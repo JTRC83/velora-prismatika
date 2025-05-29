@@ -1,0 +1,43 @@
+# Entorno virtual
+venv/
+.env
+.env.local
+
+# Archivos Python compilados
+__pycache__/
+*.py[cod]
+*.pyo
+
+# SQLite y bases temporales
+*.sqlite3
+db.sqlite3
+
+# Archivos de logs y dumps
+*.log
+*.dump
+
+# Cachés de herramientas
+.cache/
+*.bak
+
+# VSCode / JetBrains / editores
+.vscode/
+.idea/
+
+# Node.js frontend (si aplicas luego)
+node_modules/
+dist/
+build/
+
+# Archivos de sistema
+.DS_Store
+Thumbs.db
+
+# Docker
+*.pid
+*.sock
+
+# Pytest
+htmlcov/
+.coverage
+pytest_cache/
