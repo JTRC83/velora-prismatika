@@ -1,0 +1,30 @@
+{
+  "plantillas": [
+    "El {elemento} de tu {tema} brilla como un faro en la penumbra. {consejo}",
+    "{consejo_capital}. Recuerda que {metáfora} ilumina el sendero.",
+    "Tu {tema} se refleja en el {elemento} que susurra al viento. {consejo}",
+    "Entre el {elemento} y la sombra de tu {tema}, surge el secreto: {consejo_capital}."
+  ],
+  "fragmentos": {
+    "tema": [
+      "destino", "corazón", "iniciativa", "sombra",
+      "amor", "trabajo", "salud", "espiritualidad",
+      "dinero", "familia", "creatividad", "viaje",
+      "transformación", "intuición"
+    ],
+    "elemento": [
+      "sol", "luna", "espiga", "rayo",
+      "brisa", "estela", "chispa", "eco",
+      "llama", "rocío", "vórtice", "árbol"
+    ],
+    "metáfora": [
+      "solo quien osa ve más allá",
+      "todo ángulo revela un color nuevo",
+      "el silencio habla cuando todos callan",
+      "en la duda yace la semilla de la certeza",
+      "cada suspiro deja huella en el cristal del tiempo",
+      "la bruma oculta aquello que espera nacer",
+      "un susurro puede quebrar la piedra más dura"
+    ]
+  }
+}
