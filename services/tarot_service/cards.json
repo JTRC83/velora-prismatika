@@ -1,0 +1,548 @@
+[
+  {
+    "id": 0,
+    "name": "El Loco",
+    "arcano": "mayor",
+    "significado": "Comienzas un viaje sin ataduras, confiando en la espontaneidad. Deja que la inocencia guíe tus pasos.",
+    "significado_invertido": "Exceso de imprudencia o temeridad; evita lanzarte sin planificar. Cuidado con decisiones impulsivas."
+  },
+  {
+    "id": 1,
+    "name": "El Mago",
+    "arcano": "mayor",
+    "significado": "Tienes el poder de manifestar lo que deseas; enfoca tu voluntad. Usa tus recursos con habilidad y creatividad.",
+    "significado_invertido": "Falsa ilusión de control o engaño; revisa si manipulas o te dejas engañar. Falta de enfoque en tus objetivos."
+  },
+  {
+    "id": 2,
+    "name": "La Sacerdotisa",
+    "arcano": "mayor",
+    "significado": "Escucha tu sabiduría interior y mantén la calma. El conocimiento oculto se revela a través de la intuición.",
+    "significado_invertido": "Bloqueo intelectual o reclusión excesiva; evita el aislamiento y la desconfianza. Confusión interior."
+  },
+  {
+    "id": 3,
+    "name": "La Emperatriz",
+    "arcano": "mayor",
+    "significado": "La abundancia y la fertilidad florecen a tu alrededor. Conecta con la naturaleza y cuida de tu entorno.",
+    "significado_invertido": "Exceso de indulgencia o pereza; descuido de responsabilidades. Bloqueo creativo o dependencia."
+  },
+  {
+    "id": 4,
+    "name": "El Emperador",
+    "arcano": "mayor",
+    "significado": "Tu autoridad y disciplina establecen un fundamento sólido. Lidera con responsabilidad y claridad.",
+    "significado_invertido": "Rigidez o abuso de poder; inflexibilidad mental. Evita la dominación y la obstinación."
+  },
+  {
+    "id": 5,
+    "name": "El Sumo Sacerdote",
+    "arcano": "mayor",
+    "significado": "Busca consejo en la tradición y en la moral. Comparte tu fe o creencias para encontrar orientación.",
+    "significado_invertido": "Dogmatismo excesivo o conformismo; cuestiona normas si te oprimen. Evita la dependencia de terceros."
+  },
+  {
+    "id": 6,
+    "name": "Los Enamorados",
+    "arcano": "mayor",
+    "significado": "Una elección significativa en el amor o en valores se presenta. Sigue el llamado de tu corazón con honestidad.",
+    "significado_invertido": "Conflicto interno o indecisión emocional; evita elecciones precipitados. Temor a comprometerse."
+  },
+  {
+    "id": 7,
+    "name": "El Carro",
+    "arcano": "mayor",
+    "significado": "El triunfo llega con determinación y autocontrol. Avanza con confianza, superando los obstáculos.",
+    "significado_invertido": "Falta de dirección o ego desmedido; riesgo de choques si avanzas sin enfoque. Impaciencia."
+  },
+  {
+    "id": 8,
+    "name": "La Justicia",
+    "arcano": "mayor",
+    "significado": "La verdad y la equidad se impondrán. Asume la responsabilidad de tus actos y busca el equilibrio.",
+    "significado_invertido": "Injusticia o desequilibrio; evita decisiones parciales. Culpa mal canalizada o legalismos excesivos."
+  },
+  {
+    "id": 9,
+    "name": "El Ermitaño",
+    "arcano": "mayor",
+    "significado": "Retírate para encontrar tu luz interna. La introspección y la soledad te brindan claridad.",
+    "significado_invertido": "Aislamiento excesivo o melancolía profunda; no rehúyas el mundo más de la cuenta. Rigidez mental."
+  },
+  {
+    "id": 10,
+    "name": "La Rueda de la Fortuna",
+    "arcano": "mayor",
+    "significado": "Los ciclos cambian, y la suerte gira a tu favor o en tu contra. Acepta la impermanencia con serenidad.",
+    "significado_invertido": "Resistencia al cambio o mala racha prolongada; evita la frustración. Oportunidad desaprovechada."
+  },
+  {
+    "id": 11,
+    "name": "La Fuerza",
+    "arcano": "mayor",
+    "significado": "El valor y la compasión dominan la situación. Utiliza la gentileza para controlar los impulsos internos.",
+    "significado_invertido": "Falta de coraje o abuso de fuerza; inseguridad interior. Evita la violencia emocional."
+  },
+  {
+    "id": 12,
+    "name": "El Colgado",
+    "arcano": "mayor",
+    "significado": "Es momento de pausa y de ver las cosas desde otra perspectiva. El sacrificio voluntario trae nueva visión.",
+    "significado_invertido": "Estancamiento o sacrificio innecesario; inercia mental. Evita la apatía y la inacción prolongada."
+  },
+  {
+    "id": 13,
+    "name": "La Muerte",
+    "arcano": "mayor",
+    "significado": "Un ciclo termina para dar paso a la renovación. Abraza el cambio y suelta lo que ya no sirve.",
+    "significado_invertido": "Resistencia al cambio o miedo paralizante; retención de lo que debe irse. Bloqueo existencial."
+  },
+  {
+    "id": 14,
+    "name": "La Templanza",
+    "arcano": "mayor",
+    "significado": "Busca el equilibrio entre extremos. La moderación y la armonía interior te guían al equilibrio.",
+    "significado_invertido": "Desequilibrio o exceso de complacencia; indecisión. Evita la dispersión de energías."
+  },
+  {
+    "id": 15,
+    "name": "El Diablo",
+    "arcano": "mayor",
+    "significado": "Enfrentas ataduras o tentaciones que te retienen. Reconoce tus sombras y libera tu voluntad.",
+    "significado_invertido": "Liberación de adicciones o miedos, pero aún hay residual de esclavitud mental. No ignores la responsabilidad."
+  },
+  {
+    "id": 16,
+    "name": "La Torre",
+    "arcano": "mayor",
+    "significado": "Una sacudida repentina derriba estructuras falsas. La revelación dolorosa conduce a una reconstrucción sincera.",
+    "significado_invertido": "Catástrofe interna en rechazo al cambio; evitas destruir lo que ya no sirve. Posible colapso sin aprendizaje."
+  },
+  {
+    "id": 17,
+    "name": "La Estrella",
+    "arcano": "mayor",
+    "significado": "La esperanza y la inspiración renacen en tu camino. Confía en el agua sanadora de tu intuición.",
+    "significado_invertido": "Desánimo temporal o fe perdida; falta de confianza en tu guía interior. Busca fuentes externas de inspiración."
+  },
+  {
+    "id": 18,
+    "name": "La Luna",
+    "arcano": "mayor",
+    "significado": "El subconsciente te muestra ilusiones y miedos. Avanza con cautela, buscando la luz de la verdad.",
+    "significado_invertido": "Confusión extrema o engaño oculto; evita decisiones nocturnas. Aclara la mente antes de actuar."
+  },
+  {
+    "id": 19,
+    "name": "El Sol",
+    "arcano": "mayor",
+    "significado": "La claridad, la alegría y el éxito florecen. Disfruta del momento, compartiendo tu luz con los demás.",
+    "significado_invertido": "Falsas ilusiones de felicidad o arrogancia; egocentrismo. Evita la ceguera ante problemas reales."
+  },
+  {
+    "id": 20,
+    "name": "El Juicio",
+    "arcano": "mayor",
+    "significado": "Llega la llamada a la transformación y al perdón. Renace con conciencia, elevando tu propósito.",
+    "significado_invertido": "Negación de responsabilidad o culpa no asumida; estancamiento y autojuicio excesivo. Busca la reconciliación."
+  },
+  {
+    "id": 21,
+    "name": "El Mundo",
+    "arcano": "mayor",
+    "significado": "La culminación y el logro completan el ciclo. Celebra la integración y la realización plena.",
+    "significado_invertido": "Satisfacción aparente pero falta de cierre interior; busqueda de un nuevo reto. Evita la complacencia."
+  },
+  {
+    "id": 22,
+    "name": "As de Bastos",
+    "arcano": "menor",
+    "significado": "Inicia un proyecto apasionante; la chispa creativa te impulsa. Abraza la energía de un nuevo comienzo.",
+    "significado_invertido": "Falta de iniciativa o bloqueo creativo; dudas sobre el proyecto. Revisa si el entusiasmo es real o efímero."
+  },
+  {
+    "id": 23,
+    "name": "Dos de Bastos",
+    "arcano": "menor",
+    "significado": "Planeas la próxima aventura con visión clara. Confía en tu intuición para escoger el mejor camino.",
+    "significado_invertido": "Inseguridad o temor al cambio; indecisión paralizante. Aclara tus prioridades antes de actuar."
+  },
+  {
+    "id": 24,
+    "name": "Tres de Bastos",
+    "arcano": "menor",
+    "significado": "Observas el horizonte con optimismo; tus esfuerzos comienzan a dar frutos. Mantén la vista en el futuro.",
+    "significado_invertido": "Falsas expectativas o exceso de confianza; retrasos en proyectos. Ajusta tu planificación."
+  },
+  {
+    "id": 25,
+    "name": "Cuatro de Bastos",
+    "arcano": "menor",
+    "significado": "Celebración y estabilidad en tu entorno. Disfruta de la unión con amigos y familia.",
+    "significado_invertido": "Falsas apariencias de armonía; tensiones ocultas. No ignores problemas subyacentes en el grupo."
+  },
+  {
+    "id": 26,
+    "name": "Cinco de Bastos",
+    "arcano": "menor",
+    "significado": "Surgen conflictos y competencia; la rivalidad puede pulir tu carácter. Abraza el desafío con espíritu lúdico.",
+    "significado_invertido": "Caos excesivo o peleas innecesarias; evita la confrontación sin sentido. Reordena tus prioridades."
+  },
+  {
+    "id": 27,
+    "name": "Seis de Bastos",
+    "arcano": "menor",
+    "significado": "Recibes reconocimiento por tus logros; el éxito te anima. Comparte la victoria con quienes te apoyan.",
+    "significado_invertido": "Falsa exaltación o ego inflado; envidia de otros. Mantén la humildad y reconoce ayuda recibida."
+  },
+  {
+    "id": 28,
+    "name": "Siete de Bastos",
+    "arcano": "menor",
+    "significado": "Defiendes tu posición en medio de la adversidad; mantén firme tu convicción. La perseverancia te fortalece.",
+    "significado_invertido": "Saltas sin estrategia; conflicto innecesario. Revisa si vale la pena defender esa postura."
+  },
+  {
+    "id": 29,
+    "name": "Ocho de Bastos",
+    "arcano": "menor",
+    "significado": "Los acontecimientos se mueven rápidamente; prepárate para la acción rápida. El viento sopla a tu favor.",
+    "significado_invertido": "Demasiado apresuramiento o confusión repentina; evita decisiones impulsivas. Frena antes de actuar."
+  },
+  {
+    "id": 30,
+    "name": "Nueve de Bastos",
+    "arcano": "menor",
+    "significado": "Estás cerca de la meta, pero exhausto por la contienda. Resiste unos instantes más; la victoria es tuya.",
+    "significado_invertido": "Fatiga extrema o resistencia obstinada; riesgo de colapso. Busca apoyo para recargar energías."
+  },
+  {
+    "id": 31,
+    "name": "Diez de Bastos",
+    "arcano": "menor",
+    "significado": "El peso de tus responsabilidades resulta abrumador. Busca alivio delegando tareas o ajustando prioridades.",
+    "significado_invertido": "Carga injusta o abuso de poder; te sientes explotado. Aligera tu mochila y pide ayuda."
+  },
+  {
+    "id": 32,
+    "name": "Paje de Bastos",
+    "arcano": "menor",
+    "significado": "Un mensaje alentador llega con entusiasmo juvenil. Mantén la mente abierta a nuevas oportunidades.",
+    "significado_invertido": "Informaciones confusas o mensaje inmaduro; verifica fuentes antes de actuar."
+  },
+  {
+    "id": 33,
+    "name": "Caballero de Bastos",
+    "arcano": "menor",
+    "significado": "Tu energía arrolladora te impulsa hacia la acción. Comprende que la impaciencia puede causar choques.",
+    "significado_invertido": "Impulsividad desmedida o temerario; evite choques innecesarios. Controla tu fuego interior."
+  },
+  {
+    "id": 34,
+    "name": "Reina de Bastos",
+    "arcano": "menor",
+    "significado": "Irradias carisma y creatividad; tu intuición se agudiza. Lidera con calidez y valentía.",
+    "significado_invertido": "Orgullo excesivo o manipulación emocional; cuida la soberbia. No ignores necesidades ajenas."
+  },
+  {
+    "id": 35,
+    "name": "Rey de Bastos",
+    "arcano": "menor",
+    "significado": "Eres un líder visionario y lleno de iniciativa. Inspira a otros con tu entusiasmo y determinación.",
+    "significado_invertido": "Autoritarismo o fanatismo; impones tu visión sin escuchar. Evita la arrogancia de líder absoluto."
+  },
+  {
+    "id": 36,
+    "name": "As de Copas",
+    "arcano": "menor",
+    "significado": "Fluye el amor y la intuición profunda; nace una nueva oportunidad emocional. Abre tu corazón al afecto.",
+    "significado_invertido": "Emoción bloqueada o inicio fallido; cuida tus expectativas en lo sentimental. Evita idealizar."
+  },
+  {
+    "id": 37,
+    "name": "Dos de Copas",
+    "arcano": "menor",
+    "significado": "Una relación armoniosa se establece; emerge la conexión íntima. La reciprocidad fortalece el lazo.",
+    "significado_invertido": "Co-dependencia o desarmonía en la pareja; evita desequilibrios emocionales. Reflexiona sobre límites."
+  },
+  {
+    "id": 38,
+    "name": "Tres de Copas",
+    "arcano": "menor",
+    "significado": "Celebras la amistad y la alegría compartida. El apoyo mutuo sana y anima el espíritu.",
+    "significado_invertido": "Exceso de indulgencia social o superficialidad; cuidado con fiestas que distraigan del propósito."
+  },
+  {
+    "id": 39,
+    "name": "Cuatro de Copas",
+    "arcano": "menor",
+    "significado": "La apatía o el tedio invaden tu ánimo; abre los ojos a lo que te ofrecen. La gratitud renueva la perspectiva.",
+    "significado_invertido": "Estancamiento emocional prolongado; evitas nuevas oportunidades por pereza mental. Cambia tu actitud."
+  },
+  {
+    "id": 40,
+    "name": "Cinco de Copas",
+    "arcano": "menor",
+    "significado": "Lamentas pérdidas emocionales; tres vasos derramados te duelen. Reconoce lo que queda y sana con aceptación.",
+    "significado_invertido": "Rencor persistente o incapacidad de soltar; aferrarte al pasado frena tu sanación. Deja ir el dolor."
+  },
+  {
+    "id": 41,
+    "name": "Seis de Copas",
+    "arcano": "menor",
+    "significado": "La nostalgia te lleva a recuerdos de la infancia. Agradece las lecciones pasadas para encontrar consuelo.",
+    "significado_invertido": "Idealización excesiva del pasado o evasión presente; no te quedes anclado. Vive el ahora."
+  },
+  {
+    "id": 42,
+    "name": "Siete de Copas",
+    "arcano": "menor",
+    "significado": "Muchas opciones ilusorias se presentan; los sueños compiten con la realidad. Elige con discernimiento.",
+    "significado_invertido": "Confusión extrema o engaño emocional; difícil ver la verdad entre las fantasías. Clarifica tu deseo."
+  },
+  {
+    "id": 43,
+    "name": "Ocho de Copas",
+    "arcano": "menor",
+    "significado": "Abandonas lo que ya no cumple tu alma; emprendes búsqueda interior. El desapego abre paso a la verdad.",
+    "significado_invertido": "Huida emocional sin resolución; evitas enfrentar tus problemas. Retiro prematuro e inmadurez afectiva."
+  },
+  {
+    "id": 44,
+    "name": "Nueve de Copas",
+    "arcano": "menor",
+    "significado": "Se cumple un deseo emocional; la satisfacción te rodea. Disfruta con humildad y comparte tu dicha.",
+    "significado_invertido": "Satisfacción superficial o egoísta; arrogancia emocional. Evita la complacencia estéril."
+  },
+  {
+    "id": 45,
+    "name": "Diez de Copas",
+    "arcano": "menor",
+    "significado": "Armonía familiar y plenitud emocional florecen. Atesora la felicidad compartida con tus seres queridos.",
+    "significado_invertido": "Ilusión de perfección fugaz en la familia; ocultan conflictos profundos. No ignores tensiones."
+  },
+  {
+    "id": 46,
+    "name": "Paje de Copas",
+    "arcano": "menor",
+    "significado": "Un mensaje romántico o intuitivo te sorprende. Mantén el corazón abierto a lo inesperado.",
+    "significado_invertido": "Noticias engañosas o inmadurez emocional; revisa cada emoción antes de creerla ciegamente."
+  },
+  {
+    "id": 47,
+    "name": "Caballero de Copas",
+    "arcano": "menor",
+    "significado": "Proyectas sensibilidad y encanto en lo romántico. Sé auténtico y evita engaños emocionales.",
+    "significado_invertido": "Seductor vacuo o promesas huecas; cuidado con la fantasía sin compromiso. No cuentes mentiras al corazón."
+  },
+  {
+    "id": 48,
+    "name": "Reina de Copas",
+    "arcano": "menor",
+    "significado": "Tu empatía y escucha brindan sanación. Confía en tu intuición para guiar a quienes te rodean.",
+    "significado_invertido": "Exceso de empatía que absorbe problemas ajenos; límites difusos. Protégete del dolor externo."
+  },
+  {
+    "id": 49,
+    "name": "Rey de Copas",
+    "arcano": "menor",
+    "significado": "Controlas las emociones con madurez y compasión. Lidera con el corazón equilibrado para inspirar armonía.",
+    "significado_invertido": "Manipulación emocional o frialdad disfrazada de calma. No evadas tus propios sentimientos."
+  },
+  {
+    "id": 50,
+    "name": "As de Espadas",
+    "arcano": "menor",
+    "significado": "La verdad se corta como una espada; nace claridad mental. Usa la honestidad para resolver conflictos.",
+    "significado_invertido": "Veredicto injusto o palabras hirientes; cuidado con el juicio precipitado. Evita ofender innecesariamente."
+  },
+  {
+    "id": 51,
+    "name": "Dos de Espadas",
+    "arcano": "menor",
+    "significado": "Te debates entre dudas sin ver la solución. Baja la guardia y confía en tu intelecto para decidir.",
+    "significado_invertido": "Negación de la realidad o bloqueo emocional; evitas decisiones difíciles. Rompe el estancamiento."
+  },
+  {
+    "id": 52,
+    "name": "Tres de Espadas",
+    "arcano": "menor",
+    "significado": "El dolor emocional aflora con crueldad; acepta la tristeza para sanar. En la honestidad yace la liberación.",
+    "significado_invertido": "Resentimiento prolongado o incapacidad de perdonar; heridas sin sanar. Afróntalas con compasión."
+  },
+  {
+    "id": 53,
+    "name": "Cuatro de Espadas",
+    "arcano": "menor",
+    "significado": "Necesitas reposo mental; retírate para recargar fuerzas. La meditación te traerá paz interior.",
+    "significado_invertido": "Estancamiento prolongado o escapismo; retrasas la acción necesaria. No te aísles sin motivo."
+  },
+  {
+    "id": 54,
+    "name": "Cinco de Espadas",
+    "arcano": "menor",
+    "significado": "Las disputas dejan un sabor amargo; la victoria cuesta la armonía. Elige tus batallas con sabiduría.",
+    "significado_invertido": "Humillación injusta o rendición sin honor; evitas conflictos por temor. Revalora tu posición."
+  },
+  {
+    "id": 55,
+    "name": "Seis de Espadas",
+    "arcano": "menor",
+    "significado": "Te alejas de aguas turbulentas hacia un futuro más tranquilo. El cambio es necesario para sanar.",
+    "significado_invertido": "Huida precipitada sin resolución; evitas enfrentar problemas centrales. Busca estabilidad antes de partir."
+  },
+  {
+    "id": 56,
+    "name": "Siete de Espadas",
+    "arcano": "menor",
+    "significado": "La estrategia y el sigilo dominan la situación; cuidado con engaños. Actúa con integridad en la sombra.",
+    "significado_invertido": "Traición o engaño descubierto; culpas ocultas saldrán a la luz. Evita la duplicidad moral."
+  },
+  {
+    "id": 57,
+    "name": "Ocho de Espadas",
+    "arcano": "menor",
+    "significado": "Te sientes atrapado por pensamientos limitantes. Reconoce tus cadenas mentales y busca liberarte.",
+    "significado_invertido": "Parálisis mental autoimpuesta; obstáculo interior sobrevalorado. Enfrenta tus miedos con decisión."
+  },
+  {
+    "id": 58,
+    "name": "Nueve de Espadas",
+    "arcano": "menor",
+    "significado": "Las preocupaciones nocturnas te roban la calma; enfrenta tus miedos en el día. La luz disipa las sombras.",
+    "significado_invertido": "Culpa obsesiva o pesadillas constantes; ansiedad sin control. Busca ayuda para aliviar el estrés mental."
+  },
+  {
+    "id": 59,
+    "name": "Diez de Espadas",
+    "arcano": "menor",
+    "significado": "Un final doloroso llega a su punto máximo; acepta el cierre para renacer. La noche obstinada da paso al alba.",
+    "significado_invertido": "Desesperanza absoluta o autocompasión; cierre sin aprendizaje. Encuentra la lección tras el dolor."
+  },
+  {
+    "id": 60,
+    "name": "Paje de Espadas",
+    "arcano": "menor",
+    "significado": "Tu mente inquisitiva busca verdades; mantén la mente abierta. Evita juicios precipitados y escucha primero.",
+    "significado_invertido": "Críticas destructivas o chismes; información mal interpretada. Controla la impulsividad verbal."
+  },
+  {
+    "id": 61,
+    "name": "Caballero de Espadas",
+    "arcano": "menor",
+    "significado": "Tu impulsividad puede provocar enfrentamientos; canaliza tu energía en acciones constructivas. Mantén el coraje con prudencia.",
+    "significado_invertido": "Ira sin control o agresividad verbal; riesgo de conflictos inútiles. Domina tus instintos antes de avanzar."
+  },
+  {
+    "id": 62,
+    "name": "Reina de Espadas",
+    "arcano": "menor",
+    "significado": "Tu lógica y objetividad son agudas; dices la verdad sin rodeos. Cuida que la franqueza no hiera sin razón.",
+    "significado_invertido": "Crueldad o frialdad emocional; palabras duras sin empatía. No uses tu intelecto para herir."
+  },
+  {
+    "id": 63,
+    "name": "Rey de Espadas",
+    "arcano": "menor",
+    "significado": "Gobiernas con mente fría y justa; tus decisiones se basan en hechos. La autoridad exige responsabilidad.",
+    "significado_invertido": "Tiranía intelectual o injusticia disfrazada de razón. Evita el abuso de poder y la pedantería."
+  },
+  {
+    "id": 64,
+    "name": "As de Oros",
+    "arcano": "menor",
+    "significado": "Surge una oportunidad material próspera; un nuevo comienzo en finanzas. Cultiva la semilla con disciplina.",
+    "significado_invertido": "Aversión al cambio o temor a invertir; oportunidad perdida. No dejes pasar el momento de sembrar."
+  },
+  {
+    "id": 65,
+    "name": "Dos de Oros",
+    "arcano": "menor",
+    "significado": "Balanceas prioridades materiales y emocionales. La adaptabilidad te permite prosperar en la incertidumbre.",
+    "significado_invertido": "Desorganización o sobrecarga; intentas abarcar demasiado. Encuentra estabilidad antes de emprender más."
+  },
+  {
+    "id": 66,
+    "name": "Tres de Oros",
+    "arcano": "menor",
+    "significado": "El trabajo en equipo y la maestría se reconocen. Acepta las críticas constructivas para mejorar tus proyectos.",
+    "significado_invertido": "Colaboración fallida o falta de reconocimiento; esfuerzo solitario que no avanza. Ajusta tu comunicación."
+  },
+  {
+    "id": 67,
+    "name": "Cuatro de Oros",
+    "arcano": "menor",
+    "significado": "La avaricia o el miedo a perder te limitan. Aprende a compartir para que tu riqueza crezca en armonía.",
+    "significado_invertido": "Posesividad extrema o tacañería; obstaculizas el flujo de la abundancia. Suelta el apego al dinero."
+  },
+  {
+    "id": 68,
+    "name": "Cinco de Oros",
+    "arcano": "menor",
+    "significado": "Las dificultades financieras y la sensación de carencia pesan en tu ánimo. Pide ayuda y confía en la solidaridad.",
+    "significado_invertido": "Orgullo herido que impide buscar apoyo; aislamiento en la crisis. Acepta la colaboración ajena."
+  },
+  {
+    "id": 69,
+    "name": "Seis de Oros",
+    "arcano": "menor",
+    "significado": "La generosidad y la ayuda mutua equilibran las finanzas. Agradece lo que recibes y comparte sin reservas.",
+    "significado_invertido": "Desequilibrio en dar y recibir; chantaje emocional o ayuda egoísta. Busca reciprocidad genuina."
+  },
+  {
+    "id": 70,
+    "name": "Siete de Oros",
+    "arcano": "menor",
+    "significado": "Tu esfuerzo se encuentra en fase de espera; la cosecha tardará, pero llegará. Mantente paciente y perseverante.",
+    "significado_invertido": "Impaciencia o abandono prematuro; no valoras el proceso de crecimiento. Retoma tu disciplina."
+  },
+  {
+    "id": 71,
+    "name": "Ocho de Oros",
+    "arcano": "menor",
+    "significado": "El aprendizaje constante y la habilidad manual se perfeccionan. Enfócate en los detalles para alcanzar la excelencia.",
+    "significado_invertido": "Perfeccionismo excesivo o rutina aburrida; te atas a la técnica sin amar el proceso. Renueva tu inspiración."
+  },
+  {
+    "id": 72,
+    "name": "Nueve de Oros",
+    "arcano": "menor",
+    "significado": "La independencia financiera y el disfrute de tus logros ocupan tu vida. Disfruta los frutos de tu esfuerzo.",
+    "significado_invertido": "Autosuficiencia exagerada o boato vano; falsa sensación de seguridad. No ignores vulnerabilidades."
+  },
+  {
+    "id": 73,
+    "name": "Diez de Oros",
+    "arcano": "menor",
+    "significado": "La riqueza compartida y la estabilidad familiar se consolidan. Valora el patrimonio espiritual y material.",
+    "significado_invertido": "Apariencia de éxito sin sólidos cimientos; desunión oculta. Revisa relaciones familiares."
+  },
+  {
+    "id": 74,
+    "name": "Paje de Oros",
+    "arcano": "menor",
+    "significado": "Un mensaje relacionado con trabajo o finanzas llega puntual. Presta atención a las oportunidades prácticas.",
+    "significado_invertido": "Noticia insuficiente o falsa promesa económica; verifica antes de invertir esperanzas."
+  },
+  {
+    "id": 75,
+    "name": "Caballero de Oros",
+    "arcano": "menor",
+    "significado": "La constancia y la diligencia te conducen al éxito material. Evita la rigidez y mantén la flexibilidad.",
+    "significado_invertido": "Obsesión por la rutina o falta de motivación; te atas a la seguridad sin arriesgar. Busca balance."
+  },
+  {
+    "id": 76,
+    "name": "Reina de Oros",
+    "arcano": "menor",
+    "significado": "Eres cuidadosa con los asuntos domésticos y financieros. Tu generosidad y estabilidad inspiran confianza.",
+    "significado_invertido": "Exceso de preocupación material o descuido emocional; te limitas a lo práctico sin gozo."
+  },
+  {
+    "id": 77,
+    "name": "Rey de Oros",
+    "arcano": "menor",
+    "significado": "Gobiernas con sabiduría práctica y prosperidad. Tu liderazgo garantiza seguridad y abundancia para tu entorno.",
+    "significado_invertido": "Tiranía financiera o avaricia; control excesivo sobre recursos ajenos. No permitas que el poder te encierre."
+  }
+]

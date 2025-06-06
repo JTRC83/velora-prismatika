@@ -3,6 +3,7 @@ import re
 from fastapi import APIRouter, HTTPException
 from pydantic import BaseModel
 from orchestrator.mock_llm import respuesta_avatar, generar_reflejo
+from services.tarot_service.tarot_service import TarotService
 
 router = APIRouter()
 

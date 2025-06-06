@@ -1,0 +1,1 @@
+from .tarot_service import TarotService
