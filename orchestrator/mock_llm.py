@@ -8,6 +8,23 @@ from collections import Counter
 
 from orchestrator.constantes import PLANTILLAS_PATH, PROMPTS_DIR
 
+try:
+    import spacy  # type: ignore
+except Exception:  # pragma: no cover - spacy may be optional
+    spacy = None
+
+_NLP = None
+
+def _get_nlp():
+    global _NLP
+    if _NLP is None and spacy is not None:
+        try:
+            _NLP = spacy.load("es_core_news_sm", disable=["parser", "ner"])
+        except Exception as e:  # pragma: no cover - model missing
+            logger.warning(f"No se pudo cargar el modelo spaCy: {e}")
+            _NLP = False
+    return _NLP if _NLP not in (None, False) else None
+
 logger = logging.getLogger(__name__)
 
 def cargar_config_plantillas() -> Dict:
@@ -234,21 +251,25 @@ def construir_respuesta_estatica(avatar: str) -> str:
     return f"{eleccion}\n\n{firma}"
 
 def generar_reflejo(avatar: str, pregunta: str, respuesta: str) -> str:
-    """
-    Crea un breve Reflejo Prismátiko extrayendo sustantivos frecuentes de la respuesta.
-    """
+    """Genera un resumen simbólico de la respuesta."""
     # Intentar usar spaCy para POS tagging si está disponible
     try:
-        import spacy
-        nlp = spacy.load("es_core_news_sm", disable=["parser", "ner"])
-        doc = nlp(respuesta)
-        sustantivos = [token.text.lower() for token in doc if token.pos_ == "NOUN" and len(token.text) > 3]
-        cuenta = Counter(sustantivos)
-        top = [pal for pal, _ in cuenta.most_common(3)]
-        if top:
-            base = " ".join(top)
+        nlp = _get_nlp()
+        if nlp:
+            doc = nlp(respuesta)
+            sustantivos = [
+                token.text.lower()
+                for token in doc
+                if token.pos_ == "NOUN" and len(token.text) > 3
+            ]
+            cuenta = Counter(sustantivos)
+            top = [pal for pal, _ in cuenta.most_common(3)]
+            if top:
+                base = " ".join(top)
+            else:
+                raise ValueError("Sin sustantivos relevantes")
         else:
-            raise ValueError("Sin sustantivos relevantes")
+            raise ValueError("spaCy no disponible")
     except Exception:
         # Fallback: contar tokens largos
         tokens = [t.lower() for t in re.findall(r"\b[a-zA-ZáéíóúñÑ]{4,}\b", respuesta)]
