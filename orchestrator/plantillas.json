@@ -3,28 +3,79 @@
     "El {elemento} de tu {tema} brilla como un faro en la penumbra. {consejo}",
     "{consejo_capital}. Recuerda que {metáfora} ilumina el sendero.",
     "Tu {tema} se refleja en el {elemento} que susurra al viento. {consejo}",
-    "Entre el {elemento} y la sombra de tu {tema}, surge el secreto: {consejo_capital}."
+    "Entre el {elemento} y la sombra de tu {tema}, surge el secreto: {consejo_capital}.",
+    "Cuando el {elemento} se encuentra con tu {tema}, nace este mensaje: {consejo}.",
+    "Bajo la luz del {elemento}, tu {tema} revela un eco profundo: {consejo_capital}.",
+    "El {elemento} y tu {tema} tejen un tapiz sutil; observa atentamente: {consejo}.",
+    "Mientras el {elemento} danza sobre tu {tema}, atiende esta verdad: {consejo_capital}.",
+    "Tu {tema} late al ritmo del {elemento}, y en ese pulso surge: {consejo}.",
+    "En el crisol del {elemento} yace tu {tema}; destellos de sabiduría dicen: {consejo_capital}.",
+    "Cuando el eco del {elemento} retumba en tu {tema}, presta atención: {consejo}.",
+    "Bajo el manto del {elemento}, tu {tema} se revela en múltiples matices: {consejo_capital}.",
+    "El susurro del {elemento} guía tu {tema} hacia un nuevo amanecer: {consejo}.",
+    "Entre la bruma del {elemento} y el brillo de tu {tema}, descansa: {consejo_capital}.",
+    "Mientras el {elemento} cruce tu {tema}, escucha esto: {consejo}.",
+    "Cuando el {elemento} respire sobre tu {tema}, descubrirás que: {consejo_capital}.",
+    "Tu {tema} se alinea con el pulso del {elemento}; recibe este fragmento: {consejo}.",
+    "Entre el latido del {elemento} y el pulso de tu {tema}, surge esta guía: {consejo_capital}.",
+    "Cuando el {elemento} enciende tu {tema}, surge un brillo: {consejo}.",
+    "En la danza del {elemento} con tu {tema}, hallarás este mensaje: {consejo_capital}."
   ],
   "fragmentos": {
     "tema": [
       "destino", "corazón", "iniciativa", "sombra",
       "amor", "trabajo", "salud", "espiritualidad",
       "dinero", "familia", "creatividad", "viaje",
-      "transformación", "intuición"
+      "transformación", "intuición", "fortuna", "pasado",
+      "presente", "futuro", "sabiduría", "armonía",
+      "equilibrio", "propósito", "misterio", "renacimiento",
+      "esperanza", "confianza", "valentía", "cambio"
     ],
     "elemento": [
       "sol", "luna", "espiga", "rayo",
       "brisa", "estela", "chispa", "eco",
-      "llama", "rocío", "vórtice", "árbol"
+      "llama", "rocío", "vórtice", "árbol",
+      "viento", "piedra", "espejo", "arena",
+      "frasco", "cántaro", "lluvia", "nube",
+      "río", "brazo de fuego", "estrella", "gota"
     ],
+    
     "metáfora": [
-      "solo quien osa ve más allá",
-      "todo ángulo revela un color nuevo",
-      "el silencio habla cuando todos callan",
-      "en la duda yace la semilla de la certeza",
-      "cada suspiro deja huella en el cristal del tiempo",
-      "la bruma oculta aquello que espera nacer",
-      "un susurro puede quebrar la piedra más dura"
+        "solo quien osa ve más allá",
+        "todo ángulo revela un color nuevo",
+        "el silencio habla cuando todos callan",
+        "en la duda yace la semilla de la certeza",
+        "cada suspiro deja huella en el cristal del tiempo",
+        "la bruma oculta aquello que espera nacer",
+        "un susurro puede quebrar la piedra más dura",
+        "el eco antiguo responde en el corazón",
+        "la penumbra guarda la luz que buscas",
+        "las raíces invisibles sostienen la flor más pura",
+        "cuando la ceniza cae, la llama se alza",
+        "el horizonte susurra promesas de renuevo",
+        "un destello fugaz es el preludio de la revelación",
+        "la sombra revela la forma oculta",
+        "una chispa en la oscuridad abre senderos",
+        "el rocío del amanecer desliza verdades calladas",
+        "cada latido crea un puente entre mundos",
+        "la marea interior levanta barcos de esperanza",
+        "el espejismo del pasado proyecta un futuro posible",
+        "un pétalo marchito florece en tu alma renacida",
+        "la noche teje constelaciones de sabiduría",
+        "el aroma del silencio pesa más que mil voces",
+        "un rastro de polvo estelar guía tu paso",
+        "la grieta en la roca invita a la semilla oculta",
+        "cuando la luna canta, el sol escucha tu plegaria",
+        "un relámpago interno estremece tu calma",
+        "la aurora viste tus sueños de luz cambiante",
+        "la voz del viento enciende memorias dormidas",
+        "la semilla del miedo germina en tierra fértil de coraje",
+        "el murmullo del río arrastra antiguos secretos",
+        "una gota de inspiración colma el océano de tu mente",
+        "el rayo invisible traza senderos en tu destino",
+        "la página en blanco guarda el verso aún no escrito",
+        "un suspiro de eternidad atraviesa tu instante presente",
+        "la niebla disfraza la forma para que descubras tu ser"
     ]
-  }
+}
 }
