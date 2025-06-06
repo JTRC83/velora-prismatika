@@ -6,7 +6,7 @@ from orchestrator.mock_llm import respuesta_avatar, generar_reflejo
 
 router = APIRouter()
 
-# Definimos los avatares y sus gatillos temáticos (regex simples)
+# Definimos los avatares y sus gatillos temáticos
 AVATARES = {
     "sibylla": {
         "firma": "Sibylla dixit.",
@@ -42,6 +42,10 @@ AVATARES = {
     },
 }
 
+# Precompilar los patrones de gatillo para cada avatar
+for datos in AVATARES.values():
+    datos["gatillos"] = [re.compile(p, re.IGNORECASE) for p in datos["gatillos"]]
+
 # Patrón para invocación directa: "Convocar a Sibylla" o "Consultar a Dee"
 INVOCAR_DIRECTO = re.compile(r"\b(?:Convocar|Consultar)\s+a\s+([A-Za-záéíóúÁÉÍÓÚñÑ]+)\b", re.IGNORECASE)
 
@@ -66,7 +70,7 @@ async def chat(mensaje: Mensaje):
         avatar = None
         for nombre, datos in AVATARES.items():
             for pattern in datos["gatillos"]:
-                if re.search(pattern, texto, re.IGNORECASE):
+                if pattern.search(texto):
                     avatar = nombre
                     break
             if avatar:
