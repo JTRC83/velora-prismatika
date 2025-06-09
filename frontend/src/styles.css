@@ -46,7 +46,7 @@
   object-fit: contain;
   opacity: 0.6;
   filter: brightness(0.6) blur(0.5px); ;
-  padding-left: 25px; /* espacio a la izquierda */
+  padding-left: 75px; /* espacio a la izquierda */
   rotate: -23deg;         
   pointer-events: none; /* no interfiere con el carrusel */
 }
@@ -139,4 +139,31 @@
   border: none;
   border-radius: 24px;
   cursor: pointer;
+}
+
+/* Lado derecho: Rueda del Zodiaco */
+.horoscope-side {
+  position: absolute;
+  /* justo bajo el header (290px de alto) + 1rem de margen */
+  top: calc(290px + 1rem);
+  right: 0;
+  width: 180px;          /* ajusta al tamaño deseado */
+  display: flex;
+  justify-content: center;
+  pointer-events: none;  /* no interfiera con el carrusel */
+  z-index: 1;            /* bajo el carrusel pero encima del fondo */
+}
+.horoscope-side img {
+  max-height: 55vh;
+  object-fit: contain;
+  opacity: 0.8;
+  transform: rotate(18deg);     /* lo inclina levemente */
+  filter: brightness(0.9) blur(1px);
+  padding-right: 10px; /* espacio a la derecha */
+  pointer-events: none; /* no interfiere con el carrusel */
+  box-shadow:   -15px 10px 10px rgba(0, 0, 0, 0.3);
+}
+
+html, body {
+  overflow-x: hidden;
 }

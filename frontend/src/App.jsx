@@ -1,10 +1,8 @@
-// src/App.jsx
 import React from 'react';
 import Header from './components/Header';
 import CarouselAvatars from './components/CarouselAvatars';
 import ChatWindow from './components/ChatWindow';
 import InputBar from './components/InputBar';
-
 
 export default function App() {
   const [selected, setSelected] = React.useState('sibylla');
@@ -31,17 +29,16 @@ export default function App() {
   return (
     <div className="app">
       {/* Header */}
-      <div className="header-container">
-        <Header />
-      </div>
+      <Header />
 
-      {/* Main content: árbol + carrusel */}
+      {/* Main content: árbol + carrusel + horóscopo */}
       <div className="main-area">
-        {/* Lado izquierdo */}
+        {/* Árbol de la Vida */}
         <div className="tree-side">
           <img src="/assets/arbolVida.png" alt="Árbol de la Vida" />
         </div>
 
+        {/* Carrusel */}
         <div className="carousel-area">
           <CarouselAvatars
             avatars={avatars}
@@ -49,8 +46,17 @@ export default function App() {
             onSelect={setSelected}
           />
         </div>
+
+        {/* Rueda del Zodiaco */}
+        <div className="horoscope-side">
+          <img
+            src="/assets/horoscopo.png"
+            alt="Rueda del Zodiaco"
+          />
+        </div>
       </div>
 
+      {/* Chat + Input */}
       <div className="footer">
         <ChatWindow messages={messages} />
         <InputBar
@@ -59,8 +65,6 @@ export default function App() {
           onSend={handleSend}
         />
       </div>
-
-    
     </div>
   );
 }
