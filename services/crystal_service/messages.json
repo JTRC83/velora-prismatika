@@ -1,0 +1,31 @@
+{
+  "generic": [
+    "El universo se mueve; escucha su susurro interior.",
+    "Los vientos del destino cambian; permanece atento.",
+    "Entre las sombras brilla una chispa de verdad.",
+    "La luz oculta revela secretos cuando cierras los ojos.",
+    "El eco del mañana ya susurra en tu presente.",
+    "Tu intuición guardiana guía el próximo paso.",
+    "En el silencio hallarás la voz de tu alma.",
+    "El oráculo conoce tus preguntas antes de formularlas.",
+    "Las estrellas confirman tu camino; sigue su danza.",
+    "El fuego interno ilumina tu senda secreta.",
+    "Cada suspiro lleva un mensaje antiguo.",
+    "La bruma oculta el símbolo que buscas."
+  ],
+  "topic_templates": [
+    "Sobre el amor: «{topic}», el oráculo susurra: confía en tu corazón.",
+    "En el amor, «{topic}» florece cuando abraza la ternura.",
+    "Para la salud: «{topic}», la bola aconseja: atiende al equilibrio interno.",
+    "Hablando de salud: «{topic}», tu cuerpo habla con voz silenciosa.",
+    "Cuando piensas en dinero: «{topic}», el cristal augura prudencia y oportunidad.",
+    "En cuanto al dinero: «{topic}», el oráculo invita a valorar lo esencial.",
+    "Respecto al trabajo: «{topic}», el reflejo insinúa disciplina y foco.",
+    "Sobre tu labor: «{topic}», la bola recomienda brillar con constancia.",
+    "En lo laboral: «{topic}», confía en tu destreza y persistencia.",
+    "Para tus finanzas: «{topic}», el oráculo simboliza ahorro y expansión.",
+    "Al preguntar por amor: «{topic}», el cristal revela el latido del alma.",
+    "Si buscas salud: «{topic}», atiende al ritmo natural de tu vida."
+  ],
+  "allowed_topics": ["amor", "salud", "dinero", "trabajo"]
+}

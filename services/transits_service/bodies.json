@@ -1,0 +1,9 @@
+[
+  { "id": "Sun",     "name": "Sol"      },
+  { "id": "Moon",    "name": "Luna"     },
+  { "id": "Mercury", "name": "Mercurio" },
+  { "id": "Venus",   "name": "Venus"    },
+  { "id": "Mars",    "name": "Marte"    },
+  { "id": "Jupiter", "name": "Júpiter"  },
+  { "id": "Saturn",  "name": "Saturno"  }
+]

@@ -1,0 +1,31 @@
+{
+  "element_compat": {
+    "Fuego":   { "Fuego": 70, "Tierra": 40, "Aire": 90, "Agua": 30 },
+    "Tierra":  { "Fuego": 40, "Tierra": 80, "Aire": 50, "Agua": 90 },
+    "Aire":    { "Fuego": 90, "Tierra": 50, "Aire": 70, "Agua": 40 },
+    "Agua":    { "Fuego": 30, "Tierra": 90, "Aire": 40, "Agua": 80 }
+  },
+  "quality_compat": {
+    "Cardinal": { "Cardinal": 80, "Fijo": 60, "Mutable": 70 },
+    "Fijo":     { "Cardinal": 60, "Fijo": 90, "Mutable": 50 },
+    "Mutable":  { "Cardinal": 70, "Fijo": 50, "Mutable": 85 }
+  },
+  "descriptions": [
+    {
+      "range": [90, 100],
+      "text": "Almas gemelas astrológicas: vuestra conexión fluye con gran facilidad."
+    },
+    {
+      "range": [70, 89],
+      "text": "Buena compatibilidad: los retos se resuelven unidos."
+    },
+    {
+      "range": [50, 69],
+      "text": "Compatibilidad media: la comprensión mutua exige esfuerzo."
+    },
+    {
+      "range": [0, 49],
+      "text": "Desafío astrológico: cultivad la paciencia y el respeto."
+    }
+  ]
+}
