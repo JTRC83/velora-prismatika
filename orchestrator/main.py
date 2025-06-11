@@ -17,6 +17,7 @@ from services.horoscope_service.horoscope_service import router as horoscope_rou
 from services.moon_phase_service.moon_phase_service import router as moon_router
 from services.kabbalah_service.kabbalah_service import router as kabbalah_router
 from services.transits_service.transits_service import router as transits_router
+from services.ritual_service.ritual_service import router as ritual_router
 
 app = FastAPI(title="Velora Prismätika")
 
@@ -44,6 +45,7 @@ app.include_router(horoscope_router)
 app.include_router(moon_router)
 app.include_router(kabbalah_router)
 app.include_router(transits_router)
+app.include_router(ritual_router)
 
 @app.get("/")
 def root():

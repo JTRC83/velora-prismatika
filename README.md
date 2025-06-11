@@ -43,6 +43,26 @@ velora-prismatika/
 
 ---
 
+## 🛠 Servicios disponibles
+
+Velora Prismätika expone múltiples microservicios, cada uno un prisma para explorar aspectos esotéricos:
+
+- **Tarot** (`/tarot`): tirada de 3 cartas, interpretaciones de Pasado, Presente y Futuro.
+- **Astrología natal** (`/astro/sun-sign`): calcula tu signo solar, elemento, modalidad, regente y descripción.
+- **Horóscopo diario** (`/horoscope/daily?sign=...`): mensajes de orientación para tu signo.
+- **Numerología** (`/numerology/number?date=YYYY-MM-DD`): tu Número de Sendero de Vida y su significado.
+- **Runas** (`/runes/draw?count=N`): selección aleatoria de runas con símbolo, significado y reverso.
+- **I Ching** (`/iching/hexagram`): genera un hexagrama (1–64) y devuelve nombre y significado.
+- **Oráculo de Cristal** (`/crystal/message[?topic=...]`): mensajes mágicos genéricos o temáticos.
+- **Chakras** (`/chakra/`, `/chakra/advice`, `/chakra/session`): guía de los 7 chakras, consejos y mini-sesiones.
+- **Compatibilidad** (`/compatibility?sign1=...&sign2=...`): afinidad astrológica entre dos signos o fechas.
+- **Fases de Luna** (`/moon-phase?date=YYYY-MM-DD`): fase lunar, icono y significado simbólico.
+- **Tránsitos Planetarios** (`/transits?date=YYYY-MM-DD`): posiciones eclípticas del Sol, Luna y planetas con aspectos mayores.
+- **Árbol de la Vida (Cábala)** (`/kabbalah/`, `/kabbalah/{id}`, `/kabbalah/random`): recorrido por las 10 Sephiroth y mini-lecturas.
+- **Rituales y Afirmaciones** (`/ritual?birthdate=...&date=...`): rituales personalizados según tu signo y fase lunar.
+
+---
+
 ## 🧪 Primeros pasos
 
 ### 1. Clona y prepara el entorno
@@ -53,3 +73,16 @@ cd velora-prismatika
 python3 -m venv venv
 source venv/bin/activate
 pip install -r requirements.txt
+
+## 🛠 Roadmap
+
+Estas son algunas de las mejoras y expansiones planeadas para futuras versiones:
+
+- **Integración de Voz**: soporte STT/TTS local-first con Whisper‑cpp y Coqui TTS para consultas habladas.
+- **Oráculos Adicionales**: incluir Runas Vikingas y Lectura de Cartas de Ángeles.
+- **Soporte Multi-idioma**: traducir mensajes y descripciones a varios idiomas (inglés, francés, alemán).
+- **Autenticación y Perfiles**: permitir registro de usuarios, guardar historiales y lecturas personalizadas.
+- **Notificaciones**: recordatorios configurables para horóscopo diario, afirmaciones y prácticas de chakra.
+- **Integración de APIs Externas**: activar transiciones a backend OpenAI o Google Calendar / Twilio para SMS.
+- **Aplicación Móvil**: front‑end React Native para acceso offline y notificaciones push.
+- **Dashboard de Métricas**: panel admin con estadísticas de uso, servicios más populares y rendimiento.
