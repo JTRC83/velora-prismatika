@@ -1,24 +1,54 @@
 import React from 'react';
-import Header from './components/Header';
+import Header          from './components/Header';
 import CarouselAvatars from './components/CarouselAvatars';
-import ChatWindow from './components/ChatWindow';
-import InputBar from './components/InputBar';
+import ChatWindow      from './components/ChatWindow';
+import InputBar        from './components/InputBar';
+
+const ICONS = {
+  'Astrología Natal':    '/assets/icons/astroNatal.png',
+  'Numerología':         '/assets/icons/numerologia.png',
+  'Horóscopo Diario':    '/assets/icons/horoscopo.png',
+  'Fases Lunares':       '/assets/icons/fasesDeLuna.png',
+  'Compatibilidad':      '/assets/icons/compatibilidad.png',
+  'Rituales':            '/assets/icons/vela.png',
+  'Chakras':             '/assets/icons/chakras.png',
+  'Tarot 3 Cartas':      '/assets/icons/tarot.png',
+  'Runas':               '/assets/icons/runas.png',
+  'Cábala':              '/assets/icons/cabala.png',
+  'Tránsitos':           '/assets/icons/transitosPlanetarios.png',
+  'Bola de Cristal':     '/assets/icons/bolaCristal.png',
+  'I Ching':             '/assets/icons/iching.png',
+};
+
+const SERVICES_LEFT = [
+  'Astrología Natal',
+  'Numerología',
+  'Horóscopo Diario',
+  'Fases Lunares',
+  'Compatibilidad',
+  'Rituales',
+  'Chakras',
+];
+
+const SERVICES_RIGHT = [
+  'Tarot 3 Cartas',
+  'Runas',
+  'Cábala',
+  'Tránsitos',
+  'Bola de Cristal',
+  'I Ching',
+];
 
 export default function App() {
-  const [selected, setSelected] = React.useState('sibylla');
-  const [messages, setMessages] = React.useState([]);
-  const [input, setInput] = React.useState('');
+  const [selectedAvatar,  setSelectedAvatar]  = React.useState('sibylla');
+  const [messages,        setMessages]        = React.useState([]);
+  const [input,           setInput]           = React.useState('');
+  const [selectedService, setSelectedService] = React.useState(null);
 
-  const avatars = [
-    { id: 'sibylla',     name: 'Sibylla' },
-    { id: 'dee',         name: 'John Dee' },
-    { id: 'nostradamus', name: 'Nostradamus' },
-    { id: 'crowley',     name: 'Crowley' },
-    { id: 'blavatsky',   name: 'H. P. Blavatsky' },
-    { id: 'vanga',       name: 'Baba Vanga' },
-    { id: 'hermes',      name: 'Hermes Trismegisto' },
-    { id: 'paracelso',   name: 'Paracelso' },
-  ];
+  const handleSelectService = svc => {
+    setSelectedService(svc);
+    console.log('Servicio:', svc);
+  };
 
   const handleSend = () => {
     if (!input.trim()) return;
@@ -28,42 +58,66 @@ export default function App() {
 
   return (
     <div className="app">
-      {/* Header */}
+      {/* HEADER */}
       <Header />
 
-      {/* Main content: árbol + carrusel + horóscopo */}
-      <div className="main-area">
-        {/* Árbol de la Vida */}
-        <div className="tree-side">
-          <img src="/assets/arbolVida.png" alt="Árbol de la Vida" />
+      {/* ICON BUTTON BAR */}
+      <div className="icon-bar">
+        <div className="services-group">
+          {SERVICES_LEFT.map(s => (
+            <button
+              key={s}
+              className={`service-button ${selectedService === s ? 'selected' : ''}`}
+              onClick={() => handleSelectService(s)}
+            >
+              <img src={ICONS[s]} alt={s} />
+            </button>
+          ))}
         </div>
-
-        {/* Carrusel */}
-        <div className="carousel-area">
-          <CarouselAvatars
-            avatars={avatars}
-            selected={selected}
-            onSelect={setSelected}
-          />
-        </div>
-
-        {/* Rueda del Zodiaco */}
-        <div className="horoscope-side">
-          <img
-            src="/assets/horoscopo.png"
-            alt="Rueda del Zodiaco"
-          />
+        <div className="logo-placeholder" />
+        <div className="services-group">
+          {SERVICES_RIGHT.map(s => (
+            <button
+              key={s}
+              className={`service-button ${selectedService === s ? 'selected' : ''}`}
+              onClick={() => handleSelectService(s)}
+            >
+              <img src={ICONS[s]} alt={s} />
+            </button>
+          ))}
         </div>
       </div>
 
-      {/* Chat + Input */}
+      {/* MAIN */}
+      <div className="main-area">
+        <div className="tree-side">
+          <img src="/assets/arbolVida.png" alt="Árbol de la Vida" />
+        </div>
+        <div className="carousel-area">
+          <CarouselAvatars
+            avatars={[
+              { id: 'sibylla',     name: 'Sibylla' },
+              { id: 'dee',         name: 'John Dee' },
+              { id: 'nostradamus', name: 'Nostradamus' },
+              { id: 'crowley',     name: 'Crowley' },
+              { id: 'blavatsky',   name: 'H. P. Blavatsky' },
+              { id: 'vanga',       name: 'Baba Vanga' },
+              { id: 'hermes',      name: 'Hermes Trismegisto' },
+              { id: 'paracelso',   name: 'Paracelso' },
+            ]}
+            selected={selectedAvatar}
+            onSelect={setSelectedAvatar}
+          />
+        </div>
+        <div className="horoscope-side">
+          <img src="/assets/horoscopo.png" alt="Rueda del Zodiaco" />
+        </div>
+      </div>
+
+      {/* CHAT + INPUT */}
       <div className="footer">
         <ChatWindow messages={messages} />
-        <InputBar
-          value={input}
-          onChange={setInput}
-          onSend={handleSend}
-        />
+        <InputBar value={input} onChange={setInput} onSend={handleSend} />
       </div>
     </div>
   );

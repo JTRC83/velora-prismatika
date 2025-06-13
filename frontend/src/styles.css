@@ -1,12 +1,26 @@
-/* Ya tienes esto arriba… */
-* { box-sizing: border-box; margin: 0; padding: 0; }
+* { box-sizing:border-box; margin:0; padding:0; }
+html, body { overflow-x:hidden; }
 
 /* Contenedor raíz: ocupa toda la pantalla y color ocre */
+/* Raíz y fondo */
 .app {
+  background: #d7a341;
+  min-height: 100vh;
   display: flex;
   flex-direction: column;
-  height: 100vh;
-  background: #d7a341;
+}
+
+/* Acomoda el icon-bar sobre el header */
+.icon-bar {
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 4rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 1.5rem;
+  pointer-events: auto;
+  z-index: 20;
 }
 
 /* Header */
@@ -170,4 +184,59 @@ html, body {
 
 .transition-all {
   transition: all 2s ease-out;
+}
+
+/* --- Barra completa --- */
+.service-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: #d7a341; /* mismo color ocre */
+  padding: 0.5rem 2rem; /* algo más de espacio horizontal */
+  box-shadow: inset 0 -2px 4px rgba(0,0,0,0.1);
+  flex-shrink: 0;
+  z-index: 10;
+}
+
+/* Grupo de iconos (izda/dcha) */
+.services-group {
+  display: flex;
+  gap: 1.15rem;
+}
+
+/* 1) Separar la barra de iconos del top */
+.icon-bar {
+  top: 5.5rem;    /* antes: top: 0; ahora la baja 1.5rem */
+  height: 4.5rem; /* un poco más de altura para centrar bien */
+}
+
+/* Botones redondos más grandes */
+.service-button {
+  width: 3.5rem;
+  height: 3.5rem;
+  background: #7e7e23;
+  border: none;
+  border-radius: 9999px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: background .2s, transform .2s;
+  opacity: 0.8; /* ligeramente transparente */
+ 
+}
+.service-button img {
+  width: 2.5rem;
+  height: 2.5rem;
+}
+.service-button:hover {
+  background: #fcd34d;
+  transform: scale(1.05);
+}
+/* Cuando está seleccionado */
+.service-button.selected {
+  background: #1d753e;
+}
+.service-button.selected img {
+  filter: brightness(0) invert(1);
 }
