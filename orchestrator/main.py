@@ -13,7 +13,6 @@ from services.runes_service.runes_service import router as runes_router
 from services.iching_service.iching_service import router as iching_router
 from services.chakra_service.chakra_service import router as chakra_router
 from services.compatibility_service.compatibility_service import router as compat_router
-from services.horoscope_service.horoscope_service import router as horoscope_router
 from services.moon_phase_service.moon_phase_service import router as moon_router
 from services.kabbalah_service.kabbalah_service import router as kabbalah_router
 from services.transits_service.transits_service import router as transits_router
@@ -41,7 +40,6 @@ app.include_router(runes_router)
 app.include_router(iching_router)
 app.include_router(chakra_router)
 app.include_router(compat_router)
-app.include_router(horoscope_router)
 app.include_router(moon_router)
 app.include_router(kabbalah_router)
 app.include_router(transits_router)

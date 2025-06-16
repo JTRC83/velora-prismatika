@@ -5,9 +5,8 @@ import ChatWindow      from './components/ChatWindow';
 import InputBar        from './components/InputBar';
 
 const ICONS = {
-  'Astrología Natal':    '/assets/icons/astroNatal.png',
+  'Astrología Natal':    '/assets/icons/horoscopo.png',
   'Numerología':         '/assets/icons/numerologia.png',
-  'Horóscopo Diario':    '/assets/icons/horoscopo.png',
   'Fases Lunares':       '/assets/icons/fasesDeLuna.png',
   'Compatibilidad':      '/assets/icons/compatibilidad.png',
   'Rituales':            '/assets/icons/vela.png',
@@ -23,7 +22,6 @@ const ICONS = {
 const SERVICES_LEFT = [
   'Astrología Natal',
   'Numerología',
-  'Horóscopo Diario',
   'Fases Lunares',
   'Compatibilidad',
   'Rituales',
@@ -63,11 +61,14 @@ export default function App() {
 
       {/* ICON BUTTON BAR */}
       <div className="icon-bar">
-        <div className="services-group">
+        <div className="icon-group left-group"> 
           {SERVICES_LEFT.map(s => (
             <button
               key={s}
-              className={`service-button ${selectedService === s ? 'selected' : ''}`}
+              data-tooltip={s} 
+              className={`service-button service-${s.replace(/\s+/g, '-').toLowerCase()} ${
+                 selectedService === s ? 'selected' : ''
+            }`}
               onClick={() => handleSelectService(s)}
             >
               <img src={ICONS[s]} alt={s} />
@@ -75,11 +76,14 @@ export default function App() {
           ))}
         </div>
         <div className="logo-placeholder" />
-        <div className="services-group">
+        <div className="icon-group right-group"> 
           {SERVICES_RIGHT.map(s => (
             <button
               key={s}
-              className={`service-button ${selectedService === s ? 'selected' : ''}`}
+              data-tooltip={s} 
+              className={`service-button service-${s.replace(/\s+/g, '-').toLowerCase()} ${
+                selectedService === s ? 'selected' : ''
+        }`}
               onClick={() => handleSelectService(s)}
             >
               <img src={ICONS[s]} alt={s} />
