@@ -1,0 +1,38 @@
+.curtain {
+  position: fixed;
+  top: 0; bottom: 0;
+  width: 50%;
+  z-index: 50;
+  background-size: cover;
+  background-position: center;
+  pointer-events: none;
+  transition: transform 1.2s ease-in-out;
+}
+
+/* izquierda */
+.curtain-left {
+  left: 0;
+  /* asegúrate de que aquí apunte a la nube IZQUIERDA */
+  background-image: url("/assets/nubeIzquierda.png");
+  transform: translateX(-100%);
+}
+/* derecha */
+.curtain-right {
+  right: 0;
+  /* Y aquí a la nube DERECHA */
+  background-image: url("/assets/nubeDerecha.png");
+  transform: translateX(100%);
+}
+
+/* fase “closing”: entran al centro */
+.curtain-left.closing,
+.curtain-right.closing {
+  transform: translateX(0);
+}
+/* fase “opening”: salen otra vez */
+.curtain-left.opening {
+  transform: translateX(-100%);
+}
+.curtain-right.opening {
+  transform: translateX(100%);
+}

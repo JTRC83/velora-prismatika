@@ -3,6 +3,7 @@ import Header          from './components/Header';
 import CarouselAvatars from './components/CarouselAvatars';
 import ChatWindow      from './components/ChatWindow';
 import InputBar        from './components/InputBar';
+import Curtain         from './components/Curtain';
 
 const ICONS = {
   'Astrología Natal':    '/assets/icons/horoscopo.png',
@@ -42,10 +43,17 @@ export default function App() {
   const [messages,        setMessages]        = React.useState([]);
   const [input,           setInput]           = React.useState('');
   const [selectedService, setSelectedService] = React.useState(null);
+  const [curtainPhase,    setCurtainPhase]    = React.useState('idle'); // idle | closing | opening
 
   const handleSelectService = svc => {
-    setSelectedService(svc);
-    console.log('Servicio:', svc);
+    if (curtainPhase !== 'idle') return;   // evitar dobles clicks
+    setCurtainPhase('closing');
+    setTimeout(() => {
+      setSelectedService(svc);
+      console.log('Servicio:', svc);
+      setCurtainPhase('opening');
+      setTimeout(() => setCurtainPhase('idle'), 1200);
+    }, 1200);
   };
 
   const handleSend = () => {
@@ -55,20 +63,23 @@ export default function App() {
   };
 
   return (
-    <div className="app">
-      {/* HEADER */}
+    <div className="app relative min-h-screen bg-amber-50 flex flex-col items-center">
+      {/* 1) Cortinas */}
+      <Curtain phase={curtainPhase} />
+
+      {/* 2) Header */}
       <Header />
 
-      {/* ICON BUTTON BAR */}
+      {/* 3) Icon-bar */}
       <div className="icon-bar">
         <div className="icon-group left-group"> 
           {SERVICES_LEFT.map(s => (
             <button
               key={s}
-              data-tooltip={s} 
-              className={`service-button service-${s.replace(/\s+/g, '-').toLowerCase()} ${
-                 selectedService === s ? 'selected' : ''
-            }`}
+              data-tooltip={s}
+              className={`service-button ${
+                selectedService===s ? 'selected' : ''
+              }`}
               onClick={() => handleSelectService(s)}
             >
               <img src={ICONS[s]} alt={s} />
@@ -80,10 +91,10 @@ export default function App() {
           {SERVICES_RIGHT.map(s => (
             <button
               key={s}
-              data-tooltip={s} 
-              className={`service-button service-${s.replace(/\s+/g, '-').toLowerCase()} ${
-                selectedService === s ? 'selected' : ''
-        }`}
+              data-tooltip={s}
+              className={`service-button ${
+                selectedService===s ? 'selected' : ''
+              }`}
               onClick={() => handleSelectService(s)}
             >
               <img src={ICONS[s]} alt={s} />
@@ -92,14 +103,15 @@ export default function App() {
         </div>
       </div>
 
-      {/* MAIN */}
-      <div className="main-area">
-        <div className="tree-side">
-          <img src="/assets/arbolVida.png" alt="Árbol de la Vida" />
+      {/* 4) Main: árbol + carrusel + horóscopo */}
+      <div className="main-area w-full max-w-3xl flex flex-col md:flex-row items-start px-4 pt-4">
+        <div className="tree-side pointer-events-none">
+          <img src="/assets/arbolVida.png" alt="Árbol de la Vida"
+               className="max-h-[60vh] opacity-60 rotate-[-23deg] object-contain"/>
         </div>
-        <div className="carousel-area">
+        <div className="carousel-area flex-1 flex justify-center items-center">
           <CarouselAvatars
-            avatars={[
+           avatars={[
               { id: 'sibylla',     name: 'Sibylla' },
               { id: 'dee',         name: 'John Dee' },
               { id: 'nostradamus', name: 'Nostradamus' },
@@ -113,15 +125,20 @@ export default function App() {
             onSelect={setSelectedAvatar}
           />
         </div>
-        <div className="horoscope-side">
-          <img src="/assets/horoscopo.png" alt="Rueda del Zodiaco" />
+        <div className="horoscope-side pointer-events-none">
+          <img src="/assets/horoscopo.png" alt="Rueda del Zodiaco"
+               className="max-h-[56vh] rotate-[18deg] opacity-80 object-contain"/>
         </div>
       </div>
 
-      {/* CHAT + INPUT */}
-      <div className="footer">
-        <ChatWindow messages={messages} />
-        <InputBar value={input} onChange={setInput} onSend={handleSend} />
+      {/* 5) Chat + Input */}
+      <div className="w-full max-w-3xl flex flex-col flex-grow px-4 pb-4">
+        <div className="flex-grow overflow-y-auto">
+          <ChatWindow messages={messages}/>
+        </div>
+        <div className="pt-2">
+          <InputBar value={input} onChange={setInput} onSend={handleSend}/>
+        </div>
       </div>
     </div>
   );
