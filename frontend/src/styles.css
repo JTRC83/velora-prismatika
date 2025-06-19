@@ -279,10 +279,13 @@ html, body {
 }
 
 /* cábala icono */
-.service-cábala img {
+.service-cabala img {
   width: 2.0rem; /* 48px */
   height: 3.1rem;
 }
+
+/* Aquí escapamos la á con su código Unicode */
+.service-c\u00E1bala    img { width:2rem;   height:3.1rem; }
 
 /* Enmarca cada grupo */
 .icon-group {
