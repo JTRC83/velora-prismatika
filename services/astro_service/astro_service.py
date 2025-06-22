@@ -10,7 +10,7 @@ from pydantic import BaseModel
 
 BASE = os.path.dirname(__file__)
 SIGNS_PATH = os.path.join(BASE, "sun_signs.json")
-HORO_PATH  = os.path.join(BASE, "horoscope_service", "daily_horoscope.json")
+HORO_PATH = os.path.join(BASE, "daily_horoscope.json")
 
 router = APIRouter(prefix="/astro", tags=["Astrología"])
 
@@ -62,8 +62,10 @@ def load_signs() -> List[SunSign]:
     return result
 
 # Precargamos plantillas de horóscopo
-with open(HORO_PATH, encoding="utf-8") as f:
-    DAILY_TEMPLATES = json.load(f)  # dict: sign → [frases]
+@lru_cache()
+def load_daily_templates():
+    with open(HORO_PATH, encoding="utf-8") as f:
+        return json.load(f)
 
 # ——— Lógica de signo ———
 def get_sun_sign_entry(month: int, day: int) -> SunSign:
@@ -81,19 +83,15 @@ def get_sun_sign_entry(month: int, day: int) -> SunSign:
 
 # ——— Endpoints ———
 
-@router.get(
-    "/sun-sign",
-    response_model=SunSignResponse,
-    summary="Calcula tu signo solar a partir de tu fecha de nacimiento"
-)
-def sun_sign(
-    birthdate: date = Query(..., description="YYYY-MM-DD")
-):
+@router.get("/sun-sign", response_model=SunSignResponse, summary="Calcula tu signo solar a partir de tu fecha de nacimiento")
+def sun_sign(birthdate: date = Query(...)):
     """
     Devuelve tu signo solar y atributos: elemento, modalidad,
     descripción y planeta regente.
     """
+    print("Recibido:", birthdate)
     entry = get_sun_sign_entry(birthdate.month, birthdate.day)
+    print("Signo encontrado:", entry.sign)
     return SunSignResponse(
         birthdate=birthdate,
         sun_sign=entry.sign,
@@ -119,7 +117,7 @@ def daily_horoscope(
     entry = get_sun_sign_entry(birthdate.month, birthdate.day)
     sign = entry.sign
     # plantillas para el signo
-    templates = DAILY_TEMPLATES.get(sign)
+    templates = load_daily_templates().get(sign)
     if not templates:
         raise HTTPException(400, f"No hay horóscopo diario para {sign}.")
     message = random.choice(templates)

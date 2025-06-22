@@ -1,0 +1,87 @@
+.astro-service {
+  background: #d7a341;
+
+}
+
+.astro-title {
+  font-size: 1.5rem;
+  text-align: center;
+  margin-bottom: 1rem;
+  color: #4a3e1b;
+}
+
+.astro-form {
+  display: flex;
+  gap: .5rem;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 1.5rem;
+}
+
+.astro-input {
+  padding: .5rem;
+  border: 1px solid #c59d5f;
+  border-radius: .5rem;
+}
+
+.astro-btn {
+  background: #7e7e23;
+  color: #fff;
+  padding: .5rem 1rem;
+  border: none;
+  border-radius: .75rem;
+  cursor: pointer;
+  transition: background .2s;
+}
+.astro-btn:hover:not(:disabled) {
+  background: #5a5a1a;
+}
+
+.astro-error {
+  color: #a00;
+  text-align: center;
+}
+
+.astro-card {
+  background: #fde68a;
+  padding: 1rem;
+  border-radius: .85rem;
+  max-width: 24rem;
+  margin: 0 auto;
+  box-shadow: inset 0 0 4px rgba(0,0,0,0.1);
+}
+
+.astro-card-header {
+  display: flex;
+  align-items: center;
+  gap: .75rem;
+  margin-bottom: .75rem;
+}
+
+.astro-signo-img {
+  width: 3rem;
+  height: 3rem;
+}
+
+.astro-details {
+  list-style: none;
+  margin-bottom: .75rem;
+  color: #4a3e1b;
+}
+
+.astro-details li {
+  margin-bottom: .25rem;
+}
+
+.astro-desc {
+  font-style: italic;
+  color: #3a3015;
+}
+
+.astro-horoscope {
+  background-color: #e4ac43;
+  border: 1px solid #f3e5ab;
+  padding: 1rem;
+  border-radius: 1rem;
+  font-family: "Georgia", serif;
+}

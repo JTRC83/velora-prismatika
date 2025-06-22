@@ -5,6 +5,7 @@ import ChatWindow      from "./components/ChatWindow";
 import InputBar        from "./components/InputBar";
 import Curtain         from "./components/Curtain";
 import { slugify }     from "./utils/slugify";
+import AstroService         from './components/AstroService';
 
 const ICONS = {
   "Astrología Natal":  "/assets/icons/horoscopo.png",
@@ -38,6 +39,21 @@ const SERVICES_RIGHT = [
   "Bola de Cristal",
   "I Ching",
 ];
+
+const TOOLTIP_TEXT = {
+  'Astrología Natal': 'Carta natal y horóscopo',
+  'Numerología':      'Numerología',
+  'Fases Lunares':    'Fase lunar',
+  'Compatibilidad':   'Afinidad entre signos zodiacales',
+  'Rituales':         'Rituales diarios',
+  'Chakras':          'Lectura de chakras',
+  'Tarot 3 Cartas':   'Tarot',
+  'Runas':            'Lectura de runas',
+  'Cábala':           'Lectura de Sephiroth y Árbol de la Vida',
+  'Tránsitos':        'Tránsitos planetarios',
+  'Bola de Cristal':  'Bola de cristal',
+  'I Ching':          'I Ching, hexagrama',
+};
 
 export default function App() {
   const [selectedAvatar,  setSelectedAvatar]  = React.useState("sibylla");
@@ -76,7 +92,7 @@ export default function App() {
           {SERVICES_LEFT.map(s => (
             <button
               key={s}
-              data-tooltip={s}
+              data-tooltip={TOOLTIP_TEXT[s] || s}
               className={
                 "service-button " +
                 (selectedService === s ? "selected " : "") +
@@ -93,7 +109,7 @@ export default function App() {
           {SERVICES_RIGHT.map(s => (
             <button
               key={s}
-              data-tooltip={s}
+              data-tooltip={TOOLTIP_TEXT[s] || s} 
               className={
                 "service-button " +
                 (selectedService === s ? "selected " : "") +
@@ -106,6 +122,10 @@ export default function App() {
           ))}
         </div>
       </div>
+
+      {/* 4) Zona de servicio dinámico */}
+    {selectedService === 'Astrología Natal' && <AstroService />}
+    {selectedService === 'Numerología'      && <NumerologyService />}
 
       {/* Contenido principal: Árbol, Carrusel, Rueda */}
       <div className="main-area w-full max-w-3xl flex flex-col md:flex-row items-start px-4 pt-4">
