@@ -1,5 +1,7 @@
 import React, { useState } from 'react';
 import './AstroService.css';
+import ZodiacOrbit from './ZodiacOrbit';
+import './ZodiacOrbit.css';
 
 export default function AstroService() {
   const [birthdate, setBirthdate] = useState('');
@@ -37,7 +39,8 @@ const handleSubmit = async e => {
 };
 
   return (
-    <div className="astro-service p-6">
+    <div className="astro-service p-6" style={{ position: 'relative' }}>
+        <ZodiacOrbit />
       <h2 className="astro-title">🪐 Astrología Natal</h2>
 
       <form onSubmit={handleSubmit} className="astro-form">

@@ -1,6 +1,12 @@
 .astro-service {
   background: #d7a341;
+  z-index: 1;
+ position: relative; 
+}
 
+.astro-card, .astro-title, .astro-form {
+  position: relative;
+  z-index: 2;
 }
 
 .astro-title {
@@ -84,4 +90,10 @@
   padding: 1rem;
   border-radius: 1rem;
   font-family: "Georgia", serif;
+}
+
+body {
+  font-family: "Faculty Glyphic", sans-serif;
+  font-weight: 400;
+  font-style: normal;
 }

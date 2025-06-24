@@ -1,0 +1,104 @@
+.zodiac-wrapper {
+  position: absolute;
+  top: 75%;
+  left: 2rem;
+  transform: translateY(-50%);
+  width: 28rem;
+  height: 28rem;
+  pointer-events: none;
+  z-index: 0;
+}
+
+.orbit {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 28rem;
+  height: 28rem;
+  margin-left: -14rem;
+  margin-top: -14rem;
+  border-radius: 50%;
+  animation-timing-function: linear;
+  animation-iteration-count: infinite;
+  transform-origin: center center;
+}
+
+.orbit.zodiac {
+  animation-name: rotate-zodiac;
+  animation-duration: 25s;
+}
+
+.orbit.planets {
+  animation-name: rotate-planets;
+  animation-duration: 25s;
+}
+
+.symbol {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  font-size: 1.5rem;
+  opacity: 0.65;
+  transform-origin: center center;
+}
+
+.zodiac-symbol {
+  transform: rotate(calc(var(--i) * 30deg)) translateX(10.5rem) rotate(calc(var(--i) * -30deg));
+  color: #2d1a00;
+  font-family: 'Segoe UI Symbol', 'Arial Unicode MS', 'Noto Sans Symbols', serif;
+}
+
+.planet-symbol {
+  transform: rotate(calc(var(--i) * 51deg)) translateX(7.2rem) rotate(calc(var(--i) * -51deg));
+  color: #2d1a00;
+}
+
+.sun {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 6.5rem;
+  height: 6.5rem;
+  transform: translate(-50%, -50%);
+  z-index: 2;
+}
+
+.sun-img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  opacity: 0.7;
+  filter: drop-shadow(0 0 6px rgba(255, 200, 100, 0.6));
+}
+
+@keyframes rotate-zodiac {
+  0%   { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+@keyframes rotate-planets {
+  0%   { transform: rotate(0deg); }
+  100% { transform: rotate(-360deg); }
+}
+
+.zodiac-grid {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 28rem;
+  height: 28rem;
+  z-index: 0;
+  pointer-events: none;
+  stroke: #3d2a0b;
+  stroke-opacity: 0.25;
+  fill: none;
+}
+
+.zodiac-grid line {
+  stroke-width: 0.6;
+}
+
+.zodiac-grid circle {
+  stroke-width: 0.6;
+}
