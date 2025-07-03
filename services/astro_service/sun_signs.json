@@ -3,108 +3,209 @@
     "sign": "Aries",
     "start": "03-21",
     "end": "04-19",
-    "element": "Fuego enciende la chispa.",
+    "element": "Fuego, enciende la chispa.",
     "quality": "Cardinal: Inician la estación, representa el impulso, la iniciativa y el liderazgo.",
-    "desc": "Iniciador, valiente y enérgico. Chispa primordial que abre caminos; tu coraje despierta la voluntad dormida en los demás.",
+    "desc": [
+      "Iniciador, valiente y enérgico.",
+      "Chispa primordial que abre caminos; tu coraje despierta la voluntad dormida en los demás.",
+      "Aries, tú no esperas a que el mundo cambie: lo incendias de voluntad.",
+      "Tu fuego impulsa, incomoda y transforma.",
+      "Amas los comienzos como otros temen al riesgo.",
+      "Con cada decisión audaz, siembras una nueva realidad.",
+      "Eres la fuerza que rompe el hielo, el rugido que despierta la acción."
+    ],
     "ruling_planet": "Marte"
   },
   {
     "sign": "Tauro",
     "start": "04-20",
     "end": "05-20",
-    "element": "Tierra asienta la semilla.",
+    "element": "Tierra, asienta la semilla.",
     "quality": "Fijo: Mantienen la estación, aportan constancia, resistencia y capacidad de estabilizar.",
-    "desc": "Paciente, práctico y sensorial. Raíz profunda en la abundancia terrenal; tu calma forja un refugio de placer y seguridad.",
+    "desc": [
+      "Paciente, práctico y sensorial.",
+      "Raíz profunda en la abundancia terrenal; tu calma forja un refugio de placer y seguridad.",
+      "Tauro, en ti la materia canta.",
+      "Tus pasos son lentos, pero cada uno edifica permanencia.",
+      "Te deleitas en lo tangible: la textura del presente, la dulzura de lo simple.",
+      "Eres custodio del goce y guardián del ritmo natural.",
+      "Tu presencia es abrazo fértil que sostiene."
+    ],
     "ruling_planet": "Venus"
   },
   {
     "sign": "Géminis",
     "start": "05-21",
     "end": "06-20",
-    "element": "Aire esparce las ideas.",
+    "element": "Aire, esparce las ideas.",
     "quality": "Mutable: Cierran la estación, simbolizan la adaptabilidad, el cambio y la versatilidad.",
-    "desc": "Versátil, comunicativo y curioso. Viento dual que lleva mil voces; tu curiosidad enciende diálogos en cada rincón del pensamiento.",
+    "desc": [
+      "Versátil, comunicativo y curioso.",
+      "Viento dual que lleva mil voces; tu curiosidad enciende diálogos en cada rincón del pensamiento.",
+      "Géminis, eres puente entre ideas, red viva de conexiones.",
+      "Tu mente nunca reposa, siempre indagando, siempre mutando.",
+      "Hablas para descubrirte, escuchas para reinventarte.",
+      "En tu juego verbal florecen nuevas realidades.",
+      "Eres mensajero del zodíaco, viajero del símbolo y el sentido."
+    ],
     "ruling_planet": "Mercurio"
   },
   {
     "sign": "Cáncer",
     "start": "06-21",
     "end": "07-22",
-    "element": "Agua siente el fluir del alma.",
-    "quality": "Cardinal: Inician la estación, representa el impulso, la iniciativa y el liderazgo.",
-    "desc": "Protector, emocional e intuitivo. Marea sagrada que acuna los corazones; tu empatía teje redes de cuidado en lo oculto del alma.",
+    "element": "Agua, siente el fluir del alma.",
+    "quality": "Cardinal. Inician la estación, representa el impulso, la iniciativa y el liderazgo.",
+    "desc": [
+      "Protector, emocional e intuitivo.",
+      "Marea sagrada que acuna los corazones; tu empatía teje redes de cuidado en lo oculto del alma.",
+      "Cáncer, habitas la memoria ancestral.",
+      "Guardián del hogar, cuna de lo íntimo.",
+      "Tus emociones fluctúan como la luna que rige tu temple: tiernas, profundas, sagradas.",
+      "Tu fuerza es receptiva, tu poder es sostener.",
+      "Eres el nido que sana y el mar que todo recuerda."
+    ],
     "ruling_planet": "Luna"
   },
   {
     "sign": "Leo",
     "start": "07-23",
     "end": "08-22",
-    "element": "Fuego enciende la chispa.",
+    "element": "Fuego, enciende la chispa.",
     "quality": "Fijo: Mantienen la estación, aportan constancia, resistencia y capacidad de estabilizar.",
-    "desc": "Generoso, dramático y creativo. Sol que corona el horizonte interior; tu generosidad enciende el fuego creativo en todos los presentes.",
+    "desc": [
+      "Generoso, dramático y creativo.",
+      "Sol que corona el horizonte interior; tu generosidad enciende el fuego creativo en todos los presentes.",
+      "Leo, llevas un escenario por alma.",
+      "Tu luz no necesita permiso, se irradia.",
+      "Creas, lideras, inspiras con la nobleza de un corazón encendido.",
+      "En tu centro habita el niño solar que transforma la vida en acto de amor y presencia."
+    ],
     "ruling_planet": "Sol"
   },
   {
     "sign": "Virgo",
     "start": "08-23",
     "end": "09-22",
-    "element": "Tierra asienta la semilla.",
-    "quality": "Mutable: Cierran la estación, simbolizan la adaptabilidad, el cambio y la versatilidad.",
-    "desc": "Analítico, meticuloso y servicial. Luz analítica que desvela secretos; tu precisión convierte el detalle en armonía cósmica.",
+    "element": "Tierra, asienta la semilla.",
+    "quality": "Mutable. Cierran la estación, simbolizan la adaptabilidad, el cambio y la versatilidad.",
+    "desc": [
+      "Analítico, meticuloso y servicial.",
+      "Luz analítica que desvela secretos; tu precisión convierte el detalle en armonía cósmica.",
+      "Virgo, eres alquimista del orden.",
+      "Encuentras sentido en lo discreto, perfección en lo pequeño.",
+      "Tu servicio no es sumisión: es arte.",
+      "Ofreces estructura como quien ofrenda claridad.",
+      "En tu mirada, el caos encuentra patrón.",
+      "Tu mente pule el alma del mundo."
+    ],
     "ruling_planet": "Mercurio"
   },
   {
     "sign": "Libra",
     "start": "09-23",
     "end": "10-22",
-    "element": "Aire esparce las ideas.",
-    "quality": "Cardinal: Inician la estación, representa el impulso, la iniciativa y el liderazgo.",
-    "desc": "Diplomático, equilibrado y sociable. Equilibrio sutil en el juego de espejos; tu diplomacia invoca belleza en cada encuentro.",
+    "element": "Aire, esparce las ideas.",
+    "quality": "Cardinal. Inician la estación, representa el impulso, la iniciativa y el liderazgo.",
+    "desc": [
+      "Diplomático, equilibrado y sociable.",
+      "Equilibrio sutil en el juego de espejos; tu diplomacia invoca belleza en cada encuentro.",
+      "Libra, vives en el vínculo.",
+      "Eres pacto, estética, justicia.",
+      "Persigues la armonía no como destino, sino como danza.",
+      "Con cada gesto ponderado invitas a la paz.",
+      "Tu arte: reconciliar opuestos, tejer relaciones con hilos de oro."
+    ],
     "ruling_planet": "Venus"
   },
   {
     "sign": "Escorpio",
     "start": "10-23",
     "end": "11-21",
-    "element": "Agua siente el fluir del alma.",
+    "element": "Agua, siente el fluir del alma.",
     "quality": "Fijo: Mantienen la estación, aportan constancia, resistencia y capacidad de estabilizar.",
-    "desc": "Intenso, apasionado y transformador. Pozo profundo de transformación; tu intensidad purifica las sombras que el espíritu teme mirar.",
+    "desc": [
+      "Intenso, apasionado y transformador.",
+      "Pozo profundo de transformación; tu intensidad purifica las sombras que el espíritu teme mirar.",
+      "Escorpio, custodias el umbral entre vida y muerte.",
+      "Eres alquimia del alma.",
+      "Tus emociones no se dicen, se encarnan.",
+      "No temes el dolor, pues sabes que lo que muere renace.",
+      "Tu poder es regenerar lo oculto, fecundar lo prohibido.",
+      "Misterio que arde desde dentro."
+    ],
     "ruling_planet": "Plutón"
   },
   {
     "sign": "Sagitario",
     "start": "11-22",
     "end": "12-21",
-    "element": "Fuego enciende la chispa.",
-    "quality": "Mutable: Cierran la estación, simbolizan la adaptabilidad, el cambio y la versatilidad.",
-    "desc": "Optimista, filosófico y explorador. Flecha que vuela hacia el infinito; tu visión abraza el misterio de cada nuevo horizonte.",
+    "element": "Fuego, enciende la chispa.",
+    "quality": "Mutable. Cierran la estación, simbolizan la adaptabilidad, el cambio y la versatilidad.",
+    "desc": [
+      "Optimista, filosófico y explorador.",
+      "Flecha que vuela hacia el infinito; tu visión abraza el misterio de cada nuevo horizonte.",
+      "Sagitario, espíritu libre, domador de utopías.",
+      "Habitas el borde de lo conocido, allí donde nacen las rutas nuevas.",
+      "Tu risa abre puertas, tu fe crea caminos.",
+      "Eres peregrino de la verdad, sabio en movimiento.",
+      "Donde otros dudan, tú te lanzas: viajero del sentido, heraldo del porvenir."
+    ],
     "ruling_planet": "Júpiter"
   },
   {
     "sign": "Capricornio",
     "start": "12-22",
     "end": "01-19",
-    "element": "Tierra asienta la semilla.",
-    "quality": "Cardinal: Inician la estación, representa el impulso, la iniciativa y el liderazgo.",
-    "desc": "Ambicioso, disciplinado y práctico. Montaña erigida en voluntad de piedra; tu disciplina es la llave del legado eterno.",
+    "element": "Tierra, asienta la semilla.",
+    "quality": "Cardinal. Inician la estación, representa el impulso, la iniciativa y el liderazgo.",
+    "desc": [
+      "Ambicioso, disciplinado y práctico.",
+      "Montaña erigida en voluntad de piedra; tu disciplina es la llave del legado eterno.",
+      "Capricornio, esculpes destino.",
+      "Escalas lento pero firme, decidido.",
+      "Tu éxito no es fortuna, es obra.",
+      "Eres arquitecto del tiempo, portador del deber.",
+      "En ti habita la constancia que levanta imperios silenciosos.",
+      "Tu camino es austero, pero corona la cima."
+    ],
     "ruling_planet": "Saturno"
   },
   {
     "sign": "Acuario",
     "start": "01-20",
     "end": "02-18",
-    "element": "Aire esparce las ideas.",
-    "quality": "Fijo: Mantienen la estación, aportan constancia, resistencia y capacidad de estabilizar.",
-    "desc": "Innovador, humano y visionario. Vórtice de ideas en revolución; tu genio visionario despierta futuros inéditos.",
+    "element": "Aire, esparce las ideas.",
+    "quality": "Fijo. Mantienen la estación, aportan constancia, resistencia y capacidad de estabilizar.",
+    "desc": [
+      "Innovador, humano y visionario.",
+      "Vórtice de ideas en revolución; tu genio visionario despierta futuros inéditos.",
+      "Acuario, soplas con viento de cambio.",
+      "No obedeces moldes, los rediseñas.",
+      "Eres antena del mañana, hacker de la realidad colectiva.",
+      "Tu pensamiento es chispa disruptiva.",
+      "Donde hay límites, tú ves redes.",
+      "Tu don: imaginar otro mundo y conectar los hilos invisibles que lo harán real."
+    ],
     "ruling_planet": "Urano"
   },
   {
     "sign": "Piscis",
     "start": "02-19",
     "end": "03-20",
-    "element": "Agua siente el fluir del alma.",
-    "quality": "Mutable: Cierran la estación, simbolizan la adaptabilidad, el cambio y la versatilidad.",
-    "desc": "Empático, creativo y soñador. Sueño líquido que fluye entre mundos; tu compasión conecta el alma con el canto del cosmos.",
+    "element": "Agua, siente el fluir del alma.",
+    "quality": "Mutable. Cierran la estación, simbolizan la adaptabilidad, el cambio y la versatilidad.",
+    "desc": [
+      "Empático, creativo y soñador.",
+      "Sueño líquido que fluye entre mundos; tu compasión conecta el alma con el canto del cosmos.",
+      "Piscis, nadas entre realidades.",
+      "Tu sensibilidad es puente hacia lo intangible.",
+      "Amas sin bordes, percibes más allá de lo dicho.",
+      "En tu silencio habita el todo.",
+      "Eres arte, refugio, visión.",
+      "Tu ternura es disolución que sana.",
+      "Eres océano de memoria estelar."
+    ],
     "ruling_planet": "Neptuno"
   }
 ]

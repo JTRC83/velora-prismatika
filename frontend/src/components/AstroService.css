@@ -52,16 +52,17 @@
   background: #fde68a;
   padding: 1rem;
   border-radius: .85rem;
-  max-width: 24rem;
+  max-width: 35rem;
   margin: 0 auto;
   box-shadow: inset 0 0 4px rgba(0,0,0,0.1);
+  overflow: visible; /* ← esta línea es clave */
+  min-height: 22rem; /* reserva espacio (ajusta según contenido) */
+  transition: opacity 0.4s ease;
+  opacity: 0;
 }
 
-.astro-card-header {
-  display: flex;
-  align-items: center;
-  gap: .75rem;
-  margin-bottom: .75rem;
+.astro-card.visible {
+  opacity: 1;
 }
 
 .astro-signo-img {
@@ -82,6 +83,12 @@
 .astro-desc {
   font-style: italic;
   color: #3a3015;
+  line-height: 1.25;
+  white-space: pre-wrap;
+  overflow-wrap: break-word;
+  overflow: visible;
+  max-height: none;
+  display: block;
 }
 
 .astro-horoscope {
@@ -89,11 +96,57 @@
   border: 1px solid #f3e5ab;
   padding: 1rem;
   border-radius: 1rem;
-  font-family: "Georgia", serif;
+  font-family: "Faculty Glyphic", sans-serif;
 }
 
 body {
   font-family: "Faculty Glyphic", sans-serif;
   font-weight: 400;
   font-style: normal;
+}
+
+.astro-separator {
+  border: none;
+  border-top: 1px solid rgba(0, 0, 0, 0.2);
+  margin: 0.75rem 0;
+}
+
+
+.zodiac-symbol-char {
+  color: #2d1a00 !important;
+  -webkit-text-fill-color: #2d1a00;
+  font-size: 1.8rem;
+  font-family: 'Segoe UI Symbol', 'Arial Unicode MS', 'Noto Sans Symbols', serif;
+}
+
+.zodiac-name {
+  color: #2d1a00;
+}
+
+.astro-card-header {
+  margin-bottom: .75rem;
+}
+
+.zodiac-header-center {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 1.75rem;
+  font-weight: bold;
+  text-align: center;
+}
+
+body {
+  font-family: "Faculty Glyphic", sans-serif;
+  font-weight: 400;
+  font-style: normal;
+}
+
+.astro-card-container {
+  min-height: 26rem;  /* ajusta según el tamaño típico de la card */
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
 }

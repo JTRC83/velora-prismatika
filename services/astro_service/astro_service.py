@@ -23,7 +23,7 @@ class SunSign(BaseModel):
     end_day:       int
     element:       str
     quality:       str
-    desc:          str
+    desc:          List[str]
     ruling_planet: str
 
 class SunSignResponse(BaseModel):
@@ -31,7 +31,7 @@ class SunSignResponse(BaseModel):
     sun_sign:      str
     element:       str
     quality:       str
-    description:   str
+    description:   List[str]
     ruling_planet: str
 
 class HoroscopeResponse(BaseModel):
