@@ -6,6 +6,7 @@ import InputBar        from "./components/InputBar";
 import Curtain         from "./components/Curtain";
 import { slugify }     from "./utils/slugify";
 import AstroService         from './components/AstroService';
+import NumerologyService from "./components/NumerologyService";
 
 const ICONS = {
   "Astrología Natal":  "/assets/icons/horoscopo.png",

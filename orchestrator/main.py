@@ -77,7 +77,7 @@ try:
 except Exception as e:
     print(f"[WARN] No se pudo cargar ritual_service: {e}")
 
-app = FastAPI(title="Velora Prismätika")
+
 
 # CORS para tu frontend Vite
 app.add_middleware(
