@@ -90,19 +90,8 @@ app.add_middleware(
 
 # primero tu router de orquestación (si lo necesitas)
 app.include_router(orchestrator_router)
-
-# ahora cada uno de los servicios
 app.include_router(astro_router)
 app.include_router(numerology_router)
-
-app.include_router(runes_router)
-app.include_router(iching_router)
-
-app.include_router(compat_router)
-app.include_router(moon_router)
-app.include_router(kabbalah_router)
-app.include_router(transits_router)
-app.include_router(ritual_router)
 
 @app.get("/")
 def root():
