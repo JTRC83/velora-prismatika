@@ -1,46 +1,219 @@
+/* NumerologyService.css - Estética Velora Prismätika */
+
+@import url('https://fonts.googleapis.com/css2?family=Faculty+Glyphic&family=Cinzel:wght@400;700&display=swap');
+
 .numerology-service {
-  background: #f7e7c1;
-  padding: 1.5rem;
-  margin-top: 2rem;
-  border-radius: 1rem;
-  max-width: 28rem;
-  margin-left: auto;
-  margin-right: auto;
+  background: #f7e7c1; /* Color pergamino/papel antiguo */
+  padding: 2.5rem;
+  margin: 2rem auto;
+  border-radius: 1.5rem;
+  max-width: 35rem;
   font-family: 'Faculty Glyphic', sans-serif;
+  border: 2px solid #c59d5f; /* Dorado envejecido */
+  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.15), inset 0 0 50px rgba(197, 157, 95, 0.1);
+  position: relative;
+  overflow: hidden;
+}
+
+/* Decoración esquinas Art-Nouveau */
+.numerology-service::before {
+  content: "✨";
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  color: #c59d5f;
+  font-size: 1.2rem;
+  opacity: 0.6;
 }
 
 .num-title {
   text-align: center;
   color: #6a4d1f;
-  margin-bottom: 1rem;
+  font-family: 'Cinzel', serif;
+  font-size: 2rem;
+  margin-bottom: 0.5rem;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+}
+
+.num-subtitle {
+  text-align: center;
+  color: #8a6d3b;
+  font-size: 0.9rem;
+  margin-bottom: 2rem;
+  font-style: italic;
+}
+
+.numerology-form {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  margin-bottom: 2rem;
+  background: rgba(255, 255, 255, 0.3);
+  padding: 1.5rem;
+  border-radius: 1rem;
+  border: 1px dashed #c59d5f;
+}
+
+.numerology-form label {
+  color: #6a4d1f;
+  font-weight: bold;
+  font-size: 0.9rem;
 }
 
 .num-input {
   width: 100%;
-  padding: 0.5rem;
-  margin-top: 0.5rem;
+  padding: 0.8rem;
   border-radius: 0.5rem;
   border: 1px solid #c59d5f;
+  background: #fffdf7;
+  color: #4a3a1a;
+  font-size: 1rem;
+  transition: all 0.3s ease;
+  outline: none;
+}
+
+.num-input:focus {
+  border-color: #7e7e23;
+  box-shadow: 0 0 8px rgba(126, 126, 35, 0.2);
 }
 
 .num-btn {
-  margin-top: 1rem;
-  background: #7e7e23;
+  background: #7e7e23; /* Verde oliva místico */
   color: white;
-  padding: 0.5rem 1rem;
+  padding: 1rem;
   border-radius: 0.5rem;
   border: none;
   cursor: pointer;
-}
-
-.num-error {
-  color: #a00;
+  font-family: 'Cinzel', serif;
+  font-weight: bold;
+  font-size: 1rem;
+  letter-spacing: 1px;
+  transition: all 0.3s ease;
   margin-top: 0.5rem;
 }
 
+.num-btn:hover {
+  background: #5d5d1a;
+  transform: translateY(-2px);
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+}
+
+.num-btn:disabled {
+  background: #a5a58d;
+  cursor: not-allowed;
+}
+
+/* Resultados */
 .num-result {
-  margin-top: 1rem;
+  margin-top: 2rem;
   background: #fff6d8;
+  padding: 2rem;
+  border-radius: 1rem;
+  border: 1px solid #d4af37;
+  animation: portalReveal 1s ease-out;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+}
+
+.num-result-header {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 2rem;
+  border-bottom: 2px solid #d4af37;
+  padding-bottom: 1.5rem;
+  margin-bottom: 1.5rem;
+}
+
+.num-large-number {
+  font-family: 'Cinzel', serif;
+  font-size: 4.5rem;
+  font-weight: 700;
+  color: #7e7e23;
+  line-height: 1;
+  text-shadow: 2px 2px 0px rgba(255, 255, 255, 0.5);
+}
+
+.num-titles h3 {
+  margin: 0;
+  color: #6a4d1f;
+  font-size: 1.5rem;
+  font-family: 'Cinzel', serif;
+}
+
+.num-date-ref {
+  font-size: 0.85rem;
+  color: #8a6d3b;
+  margin-top: 5px;
+}
+
+.num-content {
+  color: #4a3a1a;
+  line-height: 1.6;
+}
+
+.num-esencia {
+  font-size: 1.1rem;
+  margin-bottom: 1rem;
+}
+
+.num-historia {
+  font-size: 0.9rem;
+  color: #8a6d3b;
+  display: block;
+  margin: 1.5rem 0;
+  padding: 0.8rem;
+  border-left: 2px solid #d4af37;
+  background: rgba(212, 175, 55, 0.05);
+}
+
+/* La Voz de Velora */
+.velora-reflection {
+  margin-top: 2rem;
+  padding: 1.5rem;
+  background: #7e7e23; /* Invertimos el color para darle énfasis */
+  color: #f7e7c1;
+  border-radius: 0.5rem;
+  position: relative;
+}
+
+.velora-reflection h4 {
+  margin: 0 0 0.8rem 0;
+  font-family: 'Cinzel', serif;
+  font-size: 0.9rem;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: #f7e7c1;
+  border-bottom: 1px solid rgba(247, 231, 193, 0.3);
+  display: inline-block;
+}
+
+.velora-reflection p {
+  font-style: italic;
+  font-size: 1.05rem;
+  margin: 0;
+}
+
+/* Animaciones */
+@keyframes portalReveal {
+  from {
+    opacity: 0;
+    transform: scale(0.95) translateY(20px);
+    filter: blur(10px);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+    filter: blur(0);
+  }
+}
+
+.num-error {
+  background: #f8d7da;
+  color: #721c24;
   padding: 1rem;
-  border-radius: 0.75rem;
+  border-radius: 0.5rem;
+  margin-top: 1rem;
+  text-align: center;
+  border: 1px solid #f5c6cb;
 }

@@ -1,11 +1,68 @@
 {
-  "1": "Líder, independiente, pionero.",
-  "2": "Cooperación, sensibilidad, armonía.",
-  "3": "Creatividad, comunicación, sociabilidad.",
-  "4": "Estabilidad, orden, practicidad.",
-  "5": "Libertad, cambio, aventura.",
-  "6": "Responsabilidad, familia, servicio.",
-  "7": "Análisis, espiritualidad, introspección.",
-  "8": "Poder, éxito, abundancia.",
-  "9": "Humanitarismo, compasión, culminación."
+  "1": {
+    "titulo": "La Unidad Primordial",
+    "esencia": "Representa el origen, el impulso inicial y la voluntad pura de existir por cuenta propia.",
+    "historia": "En la tradición pitagórica (s. VI a. C.), es la Mónada: el principio indivisible de todas las cosas.",
+    "reflejo": "Hoy, Velora te invita a observar dónde nace tu impulso. ¿Es el momento de iniciar un camino solitario pero auténtico?"
+  },
+  "2": {
+    "titulo": "El Espejo Sagrado",
+    "esencia": "La vibración de la dualidad, la escucha y la búsqueda de equilibrio entre fuerzas opuestas.",
+    "historia": "Representa la Díada, el primer alejamiento de la unidad para permitir el reconocimiento del 'otro'.",
+    "reflejo": "Busca la armonía en la recepción. ¿Qué te revela el silencio compartido hoy?"
+  },
+  "3": {
+    "titulo": "La Expansión Creativa",
+    "esencia": "La síntesis de la unidad y la dualidad; es la comunicación, el juego y la autoexpresión.",
+    "historia": "El triángulo, la primera forma geométrica completa, símbolo de plenitud y creación.",
+    "reflejo": "Tu voz es un pincel. Velora te pregunta: ¿Qué colores estás eligiendo para manifestar tu realidad?"
+  },
+  "4": {
+    "titulo": "El Orden de la Materia",
+    "esencia": "Estabilidad, estructura y el trabajo necesario para manifestar ideas en el plano físico.",
+    "historia": "Representa la base sólida, los cuatro elementos y los puntos cardinales que rigen la tierra.",
+    "reflejo": "Observa tus cimientos. Es un día para honrar la disciplina que sostiene tus sueños."
+  },
+  "5": {
+    "titulo": "El Soplo del Cambio",
+    "esencia": "Vibración de libertad, adaptabilidad y la curiosidad que impulsa la evolución.",
+    "historia": "El número del ser humano situado entre la tierra (4) y lo divino (6); el movimiento constante.",
+    "reflejo": "El viento cambia de dirección. No resistas el movimiento; fluye con la transformación que se presenta."
+  },
+  "6": {
+    "titulo": "La Armonía del Alma",
+    "esencia": "Representa la responsabilidad afectiva, el servicio y el equilibrio doméstico.",
+    "historia": "Simbolizado por la unión de dos triángulos (sello de Salomón), el equilibrio entre arriba y abajo.",
+    "reflejo": "La belleza reside en el cuidado. Velora te invita a ser el centro de calma para quienes te rodean."
+  },
+  "7": {
+    "titulo": "El Buscador del Misterio",
+    "esencia": "Introspección, análisis espiritual y la búsqueda de la verdad oculta tras el velo.",
+    "historia": "Número sagrado que une el espíritu (3) y la materia (4). La pausa necesaria para la sabiduría.",
+    "reflejo": "La respuesta no está en el ruido. Retírate a tu templo interno para escuchar lo que el mundo calla."
+  },
+  "8": {
+    "titulo": "La Ley del Retorno",
+    "esencia": "Poder, autoridad y la manifestación de la abundancia mediante la causa y el efecto.",
+    "historia": "El infinito en vertical; representa el juicio justo y la regeneración de la energía.",
+    "reflejo": "Cosechas lo que has vibrado. Actúa hoy con la grandeza de quien se sabe co-creador de su destino."
+  },
+  "9": {
+    "titulo": "La Culminación Universal",
+    "esencia": "Sabiduría, compasión y el cierre de ciclos para preparar el renacimiento.",
+    "historia": "El final del viaje decimal; la integración de todas las experiencias previas.",
+    "reflejo": "Suelta lo que ya ha cumplido su propósito. Velora te acompaña en este umbral de cierre."
+  },
+  "11": {
+    "titulo": "El Mensajero Iluminado (Maestro)",
+    "esencia": "Intuición superior y una conexión directa con arquetipos colectivos.",
+    "historia": "El primer número maestro; representa la visión que trasciende la lógica humana.",
+    "reflejo": "Presta atención a tus sueños y destellos de lucidez. Eres un canal de una verdad más vasta."
+  },
+  "22": {
+    "titulo": "El Constructor Cósmico (Maestro)",
+    "esencia": "La capacidad de bajar ideales espirituales y materializarlos en grandes estructuras sociales.",
+    "historia": "Número de la maestría material; la sabiduría puesta al servicio de la construcción de un nuevo mundo.",
+    "reflejo": "Tus manos tienen el poder de dar forma a lo invisible. Construye con propósito elevado."
+  }
 }
