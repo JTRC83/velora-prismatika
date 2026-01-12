@@ -7,6 +7,8 @@ import Curtain         from "./components/Curtain";
 import { slugify }     from "./utils/slugify";
 import AstroService         from './components/AstroService';
 import NumerologyService from "./components/NumerologyService";
+import MoonPhaseService from "./components/MoonPhaseService"; 
+import CompatibilityService from "./components/CompatibilityService"; 
 
 const ICONS = {
   "Astrología Natal":  "/assets/icons/horoscopo.png",
@@ -125,42 +127,47 @@ export default function App() {
       </div>
 
       {/* 4) Zona de servicio dinámico */}
-    {selectedService === 'Astrología Natal' && <AstroService />}
-    {selectedService === 'Numerología'      && <NumerologyService />}
+      {selectedService === 'Astrología Natal' && <AstroService />}
+      {selectedService === 'Numerología'      && <NumerologyService />}
+      {selectedService === 'Fases Lunares'    && <MoonPhaseService />}
+      {selectedService === 'Compatibilidad' && <CompatibilityService />}
 
       {/* Contenido principal: Árbol, Carrusel, Rueda */}
-      <div className="main-area w-full max-w-3xl flex flex-col md:flex-row items-start px-4 pt-4">
-        <div className="tree-side pointer-events-none">
-          <img
-            src="/assets/arbolVida.png"
-            alt="Árbol de la Vida"
-            className="max-h-[60vh] opacity-60 rotate-[-23deg] object-contain"
-          />
+      {/* Nota: Tal vez quieras ocultar esto cuando hay un servicio activo */}
+      {!selectedService && (
+        <div className="main-area w-full max-w-3xl flex flex-col md:flex-row items-start px-4 pt-4">
+          <div className="tree-side pointer-events-none">
+            <img
+              src="/assets/arbolVida.png"
+              alt="Árbol de la Vida"
+              className="max-h-[60vh] opacity-60 rotate-[-23deg] object-contain"
+            />
+          </div>
+          <div className="carousel-area flex-1 flex justify-center items-center">
+            <CarouselAvatars
+              avatars={[
+                { id: "sibylla",     name: "Sibylla" },
+                { id: "dee",         name: "John Dee" },
+                { id: "nostradamus", name: "Nostradamus" },
+                { id: "crowley",     name: "Crowley" },
+                { id: "blavatsky",   name: "H. P. Blavatsky" },
+                { id: "vanga",       name: "Baba Vanga" },
+                { id: "hermes",      name: "Hermes Trismegisto" },
+                { id: "paracelso",   name: "Paracelso" },
+              ]}
+              selected={selectedAvatar}
+              onSelect={setSelectedAvatar}
+            />
+          </div>
+          <div className="horoscope-side pointer-events-none">
+            <img
+              src="/assets/horoscopo.png"
+              alt="Rueda del Zodiaco"
+              className="max-h-[56vh] rotate-[18deg] opacity-80 object-contain"
+            />
+          </div>
         </div>
-        <div className="carousel-area flex-1 flex justify-center items-center">
-          <CarouselAvatars
-            avatars={[
-              { id: "sibylla",     name: "Sibylla" },
-              { id: "dee",         name: "John Dee" },
-              { id: "nostradamus", name: "Nostradamus" },
-              { id: "crowley",     name: "Crowley" },
-              { id: "blavatsky",   name: "H. P. Blavatsky" },
-              { id: "vanga",       name: "Baba Vanga" },
-              { id: "hermes",      name: "Hermes Trismegisto" },
-              { id: "paracelso",   name: "Paracelso" },
-            ]}
-            selected={selectedAvatar}
-            onSelect={setSelectedAvatar}
-          />
-        </div>
-        <div className="horoscope-side pointer-events-none">
-          <img
-            src="/assets/horoscopo.png"
-            alt="Rueda del Zodiaco"
-            className="max-h-[56vh] rotate-[18deg] opacity-80 object-contain"
-          />
-        </div>
-      </div>
+      )}
 
       {/* Chat + Input */}
       <div className="w-full max-w-3xl flex flex-col flex-grow px-4 pb-4">

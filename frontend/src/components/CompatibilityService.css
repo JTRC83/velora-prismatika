@@ -1,0 +1,168 @@
+/* --- CONTENEDOR Y FORMULARIO --- */
+.compat-container {
+  max-width: 700px; /* Un poco más ancho para las esferas */
+}
+
+.compat-form {
+  background: rgba(255, 240, 220, 0.4);
+}
+
+.compat-inputs {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+}
+
+.compat-select {
+  width: 100%;
+  text-align: center;
+  font-size: 1.1rem;
+  font-family: var(--font-heading);
+  color: #4a3e1b;
+  cursor: pointer;
+}
+
+.compat-vs {
+  font-size: 2rem;
+  color: var(--velora-gold);
+  font-family: serif;
+  margin-top: 1rem; /* Ajuste visual para alinear con inputs */
+}
+
+/* --- DIAGRAMA DE VENN (FUSIÓN) --- */
+.venn-diagram-container {
+  position: relative;
+  height: 200px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 2rem;
+  margin-top: 1rem;
+}
+
+.venn-circle {
+  width: 140px;
+  height: 140px;
+  border-radius: 50%;
+  position: absolute;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  color: #fff;
+  text-shadow: 0 1px 3px rgba(0,0,0,0.5);
+  transition: transform 0.5s ease;
+  backdrop-filter: blur(2px);
+  box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+  border: 1px solid rgba(255,255,255,0.4);
+}
+
+/* Posiciones y Animación */
+.venn-circle.left {
+  left: 50%;
+  transform: translateX(-85%); /* Posición final */
+  animation: mergeLeft 1s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
+  z-index: 1;
+}
+
+.venn-circle.right {
+  right: 50%;
+  transform: translateX(85%); /* Posición final */
+  animation: mergeRight 1s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
+  z-index: 1;
+}
+
+@keyframes mergeLeft {
+  from { opacity: 0; transform: translateX(-150%); }
+  to { opacity: 0.9; transform: translateX(-60%); } /* Se solapan un 40% */
+}
+
+@keyframes mergeRight {
+  from { opacity: 0; transform: translateX(150%); }
+  to { opacity: 0.9; transform: translateX(60%); }
+}
+
+/* --- COLORES ELEMENTALES --- */
+.venn-circle.fire {
+  background: radial-gradient(circle at 30% 30%, #ff9a9e, #fecfef, #ff6b6b);
+  background: linear-gradient(135deg, rgba(255,81,47,0.85), rgba(221,36,118,0.85));
+}
+
+.venn-circle.earth {
+  background: linear-gradient(135deg, rgba(17,153,142,0.85), rgba(56,239,125,0.85));
+}
+
+.venn-circle.air {
+  background: linear-gradient(135deg, rgba(255,255,255,0.8), rgba(200,220,255,0.8));
+  color: #444; /* Texto oscuro para aire */
+  text-shadow: none;
+  border: 1px solid #aaa;
+}
+
+.venn-circle.water {
+  background: linear-gradient(135deg, rgba(54,209,220,0.85), rgba(91,134,229,0.85));
+}
+
+/* Etiquetas dentro de los círculos */
+.venn-label {
+  font-family: var(--font-heading);
+  font-size: 1.1rem;
+  font-weight: bold;
+}
+.venn-sublabel {
+  font-size: 0.8rem;
+  text-transform: uppercase;
+  opacity: 0.9;
+}
+
+/* --- CENTRO (PUNTUACIÓN) --- */
+.venn-center {
+  position: absolute;
+  z-index: 10;
+  width: 60px;
+  height: 60px;
+  background: #fff;
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  box-shadow: 0 0 20px rgba(255, 215, 0, 0.6);
+  border: 2px solid var(--velora-gold);
+  animation: popIn 0.5s 0.8s backwards; /* Aparece después de que se juntan */
+}
+
+.score-number {
+  font-family: var(--font-heading);
+  font-size: 1.2rem;
+  font-weight: bold;
+  color: var(--velora-dark);
+}
+
+@keyframes popIn {
+  from { transform: scale(0); opacity: 0; }
+  to { transform: scale(1); opacity: 1; }
+}
+
+/* --- RESULTADO TEXTUAL --- */
+.alchemy-result {
+  text-align: center;
+  margin-top: 1rem;
+  padding: 0 1rem;
+}
+
+.alchemy-title {
+  font-family: var(--font-heading);
+  color: var(--velora-dark);
+  font-size: 1.5rem;
+  margin-bottom: 0.5rem;
+}
+
+.alchemy-text {
+  font-family: var(--font-body);
+  color: #555;
+  font-style: italic;
+  font-size: 1.1rem;
+  line-height: 1.5;
+}

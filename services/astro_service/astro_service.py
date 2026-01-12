@@ -8,9 +8,12 @@ from typing import List
 from fastapi import APIRouter, HTTPException, Query
 from pydantic import BaseModel
 
+# 👇 Importamos el cerebro de Velora
+from orchestrator.utils import get_velora_reflection
+
 BASE = os.path.dirname(__file__)
 SIGNS_PATH = os.path.join(BASE, "sun_signs.json")
-HORO_PATH = os.path.join(BASE, "daily_horoscope.json")
+# HORO_PATH ya no es necesario si usamos las lentes de Velora
 
 router = APIRouter(prefix="/astro", tags=["Astrología"])
 
@@ -42,6 +45,11 @@ class HoroscopeResponse(BaseModel):
 # ——— Carga en memoria (y cache) ———
 @lru_cache()
 def load_signs() -> List[SunSign]:
+    """Carga los datos de los signos solares para calcular cuál eres."""
+    if not os.path.exists(SIGNS_PATH):
+        print(f"⚠️ Error: No se encuentra {SIGNS_PATH}")
+        return []
+        
     raw = open(SIGNS_PATH, encoding="utf-8").read()
     data = json.loads(raw)
     result = []
@@ -61,37 +69,38 @@ def load_signs() -> List[SunSign]:
         ))
     return result
 
-# Precargamos plantillas de horóscopo
-@lru_cache()
-def load_daily_templates():
-    with open(HORO_PATH, encoding="utf-8") as f:
-        return json.load(f)
-
 # ——— Lógica de signo ———
 def get_sun_sign_entry(month: int, day: int) -> SunSign:
+    """Busca el signo correspondiente a una fecha."""
     ordinal = date(2000, month, day).timetuple().tm_yday
-    for e in load_signs():
+    signs = load_signs()
+    
+    if not signs:
+        raise HTTPException(500, "Error interno: Base de datos de signos no cargada.")
+
+    for e in signs:
         start_ord = date(2000, e.start_month, e.start_day).timetuple().tm_yday
         end_ord   = date(2000, e.end_month,   e.end_day).timetuple().tm_yday
+        
+        # Lógica para manejar el cambio de año (Capricornio)
         if start_ord <= end_ord:
             in_range = start_ord <= ordinal <= end_ord
         else:
             in_range = ordinal >= start_ord or ordinal <= end_ord
+            
         if in_range:
             return e
-    raise HTTPException(500, "Signo no encontrado (error interno).")
+            
+    raise HTTPException(500, "Signo no encontrado (fecha inválida).")
 
 # ——— Endpoints ———
 
-@router.get("/sun-sign", response_model=SunSignResponse, summary="Calcula tu signo solar a partir de tu fecha de nacimiento")
+@router.get("/sun-sign", response_model=SunSignResponse, summary="Calcula tu signo solar")
 def sun_sign(birthdate: date = Query(...)):
     """
-    Devuelve tu signo solar y atributos: elemento, modalidad,
-    descripción y planeta regente.
+    Devuelve tu signo solar y atributos.
     """
-    print("Recibido:", birthdate)
     entry = get_sun_sign_entry(birthdate.month, birthdate.day)
-    print("Signo encontrado:", entry.sign)
     return SunSignResponse(
         birthdate=birthdate,
         sun_sign=entry.sign,
@@ -101,28 +110,21 @@ def sun_sign(birthdate: date = Query(...)):
         ruling_planet=entry.ruling_planet,
     )
 
-@router.get(
-    "/horoscope",
-    response_model=HoroscopeResponse,
-    summary="Horóscopo diario: usa tu fecha de nacimiento para signo + mensaje"
-)
-def daily_horoscope(
-    birthdate: date = Query(..., description="YYYY-MM-DD")
-):
+@router.get("/horoscope", response_model=HoroscopeResponse, summary="Horóscopo diario estilo Velora")
+def daily_horoscope(birthdate: date = Query(..., description="YYYY-MM-DD")):
     """
-    Partimos de la fecha de nacimiento:
-    1) calculamos tu signo solar,
-    2) seleccionamos aleatoriamente un mensaje para ese signo.
+    Calcula el signo y devuelve una reflexión basada en la mecánica celeste
+    usando la voz unificada de Velora (Lente: astro_mechanic).
     """
+    # 1. Calculamos el signo real
     entry = get_sun_sign_entry(birthdate.month, birthdate.day)
-    sign = entry.sign
-    # plantillas para el signo
-    templates = load_daily_templates().get(sign)
-    if not templates:
-        raise HTTPException(400, f"No hay horóscopo diario para {sign}.")
-    message = random.choice(templates)
+    
+    # 2. Obtenemos la sabiduría de Velora (Lente 'John Dee' / astro_mechanic)
+    mensaje_velora = get_velora_reflection("astro_mechanic")
+    
+    # 3. Retornamos la respuesta
     return HoroscopeResponse(
         birthdate=birthdate,
-        sun_sign=sign,
-        message=message
+        sun_sign=entry.sign,
+        message=mensaje_velora
     )

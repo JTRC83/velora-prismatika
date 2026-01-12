@@ -1,0 +1,160 @@
+{
+  "hermetic_base": {
+    "desc": "Filosofía base. Principios universales.",
+    "quotes": [
+      "Toda causa tiene su efecto: alinea tus pensamientos con tu acción. Como es arriba, es abajo.",
+      "Todo vibra. Nada está inmóvil. Cambia tu frecuencia y cambiarás tu realidad.",
+      "Como es adentro, es afuera. Tu entorno es solo un espejo de tu estado interno.",
+      "Los opuestos son idénticos en naturaleza, pero diferentes en grado. Busca el equilibrio en el centro.",
+      "El ritmo compensa. Si ahora desciendes, confía en la ley del péndulo: el ascenso es inevitable.",
+      "El universo es mental. Lo que sostienes en tu mente, lo atraes a tu experiencia.",
+      "La casualidad no existe; es solo un nombre para una ley no reconocida.",
+      "Separa lo sutil de lo denso con gran industria. Ahí reside la maestría.",
+      "La generación existe en todo. Honra tus principios masculinos y femeninos internos para crear.",
+      "Nada escapa a la ley, pero el sabio usa leyes superiores para neutralizar las inferiores."
+    ]
+  },
+  "astro_mechanic": {
+    "desc": "Astrología técnica y precisa (Estilo John Dee).",
+    "quotes": [
+      "Los astros no obligan, pero inclinan. Tu tránsito solar ilumina la voluntad, pero tú sostienes el timón.",
+      "Marte y tu energía vital se alinean. Cuidado con la impulsividad; dirige el fuego, no te quemes en él.",
+      "La geometría celeste sugiere armonía en la comunicación. Es momento de pactos y palabras claras.",
+      "Saturno, el gran maestro, exige disciplina. Lo que construyas ahora con esfuerzo será eterno.",
+      "Júpiter expande tus horizontes. La suerte favorece a la mente preparada para el viaje.",
+      "La Luna marca un ciclo de renovación interna. Siembra en la oscuridad para cosechar en la luz.",
+      "El movimiento retrógrado invita a la revisión. No avances sin mirar antes el mapa trazado.",
+      "Tu Medio Cielo brilla. La vocación no es lo que haces, sino quién eres mientras lo haces.",
+      "Las aguas de Neptuno pueden nublar la vista. Busca la claridad antes de entregar tu confianza.",
+      "Urano trae el rayo del cambio súbito. Adáptate, pues la rigidez es lo único que se quiebra."
+    ]
+  },
+  "radical_will": {
+    "desc": "Empoderamiento y Magia Ritual (Estilo Crowley).",
+    "quotes": [
+      "Conquista tu propia sombra. El único fracaso es no atreverse a hollar el camino propio.",
+      "Amor es la ley, amor bajo la voluntad. No hay culpa en desear, solo en no actuar.",
+      "Desata tus cadenas internas. El fuego de tu espíritu no pide permiso para arder.",
+      "Que tu voluntad sea espada y tu coraje escudo. Reinventa tu destino ahora.",
+      "El ritual más radical es ser tú mismo en un mundo que te quiere ajeno.",
+      "Camina sin red hacia el abismo creativo. Solo cayendo aprendes a volar.",
+      "Arroja al viento el viejo yo. Renacer duele, pero es necesario.",
+      "Baila en el filo del caos. La libertad real no teme a la tempestad.",
+      "Rompe los ídolos del miedo. Tu voluntad auténtica es la única estrella guía.",
+      "Cada palabra que pronuncias es un hechizo. Habla con intención o guarda silencio."
+    ]
+  },
+  "karmic_law": {
+    "desc": "Espiritualidad profunda y Causa-Efecto (Estilo Blavatsky).",
+    "quotes": [
+      "El karma teje su tapiz con hilos antiguos. Aquello que sembraste retorna.",
+      "Recuerda que las almas son espejos sucesivos. Tu presente es el eco de un nombre olvidado.",
+      "Cada acto genera una onda en la rueda eterna. Siembra luz hoy.",
+      "El velo se descorre cuando comprendes tu propósito. La lección aguarda en la dificultad.",
+      "Las semillas del ayer germinan ahora. Atiende el eco de tus acciones.",
+      "La brújula del destino gira al compás de tus pensamientos más profundos.",
+      "Cada vida es un peldaño. Halla paz en el fuego purificador del aprendizaje.",
+      "No es castigo, es escuela. Cada lección amplía tu conciencia.",
+      "El sendero no perdona la indiferencia. Abraza el desafío y eleva tu alma.",
+      "Aquello que edificas en amor trasciende el tiempo y la muerte."
+    ]
+  },
+  "cryptic_prophecy": {
+    "desc": "Adivinación enigmática (Estilo Nostradamus).",
+    "quotes": [
+      "Cuando el cuervo cruce el cielo de la mente, las estaciones cambiarán sin aviso.",
+      "El albor de tinieblas precede a la luz. Busca en el eco las huellas antiguas.",
+      "Bajo la luna roja, el río trae memorias que creías selladas.",
+      "En la torre quebrada resuena la verdad. Solo en la ruina se ve el cimiento.",
+      "El secreto aguarda al toque de las doce campanas. Lo inesperado reclama su trono.",
+      "Cuando la serpiente devore su cola, el ciclo se cerrará para abrir uno nuevo.",
+      "Tras la hoja marchita, una flor solitaria marcará el renacer imperceptible.",
+      "El silencio precede a la danza de las llamas. Escucha lo que no se dice.",
+      "Bajo el reflejo de cristal, la visión se aclara solo para quien no teme mirar.",
+      "Cuando el martillo golpee el yunque del destino, nacerá la visión nocturna."
+    ]
+  },
+  "oracle_vision": {
+    "desc": "Intuición suave y clarividencia (Estilo Sibylla / Vanga).",
+    "quotes": [
+      "Un camino bifurcado aparece ante ti. La luna sugiere esperar antes de elegir.",
+      "Tu sombra se alarga hacia el mañana. Lo que temes es solo un guía disfrazado.",
+      "Atiende al viento que no vuelve. Hay un mensaje en lo sutil.",
+      "Confía en tu intuición. La vida te mostrará la vía cuando sea preciso.",
+      "Percibo un cambio suave en tu entorno. Mantén la calma y observa.",
+      "Tu corazón busca respuestas. El silencio interior las grita.",
+      "Un gesto sencillo hará renacer la armonía donde ahora hay duda.",
+      "La respuesta que buscas está en tu propia sinceridad. Habla desde el corazón.",
+      "En el ojo de la tormenta hay calma. Siéntate allí y el velo caerá.",
+      "Lo que esperas florecerá si plantas la semilla del esfuerzo hoy."
+    ]
+  },
+  "elemental_balance": {
+    "desc": "Bienestar energético (Estilo Paracelso - ADAPTADO A NO MÉDICO).",
+    "quotes": [
+      "Tus elementos piden tierra. Busca la calma en la naturaleza para restaurar tu centro.",
+      "El fuego interno necesita moderación. Enfría tu mente con aguas de tranquilidad.",
+      "El aire de tus pensamientos es un vendaval. Busca el silencio para aquietarlo.",
+      "Hay estancamiento en tus aguas emocionales. Deja que fluyan y purifiquen.",
+      "El frío de la duda crispa tu energía. Busca el calor de la acción solar.",
+      "La rigidez mental bloquea el flujo. Sé flexible como el junco, no duro como el roble.",
+      "Tus nervios vibran demasiado alto. Conecta tus pies desnudos con la tierra.",
+      "Una sombra de melancolía cubre tu ánimo. Busca la luz del sol para disiparla.",
+      "La energía vital requiere movimiento. No dejes que el estanque se pudra.",
+      "In natura, la cura. Vuelve a lo simple para sanar lo complejo."
+    ]
+  },
+  "lunar_tides": {
+    "desc": "Ciclos lunares y emociones.",
+    "quotes": [
+      "La luna no emite luz, solo la refleja. Observa qué emociones estás reflejando hoy.",
+      "Como la marea, deja que tus sentimientos fluyan y se retiren sin ahogarte en ellos.",
+      "En la oscuridad de la fase nueva se siembran las intenciones invisibles.",
+      "La plenitud de la luz revela lo que estaba oculto en la sombra de tu subconsciente.",
+      "Todo ciclo tiene su final y su inicio. No temas al vacío de la luna negra.",
+      "Tu intuición es un músculo que se ejercita en el silencio. Escucha.",
+      "El agua toma la forma del recipiente; adapta tu emoción al momento presente.",
+      "Lo que sientes ahora es tránsito, no permanencia. Déjalo pasar.",
+      "La noche es la madre del consejo. No fuerces respuestas bajo el sol que pertenecen a la luna.",
+      "Si las mareas mueven océanos enteros, ¿por qué te resistes a tu propio movimiento interno?",
+      "La intuición no grita, susurra. Baja el volumen de tu mente para oírla.",
+      "Estás en un ciclo de gestación. Lo que no se ve, también está creciendo.",
+      "La luna llena no crea sombras nuevas, solo ilumina las que ya estaban allí.",
+      "Para llenarte de lo nuevo, primero debes vaciarte de lo viejo. Honra tu fase menguante.",
+      "No eres la ola efímera, eres el océano profundo. La superficie no define tu calma.",
+      "El cangrejo camina de lado para avanzar. A veces, la ruta indirecta es la más sabia.",
+      "Tu sensibilidad no es debilidad, es el radar que detecta lo invisible.",
+      "El agua estancada se corrompe; la emoción retenida se vuelve veneno. Déjala correr.",
+      "Mira al cielo nocturno: incluso en la oscuridad total, las estrellas te orientan.",
+      "La fase creciente te pide acción, pero no prisa. Crece al ritmo de la naturaleza.",
+      "Lo que hoy parece un final, mañana será el abono de un nuevo comienzo.",
+      "La plata de la luna cura lo que el oro del sol quema. Busca el reposo.",
+      "Refugiate en tu mundo interior; las respuestas externas hoy son solo ruido.",
+      "Como el ciclo lunar, tú también eres cambiante. No te castigues por no ser lineal.",
+      "La marea baja revela los tesoros ocultos en la arena. Observa qué ha quedado al descubierto.",
+      "Nutre tus raíces en la oscuridad para que tus ramas soporten la luz.",
+      "La lógica construye casas, pero la intuición construye hogares.",
+      "No nades contra la corriente emocional de hoy. Flota y ahorra energía.",
+      "Un espejo sucio no refleja la luz. Limpia tu percepción antes de juzgar.",
+      "El misterio es parte de la vida. No necesitas entenderlo todo ahora mismo.",
+      "La luna gobierna los líquidos. Bebe agua y deja que limpie tus pensamientos.",
+      "En el silencio de la noche, tu alma habla sin máscaras.",
+      "La paciencia es la reina de las virtudes lunares. Todo llega a su plenitud.",
+      "Protege tu energía. No toda puerta abierta debe ser cruzada hoy.",
+      "Tu instinto es más antiguo que tu razón. Confía en esa memoria ancestral."
+    ]
+  },
+  "zodiac_affinity": {
+    "desc": "Compatibilidad y relaciones.",
+    "quotes": [
+      "No busques tu mitad, busca tu espejo. Lo que te irrita del otro es lo que debes sanar en ti.",
+      "La armonía no es la ausencia de fuego, sino aprender a danzar sin quemarse.",
+      "Dos estrellas orbitando el mismo centro no compiten por la luz, se iluminan mutuamente.",
+      "El encuentro de dos almas es como el contacto de dos sustancias químicas: si hay reacción, ambas se transforman.",
+      "El amor perfecto es aquel que permite que ambos sean soledades que se saludan y se respetan.",
+      "No fuerces la pieza del puzzle. Si hay fricción, hay pulido; si hay flujo, hay descanso.",
+      "La compatibilidad es un jardín que se riega, no una piedra que se encuentra.",
+      "Observa los elementos: el viento no pide permiso para mover el agua, y el agua no se resiste a ser movida."
+    ]
+  }
+}

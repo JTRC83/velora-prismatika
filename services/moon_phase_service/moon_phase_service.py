@@ -1,55 +1,99 @@
 import os
 import ephem
+import math
+from datetime import datetime, date
 from fastapi import APIRouter, HTTPException, Query
-from datetime import datetime
+from pydantic import BaseModel
+from orchestrator.utils import get_velora_reflection
 
-BASE = os.path.dirname(__file__)
 router = APIRouter(prefix="/moon-phase", tags=["Fases Lunares"])
 
-PHASES = [
-    (0.0, 12.5, "Luna Nueva", "🌑", "Tiempo de nuevos comienzos y renovación."),
-    (12.5, 25.0, "Creciente Iluminante", "🌒", "Paso inicial hacia la claridad interior."),
-    (25.0, 37.5, "Primer Cuarto", "🌓", "Momento de tomar decisiones equilibradas."),
-    (37.5, 50.0, "Gibosa Iluminante", "🌔", "Cultiva la luz que crece en tu interior."),
-    (50.0, 62.5, "Luna Llena", "🌕", "Punto de culminación y plenitud energética."),
-    (62.5, 75.0, "Gibosa Menguante", "🌖", "Reflexiona sobre lo aprendido hasta ahora."),
-    (75.0, 87.5, "Último Cuarto", "🌗", "Momento de soltar y cerrar ciclos."),
-    (87.5, 100.0, "Menguante Iluminante", "🌘", "Transición suave hacia el descanso interno.")
+# --- CONSTANTES Y UTILIDADES ---
+
+ZODIAC_SIGNS = [
+    "Aries", "Tauro", "Géminis", "Cáncer", "Leo", "Virgo", 
+    "Libra", "Escorpio", "Sagitario", "Capricornio", "Acuario", "Piscis"
 ]
 
-@router.get("/",
-            summary="Obtiene la fase lunar para una fecha dada",
-            description="Devuelve nombre, icono, porcentaje de iluminación y significado simbólico.")
-def moon_phase(
-    date: str = Query(..., description="Fecha en formato YYYY-MM-DD")
+class MoonResponse(BaseModel):
+    date: str
+    phase_name: str
+    illumination: float
+    icon: str
+    zodiac_sign: str
+    velora_message: str
+
+def get_moon_sign(date_obj):
+    """Calcula el signo tropical de la luna."""
+    observer = ephem.Observer()
+    observer.date = date_obj
+    moon = ephem.Moon(observer)
+    degrees = math.degrees(moon.hlon)
+    sign_index = int(degrees / 30)
+    return ZODIAC_SIGNS[sign_index % 12]
+
+def get_phase_details(date_obj):
+    """
+    Calcula la fase basándose en la 'lunación' (0.0 a 1.0),
+    lo que permite distinguir Creciente de Menguante.
+    """
+    observer = ephem.Observer()
+    observer.date = date_obj
+    
+    # Calculamos la lunación comparando con la Luna Nueva anterior y siguiente
+    prev_new = ephem.previous_new_moon(date_obj)
+    next_new = ephem.next_new_moon(date_obj)
+    
+    # Porcentaje del ciclo completado (0.0 = Nueva, 0.5 = Llena, 0.99 = Fin)
+    lunation = (ephem.Date(date_obj) - prev_new) / (next_new - prev_new)
+    
+    # Mapeo preciso
+    if lunation < 0.03: return "Luna Nueva", "🌑"
+    if lunation < 0.22: return "Creciente", "🌒"
+    if lunation < 0.28: return "Cuarto Creciente", "🌓"
+    if lunation < 0.47: return "Gibosa Creciente", "🌔"
+    if lunation < 0.53: return "Luna Llena", "🌕"
+    if lunation < 0.72: return "Gibosa Menguante", "🌖"
+    if lunation < 0.78: return "Cuarto Menguante", "🌗"
+    return "Menguante", "🌘"
+
+# --- ENDPOINT ---
+
+@router.get("/current", response_model=MoonResponse)
+def get_moon_phase(
+    target_date: str = Query(None, description="Fecha YYYY-MM-DD (Opcional, por defecto HOY)", alias="date")
 ):
-    # Parsear fecha
+    """
+    Devuelve la fase lunar, iluminación, signo y mensaje de Velora.
+    Acepta una fecha opcional.
+    """
+    # 1. Gestionar Fecha
     try:
-        dt = datetime.strptime(date, "%Y-%m-%d")
+        if target_date:
+            dt = datetime.strptime(target_date, "%Y-%m-%d")
+        else:
+            dt = datetime.now()
     except ValueError:
-        raise HTTPException(status_code=400, detail="Formato inválido, use YYYY-MM-DD")
-    # Calcular fase con PyEphem
-    try:
-        moon = ephem.Moon(dt)
-        illum = float(moon.phase)  # porcentaje iluminado
-    except Exception:
-        raise HTTPException(status_code=500, detail="Error al calcular fase lunar")
-    # Determinar fase
-    for start, end, name, icon, meaning in PHASES:
-        if start <= illum < end:
-            return {
-                "date": date,
-                "phase_name": name,
-                "icon": icon,
-                "illumination": round(illum, 1),
-                "meaning": meaning
-            }
-    # En caso borde
-    name, icon, meaning = PHASES[0][2], PHASES[0][3], PHASES[0][4]
-    return {
-        "date": date,
-        "phase_name": name,
-        "icon": icon,
-        "illumination": round(illum, 1),
-        "meaning": meaning
-    }
+        raise HTTPException(status_code=400, detail="Formato inválido. Usa YYYY-MM-DD")
+
+    # 2. Cálculos Astronómicos (Ephem)
+    observer = ephem.Observer()
+    observer.date = dt
+    moon = ephem.Moon(observer)
+    
+    illumination = round(moon.phase, 1) # Porcentaje de luz (0-100)
+    phase_name, icon = get_phase_details(dt) # Nombre real (Creciente vs Menguante)
+    zodiac_sign = get_moon_sign(dt) # Signo astrológico
+
+    # 3. La Voz de Velora
+    # Usamos la lente 'lunar_tides' que definimos en wisdom_lenses.json
+    message = get_velora_reflection("lunar_tides")
+
+    return MoonResponse(
+        date=dt.strftime("%Y-%m-%d"),
+        phase_name=phase_name,
+        illumination=illumination,
+        icon=icon,
+        zodiac_sign=zodiac_sign,
+        velora_message=message
+    )

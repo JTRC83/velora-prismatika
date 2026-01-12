@@ -1,22 +1,24 @@
 // vite.config.js
-import { defineConfig } from 'vite';
-import react from '@vitejs/plugin-react';
+import { defineConfig } from 'vite'
+import react from '@vitejs/plugin-react'
 
+// https://vitejs.dev/config/
 export default defineConfig({
   plugins: [react()],
   server: {
     proxy: {
-      // cuando pidas /astro, lo redirige a tu FastAPI en el 8000
+      // Cualquier petición que empiece por /astro se redirige al backend
       '/astro': {
-        target: 'http://localhost:8000',
+        target: 'http://127.0.0.1:8000',
         changeOrigin: true,
         secure: false,
       },
-      '/numerology': {
-        target: 'http://localhost:8000',
-        changeOrigin: true,
-        secure: false,
-      }
+      // Hacemos lo mismo para el resto de servicios futuros
+      '/numerology': { target: 'http://127.0.0.1:8000', changeOrigin: true },
+      '/tarot': { target: 'http://127.0.0.1:8000', changeOrigin: true },
+      '/moon-phase': { target: 'http://127.0.0.1:8000', changeOrigin: true },
+      '/compatibility': { target: 'http://127.0.0.1:8000', changeOrigin: true },
+      // ... puedes añadir más según los necesites
     }
   }
-});
+})

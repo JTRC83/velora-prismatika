@@ -1,152 +1,297 @@
+/* --- VARIABLES GLOBALES DE VELORA --- */
+:root {
+  --velora-bg: #d7a341;
+  --velora-dark: #2d1a00;
+  --velora-gold: #b8860b;
+  --velora-cream: #fdf6e3;
+  --velora-accent: #7e7e23;
+  --glass-bg: rgba(255, 255, 255, 0.15);
+  --glass-border: rgba(255, 255, 255, 0.3);
+  --font-heading: "Faculty Glyphic", serif; /* O la fuente que uses para títulos */
+  --font-body: "Garamond", "Georgia", serif;
+}
+
 .astro-service {
-  background: #d7a341;
-  z-index: 1;
- position: relative; 
-}
-
-.astro-card, .astro-title, .astro-form {
   position: relative;
-  z-index: 2;
+  z-index: 1;
+  color: var(--velora-dark);
+  max-width: 800px;
+  margin: 0 auto;
 }
 
+/* --- TÍTULOS --- */
 .astro-title {
-  font-size: 1.5rem;
+  font-family: var(--font-heading);
+  font-size: 2rem;
   text-align: center;
-  margin-bottom: 1rem;
+  margin-bottom: 2rem;
   color: #4a3e1b;
+  text-shadow: 0 1px 2px rgba(255,255,255,0.4);
 }
 
-.astro-form {
+/* --- FORMULARIO ESTILO "LIBRO DE REGISTRO" --- */
+.astro-form-col {
+  background: rgba(253, 246, 227, 0.6); /* Pergamino semitransparente */
+  padding: 1.5rem;
+  border-radius: 1rem;
+  box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+  border: 1px solid var(--glass-border);
+  backdrop-filter: blur(5px);
+  margin-bottom: 2rem;
+}
+
+.form-row {
   display: flex;
-  gap: .5rem;
-  align-items: center;
-  justify-content: center;
-  margin-bottom: 1.5rem;
+  gap: 1.5rem;
+  margin-bottom: 1rem;
 }
 
+.form-group {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  margin-bottom: 1rem;
+}
+
+.form-group label {
+  font-family: var(--font-heading);
+  font-size: 0.95rem;
+  margin-bottom: 0.5rem;
+  color: var(--velora-dark);
+  font-weight: 600;
+  letter-spacing: 0.5px;
+}
+
+/* Inputs personalizados */
 .astro-input {
-  padding: .5rem;
-  border: 1px solid #c59d5f;
-  border-radius: .5rem;
-}
-
-.astro-btn {
-  background: #7e7e23;
-  color: #fff;
-  padding: .5rem 1rem;
+  padding: 0.8rem;
   border: none;
-  border-radius: .75rem;
-  cursor: pointer;
-  transition: background .2s;
-}
-.astro-btn:hover:not(:disabled) {
-  background: #5a5a1a;
+  border-bottom: 2px solid var(--velora-gold);
+  background: rgba(255, 255, 255, 0.5);
+  border-radius: 0.3rem 0.3rem 0 0;
+  font-family: var(--font-body);
+  font-size: 1rem;
+  color: var(--velora-dark);
+  transition: all 0.3s ease;
 }
 
-.astro-error {
-  color: #a00;
-  text-align: center;
+.astro-input:focus {
+  outline: none;
+  background: rgba(255, 255, 255, 0.8);
+  border-bottom-color: var(--velora-dark);
+}
+
+/* Botón Místico */
+.astro-btn {
+  background: linear-gradient(135deg, #7e7e23 0%, #5a5a1a 100%);
+  color: #fff;
+  padding: 1rem;
+  border: 1px solid #4a4a15;
+  border-radius: 0.5rem;
+  font-family: var(--font-heading);
+  font-size: 1.1rem;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  cursor: pointer;
+  width: 100%;
+  transition: transform 0.2s, box-shadow 0.2s;
+  box-shadow: 0 4px 6px rgba(0,0,0,0.2);
+}
+
+.astro-btn:hover:not(:disabled) {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 12px rgba(0,0,0,0.25);
+}
+
+.astro-btn:disabled {
+  opacity: 0.7;
+  cursor: not-allowed;
+}
+
+/* --- TARJETA DE RESULTADOS (CARTA ASTRAL) --- */
+.astro-card-container {
+  display: flex;
+  justify-content: center;
 }
 
 .astro-card {
-  background: #fde68a;
-  padding: 1rem;
-  border-radius: .85rem;
-  max-width: 35rem;
-  margin: 0 auto;
-  box-shadow: inset 0 0 4px rgba(0,0,0,0.1);
-  overflow: visible; /* ← esta línea es clave */
-  min-height: 22rem; /* reserva espacio (ajusta según contenido) */
-  transition: opacity 0.4s ease;
-  opacity: 0;
+  background-image: linear-gradient(to bottom right, #fffbf0, #f3e5ab);
+  padding: 2rem;
+  border-radius: 12px;
+  border: 1px solid #d4af37;
+  box-shadow: 
+    0 10px 25px rgba(0,0,0,0.15),
+    inset 0 0 40px rgba(212, 175, 55, 0.1); /* Brillo interior dorado */
+  max-width: 500px;
+  width: 100%;
+  animation: slideUp 0.6s cubic-bezier(0.22, 1, 0.36, 1);
+  position: relative;
 }
 
-.astro-card.visible {
-  opacity: 1;
+/* Cabecera del Signo */
+.zodiac-header-center {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-bottom: 1.5rem;
+  border-bottom: 1px solid rgba(45, 26, 0, 0.1);
+  padding-bottom: 1rem;
 }
-
-.astro-signo-img {
-  width: 3rem;
-  height: 3rem;
-}
-
-.astro-details {
-  list-style: none;
-  margin-bottom: .75rem;
-  color: #4a3e1b;
-}
-
-.astro-details li {
-  margin-bottom: .25rem;
-}
-
-.astro-desc {
-  font-style: italic;
-  color: #3a3015;
-  line-height: 1.25;
-  white-space: pre-wrap;
-  overflow-wrap: break-word;
-  overflow: visible;
-  max-height: none;
-  display: block;
-}
-
-.astro-horoscope {
-  background-color: #e4ac43;
-  border: 1px solid #f3e5ab;
-  padding: 1rem;
-  border-radius: 1rem;
-  font-family: "Faculty Glyphic", sans-serif;
-}
-
-body {
-  font-family: "Faculty Glyphic", sans-serif;
-  font-weight: 400;
-  font-style: normal;
-}
-
-.astro-separator {
-  border: none;
-  border-top: 1px solid rgba(0, 0, 0, 0.2);
-  margin: 0.75rem 0;
-}
-
 
 .zodiac-symbol-char {
-  color: #2d1a00 !important;
-  -webkit-text-fill-color: #2d1a00;
-  font-size: 1.8rem;
-  font-family: 'Segoe UI Symbol', 'Arial Unicode MS', 'Noto Sans Symbols', serif;
+  font-size: 4rem;
+  line-height: 1;
+  color: var(--velora-gold);
+  text-shadow: 2px 2px 0px rgba(0,0,0,0.1);
 }
 
 .zodiac-name {
-  color: #2d1a00;
+  font-family: var(--font-heading);
+  font-size: 2rem;
+  color: var(--velora-dark);
+  text-transform: uppercase;
+  letter-spacing: 2px;
 }
 
-.astro-card-header {
-  margin-bottom: .75rem;
+/* --- GRID DE ESTADÍSTICAS (ESTILO ALQUIMIA) --- */
+.astro-stats-grid {
+  display: flex; /* Usamos flex para mejor control que grid */
+  justify-content: space-between;
+  align-items: flex-start;
+  margin: 2rem 0;
+  padding: 1.5rem 0;
+  border-top: 1px solid rgba(184, 134, 11, 0.3);    /* Línea sutil arriba */
+  border-bottom: 1px solid rgba(184, 134, 11, 0.3); /* Línea sutil abajo */
+  position: relative;
 }
 
-.zodiac-header-center {
+/* Efecto decorativo: doble línea sutil */
+.astro-stats-grid::before {
+  content: '';
+  position: absolute;
+  top: 3px; left: 0; right: 0;
+  border-top: 1px solid rgba(184, 134, 11, 0.1);
+}
+.astro-stats-grid::after {
+  content: '';
+  position: absolute;
+  bottom: 3px; left: 0; right: 0;
+  border-bottom: 1px solid rgba(184, 134, 11, 0.1);
+}
+
+.stat-box {
+  background: transparent; /* ADIÓS AL FONDO BLANCO */
+  border: none;
+  padding: 0 1rem;
+  flex: 1;
+  text-align: center;
+  position: relative;
   display: flex;
-  justify-content: center;
+  flex-direction: column;
   align-items: center;
   gap: 0.5rem;
-  font-size: 1.75rem;
+}
+
+/* Separadores verticales entre elementos */
+.stat-box:not(:last-child)::after {
+  content: '';
+  position: absolute;
+  right: 0;
+  top: 10%;
+  height: 80%;
+  width: 1px;
+  background: linear-gradient(to bottom, transparent, rgba(184,134,11,0.4), transparent);
+}
+
+/* Etiquetas (ELEMENTO, CUALIDAD...) */
+.stat-label {
+  font-family: var(--font-heading);
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+  color: var(--velora-accent); /* Color oliva/dorado oscuro */
+  opacity: 0.9;
+  margin-bottom: 0.2rem;
+}
+
+/* Valores (Aire, Venus...) */
+.stat-value {
+  font-family: var(--font-body);
   font-weight: bold;
+  font-size: 1.1rem;
+  color: var(--velora-dark);
+  line-height: 1.3;
+}
+
+/* Para textos largos (como la descripción de cualidad) */
+.stat-value small {
+  display: block;
+  font-weight: normal;
+  font-size: 0.9rem;
+  font-style: italic;
+  opacity: 0.8;
+  margin-top: 0.3rem;
+}
+
+/* Íconos decorativos opcionales */
+.stat-icon {
+  font-size: 1.5rem;
+  color: var(--velora-gold);
+  margin-bottom: 0.2rem;
+  opacity: 0.8;
+}
+
+/* Descripción */
+.astro-desc {
+  font-family: var(--font-body);
+  color: #3e2b12;
+  line-height: 1.6;
+  font-size: 1.05rem;
+  text-align: justify;
+  margin-bottom: 2rem;
+}
+
+/* --- SECCIÓN VELORA (EL REFLEJO) --- */
+.astro-horoscope {
+  background: rgba(45, 26, 0, 0.05);
+  border-left: 4px solid var(--velora-gold);
+  padding: 1.5rem;
+  border-radius: 0 8px 8px 0;
+  position: relative;
+  margin-top: 1rem;
+}
+
+.velora-label {
+  display: block;
+  font-family: var(--font-heading);
+  color: var(--velora-gold);
+  font-size: 0.9rem;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  margin-bottom: 0.5rem;
   text-align: center;
 }
 
-body {
-  font-family: "Faculty Glyphic", sans-serif;
-  font-weight: 400;
-  font-style: normal;
+.velora-text {
+  font-family: var(--font-body);
+  font-style: italic;
+  font-size: 1.15rem;
+  color: var(--velora-dark);
+  text-align: center;
 }
 
-.astro-card-container {
-  min-height: 26rem;  /* ajusta según el tamaño típico de la card */
-  position: relative;
-  display: flex;
-  justify-content: center;
-  align-items: flex-start;
+/* Utilidades */
+.astro-error {
+  background: rgba(160, 0, 0, 0.1);
+  color: #7a0000;
+  padding: 1rem;
+  border-radius: 8px;
+  text-align: center;
+  margin-bottom: 1rem;
+  border: 1px solid rgba(160, 0, 0, 0.3);
+}
+
+@keyframes slideUp {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
 }
