@@ -1,0 +1,137 @@
+/* --- CONTENEDOR PRINCIPAL --- */
+.ritual-container {
+  max-width: 700px;
+  margin: 0 auto;
+  color: var(--velora-dark); /* Color texto base oscuro */
+}
+
+/* Reutilizamos clases de AstroService, pero definimos especificidades aquí */
+.ritual-card {
+  /* Fondo pergamino igual que en Astrología */
+  background-image: linear-gradient(to bottom right, #fffbf0, #f3e5ab);
+  border: 1px solid #d4af37;
+  padding: 2rem;
+  box-shadow: 
+    0 10px 25px rgba(0,0,0,0.1),
+    inset 0 0 60px rgba(212, 175, 55, 0.15); /* Brillo interior dorado */
+}
+
+/* --- CABECERA --- */
+.ritual-header {
+  text-align: center;
+  margin-bottom: 2rem;
+  border-bottom: 1px solid rgba(184, 134, 11, 0.3);
+  padding-bottom: 1rem;
+}
+
+.ritual-title-text {
+  font-family: var(--font-heading);
+  font-size: 1.8rem;
+  color: #4a3e1b; /* Marrón oscuro */
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  margin-bottom: 0.5rem;
+  text-shadow: 0 1px 0 rgba(255,255,255,0.8);
+}
+
+.ritual-meta-grid {
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+
+.meta-tag {
+  background: rgba(255, 255, 255, 0.5);
+  border: 1px solid rgba(184, 134, 11, 0.3);
+  padding: 0.3rem 0.8rem;
+  border-radius: 15px;
+  font-size: 0.85rem;
+  color: #5a4a42;
+  font-weight: 600;
+}
+
+/* --- SECCIONES (MATERIALES Y PASOS) --- */
+.ritual-section {
+  margin-bottom: 1.5rem;
+}
+
+.ritual-section h4 {
+  font-family: var(--font-heading);
+  color: #7e7e23; /* Verde oliva acento */
+  font-size: 1.1rem;
+  margin-bottom: 0.8rem;
+  border-left: 3px solid #d4af37;
+  padding-left: 0.5rem;
+}
+
+.ritual-section ul, 
+.ritual-section ol {
+  padding-left: 1.5rem;
+  font-family: var(--font-body);
+  color: #2d1a00;
+  line-height: 1.6;
+}
+
+.ritual-section li {
+  margin-bottom: 0.4rem;
+}
+
+/* Caja especial para materiales */
+.materials-box {
+  background: rgba(255, 255, 255, 0.3);
+  padding: 1rem;
+  border-radius: 8px;
+  border: 1px dashed rgba(184, 134, 11, 0.3);
+}
+
+/* --- MANTRA --- */
+.ritual-mantra-box {
+  text-align: center;
+  background: rgba(45, 26, 0, 0.03);
+  padding: 1.5rem;
+  margin: 2rem 0;
+  border-radius: 8px;
+  border-top: 1px solid var(--velora-gold);
+  border-bottom: 1px solid var(--velora-gold);
+  position: relative;
+}
+
+.mantra-label {
+  display: block;
+  font-family: var(--font-heading);
+  font-size: 0.8rem;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  color: #b8860b;
+  margin-bottom: 0.5rem;
+}
+
+.mantra-text {
+  font-family: var(--font-body); /* O una fuente cursiva si tienes */
+  font-style: italic;
+  font-size: 1.3rem;
+  color: #2d1a00;
+  font-weight: bold;
+}
+
+/* --- UTILIDADES --- */
+.reset-link {
+  display: block;
+  width: 100%;
+  text-align: center;
+  margin-top: 1.5rem;
+  background: none;
+  border: none;
+  color: #7e7e23;
+  cursor: pointer;
+  font-size: 0.9rem;
+  text-decoration: underline;
+  opacity: 0.8;
+  transition: opacity 0.2s;
+}
+
+.reset-link:hover {
+  opacity: 1;
+  color: #5a4a42;
+}

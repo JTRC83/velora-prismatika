@@ -18,6 +18,8 @@ export default defineConfig({
       '/tarot': { target: 'http://127.0.0.1:8000', changeOrigin: true },
       '/moon-phase': { target: 'http://127.0.0.1:8000', changeOrigin: true },
       '/compatibility': { target: 'http://127.0.0.1:8000', changeOrigin: true },
+      '/ritual': { target: 'http://127.0.0.1:8000', changeOrigin: true },
+      '/chakra': { target: 'http://127.0.0.1:8000', changeOrigin: true },
       // ... puedes añadir más según los necesites
     }
   }

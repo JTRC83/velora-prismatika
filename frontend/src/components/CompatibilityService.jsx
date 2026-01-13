@@ -7,7 +7,7 @@ const SIGNS = [
   "Libra", "Escorpio", "Sagitario", "Capricornio", "Acuario", "Piscis"
 ];
 
-// Mapeo de elementos para colores (usado en CSS)
+// Mapeo de elementos para colores
 const ELEMENT_MAP = {
   Fuego: 'fire',
   Tierra: 'earth',
@@ -31,13 +31,12 @@ export default function CompatibilityService() {
     setError(null);
 
     try {
-      // Llamada al backend
       const res = await fetch(`/compatibility/check?sign1=${sign1}&sign2=${sign2}`);
       if (!res.ok) throw new Error("Error en la alquimia estelar");
       
       const data = await res.json();
       
-      // Pequeño delay artificial para dejar que la animación de carga se vea (opcional)
+      // Pequeño delay para la animación
       setTimeout(() => {
         setResult(data);
         setLoading(false);
@@ -50,13 +49,21 @@ export default function CompatibilityService() {
     }
   };
 
+  // Función auxiliar para obtener la clase de color limpia
+  const getElementClass = (elementRaw) => {
+    if (!elementRaw) return '';
+    // Toma solo la primera palabra (ej: "Fuego, cardinal" -> "Fuego")
+    const key = elementRaw.split(',')[0].trim(); 
+    return ELEMENT_MAP[key] || '';
+  };
+
   return (
     <div className="astro-service p-6 compat-container">
       <h2 className="astro-title" style={{ color: '#5a4a42' }}>
         💞 Sinastría de Almas
       </h2>
 
-      {/* --- FORMULARIO DE SELECCIÓN --- */}
+      {/* --- FORMULARIO --- */}
       <form onSubmit={handleCalculate} className="astro-form-col compat-form">
         <div className="compat-inputs">
           
@@ -91,41 +98,55 @@ export default function CompatibilityService() {
         </div>
 
         <button type="submit" disabled={loading || !sign1 || !sign2} className="astro-btn">
-          {loading ? 'Fusionando esencias...' : 'Calcular Afinidad'}
+          {loading ? 'Fusionando esencias...' : 'CALCULAR AFINIDAD'}
         </button>
       </form>
 
       {error && <p className="astro-error">{error}</p>}
 
-      {/* --- VISUALIZACIÓN DE RESULTADOS --- */}
+      {/* --- RESULTADOS --- */}
       {result && (
         <div className="astro-card-container">
           <div className="astro-card visible compat-card">
             
-            {/* 1. ANIMACIÓN DE ESFERAS (Diagrama de Venn) */}
+            {/* 1. DIAGRAMA DE VENN */}
             <div className="venn-diagram-container">
               {/* Esfera Izquierda */}
-              <div className={`venn-circle left ${ELEMENT_MAP[result.sign1_element]}`}>
+              <div className={`venn-circle left ${getElementClass(result.sign1_element)}`}>
                 <span className="venn-label">{result.sign1_name}</span>
-                <span className="venn-sublabel">{result.sign1_element}</span>
+                <span className="venn-sublabel">{result.sign1_element.split(',')[0]}</span>
               </div>
 
               {/* Esfera Derecha */}
-              <div className={`venn-circle right ${ELEMENT_MAP[result.sign2_element]}`}>
+              <div className={`venn-circle right ${getElementClass(result.sign2_element)}`}>
                 <span className="venn-label">{result.sign2_name}</span>
-                <span className="venn-sublabel">{result.sign2_element}</span>
+                <span className="venn-sublabel">{result.sign2_element.split(',')[0]}</span>
               </div>
 
               {/* Centro (Resultado) */}
               <div className="venn-center">
-                <span className="score-number">{result.score}%</span>
+                {/* Usamos total_score (suma de base + bonus) */}
+                <span className="score-number">{result.total_score}%</span>
               </div>
+              
+              {/* 👇 NUEVO: Badge si hay Bonus Cósmico */}
+              {result.transit_bonus > 0 && (
+                <div className="transit-badge">
+                   ✨ +{result.transit_bonus}%
+                </div>
+              )}
             </div>
 
             {/* 2. TEXTO ALQUÍMICO */}
             <div className="alchemy-result">
               <h3 className="alchemy-title">{result.alchemy_title}</h3>
               <p className="alchemy-text">{result.alchemy_text}</p>
+              
+              {/* 👇 NUEVO: Explicación del Clima Astral */}
+              <div className="transit-info-box">
+                 <strong>☁️ Clima Astral de Hoy:</strong>
+                 <p>{result.transit_message}</p>
+              </div>
             </div>
 
             {/* 3. MENSAJE DE VELORA */}

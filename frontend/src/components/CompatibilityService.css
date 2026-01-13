@@ -166,3 +166,62 @@
   font-size: 1.1rem;
   line-height: 1.5;
 }
+
+/* --- NUEVO: ESTILOS CLIMA CÓSMICO --- */
+
+/* 1. La etiqueta flotante (+15%) */
+.transit-badge {
+  position: absolute;
+  /* Lo centramos perfectamente en el diagrama */
+  top: 20px; 
+  left: 50%;
+  transform: translateX(-50%); 
+  z-index: 20; /* Por encima de todo */
+  
+  background: linear-gradient(135deg, #ffd700, #ffa500);
+  color: #fff;
+  font-family: var(--font-heading);
+  font-size: 0.9rem;
+  padding: 0.3rem 0.8rem;
+  border-radius: 20px;
+  font-weight: bold;
+  letter-spacing: 1px;
+  box-shadow: 0 4px 10px rgba(255, 165, 0, 0.4);
+  border: 1px solid #fff;
+  
+  /* Animación de flotación suave */
+  animation: floatBadge 3s ease-in-out infinite;
+}
+
+@keyframes floatBadge {
+  0%, 100% { transform: translate(-50%, 0px); }
+  50% { transform: translate(-50%, -5px); }
+}
+
+/* 2. La caja de explicación del clima */
+.transit-info-box {
+  background: rgba(255, 255, 255, 0.5);
+  border: 1px solid rgba(184, 134, 11, 0.3);
+  border-left: 4px solid var(--velora-gold); /* Borde lateral dorado */
+  border-radius: 8px;
+  padding: 1rem;
+  margin-top: 1.5rem;
+  text-align: left;
+  position: relative;
+}
+
+.transit-info-box strong {
+  display: block;
+  font-family: var(--font-heading);
+  color: #b8860b;
+  margin-bottom: 0.4rem;
+  font-size: 0.95rem;
+}
+
+.transit-info-box p {
+  font-family: var(--font-body);
+  color: #5a4a42;
+  font-size: 0.95rem;
+  margin: 0;
+  line-height: 1.4;
+}

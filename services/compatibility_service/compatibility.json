@@ -14,15 +14,55 @@
     "Mutable-Mutable": 5
   },
   "alchemy_text": {
-    "Fuego-Fuego": "Dos llamas se unen en una hoguera inmensa. Pasión desbordante, pero riesgo de quemarse mutuamente.",
-    "Fuego-Tierra": "La tierra ahoga el fuego; el fuego calcina la tierra. Una relación que requiere mucha paciencia.",
-    "Fuego-Aire": "El aire aviva la llama. Una conexión explosiva, inspiradora y llena de movimiento ascendente.",
-    "Fuego-Agua": "Vapor y ebullición. El agua apaga el instinto; el fuego evapora la emoción. Un reto de transformación.",
-    "Tierra-Tierra": "Montañas sólidas. Una unión inquebrantable, segura y leal, aunque con riesgo de estancamiento.",
-    "Tierra-Aire": "Polvo en el viento. La tierra busca quietud, el aire libertad. Cuesta encontrar un terreno común.",
-    "Tierra-Agua": "Barro fértil. El agua nutre la tierra seca; la tierra da cauce al agua. Vida y estabilidad.",
-    "Aire-Aire": "Huracán de ideas. Comunicación telepática y libertad absoluta, pero a veces falta suelo donde aterrizar.",
-    "Aire-Agua": "Olas y bruma. El aire agita el agua emocional. Fascinante pero inestable.",
-    "Agua-Agua": "Océano profundo. Comprensión psíquica sin palabras. Cuidado con ahogarse en las corrientes."
+    "Fuego-Fuego": [
+      "Dos llamas en una misma hoguera. La pasión es infinita, pero consumís el oxígeno muy rápido. Necesitáis aire externo para no ahogaros.",
+      "Espejos incandescentes. Os entendéis sin hablar, pero la competencia por el protagonismo puede incendiar el escenario.",
+      "Energía nuclear. Juntos podéis iluminar ciudades o quemar puentes. La clave es tener misiones separadas donde brillar."
+    ],
+    "Fuego-Tierra": [
+      "El volcán y la montaña. La tierra ofrece estructura al caos del fuego; el fuego calienta la frialdad de la tierra. Un motor de vapor potente.",
+      "Ritmos opuestos: uno quiere 'ya', el otro quiere 'seguro'. Si lográis sincronizar el reloj, sois constructores de imperios.",
+      "Riesgo de asfixia. La tierra puede sepultar el entusiasmo del fuego con realismo; el fuego puede agotar a la tierra con su intensidad."
+    ],
+    "Fuego-Aire": [
+      "El oxígeno que aviva la llama. Una conexión explosiva, llena de inspiración, viajes y movimiento ascendente. Imposible aburrirse.",
+      "Incendio forestal. La mente del aire expande la voluntad del fuego. Cuidado con quemar etapas demasiado rápido sin asentar bases.",
+      "Elevación mutua. El aire da ideas, el fuego las ejecuta. Sois la definición de entusiasmo, aunque a veces os falte suelo."
+    ],
+    "Fuego-Agua": [
+      "Vapor y ebullición. Una alquimia difícil: el agua apaga el instinto del fuego; el fuego evapora la sensibilidad del agua.",
+      "Transformación radical. Os fascináis porque sois opuestos. Si lográis el equilibrio, sois como una terma sanadora; si no, vapor hirviente.",
+      "Choque de realidades. El fuego actúa, el agua siente. Debéis aprender que la emoción no es debilidad y la acción no es agresión."
+    ],
+    "Tierra-Tierra": [
+      "Cimientos de roca. Una unión inquebrantable, segura y leal. Construís un legado lento pero eterno.",
+      "La fuerza de la gravedad. Os entendéis en lo tangible, el placer y la seguridad. El único riesgo es el estancamiento sísmico por rutina.",
+      "Dos montañas que se miran. Respeto absoluto y silencio cómodo. Cuidado con la terquedad: si chocáis, ninguno se moverá."
+    ],
+    "Tierra-Aire": [
+      "Tormenta de arena. La tierra busca quietud, el aire libertad. Cuesta encontrar un terreno común donde edificar, pero el aprendizaje es inmenso.",
+      "El arquitecto y el soñador. El aire imagina, la tierra construye. Si superáis la incomprensión inicial, materializáis lo imposible.",
+      "Desconexión sensorial. La tierra pide tacto; el aire pide palabras. Necesitáis un traductor emocional para no vivir en mundos paralelos."
+    ],
+    "Tierra-Agua": [
+      "Barro fértil. La unión más productiva de la naturaleza. El agua nutre la sequedad de la tierra; la tierra da cauce y forma al agua.",
+      "Jardín del Edén. Florecéis juntos con facilidad. La seguridad emocional y material se entrelazan perfectamente.",
+      "El abrazo del lodo. Cuidado con volverse demasiado dependientes o aislados del mundo. Vuestro refugio es tan cómodo que atrapa."
+    ],
+    "Aire-Aire": [
+      "Huracán de ideas. Comunicación telepática y libertad absoluta. Vivís en el mundo de las ideas, pero a veces olvidáis pagar las facturas.",
+      "Vientos cruzados. Nunca os faltará tema de conversación, pero os puede faltar calor humano. Mucha mente, poco cuerpo.",
+      "Danza en las nubes. Sois los mejores amigos y compañeros de viaje. La relación es ligera, sin ataduras, pero a veces etérea."
+    ],
+    "Aire-Agua": [
+      "Olas y bruma. El aire agita la superficie del agua, creando mareas emocionales. Fascinante, poético, pero a menudo inestable.",
+      "Lluvia mental. El aire intenta explicar lo que el agua solo quiere sentir. El agua inunda la lógica del aire. Un reto de traducción.",
+      "Evaporación. El aire puede secar las lágrimas del agua, o el agua puede hacer sentir pesado al aire. Requiere mucha delicadeza."
+    ],
+    "Agua-Agua": [
+      "Océano profundo. Comprensión psíquica sin palabras. Fluís en la misma frecuencia, pero cuidado con ahogarse en las corrientes compartidas.",
+      "Fusión total. Los límites del 'yo' se disuelven. Es la unión más empática, pero corréis el riesgo de perder la identidad individual.",
+      "Reflejo infinito. Os cuidáis mutuamente con devoción. El peligro es crear una burbuja emocional donde la realidad externa no entra."
+    ]
   }
 }

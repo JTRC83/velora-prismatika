@@ -9,6 +9,8 @@ import AstroService         from './components/AstroService';
 import NumerologyService from "./components/NumerologyService";
 import MoonPhaseService from "./components/MoonPhaseService"; 
 import CompatibilityService from "./components/CompatibilityService"; 
+import RitualService from "./components/RitualService"; 
+import ChakraService from "./components/ChakraService"; 
 
 const ICONS = {
   "Astrología Natal":  "/assets/icons/horoscopo.png",
@@ -22,7 +24,7 @@ const ICONS = {
   "Cábala":            "/assets/icons/cabala.png",
   "Tránsitos":         "/assets/icons/transitosPlanetarios.png",
   "Bola de Cristal":   "/assets/icons/bolaCristal.png",
-  "I Ching":           "/assets/icons/iching.png",
+  "I Ching":           "/assets/icons/mano.png",
 };
 
 const SERVICES_LEFT  = [
@@ -131,6 +133,8 @@ export default function App() {
       {selectedService === 'Numerología'      && <NumerologyService />}
       {selectedService === 'Fases Lunares'    && <MoonPhaseService />}
       {selectedService === 'Compatibilidad' && <CompatibilityService />}
+      {selectedService === 'Rituales' && <RitualService />}
+      {selectedService === 'Chakras' && <ChakraService />}
 
       {/* Contenido principal: Árbol, Carrusel, Rueda */}
       {/* Nota: Tal vez quieras ocultar esto cuando hay un servicio activo */}
