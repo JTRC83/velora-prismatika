@@ -5,12 +5,15 @@ import ChatWindow      from "./components/ChatWindow";
 import InputBar        from "./components/InputBar";
 import Curtain         from "./components/Curtain";
 import { slugify }     from "./utils/slugify";
+// Servicios existentes
 import AstroService         from './components/AstroService';
-import NumerologyService from "./components/NumerologyService";
-import MoonPhaseService from "./components/MoonPhaseService"; 
+import NumerologyService    from "./components/NumerologyService";
+import MoonPhaseService     from "./components/MoonPhaseService"; 
 import CompatibilityService from "./components/CompatibilityService"; 
-import RitualService from "./components/RitualService"; 
-import ChakraService from "./components/ChakraService"; 
+import RitualService        from "./components/RitualService"; 
+import ChakraService        from "./components/ChakraService";
+// NUEVO: Importar el servicio de Tarot
+import TarotService         from "./components/TarotService";
 
 const ICONS = {
   "Astrología Natal":  "/assets/icons/horoscopo.png",
@@ -68,7 +71,22 @@ export default function App() {
   const [curtainPhase,    setCurtainPhase]    = React.useState("idle"); // idle | closing | opening
 
   const handleSelectService = svc => {
+    // Si la cortina ya se está moviendo, no hacer nada para evitar glitches
     if (curtainPhase !== "idle") return;
+
+    // Si pulsamos el mismo servicio que ya está activo, quizás queramos cerrarlo (volver a home)
+    // Opcional: Descomenta esto si quieres que al volver a clicar se cierre
+    /* if (selectedService === svc) {
+       setCurtainPhase("closing");
+       setTimeout(() => {
+         setSelectedService(null);
+         setCurtainPhase("opening");
+         setTimeout(() => setCurtainPhase("idle"), 1200);
+       }, 1200);
+       return;
+    } 
+    */
+
     setCurtainPhase("closing");
     setTimeout(() => {
       setSelectedService(svc);
@@ -109,7 +127,14 @@ export default function App() {
             </button>
           ))}
         </div>
-        <div className="logo-placeholder" />
+        
+        {/* Al hacer clic en el centro (logo), volvemos al Home (null) */}
+        <div 
+          className="logo-placeholder cursor-pointer" 
+          onClick={() => handleSelectService(null)}
+          title="Volver al Inicio"
+        />
+        
         <div className="icon-group right-group">
           {SERVICES_RIGHT.map(s => (
             <button
@@ -132,12 +157,15 @@ export default function App() {
       {selectedService === 'Astrología Natal' && <AstroService />}
       {selectedService === 'Numerología'      && <NumerologyService />}
       {selectedService === 'Fases Lunares'    && <MoonPhaseService />}
-      {selectedService === 'Compatibilidad' && <CompatibilityService />}
-      {selectedService === 'Rituales' && <RitualService />}
-      {selectedService === 'Chakras' && <ChakraService />}
+      {selectedService === 'Compatibilidad'   && <CompatibilityService />}
+      {selectedService === 'Rituales'         && <RitualService />}
+      {selectedService === 'Chakras'          && <ChakraService />}
+      
+      {/* AQUÍ ESTABA EL CAMBIO CLAVE: Coincidir string exacto "Tarot 3 Cartas" */}
+      {selectedService === 'Tarot 3 Cartas'   && <TarotService />}
 
       {/* Contenido principal: Árbol, Carrusel, Rueda */}
-      {/* Nota: Tal vez quieras ocultar esto cuando hay un servicio activo */}
+      {/* Solo se muestra si NO hay un servicio seleccionado */}
       {!selectedService && (
         <div className="main-area w-full max-w-3xl flex flex-col md:flex-row items-start px-4 pt-4">
           <div className="tree-side pointer-events-none">

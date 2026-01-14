@@ -3,6 +3,9 @@
     "id": 0,
     "name": "El Loco",
     "arcano": "mayor",
+    "element": "Aire",
+    "number": 0,
+    "keywords": ["Inocencia", "Nuevos Comienzos", "Espontaneidad"],
     "significado": "Comienzas un viaje sin ataduras, confiando en la espontaneidad. Deja que la inocencia guíe tus pasos.",
     "significado_invertido": "Exceso de imprudencia o temeridad; evita lanzarte sin planificar. Cuidado con decisiones impulsivas."
   },
@@ -10,223 +13,319 @@
     "id": 1,
     "name": "El Mago",
     "arcano": "mayor",
+    "element": "Aire",
+    "number": 1,
+    "keywords": ["Manifestación", "Poder", "Habilidad"],
     "significado": "Tienes el poder de manifestar lo que deseas; enfoca tu voluntad. Usa tus recursos con habilidad y creatividad.",
-    "significado_invertido": "Falsa ilusión de control o engaño; revisa si manipulas o te dejas engañar. Falta de enfoque en tus objetivos."
+    "significado_invertido": "Falsa ilusión de control o engaño; revisa si manipulas o te dejas engañar. Falta de enfoque."
   },
   {
     "id": 2,
     "name": "La Sacerdotisa",
     "arcano": "mayor",
+    "element": "Agua",
+    "number": 2,
+    "keywords": ["Intuición", "Misterio", "Subconsciente"],
     "significado": "Escucha tu sabiduría interior y mantén la calma. El conocimiento oculto se revela a través de la intuición.",
-    "significado_invertido": "Bloqueo intelectual o reclusión excesiva; evita el aislamiento y la desconfianza. Confusión interior."
+    "significado_invertido": "Bloqueo intelectual o reclusión excesiva; evita el aislamiento y la desconfianza."
   },
   {
     "id": 3,
     "name": "La Emperatriz",
     "arcano": "mayor",
+    "element": "Tierra",
+    "number": 3,
+    "keywords": ["Fertilidad", "Naturaleza", "Abundancia"],
     "significado": "La abundancia y la fertilidad florecen a tu alrededor. Conecta con la naturaleza y cuida de tu entorno.",
-    "significado_invertido": "Exceso de indulgencia o pereza; descuido de responsabilidades. Bloqueo creativo o dependencia."
+    "significado_invertido": "Exceso de indulgencia o pereza; descuido de responsabilidades. Bloqueo creativo."
   },
   {
     "id": 4,
     "name": "El Emperador",
     "arcano": "mayor",
+    "element": "Fuego",
+    "number": 4,
+    "keywords": ["Autoridad", "Estructura", "Control"],
     "significado": "Tu autoridad y disciplina establecen un fundamento sólido. Lidera con responsabilidad y claridad.",
-    "significado_invertido": "Rigidez o abuso de poder; inflexibilidad mental. Evita la dominación y la obstinación."
+    "significado_invertido": "Rigidez o abuso de poder; inflexibilidad mental. Evita la dominación."
   },
   {
     "id": 5,
     "name": "El Sumo Sacerdote",
     "arcano": "mayor",
+    "element": "Tierra",
+    "number": 5,
+    "keywords": ["Tradición", "Creencias", "Guía Espiritual"],
     "significado": "Busca consejo en la tradición y en la moral. Comparte tu fe o creencias para encontrar orientación.",
-    "significado_invertido": "Dogmatismo excesivo o conformismo; cuestiona normas si te oprimen. Evita la dependencia de terceros."
+    "significado_invertido": "Dogmatismo excesivo o conformismo; cuestiona normas si te oprimen."
   },
   {
     "id": 6,
     "name": "Los Enamorados",
     "arcano": "mayor",
+    "element": "Aire",
+    "number": 6,
+    "keywords": ["Amor", "Elección", "Armonía"],
     "significado": "Una elección significativa en el amor o en valores se presenta. Sigue el llamado de tu corazón con honestidad.",
-    "significado_invertido": "Conflicto interno o indecisión emocional; evita elecciones precipitados. Temor a comprometerse."
+    "significado_invertido": "Conflicto interno o indecisión emocional; evita elecciones precipitadas."
   },
   {
     "id": 7,
     "name": "El Carro",
     "arcano": "mayor",
+    "element": "Agua",
+    "number": 7,
+    "keywords": ["Victoria", "Voluntad", "Determinación"],
     "significado": "El triunfo llega con determinación y autocontrol. Avanza con confianza, superando los obstáculos.",
-    "significado_invertido": "Falta de dirección o ego desmedido; riesgo de choques si avanzas sin enfoque. Impaciencia."
+    "significado_invertido": "Falta de dirección o ego desmedido; riesgo de choques si avanzas sin enfoque."
   },
   {
     "id": 8,
     "name": "La Justicia",
     "arcano": "mayor",
+    "element": "Aire",
+    "number": 8,
+    "keywords": ["Verdad", "Equidad", "Causa y Efecto"],
     "significado": "La verdad y la equidad se impondrán. Asume la responsabilidad de tus actos y busca el equilibrio.",
-    "significado_invertido": "Injusticia o desequilibrio; evita decisiones parciales. Culpa mal canalizada o legalismos excesivos."
+    "significado_invertido": "Injusticia o desequilibrio; evita decisiones parciales. Culpa mal canalizada."
   },
   {
     "id": 9,
     "name": "El Ermitaño",
     "arcano": "mayor",
+    "element": "Tierra",
+    "number": 9,
+    "keywords": ["Introspección", "Soledad", "Guía Interior"],
     "significado": "Retírate para encontrar tu luz interna. La introspección y la soledad te brindan claridad.",
-    "significado_invertido": "Aislamiento excesivo o melancolía profunda; no rehúyas el mundo más de la cuenta. Rigidez mental."
+    "significado_invertido": "Aislamiento excesivo o melancolía profunda; no rehúyas el mundo más de la cuenta."
   },
   {
     "id": 10,
     "name": "La Rueda de la Fortuna",
     "arcano": "mayor",
+    "element": "Fuego",
+    "number": 10,
+    "keywords": ["Ciclos", "Cambio", "Destino"],
     "significado": "Los ciclos cambian, y la suerte gira a tu favor o en tu contra. Acepta la impermanencia con serenidad.",
-    "significado_invertido": "Resistencia al cambio o mala racha prolongada; evita la frustración. Oportunidad desaprovechada."
+    "significado_invertido": "Resistencia al cambio o mala racha prolongada; evita la frustración."
   },
   {
     "id": 11,
     "name": "La Fuerza",
     "arcano": "mayor",
+    "element": "Fuego",
+    "number": 11,
+    "keywords": ["Coraje", "Compasión", "Control Suave"],
     "significado": "El valor y la compasión dominan la situación. Utiliza la gentileza para controlar los impulsos internos.",
-    "significado_invertido": "Falta de coraje o abuso de fuerza; inseguridad interior. Evita la violencia emocional."
+    "significado_invertido": "Falta de coraje o abuso de fuerza; inseguridad interior."
   },
   {
     "id": 12,
     "name": "El Colgado",
     "arcano": "mayor",
+    "element": "Agua",
+    "number": 12,
+    "keywords": ["Pausa", "Perspectiva", "Sacrificio"],
     "significado": "Es momento de pausa y de ver las cosas desde otra perspectiva. El sacrificio voluntario trae nueva visión.",
-    "significado_invertido": "Estancamiento o sacrificio innecesario; inercia mental. Evita la apatía y la inacción prolongada."
+    "significado_invertido": "Estancamiento o sacrificio innecesario; inercia mental. Evita la apatía."
   },
   {
     "id": 13,
     "name": "La Muerte",
     "arcano": "mayor",
+    "element": "Agua",
+    "number": 13,
+    "keywords": ["Fin", "Transformación", "Transición"],
     "significado": "Un ciclo termina para dar paso a la renovación. Abraza el cambio y suelta lo que ya no sirve.",
-    "significado_invertido": "Resistencia al cambio o miedo paralizante; retención de lo que debe irse. Bloqueo existencial."
+    "significado_invertido": "Resistencia al cambio o miedo paralizante; retención de lo que debe irse."
   },
   {
     "id": 14,
     "name": "La Templanza",
     "arcano": "mayor",
+    "element": "Fuego",
+    "number": 14,
+    "keywords": ["Equilibrio", "Moderación", "Paciencia"],
     "significado": "Busca el equilibrio entre extremos. La moderación y la armonía interior te guían al equilibrio.",
-    "significado_invertido": "Desequilibrio o exceso de complacencia; indecisión. Evita la dispersión de energías."
+    "significado_invertido": "Desequilibrio o exceso de complacencia; indecisión. Evita la dispersión."
   },
   {
     "id": 15,
     "name": "El Diablo",
     "arcano": "mayor",
+    "element": "Tierra",
+    "number": 15,
+    "keywords": ["Ataduras", "Materialismo", "Sombra"],
     "significado": "Enfrentas ataduras o tentaciones que te retienen. Reconoce tus sombras y libera tu voluntad.",
-    "significado_invertido": "Liberación de adicciones o miedos, pero aún hay residual de esclavitud mental. No ignores la responsabilidad."
+    "significado_invertido": "Liberación de adicciones o miedos, pero aún hay residual de esclavitud mental."
   },
   {
     "id": 16,
     "name": "La Torre",
     "arcano": "mayor",
+    "element": "Fuego",
+    "number": 16,
+    "keywords": ["Caos", "Revelación", "Despertar"],
     "significado": "Una sacudida repentina derriba estructuras falsas. La revelación dolorosa conduce a una reconstrucción sincera.",
-    "significado_invertido": "Catástrofe interna en rechazo al cambio; evitas destruir lo que ya no sirve. Posible colapso sin aprendizaje."
+    "significado_invertido": "Catástrofe interna en rechazo al cambio; evitas destruir lo que ya no sirve."
   },
   {
     "id": 17,
     "name": "La Estrella",
     "arcano": "mayor",
+    "element": "Aire",
+    "number": 17,
+    "keywords": ["Esperanza", "Inspiración", "Sanación"],
     "significado": "La esperanza y la inspiración renacen en tu camino. Confía en el agua sanadora de tu intuición.",
-    "significado_invertido": "Desánimo temporal o fe perdida; falta de confianza en tu guía interior. Busca fuentes externas de inspiración."
+    "significado_invertido": "Desánimo temporal o fe perdida; falta de confianza en tu guía interior."
   },
   {
     "id": 18,
     "name": "La Luna",
     "arcano": "mayor",
+    "element": "Agua",
+    "number": 18,
+    "keywords": ["Ilusión", "Miedo", "Sueños"],
     "significado": "El subconsciente te muestra ilusiones y miedos. Avanza con cautela, buscando la luz de la verdad.",
-    "significado_invertido": "Confusión extrema o engaño oculto; evita decisiones nocturnas. Aclara la mente antes de actuar."
+    "significado_invertido": "Confusión extrema o engaño oculto; evita decisiones nocturnas."
   },
   {
     "id": 19,
     "name": "El Sol",
     "arcano": "mayor",
+    "element": "Fuego",
+    "number": 19,
+    "keywords": ["Alegría", "Éxito", "Vitalidad"],
     "significado": "La claridad, la alegría y el éxito florecen. Disfruta del momento, compartiendo tu luz con los demás.",
-    "significado_invertido": "Falsas ilusiones de felicidad o arrogancia; egocentrismo. Evita la ceguera ante problemas reales."
+    "significado_invertido": "Falsas ilusiones de felicidad o arrogancia; egocentrismo."
   },
   {
     "id": 20,
     "name": "El Juicio",
     "arcano": "mayor",
+    "element": "Fuego",
+    "number": 20,
+    "keywords": ["Renacimiento", "Llamada", "Absolución"],
     "significado": "Llega la llamada a la transformación y al perdón. Renace con conciencia, elevando tu propósito.",
-    "significado_invertido": "Negación de responsabilidad o culpa no asumida; estancamiento y autojuicio excesivo. Busca la reconciliación."
+    "significado_invertido": "Negación de responsabilidad o culpa no asumida; estancamiento."
   },
   {
     "id": 21,
     "name": "El Mundo",
     "arcano": "mayor",
+    "element": "Tierra",
+    "number": 21,
+    "keywords": ["Totalidad", "Logro", "Viajes"],
     "significado": "La culminación y el logro completan el ciclo. Celebra la integración y la realización plena.",
-    "significado_invertido": "Satisfacción aparente pero falta de cierre interior; busqueda de un nuevo reto. Evita la complacencia."
+    "significado_invertido": "Satisfacción aparente pero falta de cierre interior; búsqueda de un nuevo reto."
   },
   {
     "id": 22,
     "name": "As de Bastos",
     "arcano": "menor",
+    "element": "Fuego",
+    "number": 1,
+    "keywords": ["Inspiración", "Potencia", "Nuevo Comienzo"],
     "significado": "Inicia un proyecto apasionante; la chispa creativa te impulsa. Abraza la energía de un nuevo comienzo.",
-    "significado_invertido": "Falta de iniciativa o bloqueo creativo; dudas sobre el proyecto. Revisa si el entusiasmo es real o efímero."
+    "significado_invertido": "Falta de iniciativa o bloqueo creativo; dudas sobre el proyecto."
   },
   {
     "id": 23,
     "name": "Dos de Bastos",
     "arcano": "menor",
+    "element": "Fuego",
+    "number": 2,
+    "keywords": ["Planificación", "Decisiones", "Descubrimiento"],
     "significado": "Planeas la próxima aventura con visión clara. Confía en tu intuición para escoger el mejor camino.",
-    "significado_invertido": "Inseguridad o temor al cambio; indecisión paralizante. Aclara tus prioridades antes de actuar."
+    "significado_invertido": "Inseguridad o temor al cambio; indecisión paralizante."
   },
   {
     "id": 24,
     "name": "Tres de Bastos",
     "arcano": "menor",
+    "element": "Fuego",
+    "number": 3,
+    "keywords": ["Expansión", "Progreso", "Horizonte"],
     "significado": "Observas el horizonte con optimismo; tus esfuerzos comienzan a dar frutos. Mantén la vista en el futuro.",
-    "significado_invertido": "Falsas expectativas o exceso de confianza; retrasos en proyectos. Ajusta tu planificación."
+    "significado_invertido": "Falsas expectativas o exceso de confianza; retrasos en proyectos."
   },
   {
     "id": 25,
     "name": "Cuatro de Bastos",
     "arcano": "menor",
+    "element": "Fuego",
+    "number": 4,
+    "keywords": ["Celebración", "Hogar", "Armonía"],
     "significado": "Celebración y estabilidad en tu entorno. Disfruta de la unión con amigos y familia.",
-    "significado_invertido": "Falsas apariencias de armonía; tensiones ocultas. No ignores problemas subyacentes en el grupo."
+    "significado_invertido": "Falsas apariencias de armonía; tensiones ocultas."
   },
   {
     "id": 26,
     "name": "Cinco de Bastos",
     "arcano": "menor",
+    "element": "Fuego",
+    "number": 5,
+    "keywords": ["Conflicto", "Competencia", "Tensión"],
     "significado": "Surgen conflictos y competencia; la rivalidad puede pulir tu carácter. Abraza el desafío con espíritu lúdico.",
-    "significado_invertido": "Caos excesivo o peleas innecesarias; evita la confrontación sin sentido. Reordena tus prioridades."
+    "significado_invertido": "Caos excesivo o peleas innecesarias; evita la confrontación sin sentido."
   },
   {
     "id": 27,
     "name": "Seis de Bastos",
     "arcano": "menor",
+    "element": "Fuego",
+    "number": 6,
+    "keywords": ["Éxito", "Reconocimiento", "Victoria"],
     "significado": "Recibes reconocimiento por tus logros; el éxito te anima. Comparte la victoria con quienes te apoyan.",
-    "significado_invertido": "Falsa exaltación o ego inflado; envidia de otros. Mantén la humildad y reconoce ayuda recibida."
+    "significado_invertido": "Falsa exaltación o ego inflado; envidia de otros."
   },
   {
     "id": 28,
     "name": "Siete de Bastos",
     "arcano": "menor",
+    "element": "Fuego",
+    "number": 7,
+    "keywords": ["Defensa", "Perseverancia", "Desafío"],
     "significado": "Defiendes tu posición en medio de la adversidad; mantén firme tu convicción. La perseverancia te fortalece.",
-    "significado_invertido": "Saltas sin estrategia; conflicto innecesario. Revisa si vale la pena defender esa postura."
+    "significado_invertido": "Saltas sin estrategia; conflicto innecesario."
   },
   {
     "id": 29,
     "name": "Ocho de Bastos",
     "arcano": "menor",
+    "element": "Fuego",
+    "number": 8,
+    "keywords": ["Velocidad", "Movimiento", "Acción"],
     "significado": "Los acontecimientos se mueven rápidamente; prepárate para la acción rápida. El viento sopla a tu favor.",
-    "significado_invertido": "Demasiado apresuramiento o confusión repentina; evita decisiones impulsivas. Frena antes de actuar."
+    "significado_invertido": "Demasiado apresuramiento o confusión repentina; evita decisiones impulsivas."
   },
   {
     "id": 30,
     "name": "Nueve de Bastos",
     "arcano": "menor",
+    "element": "Fuego",
+    "number": 9,
+    "keywords": ["Resiliencia", "Persistencia", "Última Defensa"],
     "significado": "Estás cerca de la meta, pero exhausto por la contienda. Resiste unos instantes más; la victoria es tuya.",
-    "significado_invertido": "Fatiga extrema o resistencia obstinada; riesgo de colapso. Busca apoyo para recargar energías."
+    "significado_invertido": "Fatiga extrema o resistencia obstinada; riesgo de colapso."
   },
   {
     "id": 31,
     "name": "Diez de Bastos",
     "arcano": "menor",
+    "element": "Fuego",
+    "number": 10,
+    "keywords": ["Carga", "Responsabilidad", "Estrés"],
     "significado": "El peso de tus responsabilidades resulta abrumador. Busca alivio delegando tareas o ajustando prioridades.",
-    "significado_invertido": "Carga injusta o abuso de poder; te sientes explotado. Aligera tu mochila y pide ayuda."
+    "significado_invertido": "Carga injusta o abuso de poder; te sientes explotado."
   },
   {
     "id": 32,
     "name": "Paje de Bastos",
     "arcano": "menor",
+    "element": "Fuego",
+    "number": 11,
+    "keywords": ["Entusiasmo", "Exploración", "Noticia"],
     "significado": "Un mensaje alentador llega con entusiasmo juvenil. Mantén la mente abierta a nuevas oportunidades.",
     "significado_invertido": "Informaciones confusas o mensaje inmaduro; verifica fuentes antes de actuar."
   },
@@ -234,97 +333,139 @@
     "id": 33,
     "name": "Caballero de Bastos",
     "arcano": "menor",
+    "element": "Fuego",
+    "number": 12,
+    "keywords": ["Pasión", "Aventura", "Impulsividad"],
     "significado": "Tu energía arrolladora te impulsa hacia la acción. Comprende que la impaciencia puede causar choques.",
-    "significado_invertido": "Impulsividad desmedida o temerario; evite choques innecesarios. Controla tu fuego interior."
+    "significado_invertido": "Impulsividad desmedida o temerario; evite choques innecesarios."
   },
   {
     "id": 34,
     "name": "Reina de Bastos",
     "arcano": "menor",
+    "element": "Fuego",
+    "number": 13,
+    "keywords": ["Confianza", "Independencia", "Calidez"],
     "significado": "Irradias carisma y creatividad; tu intuición se agudiza. Lidera con calidez y valentía.",
-    "significado_invertido": "Orgullo excesivo o manipulación emocional; cuida la soberbia. No ignores necesidades ajenas."
+    "significado_invertido": "Orgullo excesivo o manipulación emocional; cuida la soberbia."
   },
   {
     "id": 35,
     "name": "Rey de Bastos",
     "arcano": "menor",
+    "element": "Fuego",
+    "number": 14,
+    "keywords": ["Liderazgo", "Visión", "Emprendimiento"],
     "significado": "Eres un líder visionario y lleno de iniciativa. Inspira a otros con tu entusiasmo y determinación.",
-    "significado_invertido": "Autoritarismo o fanatismo; impones tu visión sin escuchar. Evita la arrogancia de líder absoluto."
+    "significado_invertido": "Autoritarismo o fanatismo; impones tu visión sin escuchar."
   },
   {
     "id": 36,
     "name": "As de Copas",
     "arcano": "menor",
+    "element": "Agua",
+    "number": 1,
+    "keywords": ["Amor", "Compasión", "Creatividad"],
     "significado": "Fluye el amor y la intuición profunda; nace una nueva oportunidad emocional. Abre tu corazón al afecto.",
-    "significado_invertido": "Emoción bloqueada o inicio fallido; cuida tus expectativas en lo sentimental. Evita idealizar."
+    "significado_invertido": "Emoción bloqueada o inicio fallido; cuida tus expectativas en lo sentimental."
   },
   {
     "id": 37,
     "name": "Dos de Copas",
     "arcano": "menor",
+    "element": "Agua",
+    "number": 2,
+    "keywords": ["Unión", "Pareja", "Conexión"],
     "significado": "Una relación armoniosa se establece; emerge la conexión íntima. La reciprocidad fortalece el lazo.",
-    "significado_invertido": "Co-dependencia o desarmonía en la pareja; evita desequilibrios emocionales. Reflexiona sobre límites."
+    "significado_invertido": "Co-dependencia o desarmonía en la pareja; evita desequilibrios emocionales."
   },
   {
     "id": 38,
     "name": "Tres de Copas",
     "arcano": "menor",
+    "element": "Agua",
+    "number": 3,
+    "keywords": ["Amistad", "Comunidad", "Celebración"],
     "significado": "Celebras la amistad y la alegría compartida. El apoyo mutuo sana y anima el espíritu.",
-    "significado_invertido": "Exceso de indulgencia social o superficialidad; cuidado con fiestas que distraigan del propósito."
+    "significado_invertido": "Exceso de indulgencia social o superficialidad; cuidado con fiestas que distraigan."
   },
   {
     "id": 39,
     "name": "Cuatro de Copas",
     "arcano": "menor",
+    "element": "Agua",
+    "number": 4,
+    "keywords": ["Apatía", "Contemplación", "Desconexión"],
     "significado": "La apatía o el tedio invaden tu ánimo; abre los ojos a lo que te ofrecen. La gratitud renueva la perspectiva.",
-    "significado_invertido": "Estancamiento emocional prolongado; evitas nuevas oportunidades por pereza mental. Cambia tu actitud."
+    "significado_invertido": "Estancamiento emocional prolongado; evitas nuevas oportunidades por pereza mental."
   },
   {
     "id": 40,
     "name": "Cinco de Copas",
     "arcano": "menor",
+    "element": "Agua",
+    "number": 5,
+    "keywords": ["Pérdida", "Arrepentimiento", "Duelo"],
     "significado": "Lamentas pérdidas emocionales; tres vasos derramados te duelen. Reconoce lo que queda y sana con aceptación.",
-    "significado_invertido": "Rencor persistente o incapacidad de soltar; aferrarte al pasado frena tu sanación. Deja ir el dolor."
+    "significado_invertido": "Rencor persistente o incapacidad de soltar; aferrarte al pasado frena tu sanación."
   },
   {
     "id": 41,
     "name": "Seis de Copas",
     "arcano": "menor",
+    "element": "Agua",
+    "number": 6,
+    "keywords": ["Nostalgia", "Recuerdos", "Inocencia"],
     "significado": "La nostalgia te lleva a recuerdos de la infancia. Agradece las lecciones pasadas para encontrar consuelo.",
-    "significado_invertido": "Idealización excesiva del pasado o evasión presente; no te quedes anclado. Vive el ahora."
+    "significado_invertido": "Idealización excesiva del pasado o evasión presente; no te quedes anclado."
   },
   {
     "id": 42,
     "name": "Siete de Copas",
     "arcano": "menor",
+    "element": "Agua",
+    "number": 7,
+    "keywords": ["Fantasía", "Ilusión", "Opciones"],
     "significado": "Muchas opciones ilusorias se presentan; los sueños compiten con la realidad. Elige con discernimiento.",
-    "significado_invertido": "Confusión extrema o engaño emocional; difícil ver la verdad entre las fantasías. Clarifica tu deseo."
+    "significado_invertido": "Confusión extrema o engaño emocional; difícil ver la verdad entre las fantasías."
   },
   {
     "id": 43,
     "name": "Ocho de Copas",
     "arcano": "menor",
+    "element": "Agua",
+    "number": 8,
+    "keywords": ["Abandono", "Búsqueda", "Retiro"],
     "significado": "Abandonas lo que ya no cumple tu alma; emprendes búsqueda interior. El desapego abre paso a la verdad.",
-    "significado_invertido": "Huida emocional sin resolución; evitas enfrentar tus problemas. Retiro prematuro e inmadurez afectiva."
+    "significado_invertido": "Huida emocional sin resolución; evitas enfrentar tus problemas."
   },
   {
     "id": 44,
     "name": "Nueve de Copas",
     "arcano": "menor",
+    "element": "Agua",
+    "number": 9,
+    "keywords": ["Satisfacción", "Deseo Cumplido", "Gratitud"],
     "significado": "Se cumple un deseo emocional; la satisfacción te rodea. Disfruta con humildad y comparte tu dicha.",
-    "significado_invertido": "Satisfacción superficial o egoísta; arrogancia emocional. Evita la complacencia estéril."
+    "significado_invertido": "Satisfacción superficial o egoísta; arrogancia emocional."
   },
   {
     "id": 45,
     "name": "Diez de Copas",
     "arcano": "menor",
+    "element": "Agua",
+    "number": 10,
+    "keywords": ["Felicidad", "Armonía Familiar", "Plenitud"],
     "significado": "Armonía familiar y plenitud emocional florecen. Atesora la felicidad compartida con tus seres queridos.",
-    "significado_invertido": "Ilusión de perfección fugaz en la familia; ocultan conflictos profundos. No ignores tensiones."
+    "significado_invertido": "Ilusión de perfección fugaz en la familia; ocultan conflictos profundos."
   },
   {
     "id": 46,
     "name": "Paje de Copas",
     "arcano": "menor",
+    "element": "Agua",
+    "number": 11,
+    "keywords": ["Mensaje", "Intuición", "Sueño"],
     "significado": "Un mensaje romántico o intuitivo te sorprende. Mantén el corazón abierto a lo inesperado.",
     "significado_invertido": "Noticias engañosas o inmadurez emocional; revisa cada emoción antes de creerla ciegamente."
   },
@@ -332,195 +473,279 @@
     "id": 47,
     "name": "Caballero de Copas",
     "arcano": "menor",
+    "element": "Agua",
+    "number": 12,
+    "keywords": ["Romance", "Encanto", "Imaginación"],
     "significado": "Proyectas sensibilidad y encanto en lo romántico. Sé auténtico y evita engaños emocionales.",
-    "significado_invertido": "Seductor vacuo o promesas huecas; cuidado con la fantasía sin compromiso. No cuentes mentiras al corazón."
+    "significado_invertido": "Seductor vacuo o promesas huecas; cuidado con la fantasía sin compromiso."
   },
   {
     "id": 48,
     "name": "Reina de Copas",
     "arcano": "menor",
+    "element": "Agua",
+    "number": 13,
+    "keywords": ["Empatía", "Cuidado", "Intuición"],
     "significado": "Tu empatía y escucha brindan sanación. Confía en tu intuición para guiar a quienes te rodean.",
-    "significado_invertido": "Exceso de empatía que absorbe problemas ajenos; límites difusos. Protégete del dolor externo."
+    "significado_invertido": "Exceso de empatía que absorbe problemas ajenos; límites difusos."
   },
   {
     "id": 49,
     "name": "Rey de Copas",
     "arcano": "menor",
+    "element": "Agua",
+    "number": 14,
+    "keywords": ["Equilibrio Emocional", "Diplomacia", "Control"],
     "significado": "Controlas las emociones con madurez y compasión. Lidera con el corazón equilibrado para inspirar armonía.",
-    "significado_invertido": "Manipulación emocional o frialdad disfrazada de calma. No evadas tus propios sentimientos."
+    "significado_invertido": "Manipulación emocional o frialdad disfrazada de calma."
   },
   {
     "id": 50,
     "name": "As de Espadas",
     "arcano": "menor",
+    "element": "Aire",
+    "number": 1,
+    "keywords": ["Claridad", "Verdad", "Corte"],
     "significado": "La verdad se corta como una espada; nace claridad mental. Usa la honestidad para resolver conflictos.",
-    "significado_invertido": "Veredicto injusto o palabras hirientes; cuidado con el juicio precipitado. Evita ofender innecesariamente."
+    "significado_invertido": "Veredicto injusto o palabras hirientes; cuidado con el juicio precipitado."
   },
   {
     "id": 51,
     "name": "Dos de Espadas",
     "arcano": "menor",
+    "element": "Aire",
+    "number": 2,
+    "keywords": ["Dilema", "Bloqueo", "Elección"],
     "significado": "Te debates entre dudas sin ver la solución. Baja la guardia y confía en tu intelecto para decidir.",
-    "significado_invertido": "Negación de la realidad o bloqueo emocional; evitas decisiones difíciles. Rompe el estancamiento."
+    "significado_invertido": "Negación de la realidad o bloqueo emocional; evitas decisiones difíciles."
   },
   {
     "id": 52,
     "name": "Tres de Espadas",
     "arcano": "menor",
+    "element": "Aire",
+    "number": 3,
+    "keywords": ["Dolor", "Traición", "Separación"],
     "significado": "El dolor emocional aflora con crueldad; acepta la tristeza para sanar. En la honestidad yace la liberación.",
-    "significado_invertido": "Resentimiento prolongado o incapacidad de perdonar; heridas sin sanar. Afróntalas con compasión."
+    "significado_invertido": "Resentimiento prolongado o incapacidad de perdonar; heridas sin sanar."
   },
   {
     "id": 53,
     "name": "Cuatro de Espadas",
     "arcano": "menor",
+    "element": "Aire",
+    "number": 4,
+    "keywords": ["Descanso", "Recuperación", "Contemplación"],
     "significado": "Necesitas reposo mental; retírate para recargar fuerzas. La meditación te traerá paz interior.",
-    "significado_invertido": "Estancamiento prolongado o escapismo; retrasas la acción necesaria. No te aísles sin motivo."
+    "significado_invertido": "Estancamiento prolongado o escapismo; retrasas la acción necesaria."
   },
   {
     "id": 54,
     "name": "Cinco de Espadas",
     "arcano": "menor",
+    "element": "Aire",
+    "number": 5,
+    "keywords": ["Conflicto", "Derrota", "Deshonor"],
     "significado": "Las disputas dejan un sabor amargo; la victoria cuesta la armonía. Elige tus batallas con sabiduría.",
-    "significado_invertido": "Humillación injusta o rendición sin honor; evitas conflictos por temor. Revalora tu posición."
+    "significado_invertido": "Humillación injusta o rendición sin honor; evitas conflictos por temor."
   },
   {
     "id": 55,
     "name": "Seis de Espadas",
     "arcano": "menor",
+    "element": "Aire",
+    "number": 6,
+    "keywords": ["Transición", "Viaje", "Recuperación"],
     "significado": "Te alejas de aguas turbulentas hacia un futuro más tranquilo. El cambio es necesario para sanar.",
-    "significado_invertido": "Huida precipitada sin resolución; evitas enfrentar problemas centrales. Busca estabilidad antes de partir."
+    "significado_invertido": "Huida precipitada sin resolución; evitas enfrentar problemas centrales."
   },
   {
     "id": 56,
     "name": "Siete de Espadas",
     "arcano": "menor",
+    "element": "Aire",
+    "number": 7,
+    "keywords": ["Estrategia", "Engaño", "Sigilo"],
     "significado": "La estrategia y el sigilo dominan la situación; cuidado con engaños. Actúa con integridad en la sombra.",
-    "significado_invertido": "Traición o engaño descubierto; culpas ocultas saldrán a la luz. Evita la duplicidad moral."
+    "significado_invertido": "Traición o engaño descubierto; culpas ocultas saldrán a la luz."
   },
   {
     "id": 57,
     "name": "Ocho de Espadas",
     "arcano": "menor",
+    "element": "Aire",
+    "number": 8,
+    "keywords": ["Restricción", "Miedo", "Atrapado"],
     "significado": "Te sientes atrapado por pensamientos limitantes. Reconoce tus cadenas mentales y busca liberarte.",
-    "significado_invertido": "Parálisis mental autoimpuesta; obstáculo interior sobrevalorado. Enfrenta tus miedos con decisión."
+    "significado_invertido": "Parálisis mental autoimpuesta; obstáculo interior sobrevalorado."
   },
   {
     "id": 58,
     "name": "Nueve de Espadas",
     "arcano": "menor",
+    "element": "Aire",
+    "number": 9,
+    "keywords": ["Ansiedad", "Pesadilla", "Preocupación"],
     "significado": "Las preocupaciones nocturnas te roban la calma; enfrenta tus miedos en el día. La luz disipa las sombras.",
-    "significado_invertido": "Culpa obsesiva o pesadillas constantes; ansiedad sin control. Busca ayuda para aliviar el estrés mental."
+    "significado_invertido": "Culpa obsesiva o pesadillas constantes; ansiedad sin control."
   },
   {
     "id": 59,
     "name": "Diez de Espadas",
     "arcano": "menor",
+    "element": "Aire",
+    "number": 10,
+    "keywords": ["Final", "Traición", "Crisis"],
     "significado": "Un final doloroso llega a su punto máximo; acepta el cierre para renacer. La noche obstinada da paso al alba.",
-    "significado_invertido": "Desesperanza absoluta o autocompasión; cierre sin aprendizaje. Encuentra la lección tras el dolor."
+    "significado_invertido": "Desesperanza absoluta o autocompasión; cierre sin aprendizaje."
   },
   {
     "id": 60,
     "name": "Paje de Espadas",
     "arcano": "menor",
+    "element": "Aire",
+    "number": 11,
+    "keywords": ["Curiosidad", "Vigilancia", "Mente Aguda"],
     "significado": "Tu mente inquisitiva busca verdades; mantén la mente abierta. Evita juicios precipitados y escucha primero.",
-    "significado_invertido": "Críticas destructivas o chismes; información mal interpretada. Controla la impulsividad verbal."
+    "significado_invertido": "Críticas destructivas o chismes; información mal interpretada."
   },
   {
     "id": 61,
     "name": "Caballero de Espadas",
     "arcano": "menor",
-    "significado": "Tu impulsividad puede provocar enfrentamientos; canaliza tu energía en acciones constructivas. Mantén el coraje con prudencia.",
-    "significado_invertido": "Ira sin control o agresividad verbal; riesgo de conflictos inútiles. Domina tus instintos antes de avanzar."
+    "element": "Aire",
+    "number": 12,
+    "keywords": ["Acción", "Impulsividad", "Ambición"],
+    "significado": "Tu impulsividad puede provocar enfrentamientos; canaliza tu energía en acciones constructivas.",
+    "significado_invertido": "Ira sin control o agresividad verbal; riesgo de conflictos inútiles."
   },
   {
     "id": 62,
     "name": "Reina de Espadas",
     "arcano": "menor",
+    "element": "Aire",
+    "number": 13,
+    "keywords": ["Independencia", "Percepción", "Claridad"],
     "significado": "Tu lógica y objetividad son agudas; dices la verdad sin rodeos. Cuida que la franqueza no hiera sin razón.",
-    "significado_invertido": "Crueldad o frialdad emocional; palabras duras sin empatía. No uses tu intelecto para herir."
+    "significado_invertido": "Crueldad o frialdad emocional; palabras duras sin empatía."
   },
   {
     "id": 63,
     "name": "Rey de Espadas",
     "arcano": "menor",
+    "element": "Aire",
+    "number": 14,
+    "keywords": ["Autoridad", "Verdad", "Intelecto"],
     "significado": "Gobiernas con mente fría y justa; tus decisiones se basan en hechos. La autoridad exige responsabilidad.",
-    "significado_invertido": "Tiranía intelectual o injusticia disfrazada de razón. Evita el abuso de poder y la pedantería."
+    "significado_invertido": "Tiranía intelectual o injusticia disfrazada de razón. Evita la pedantería."
   },
   {
     "id": 64,
     "name": "As de Oros",
     "arcano": "menor",
+    "element": "Tierra",
+    "number": 1,
+    "keywords": ["Oportunidad", "Prosperidad", "Abundancia"],
     "significado": "Surge una oportunidad material próspera; un nuevo comienzo en finanzas. Cultiva la semilla con disciplina.",
-    "significado_invertido": "Aversión al cambio o temor a invertir; oportunidad perdida. No dejes pasar el momento de sembrar."
+    "significado_invertido": "Aversión al cambio o temor a invertir; oportunidad perdida."
   },
   {
     "id": 65,
     "name": "Dos de Oros",
     "arcano": "menor",
+    "element": "Tierra",
+    "number": 2,
+    "keywords": ["Equilibrio", "Adaptabilidad", "Prioridades"],
     "significado": "Balanceas prioridades materiales y emocionales. La adaptabilidad te permite prosperar en la incertidumbre.",
-    "significado_invertido": "Desorganización o sobrecarga; intentas abarcar demasiado. Encuentra estabilidad antes de emprender más."
+    "significado_invertido": "Desorganización o sobrecarga; intentas abarcar demasiado."
   },
   {
     "id": 66,
     "name": "Tres de Oros",
     "arcano": "menor",
+    "element": "Tierra",
+    "number": 3,
+    "keywords": ["Trabajo en Equipo", "Colaboración", "Maestría"],
     "significado": "El trabajo en equipo y la maestría se reconocen. Acepta las críticas constructivas para mejorar tus proyectos.",
-    "significado_invertido": "Colaboración fallida o falta de reconocimiento; esfuerzo solitario que no avanza. Ajusta tu comunicación."
+    "significado_invertido": "Colaboración fallida o falta de reconocimiento; esfuerzo solitario que no avanza."
   },
   {
     "id": 67,
     "name": "Cuatro de Oros",
     "arcano": "menor",
+    "element": "Tierra",
+    "number": 4,
+    "keywords": ["Seguridad", "Avaricia", "Estabilidad"],
     "significado": "La avaricia o el miedo a perder te limitan. Aprende a compartir para que tu riqueza crezca en armonía.",
-    "significado_invertido": "Posesividad extrema o tacañería; obstaculizas el flujo de la abundancia. Suelta el apego al dinero."
+    "significado_invertido": "Posesividad extrema o tacañería; obstaculizas el flujo de la abundancia."
   },
   {
     "id": 68,
     "name": "Cinco de Oros",
     "arcano": "menor",
+    "element": "Tierra",
+    "number": 5,
+    "keywords": ["Pobreza", "Aislamiento", "Inseguridad"],
     "significado": "Las dificultades financieras y la sensación de carencia pesan en tu ánimo. Pide ayuda y confía en la solidaridad.",
-    "significado_invertido": "Orgullo herido que impide buscar apoyo; aislamiento en la crisis. Acepta la colaboración ajena."
+    "significado_invertido": "Orgullo herido que impide buscar apoyo; aislamiento en la crisis."
   },
   {
     "id": 69,
     "name": "Seis de Oros",
     "arcano": "menor",
+    "element": "Tierra",
+    "number": 6,
+    "keywords": ["Generosidad", "Caridad", "Compartir"],
     "significado": "La generosidad y la ayuda mutua equilibran las finanzas. Agradece lo que recibes y comparte sin reservas.",
-    "significado_invertido": "Desequilibrio en dar y recibir; chantaje emocional o ayuda egoísta. Busca reciprocidad genuina."
+    "significado_invertido": "Desequilibrio en dar y recibir; chantaje emocional o ayuda egoísta."
   },
   {
     "id": 70,
     "name": "Siete de Oros",
     "arcano": "menor",
+    "element": "Tierra",
+    "number": 7,
+    "keywords": ["Paciencia", "Inversión", "Espera"],
     "significado": "Tu esfuerzo se encuentra en fase de espera; la cosecha tardará, pero llegará. Mantente paciente y perseverante.",
-    "significado_invertido": "Impaciencia o abandono prematuro; no valoras el proceso de crecimiento. Retoma tu disciplina."
+    "significado_invertido": "Impaciencia o abandono prematuro; no valoras el proceso de crecimiento."
   },
   {
     "id": 71,
     "name": "Ocho de Oros",
     "arcano": "menor",
+    "element": "Tierra",
+    "number": 8,
+    "keywords": ["Dedicación", "Habilidad", "Perfeccionismo"],
     "significado": "El aprendizaje constante y la habilidad manual se perfeccionan. Enfócate en los detalles para alcanzar la excelencia.",
-    "significado_invertido": "Perfeccionismo excesivo o rutina aburrida; te atas a la técnica sin amar el proceso. Renueva tu inspiración."
+    "significado_invertido": "Perfeccionismo excesivo o rutina aburrida; te atas a la técnica sin amar el proceso."
   },
   {
     "id": 72,
     "name": "Nueve de Oros",
     "arcano": "menor",
+    "element": "Tierra",
+    "number": 9,
+    "keywords": ["Abundancia", "Lujo", "Autosuficiencia"],
     "significado": "La independencia financiera y el disfrute de tus logros ocupan tu vida. Disfruta los frutos de tu esfuerzo.",
-    "significado_invertido": "Autosuficiencia exagerada o boato vano; falsa sensación de seguridad. No ignores vulnerabilidades."
+    "significado_invertido": "Autosuficiencia exagerada o boato vano; falsa sensación de seguridad."
   },
   {
     "id": 73,
     "name": "Diez de Oros",
     "arcano": "menor",
+    "element": "Tierra",
+    "number": 10,
+    "keywords": ["Riqueza", "Familia", "Legado"],
     "significado": "La riqueza compartida y la estabilidad familiar se consolidan. Valora el patrimonio espiritual y material.",
-    "significado_invertido": "Apariencia de éxito sin sólidos cimientos; desunión oculta. Revisa relaciones familiares."
+    "significado_invertido": "Apariencia de éxito sin sólidos cimientos; desunión oculta."
   },
   {
     "id": 74,
     "name": "Paje de Oros",
     "arcano": "menor",
+    "element": "Tierra",
+    "number": 11,
+    "keywords": ["Manifestación", "Estudio", "Nuevo Proyecto"],
     "significado": "Un mensaje relacionado con trabajo o finanzas llega puntual. Presta atención a las oportunidades prácticas.",
     "significado_invertido": "Noticia insuficiente o falsa promesa económica; verifica antes de invertir esperanzas."
   },
@@ -528,13 +753,19 @@
     "id": 75,
     "name": "Caballero de Oros",
     "arcano": "menor",
+    "element": "Tierra",
+    "number": 12,
+    "keywords": ["Eficiencia", "Rutina", "Conservadurismo"],
     "significado": "La constancia y la diligencia te conducen al éxito material. Evita la rigidez y mantén la flexibilidad.",
-    "significado_invertido": "Obsesión por la rutina o falta de motivación; te atas a la seguridad sin arriesgar. Busca balance."
+    "significado_invertido": "Obsesión por la rutina o falta de motivación; te atas a la seguridad sin arriesgar."
   },
   {
     "id": 76,
     "name": "Reina de Oros",
     "arcano": "menor",
+    "element": "Tierra",
+    "number": 13,
+    "keywords": ["Practicidad", "Confort", "Seguridad"],
     "significado": "Eres cuidadosa con los asuntos domésticos y financieros. Tu generosidad y estabilidad inspiran confianza.",
     "significado_invertido": "Exceso de preocupación material o descuido emocional; te limitas a lo práctico sin gozo."
   },
@@ -542,7 +773,10 @@
     "id": 77,
     "name": "Rey de Oros",
     "arcano": "menor",
+    "element": "Tierra",
+    "number": 14,
+    "keywords": ["Riqueza", "Negocios", "Liderazgo"],
     "significado": "Gobiernas con sabiduría práctica y prosperidad. Tu liderazgo garantiza seguridad y abundancia para tu entorno.",
-    "significado_invertido": "Tiranía financiera o avaricia; control excesivo sobre recursos ajenos. No permitas que el poder te encierre."
+    "significado_invertido": "Tiranía financiera o avaricia; control excesivo sobre recursos ajenos."
   }
 ]

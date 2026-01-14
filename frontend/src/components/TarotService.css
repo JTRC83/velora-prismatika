@@ -1,0 +1,475 @@
+/* VARIABLES DE ESTILO VELORA (Modo Integrado) */
+:root {
+  /* Tono Verde Oliva/Bronce oscuro extraído del logotipo de Velora */
+  --velora-accent: #556b2f; 
+  --velora-accent-dark: #3a4a20;
+  
+  /* Dorado antiguo para detalles */
+  --velora-gold: #c5a028; 
+  
+  /* Texto oscuro para leer bien sobre fondo claro */
+  --velora-text-main: #2c241b; 
+  
+  --card-ratio: 1.6;
+  --card-width: 200px;
+}
+
+.tarot-service-container {
+  width: 100%;
+  min-height: 80vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  /* Eliminamos el fondo negro para dejar ver el bg-amber-50 de la App */
+  background-color: transparent; 
+  font-family: 'Cinzel', serif; 
+  padding-bottom: 50px;
+  color: var(--velora-text-main);
+}
+
+/* --- TÍTULOS Y TEXTOS --- */
+
+.tarot-header h2 {
+  font-size: 3rem;
+  font-weight: 700;
+  /* Color del logotipo Velora (Verde/Bronce) */
+  color: var(--velora-accent-dark); 
+  /* Sombra suave y dorada en lugar de negra dura */
+  text-shadow: 0px 1px 1px rgba(255, 255, 255, 0.8), 
+               0 0 20px rgba(197, 160, 40, 0.3);
+  margin-bottom: 0.5rem;
+  text-transform: uppercase;
+  letter-spacing: 4px;
+}
+
+.velora-whisper {
+  font-style: italic;
+  font-family: 'Playfair Display', serif;
+  font-size: 1.2rem;
+  color: var(--velora-accent); /* Verde oliva suave */
+  text-shadow: none;
+  margin-bottom: 2rem;
+  font-weight: 500;
+  border-bottom: 1px solid rgba(85, 107, 47, 0.2); /* Línea divisoria sutil */
+  padding-bottom: 10px;
+}
+
+/* --- MESA DE JUEGO --- */
+
+.tarot-table {
+  width: 100%;
+  max-width: 1200px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 500px;
+  
+  /* Eliminamos el fondo negro radial. 
+     Usamos una viñeta muy sutil para dar profundidad sin oscurecer */
+  background: radial-gradient(circle at center, rgba(255,255,255,0.4) 0%, rgba(139, 116, 59, 0.1) 80%);
+  
+  border-radius: 20px;
+  /* Borde más sutil, estilo marco de libro antiguo */
+  border: 1px solid rgba(85, 107, 47, 0.3);
+  box-shadow: inset 0 0 60px rgba(139, 116, 59, 0.1); 
+  padding: 2rem;
+  perspective: 1000px;
+}
+
+/* --- MAZO (DECK) --- */
+.deck-container {
+  position: relative;
+  cursor: pointer;
+  width: var(--card-width);
+  height: calc(var(--card-width) * var(--card-ratio));
+  transition: transform 0.3s ease;
+  z-index: 10;
+}
+
+.deck-container:hover {
+  transform: scale(1.05);
+}
+
+.stack-layer {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  border-radius: 12px;
+  /* Sombra más suave para entorno claro */
+  box-shadow: 2px 4px 10px rgba(44, 36, 27, 0.4);
+  transition: transform 0.5s ease;
+  object-fit: cover;
+}
+
+/* Capas del mazo */
+.layer-1 { top: 0; left: 0; z-index: 3; }
+.layer-2 { top: -2px; left: -2px; z-index: 2; transform: rotate(-2deg); }
+.layer-3 { top: -4px; left: -4px; z-index: 1; transform: rotate(2deg); }
+
+.deck-container:hover .layer-2 { transform: rotate(-4deg) translate(-4px, -4px); }
+.deck-container:hover .layer-3 { transform: rotate(4deg) translate(4px, 4px); }
+
+.deck-instruction {
+  position: absolute;
+  bottom: -60px;
+  width: 140%;
+  left: -20%;
+  text-align: center;
+  
+  /* Texto oscuro sobre fondo claro */
+  color: var(--velora-accent-dark);
+  font-weight: bold;
+  font-size: 1rem;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  
+  animation: pulseText 3s infinite;
+  background-color: rgba(255, 255, 255, 0.6);
+  padding: 8px;
+  border-radius: 4px;
+  border: 1px solid rgba(85, 107, 47, 0.2);
+}
+
+@keyframes pulseText {
+  0% { opacity: 0.7; transform: scale(1); }
+  50% { opacity: 1; transform: scale(1.02); border-color: var(--velora-accent); }
+  100% { opacity: 0.7; transform: scale(1); }
+}
+
+/* Animación de barajado */
+@keyframes shake {
+  0% { transform: translate(1px, 1px) rotate(0deg); }
+  10% { transform: translate(-1px, -2px) rotate(-1deg); }
+  20% { transform: translate(-3px, 0px) rotate(1deg); }
+  30% { transform: translate(3px, 2px) rotate(0deg); }
+  40% { transform: translate(1px, -1px) rotate(1deg); }
+  50% { transform: translate(-1px, 2px) rotate(-1deg); }
+  60% { transform: translate(-3px, 1px) rotate(0deg); }
+  70% { transform: translate(3px, 1px) rotate(-1deg); }
+  80% { transform: translate(-1px, -1px) rotate(1deg); }
+  90% { transform: translate(1px, 2px) rotate(0deg); }
+  100% { transform: translate(1px, -2px) rotate(-1deg); }
+}
+.shaking { animation: shake 0.5s infinite; }
+
+/* --- TIRADA --- */
+.spread-container {
+  display: flex;
+  gap: 3rem;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.card-slot {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: var(--card-width);
+}
+
+/* --- EFECTO ABANICO INVERTIDO (SOLO CARTA, TEXTO RECTO) --- */
+
+/* IMPORTANTE: El contenedor (slot) se queda recto */
+.spread-container .card-slot:nth-child(1),
+.spread-container .card-slot:nth-child(3) {
+  transform: none;
+}
+
+/* Carta 1 (Izquierda): Rotamos solo la imagen */
+.spread-container .card-slot:nth-child(1) .tarot-card-scene {
+  transform: rotate(-10deg) translateY(25px);
+}
+
+/* Carta 3 (Derecha): Rotamos solo la imagen */
+.spread-container .card-slot:nth-child(3) .tarot-card-scene {
+  transform: rotate(10deg) translateY(25px);
+}
+
+/* Carta 2 (Centro): Recta y por encima */
+.spread-container .card-slot:nth-child(2) .tarot-card-scene {
+  transform: rotate(0deg);
+  z-index: 10;
+}
+
+
+/* --- ETIQUETAS Y POSICIÓN --- */
+
+.position-label {
+  margin-bottom: 1.5rem;
+  /* Color del logotipo Velora */
+  color: var(--velora-accent-dark); 
+  font-size: 0.9rem;
+  font-weight: bold;
+  text-transform: uppercase;
+  letter-spacing: 3px;
+  border-bottom: 2px solid var(--velora-gold); /* Detalle dorado */
+  padding-bottom: 5px;
+}
+
+/* FLIP CARD */
+.tarot-card-scene {
+  width: var(--card-width);
+  height: calc(var(--card-width) * var(--card-ratio));
+  perspective: 1000px;
+  cursor: pointer;
+  /* Transición suave por si cambia */
+  transition: transform 0.5s ease;
+}
+
+.tarot-card-inner {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  text-align: center;
+  transition: transform 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  transform-style: preserve-3d;
+  /* Sombra realista sobre la mesa */
+  box-shadow: 0 15px 35px rgba(60, 50, 40, 0.3);
+  border-radius: 12px;
+}
+
+.tarot-card-scene.is-flipped .tarot-card-inner {
+  transform: rotateY(180deg);
+}
+
+.card-face {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  -webkit-backface-visibility: hidden;
+  backface-visibility: hidden;
+  border-radius: 12px;
+  overflow: hidden;
+  /* Borde fino oscuro para definir la carta sobre fondo claro */
+  border: 1px solid rgba(0,0,0,0.2); 
+}
+
+.card-face img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.card-back-face {
+  background-color: #2a1a3a;
+  transform: rotateY(0deg);
+  z-index: 2;
+}
+
+.card-front-face {
+  background-color: #f4e4bc;
+  transform: rotateY(180deg);
+  z-index: 1;
+}
+
+.inverted-image { transform: rotate(180deg); }
+
+.inverted-tag {
+  font-size: 0.7rem;
+  color: #c0392b; /* Rojo sangre oscuro para contraste */
+  vertical-align: middle;
+  font-weight: bold;
+  margin-left: 5px;
+  text-transform: uppercase;
+}
+
+/* --- INTERPRETACIÓN (TEXTO RECTO Y SEPARADO) --- */
+.card-meaning {
+  /* Separación generosa para no chocar con la carta inclinada */
+  margin-top: 4rem; 
+  
+  text-align: center;
+  opacity: 0;
+  transform: translateY(10px);
+  transition: all 0.5s ease;
+  max-width: 260px;
+  
+  /* Sin fondo ni bordes */
+  background: transparent;
+  box-shadow: none;
+  border: none;
+  padding: 0;
+}
+
+.card-meaning.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.card-meaning h3 {
+  /* Título en Verde/Bronce oscuro (Color Velora) */
+  color: var(--velora-accent-dark);
+  font-size: 1.2rem;
+  font-weight: bold;
+  margin-bottom: 0.5rem;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  
+  /* Pequeño detalle: línea dorada debajo del nombre */
+  display: inline-block;
+  border-bottom: 1px solid var(--velora-gold);
+  padding-bottom: 5px;
+}
+
+.card-meaning p {
+  font-family: 'Playfair Display', serif;
+  font-size: 1rem;
+  line-height: 1.5;
+  /* Texto oscuro para leerse bien sobre el fondo crema */
+  color: var(--velora-text-main); 
+  font-style: italic;
+  font-weight: 500;
+}
+
+/* BOTÓN NUEVA CONSULTA */
+.reset-btn {
+  margin-top: 3rem;
+  background: transparent;
+  /* Borde Verde Oliva */
+  border: 2px solid var(--velora-accent);
+  /* Texto Verde Oliva */
+  color: var(--velora-accent-dark);
+  padding: 12px 40px;
+  font-family: 'Cinzel', serif;
+  font-weight: bold;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  text-transform: uppercase;
+  letter-spacing: 3px;
+}
+
+.reset-btn:hover {
+  background: var(--velora-accent);
+  color: #fff; /* Texto blanco al pasar el ratón */
+  box-shadow: 0 5px 15px rgba(85, 107, 47, 0.3);
+}
+
+/* --- ESTILOS DEL MENÚ DE SELECCIÓN (V2: ÉPICO) --- */
+
+.spread-selector-container {
+  display: flex;
+  gap: 4rem; /* Separación amplia entre opciones */
+  justify-content: center;
+  align-items: flex-start; /* Alineados arriba */
+  flex-wrap: wrap;
+  max-width: 1200px;
+  margin-top: 2rem;
+  padding: 0 20px;
+  animation: fadeIn 1.5s ease-out;
+}
+
+/* Grupo que contiene Carta + Texto */
+.menu-option-group {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  cursor: pointer;
+  group: hover; /* Para efectos */
+  width: 220px; /* Ancho fijo para alineación */
+}
+
+/* --- LA CARTA EN EL MENÚ --- */
+.menu-card-visual {
+  width: 160px; /* Un poco más pequeña que la carta de juego */
+  height: calc(160px * 1.6);
+  position: relative;
+  transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  margin-bottom: 2rem;
+}
+
+.menu-card-inner {
+  width: 100%;
+  height: 100%;
+  position: relative;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 10px 20px rgba(0,0,0,0.3);
+  border: 2px solid transparent;
+  transition: all 0.4s ease;
+}
+
+.menu-card-inner img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  filter: brightness(0.8); /* Un poco oscura por defecto */
+  transition: filter 0.4s ease;
+}
+
+/* Símbolo (I, III, +) encima de la carta */
+.menu-card-symbol {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 4rem;
+  color: var(--velora-gold);
+  font-family: 'Cinzel', serif;
+  text-shadow: 0 2px 10px rgba(0,0,0,0.8);
+  opacity: 0.9;
+  z-index: 10;
+  transition: transform 0.4s ease, text-shadow 0.4s ease;
+}
+
+/* --- EFECTOS HOVER (MAGIA) --- */
+.menu-option-group:hover .menu-card-visual {
+  transform: translateY(-20px) scale(1.05); /* La carta flota hacia arriba */
+}
+
+.menu-option-group:hover .menu-card-inner {
+  box-shadow: 0 0 25px rgba(197, 160, 40, 0.6); /* Resplandor dorado */
+  border-color: var(--velora-gold);
+}
+
+.menu-option-group:hover .menu-card-inner img {
+  filter: brightness(1.1); /* Se ilumina */
+}
+
+.menu-option-group:hover .menu-card-symbol {
+  transform: translate(-50%, -50%) scale(1.2); /* Símbolo crece */
+  text-shadow: 0 0 20px var(--velora-gold); /* Símbolo brilla */
+  color: #fff;
+}
+
+/* --- TEXTO DEBAJO DE LA CARTA --- */
+.menu-text-info {
+  text-align: center;
+  opacity: 0.8;
+  transition: opacity 0.3s ease;
+}
+
+.menu-option-group:hover .menu-text-info {
+  opacity: 1;
+}
+
+.menu-text-info h3 {
+  font-family: 'Cinzel', serif;
+  color: var(--velora-accent-dark);
+  font-size: 1.2rem;
+  margin-bottom: 0.5rem;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  border-bottom: 1px solid var(--velora-gold);
+  padding-bottom: 5px;
+  display: inline-block;
+}
+
+.menu-subtitle {
+  display: block;
+  font-size: 0.8rem;
+  color: var(--velora-accent);
+  font-weight: bold;
+  text-transform: uppercase;
+  margin-bottom: 0.5rem;
+  letter-spacing: 2px;
+}
+
+.menu-text-info p {
+  font-family: 'Playfair Display', serif;
+  font-size: 0.95rem;
+  color: var(--velora-text-main);
+  line-height: 1.4;
+  font-style: italic;
+}

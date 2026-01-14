@@ -24,7 +24,6 @@ SERVICE_LIST = [
     ("numerology", "services.numerology_service.numerology_service"),
     ("tarot", "services.tarot_service.tarot_service"),
     ("runes", "services.runes_service.runes_service"),
-    ("iching", "services.iching_service.iching_service"),
     ("chakra", "services.chakra_service.chakra_service"),
     ("compatibility", "services.compatibility_service.compatibility_service"),
     ("moon_phase", "services.moon_phase_service.moon_phase_service"),
@@ -32,6 +31,7 @@ SERVICE_LIST = [
     ("transits", "services.transits_service.transits_service"),
     ("ritual", "services.ritual_service.ritual_service"),
     ("crystal_ball", "services.crystal_ball_service.crystal_ball_service"), 
+    ("palmistry", "services.palmistry_service.palmistry_service"),
 ]
 
 for service_name, module_path in SERVICE_LIST:
