@@ -1,0 +1,234 @@
+/* TransitsService.css - Estilo Almanaque Renacentista (Alta Legibilidad) */
+
+:root {
+  --astro-gold: #c5a028;
+  /* Nuevo color: Bronce oscuro para textos que deben leerse sobre dorado */
+  --astro-bronze: #705816; 
+  --astro-ink: #8d700f; /* Casi negro para máximo contraste */
+  --astro-sheet-bg: rgba(245, 238, 225, 0.45); /* Fondo "papel" para el marco */
+  --astro-border: rgba(138, 113, 32, 0.4);
+}
+
+.transits-container {
+  width: 100%;
+  min-height: 85vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  font-family: 'Cinzel', serif;
+  color: var(--astro-ink);
+  padding-bottom: 10px;
+}
+
+/* Título Principal (Fuera del marco) */
+.transits-header-title {
+  text-align: center;
+  margin-bottom: 2rem;
+}
+
+.transits-header-title h2 {
+  font-size: 3rem;
+  color: #3a4a20;
+  text-transform: uppercase;
+  margin-bottom: 0.5rem;
+  text-shadow: 0 1px 1px rgba(255,255,255,0.5);
+}
+
+/* --- EL MARCO / HOJA DE EFEMÉRIDES (NUEVO) --- */
+.transits-sheet {
+  width: 100%;
+  max-width: 1100px;
+  background-color: var(--astro-sheet-bg); /* Fondo claro para contraste */
+  border: 1px solid var(--astro-border);   /* Borde sutil */
+  padding: 3rem;
+  box-shadow: 
+    0 0 0 4px rgba(138, 113, 32, 0.1), /* Doble borde decorativo */
+    0 10px 30px rgba(44, 36, 27, 0.1); /* Sombra suave */
+  border-radius: 4px;
+  animation: fadeIn 0.8s ease-out;
+}
+
+/* --- EXPLICACIÓN / ONBOARDING --- */
+.transits-explanation {
+  max-width: 800px;
+  text-align: center;
+  margin: 0 auto 2rem auto;
+  font-family: 'Playfair Display', serif;
+  font-size: 1.05rem;
+  line-height: 1.6;
+  color: #333; /* Texto gris oscuro sólido */
+  padding-bottom: 1.5rem;
+  border-bottom: 1px solid rgba(0,0,0,0.1); /* Separador sutil */
+}
+
+.transits-explanation strong {
+  color: #3a4a20;
+  font-weight: bold;
+}
+
+/* --- SELECTOR DE FECHA --- */
+.date-selector-wrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 15px;
+  margin-bottom: 2.5rem;
+}
+
+.date-selector-wrapper label {
+  font-weight: bold;
+  text-transform: uppercase;
+  font-size: 0.9rem;
+  letter-spacing: 1px;
+}
+
+.mystic-date-input {
+  background: rgba(255,255,255,0.8);
+  border: 1px solid var(--astro-gold);
+  padding: 5px 10px;
+  font-family: 'Cinzel', serif;
+  font-size: 1.1rem;
+  color: var(--astro-ink);
+  cursor: pointer;
+  border-radius: 4px;
+}
+
+/* --- ALERTA RX --- */
+.retrograde-banner {
+  background: rgba(183, 28, 28, 0.08);
+  border: 1px solid rgba(183, 28, 28, 0.3);
+  color: #8b0000; /* Rojo oscuro legible */
+  padding: 15px;
+  margin-bottom: 3rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 15px;
+}
+
+.retro-symbol {
+  font-weight: 900;
+  font-size: 1.2rem;
+  border: 2px solid #8b0000;
+  padding: 0px 5px;
+}
+
+/* --- LAYOUT ALMANAQUE --- */
+.almanac-layout {
+  display: grid;
+  grid-template-columns: 1.2fr 1fr;
+  gap: 4rem;
+  align-items: start;
+}
+
+/* Títulos de Sección */
+.ephemeris-section h3, .aspects-section h3 {
+  font-size: 1.4rem;
+  color: #3a4a20;
+  border-bottom: 2px solid var(--astro-gold);
+  padding-bottom: 10px;
+  margin-bottom: 1.5rem;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+}
+
+/* TABLA */
+.ephemeris-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-family: 'Playfair Display', serif;
+}
+
+.ephemeris-table th {
+  text-align: left;
+  font-family: 'Cinzel', serif;
+  font-size: 0.8rem;
+  color: #555; /* Gris oscuro */
+  text-transform: uppercase;
+  padding-bottom: 10px;
+  border-bottom: 1px solid var(--astro-border);
+}
+
+.ephemeris-table td {
+  padding: 14px 5px;
+  border-bottom: 1px solid rgba(0,0,0,0.05);
+  font-size: 1.05rem;
+  color: #111; /* Negro casi puro */
+}
+
+/* Truco de tinta para iconos */
+.ink-glyph {
+  color: transparent;
+  text-shadow: 0 0 0 var(--astro-ink);
+  font-family: 'Segoe UI Symbol', sans-serif;
+  font-size: 1.2rem;
+  margin-right: 8px;
+}
+
+.col-archetype { color: #666; font-style: italic; font-size: 0.9rem; }
+.col-deg { font-weight: bold; color: #444; }
+.rx-mark { color: #b71c1c; font-size: 0.7rem; vertical-align: top; margin-left: 2px; font-weight: bold;}
+
+/* DIARIO DE ASPECTOS */
+.journal-entry {
+  margin-bottom: 2rem;
+}
+
+.journal-header {
+  margin-bottom: 0.5rem;
+  padding-bottom: 0.2rem;
+  border-bottom: 1px dashed rgba(0,0,0,0.1);
+}
+
+.aspect-title {
+  font-weight: bold;
+  font-size: 1.15rem;
+  color: #000; /* Negro para los planetas */
+}
+
+/* CORRECCIÓN: Conector ahora es oscuro y visible */
+.connector {
+  font-family: 'Playfair Display', serif;
+  font-style: italic;
+  font-weight: bold;
+  color: var(--astro-bronze); /* Bronce oscuro en vez de dorado claro */
+  margin: 0 6px;
+  text-transform: lowercase;
+  font-size: 1.1rem;
+}
+
+.journal-text {
+  font-family: 'Playfair Display', serif;
+  font-size: 1rem;
+  line-height: 1.5;
+  color: #222; /* Texto oscuro */
+  margin-top: 5px;
+}
+
+.journal-separator {
+  text-align: center;
+  color: var(--astro-gold);
+  margin-top: 1.5rem;
+  opacity: 0.6;
+}
+
+.journal-empty { font-style: italic; color: #666; }
+
+/* LOADING */
+.loading-state { margin-top: 4rem; text-align: center; color: var(--astro-bronze); }
+.spinner-orbit {
+  width: 50px; height: 50px;
+  border: 3px solid rgba(0,0,0,0.1);
+  border-top: 3px solid var(--astro-bronze);
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+  margin: 0 auto 1rem auto;
+}
+@keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+@keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+
+/* Responsive */
+@media (max-width: 900px) {
+  .transits-sheet { padding: 1.5rem; }
+  .almanac-layout { grid-template-columns: 1fr; gap: 3rem; }
+}

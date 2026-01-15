@@ -1,9 +1,62 @@
 [
-  { "id": "Sun",     "name": "Sol"      },
-  { "id": "Moon",    "name": "Luna"     },
-  { "id": "Mercury", "name": "Mercurio" },
-  { "id": "Venus",   "name": "Venus"    },
-  { "id": "Mars",    "name": "Marte"    },
-  { "id": "Jupiter", "name": "Júpiter"  },
-  { "id": "Saturn",  "name": "Saturno"  }
+  { 
+    "id": "Sun", 
+    "name": "Sol", 
+    "keywords": ["Esencia", "Vitalidad", "Ego"],
+    "archetype": "El Rey / La Consciencia"
+  },
+  { 
+    "id": "Moon", 
+    "name": "Luna", 
+    "keywords": ["Emoción", "Intuición", "Seguridad"],
+    "archetype": "La Madre / El Inconsciente"
+  },
+  { 
+    "id": "Mercury", 
+    "name": "Mercurio", 
+    "keywords": ["Mente", "Comunicación", "Viajes"],
+    "archetype": "El Mensajero / El Intelecto"
+  },
+  { 
+    "id": "Venus", 
+    "name": "Venus", 
+    "keywords": ["Amor", "Deseo", "Armonía"],
+    "archetype": "La Amante / El Valor"
+  },
+  { 
+    "id": "Mars", 
+    "name": "Marte", 
+    "keywords": ["Acción", "Conflicto", "Impulso"],
+    "archetype": "El Guerrero / La Voluntad"
+  },
+  { 
+    "id": "Jupiter", 
+    "name": "Júpiter", 
+    "keywords": ["Expansión", "Suerte", "Sabiduría"],
+    "archetype": "El Maestro / La Abundancia"
+  },
+  { 
+    "id": "Saturn", 
+    "name": "Saturno", 
+    "keywords": ["Estructura", "Límite", "Karma"],
+    "archetype": "El Anciano / La Disciplina"
+  },
+  { 
+    "id": "Uranus", 
+    "name": "Urano", 
+    "keywords": ["Cambio", "Rebeldía", "Innovación"],
+    "archetype": "El Revolucionario / El Rayo"
+  },
+  { 
+    "id": "Neptune", 
+    "name": "Neptuno", 
+    "keywords": ["Sueño", "Ilusión", "Espiritualidad"],
+    "archetype": "El Místico / El Océano"
+  },
+  { 
+    "id": "Pluto", 
+    "name": "Plutón", 
+    "keywords": ["Transformación", "Poder", "Renacimiento"],
+    "archetype": "El Alquimista / La Sombra"
+  }
 ]

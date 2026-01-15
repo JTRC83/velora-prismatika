@@ -14,6 +14,11 @@ import RitualService        from "./components/RitualService";
 import ChakraService        from "./components/ChakraService";
 // NUEVO: Importar el servicio de Tarot
 import TarotService         from "./components/TarotService";
+import RunesService         from "./components/RunesService";
+import KabbalahService      from "./components/KabbalahService";
+import TransitsService      from "./components/TransitsService";
+import CrystalBallService   from "./components/CrystalBallService";
+import PalmistryService     from "./components/PalmistryService";
 
 const ICONS = {
   "Astrología Natal":  "/assets/icons/horoscopo.png",
@@ -27,7 +32,7 @@ const ICONS = {
   "Cábala":            "/assets/icons/cabala.png",
   "Tránsitos":         "/assets/icons/transitosPlanetarios.png",
   "Bola de Cristal":   "/assets/icons/bolaCristal.png",
-  "I Ching":           "/assets/icons/mano.png",
+  "Lectura de Mano":   "/assets/icons/mano.png",
 };
 
 const SERVICES_LEFT  = [
@@ -45,7 +50,7 @@ const SERVICES_RIGHT = [
   "Cábala",
   "Tránsitos",
   "Bola de Cristal",
-  "I Ching",
+  "Lectura de Mano",
 ];
 
 const TOOLTIP_TEXT = {
@@ -60,7 +65,7 @@ const TOOLTIP_TEXT = {
   'Cábala':           'Lectura de Sephiroth y Árbol de la Vida',
   'Tránsitos':        'Tránsitos planetarios',
   'Bola de Cristal':  'Bola de cristal',
-  'I Ching':          'I Ching, hexagrama',
+  'Lectura de Mano':  'Lectura de Mano',
 };
 
 export default function App() {
@@ -163,6 +168,12 @@ export default function App() {
       
       {/* AQUÍ ESTABA EL CAMBIO CLAVE: Coincidir string exacto "Tarot 3 Cartas" */}
       {selectedService === 'Tarot 3 Cartas'   && <TarotService />}
+      {selectedService === 'Runas'            && <RunesService />}
+      {selectedService === 'Cábala'           && <KabbalahService />}
+      {selectedService === 'Tránsitos'        && <TransitsService />}
+      {selectedService === 'Bola de Cristal'  && <CrystalBallService />}
+      {selectedService === 'Lectura de Mano'  && <PalmistryService />}
+      
 
       {/* Contenido principal: Árbol, Carrusel, Rueda */}
       {/* Solo se muestra si NO hay un servicio seleccionado */}

@@ -1,0 +1,270 @@
+/* RunesService.css - Estilo Orgánico y Ancestral */
+
+:root {
+  --rune-stone-bg: #3e3e3e; /* Gris piedra oscura base */
+  --rune-gold: #d4af37;
+  --rune-text: #2c241b;
+  --rune-size: 110px;
+}
+
+.runes-service-container {
+  width: 100%;
+  min-height: 80vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  font-family: 'Cinzel', serif;
+  color: #2c241b;
+  padding-bottom: 50px;
+  animation: fadeIn 1s ease;
+}
+
+.runes-header h2 {
+  font-size: 3rem;
+  color: #3a4a20; /* Verde Velora oscuro */
+  text-shadow: 0 0 15px rgba(212, 175, 55, 0.3);
+  margin-bottom: 0.5rem;
+  text-transform: uppercase;
+  letter-spacing: 4px;
+}
+
+/* --- MENÚ DE SELECCIÓN --- */
+.rune-menu {
+  display: flex;
+  gap: 3rem;
+  margin-top: 3rem;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.rune-option {
+  background: rgba(58, 74, 32, 0.85); /* Fondo verde musgo oscuro */
+  width: 240px;
+  padding: 2rem;
+  border-radius: 20px 5px 20px 5px; /* Forma irregular orgánica */
+  text-align: center;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  border: 1px solid var(--rune-gold);
+  box-shadow: 0 10px 20px rgba(0,0,0,0.2);
+}
+
+.rune-option:hover {
+  transform: translateY(-10px) scale(1.02);
+  background: #2a3515;
+  box-shadow: 0 15px 30px rgba(85, 107, 47, 0.4);
+}
+
+.rune-option-icon {
+  font-size: 4rem;
+  color: var(--rune-gold);
+  margin-bottom: 1rem;
+  text-shadow: 0 2px 5px rgba(0,0,0,0.5);
+}
+
+.rune-option h3 {
+  color: #fff;
+  margin-bottom: 0.5rem;
+  font-size: 1.2rem;
+}
+
+.rune-option p {
+  color: #ddd;
+  font-family: 'Playfair Display', serif;
+  font-size: 0.9rem;
+  font-style: italic;
+}
+
+/* --- BOLSA DE RUNAS --- */
+.pouch-container {
+  margin-top: 4rem;
+  cursor: pointer;
+  text-align: center;
+}
+
+.rune-pouch {
+  width: 200px;
+  height: 200px;
+  /* Usamos un círculo difuso si no carga la imagen, o la imagen de icono que tienes */
+  background: radial-gradient(circle, #5d4037 0%, #3e2723 100%);
+  border-radius: 50% 50% 40% 40%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 0 auto;
+  box-shadow: 0 10px 25px rgba(0,0,0,0.4);
+  transition: transform 0.2s;
+  position: relative;
+}
+
+.pouch-img {
+  width: 60%;
+  opacity: 0.8;
+  filter: drop-shadow(0 0 10px var(--rune-gold));
+}
+
+.pouch-container:hover .rune-pouch {
+  transform: scale(1.05);
+}
+
+.shaking-pouch {
+  animation: shake 0.5s infinite;
+}
+
+.pouch-instruction {
+  margin-top: 2rem;
+  font-weight: bold;
+  color: #3a4a20;
+  letter-spacing: 2px;
+  animation: pulse 2s infinite;
+}
+
+/* --- MESA Y RUNAS --- */
+.runes-table {
+  margin-top: 2rem;
+  width: 100%;
+  max-width: 1200px;
+}
+
+.runes-spread {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 4rem;
+}
+
+.rune-slot {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 180px;
+}
+
+.position-label-rune {
+  text-transform: uppercase;
+  font-weight: bold;
+  color: #556b2f;
+  margin-bottom: 1.5rem;
+  letter-spacing: 2px;
+  font-size: 0.9rem;
+}
+
+/* --- LA PIEDRA RÚNICA (CSS PURO) --- */
+.rune-stone {
+  width: var(--rune-size);
+  height: var(--rune-size);
+  border-radius: 40% 45% 45% 40%; /* Forma irregular de canto rodado */
+  
+  /* Textura de piedra gris/azulada */
+  background: radial-gradient(circle at 30% 30%, #5a6e7c 0%, #2f3a42 100%);
+  
+  box-shadow: 
+    inset 2px 2px 5px rgba(255,255,255,0.2), /* Brillo borde */
+    inset -5px -5px 10px rgba(0,0,0,0.5), /* Sombra interna */
+    5px 10px 15px rgba(0,0,0,0.4); /* Sombra externa */
+    
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  transition: all 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  position: relative;
+  overflow: hidden;
+}
+
+/* Efecto al pasar el ratón */
+.rune-stone:hover {
+  transform: scale(1.05) rotate(5deg) !important; /* !important para sobrescribir la rotación inline temporalmente */
+  box-shadow: 0 0 20px rgba(212, 175, 55, 0.4);
+}
+
+/* Cara oculta (antes de revelar) */
+.rune-stone.hidden .rune-symbol {
+  opacity: 0;
+  transform: scale(0.5);
+}
+
+.rune-stone.hidden {
+  /* Piedra volteada (solo textura oscura) */
+  background: radial-gradient(circle at 30% 30%, #3a4a55 0%, #1a2228 100%);
+}
+
+/* Símbolo tallado */
+.rune-symbol {
+  font-size: 4rem;
+  color: var(--rune-gold); /* Oro */
+  font-weight: bold;
+  opacity: 1;
+  transition: all 0.5s ease;
+  
+  /* Efecto de grabado (Inset text shadow) */
+  text-shadow: 
+    1px 1px 0px rgba(255, 255, 255, 0.3), 
+    -1px -1px 2px rgba(0, 0, 0, 0.8);
+}
+
+/* Runa invertida (si no es simétrica) */
+.rune-stone.inverted-stone .rune-symbol {
+  color: #bf360c; /* Un tono rojizo sutil para indicar conflicto/inversión */
+}
+
+/* --- INTERPRETACIÓN --- */
+.rune-meaning {
+  margin-top: 3rem;
+  text-align: center;
+  opacity: 0;
+  transform: translateY(10px);
+  transition: all 0.5s ease;
+}
+
+.rune-meaning.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.rune-meaning h3 {
+  color: #3a4a20;
+  font-size: 1.4rem;
+  margin-bottom: 0.5rem;
+  text-transform: uppercase;
+  border-bottom: 2px solid var(--rune-gold);
+  display: inline-block;
+}
+
+.inv-tag {
+  color: #c0392b;
+  font-size: 0.8rem;
+}
+
+.rune-meaning p {
+  font-family: 'Playfair Display', serif;
+  font-size: 1rem;
+  line-height: 1.5;
+  color: #2c241b;
+}
+
+.rune-reset-btn {
+  margin: 4rem auto;
+  display: block;
+  background: transparent;
+  border: 2px solid #3a4a20;
+  color: #3a4a20;
+  padding: 10px 30px;
+  font-family: 'Cinzel', serif;
+  font-weight: bold;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.rune-reset-btn:hover {
+  background: #3a4a20;
+  color: #fff;
+}
+
+@keyframes shake {
+  0% { transform: rotate(0deg); }
+  25% { transform: rotate(5deg); }
+  50% { transform: rotate(0deg); }
+  75% { transform: rotate(-5deg); }
+  100% { transform: rotate(0deg); }
+}

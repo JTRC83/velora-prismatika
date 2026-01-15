@@ -20,7 +20,11 @@ export default defineConfig({
       '/compatibility': { target: 'http://127.0.0.1:8000', changeOrigin: true },
       '/ritual': { target: 'http://127.0.0.1:8000', changeOrigin: true },
       '/chakra': { target: 'http://127.0.0.1:8000', changeOrigin: true },
-      '/tarot': { target: 'http://127.0.0.1:8000', changeOrigin: true },
+      '/runes': { target: 'http://127.0.0.1:8000', changeOrigin: true },
+      '/kabbalah': { target: 'http://127.0.0.1:8000', changeOrigin: true },
+      '/transits': { target: 'http://127.0.0.1:8000', changeOrigin: true },
+      '/crystal': { target: 'http://127.0.0.1:8000', changeOrigin: true },
+      '/palmistry': { target: 'http://127.0.0.1:8000', changeOrigin: true },
       // ... puedes añadir más según los necesites
     }
   }

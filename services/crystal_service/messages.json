@@ -1,31 +1,66 @@
 {
-  "generic": [
-    "El universo se mueve; escucha su susurro interior.",
-    "Los vientos del destino cambian; permanece atento.",
-    "Entre las sombras brilla una chispa de verdad.",
-    "La luz oculta revela secretos cuando cierras los ojos.",
-    "El eco del mañana ya susurra en tu presente.",
-    "Tu intuición guardiana guía el próximo paso.",
-    "En el silencio hallarás la voz de tu alma.",
-    "El oráculo conoce tus preguntas antes de formularlas.",
-    "Las estrellas confirman tu camino; sigue su danza.",
-    "El fuego interno ilumina tu senda secreta.",
-    "Cada suspiro lleva un mensaje antiguo.",
-    "La bruma oculta el símbolo que buscas."
-  ],
-  "topic_templates": [
-    "Sobre el amor: «{topic}», el oráculo susurra: confía en tu corazón.",
-    "En el amor, «{topic}» florece cuando abraza la ternura.",
-    "Para la salud: «{topic}», la bola aconseja: atiende al equilibrio interno.",
-    "Hablando de salud: «{topic}», tu cuerpo habla con voz silenciosa.",
-    "Cuando piensas en dinero: «{topic}», el cristal augura prudencia y oportunidad.",
-    "En cuanto al dinero: «{topic}», el oráculo invita a valorar lo esencial.",
-    "Respecto al trabajo: «{topic}», el reflejo insinúa disciplina y foco.",
-    "Sobre tu labor: «{topic}», la bola recomienda brillar con constancia.",
-    "En lo laboral: «{topic}», confía en tu destreza y persistencia.",
-    "Para tus finanzas: «{topic}», el oráculo simboliza ahorro y expansión.",
-    "Al preguntar por amor: «{topic}», el cristal revela el latido del alma.",
-    "Si buscas salud: «{topic}», atiende al ritmo natural de tu vida."
-  ],
-  "allowed_topics": ["amor", "salud", "dinero", "trabajo"]
+  "topics": {
+    "love": {
+      "keywords": ["amor", "quiere", "pareja", "corazón", "sentimiento", "relación", "boda", "ex"],
+      "messages": [
+        "Una vieja herida sanará pronto para dejar espacio a lo nuevo.",
+        "El corazón que buscas late al mismo ritmo que el tuyo, ten paciencia.",
+        "Cuidado con las ilusiones; no todo lo que brilla es oro en el afecto.",
+        "La bruma se disipa: un encuentro inesperado cambiará tu perspectiva.",
+        "Debes soltar el pasado para que el presente pueda abrazarte.",
+        "La respuesta está en el amor propio, no en la validación ajena.",
+        "Veo una conexión profunda formándose en el silencio.",
+        "Las aguas del sentimiento están turbulentas; espera a que se calmen."
+      ]
+    },
+    "work": {
+      "keywords": ["trabajo", "dinero", "negocio", "empleo", "jefe", "proyecto", "inversión", "éxito"],
+      "messages": [
+        "El esfuerzo invisible de hoy será la corona de mañana.",
+        "Cuidado con las envidias cercanas; mantén tus planes en secreto.",
+        "Una oportunidad se presentará disfrazada de un desafío difícil.",
+        "La abundancia fluye cuando dejas de perseguirla con desesperación.",
+        "Es momento de sembrar, no de cosechar. La paciencia es tu aliada.",
+        "Veo un cambio de dirección favorable en tu camino profesional.",
+        "Confía en tu talento; el síndrome del impostor es tu único enemigo.",
+        "La llave del éxito está en la colaboración, no en la competencia."
+      ]
+    },
+    "health": {
+      "keywords": ["salud", "cuerpo", "dolor", "mente", "sanar", "energia", "cansancio"],
+      "messages": [
+        "Tu cuerpo susurra lo que tu mente calla; escúchalo.",
+        "La vitalidad regresará cuando te permitas descansar de verdad.",
+        "Busca el equilibrio en el agua y el aire libre.",
+        "La sanación comienza perdonándote a ti mismo.",
+        "Una renovación energética está en camino.",
+        "No descuides los pequeños avisos; la prevención es sabiduría."
+      ]
+    },
+    "general": {
+      "keywords": [],
+      "messages": [
+        "La niebla es densa, pero la luz al final es innegable.",
+        "Lo que buscas también te está buscando a ti.",
+        "El destino no está escrito en piedra, sino en agua.",
+        "Una sorpresa agradable llegará antes de la próxima luna llena.",
+        "Presta atención a tus sueños esta noche; traen mensajes.",
+        "El camino se bifurca; elige el sendero que te dé paz, no euforia."
+      ]
+    },
+    "yes_no": {
+      "messages": [
+        "Definitivamente sí.",
+        "Las estrellas indican que sí.",
+        "El camino está abierto: sí.",
+        "Todo apunta a un sí rotundo.",
+        "Mis visiones son oscuras... mejor no.",
+        "No es el momento adecuado.",
+        "El destino dice no.",
+        "Hay bloqueos en el camino: no por ahora.",
+        "La imagen es borrosa, pregunta de nuevo más tarde.",
+        "El futuro está en movimiento; el resultado es incierto."
+      ]
+    }
+  }
 }

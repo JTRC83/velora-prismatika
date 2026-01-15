@@ -1,0 +1,48 @@
+{
+  "lines": [
+    {
+      "id": "heart",
+      "name": "Línea del Corazón",
+      "description": "Rige las emociones, el amor y la estabilidad afectiva.",
+      "readings": [
+        "Tu línea es profunda y curva: indica una naturaleza apasionada y una gran capacidad para amar sin reservas.",
+        "La línea termina bajo el dedo índice: eres selectivo/a en el amor, buscando una conexión intelectual antes que física.",
+        "Se observan pequeñas ramificaciones al final: tu bondad a menudo te hace sacrificarte por los demás. Cuida tu energía.",
+        "La línea es recta y clara: manejas tus emociones con lógica y prudencia. Eres un refugio seguro para tu pareja."
+      ]
+    },
+    {
+      "id": "head",
+      "name": "Línea de la Cabeza",
+      "description": "Representa el intelecto, la concentración y el enfoque mental.",
+      "readings": [
+        "Línea larga y ligeramente curvada: posees una mente creativa y flexible. Resuelves problemas con intuición.",
+        "Línea recta que cruza la palma: pensamiento analítico y realista. No te dejas llevar por fantasías.",
+        "Separada de la línea de la vida al inicio: eres independiente y aventurero/a de pensamiento desde joven.",
+        "La línea muestra ondulaciones: tienes múltiples intereses y te cuesta enfocarte en uno solo, pero tu versatilidad es tu don."
+      ]
+    },
+    {
+      "id": "life",
+      "name": "Línea de la Vida",
+      "description": "No indica cuánto vivirás, sino la calidad, vitalidad y cambios importantes.",
+      "readings": [
+        "Arco amplio y bien definido: tienes una vitalidad envidiable y gran resistencia física. Tu aura es fuerte.",
+        "Línea que corre cerca del pulgar: a veces te falta energía y prefieres la comodidad del hogar a la aventura.",
+        "Se vislumbran rupturas o cambios: has pasado por reinvenciones completas de tu identidad. Eres un fénix.",
+        "Línea doble o con líneas hermanas: tienes una protección espiritual extra o un 'ángel guardián' muy activo."
+      ]
+    },
+    {
+      "id": "fate",
+      "name": "Línea del Destino",
+      "description": "El camino de la carrera, los logros y la influencia externa.",
+      "readings": [
+        "Línea fuerte y vertical: tienes un sentido del propósito muy claro. El éxito llega por tu propia determinación.",
+        "La línea comienza tarde o es tenue: estás construyendo tu propio camino fuera de las expectativas familiares.",
+        "Se une con la línea de la vida: tu éxito depende mucho del apoyo de tu familia o raíces.",
+        "Interrumpida o cambiante: tu carrera no es lineal; tendrás múltiples vocaciones exitosas a lo largo de tu vida."
+      ]
+    }
+  ]
+}

@@ -1,0 +1,427 @@
+/* CrystalBallService.css - Cinematic & Mystical Update */
+
+:root {
+  --crystal-glow: #b3e5fc; /* Azul etéreo */
+  --crystal-core: #0d1b2a; /* Azul noche profundo */
+  --crystal-gold: #ffd700; 
+  --fog-color: rgba(200, 230, 255, 0.5);
+  --stand-wood: #3e2723;
+  --stand-highlight: #5d4037;
+}
+
+.crystal-container {
+  width: 100%;
+  min-height: 85vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  font-family: 'Cinzel', serif;
+  color: #2c241b;
+  padding-bottom: 50px;
+  overflow: hidden;
+  background: radial-gradient(
+  circle at center, 
+  rgba(255, 220, 100, 0.15) 0%, /* Centro: un tono dorado/cálido muy sutil */
+  transparent 70%               /* Bordes: completamente transparente */
+  );
+}
+
+.crystal-header h2 {
+  font-size: 3rem;
+  color: #2e3b1f; /* Verde muy oscuro */
+  text-transform: uppercase;
+  margin-bottom: 0.5rem;
+  text-shadow: 0 2px 4px rgba(255,255,255,0.4);
+  letter-spacing: 4px;
+}
+
+
+/* --- ESCENARIO (STAGE) --- */
+.scrying-stage {
+  position: relative;
+  margin-top: 0.5rem;
+  height: 500px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  /* Efecto de luz "divina" detrás de la bola */
+  background: radial-gradient(circle at center, rgba(255, 215, 0, 0.15) 0%, transparent 60%);
+}
+
+/* --- PARTÍCULAS MÁGICAS --- */
+.particles-container {
+  position: absolute;
+  width: 600px;
+  height: 600px;
+  pointer-events: none;
+  z-index: 0;
+}
+
+.magic-particle {
+  position: absolute;
+  background: white;
+  border-radius: 50%;
+  opacity: 0;
+  box-shadow: 0 0 10px var(--crystal-gold);
+  animation: floatUp 6s infinite ease-in-out;
+}
+
+/* Posiciones y tamaños aleatorios para las partículas */
+.p1 { width: 4px; height: 4px; left: 20%; top: 80%; animation-delay: 0s; }
+.p2 { width: 6px; height: 6px; left: 80%; top: 70%; animation-delay: 2s; }
+.p3 { width: 3px; height: 3px; left: 40%; top: 90%; animation-delay: 4s; }
+.p4 { width: 5px; height: 5px; left: 70%; top: 60%; animation-delay: 1s; }
+.p5 { width: 4px; height: 4px; left: 30%; top: 50%; animation-delay: 3s; }
+
+@keyframes floatUp {
+  0% { transform: translateY(0) scale(0.5); opacity: 0; }
+  50% { opacity: 0.8; }
+  100% { transform: translateY(-100px) scale(0); opacity: 0; }
+}
+
+/* --- LA BOLA DE CRISTAL (ESFERA 3D) --- */
+.crystal-ball {
+  width: 400px;
+  height: 400px;
+  border-radius: 50%;
+  position: relative;
+  z-index: 10;
+  
+  /* BASE: Cristal oscuro pero transparente */
+  background: radial-gradient(circle at 35% 35%, 
+    rgba(255, 255, 255, 0.05) 0%, 
+    rgba(179, 229, 252, 0.1) 40%, 
+    rgba(13, 27, 42, 0.4) 85%,
+    rgba(0, 0, 0, 0.6) 100%
+  );
+  
+  /* LUCES Y SOMBRAS COMPLEJAS */
+  box-shadow: 
+    inset -20px -20px 50px rgba(0, 0, 0, 0.7), /* Profundidad trasera */
+    inset 10px 10px 40px rgba(255, 255, 255, 0.2), /* Luz ambiental */
+    0 0 30px rgba(179, 229, 252, 0.1), /* Glow exterior suave */
+    0 30px 60px rgba(0,0,0,0.5); /* Sombra en el suelo */
+
+  transition: all 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  backdrop-filter: blur(4px) brightness(1.1);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
+  cursor: pointer;
+}
+
+/* Efecto Hover: La bola "despierta" */
+.crystal-ball:hover {
+  box-shadow: 
+    inset -20px -20px 50px rgba(0, 0, 0, 0.6),
+    inset 10px 10px 40px rgba(255, 255, 255, 0.4),
+    0 0 50px rgba(179, 229, 252, 0.4), 
+    0 30px 60px rgba(0,0,0,0.6);
+  transform: scale(1.02);
+}
+
+/* Estado GAZING (Pulsando e Invocando) */
+.crystal-ball.pulsing {
+  /* Combinamos: Flotar (3s) + Brillar (2s) */
+  animation: 
+    floatBall 3s ease-in-out infinite, 
+    pulseGlow 2s infinite alternate;
+}
+
+@keyframes pulseGlow {
+  from { box-shadow: 0 0 30px rgba(179, 229, 252, 0.2), inset 0 0 20px rgba(0,0,0,0.5); }
+  to { box-shadow: 0 0 80px rgba(179, 229, 252, 0.6), inset 0 0 50px rgba(255,255,255,0.2); }
+}
+
+/* Reflejo Especular (El punto blanco brillante de luz) */
+.ball-reflection {
+  position: absolute;
+  top: 15%;
+  left: 18%;
+  width: 15%;
+  height: 8%;
+  background: radial-gradient(ellipse at center, rgba(255,255,255,0.95) 0%, rgba(255,255,255,0) 70%);
+  transform: rotate(-45deg);
+  z-index: 20;
+  pointer-events: none;
+  filter: blur(1px);
+}
+
+/* Highlight secundario (Borde opuesto) */
+.ball-highlight {
+  position: absolute;
+  bottom: 10%;
+  right: 10%;
+  width: 40%;
+  height: 40%;
+  border-radius: 50%;
+  background: radial-gradient(circle at bottom right, rgba(255,255,255,0.1) 0%, transparent 60%);
+  z-index: 15;
+}
+
+/* --- NIEBLA VOLUMÉTRICA --- */
+.ball-fog {
+  position: absolute;
+  top: -60%;
+  left: -60%;
+  width: 220%;
+  height: 220%;
+  background: 
+    radial-gradient(circle, rgba(255,255,255,0.8) 0%, transparent 60%),
+    conic-gradient(from 0deg, transparent 0deg, var(--fog-color) 90deg, transparent 180deg);
+  background-blend-mode: screen;
+  filter: blur(40px);
+  mix-blend-mode: hard-light;
+  animation: fogTurn 15s linear infinite;
+  pointer-events: none;
+}
+
+@keyframes fogTurn { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
+
+
+/* --- CONTENIDO INTERNO (TEXTO) --- */
+.ball-content {
+  position: relative;
+  z-index: 30;
+  text-align: center;
+  width: 75%;
+  color: #fff;
+}
+
+/* Texto "Invocando..." o "Escudriñando..." */
+.gazing-text {
+  /* 1. TIPOGRAFÍA: Recuperamos el estilo clásico y elegante */
+  font-family: 'Playfair Display', serif;
+  text-transform: uppercase;
+  font-style: italic;
+  font-size: 1.5rem; /* Un poco más grande */
+  letter-spacing: normal;
+  
+  /* 2. COLOR Y VISIBILIDAD: Blanco puro con fulgor */
+  color: #fff;
+  
+  /* 3. CONTRASTE: Sombra oscura para que se lea sobre la niebla brillante */
+  text-shadow: 
+    0 2px 4px rgba(0, 0, 0, 0.8), /* Borde negro para legibilidad */
+    0 0 20px rgba(179, 229, 252, 0.8); /* Resplandor azulado */
+    
+  /* 4. POSICIÓN: Aseguramos que esté por encima de la niebla */
+  position: relative;
+  z-index: 40; 
+  
+  animation: pulseText 1.5s infinite ease-in-out;
+}
+
+/* Resultado de la visión */
+.vision-result {
+  animation: fadeInMist 1.5s ease-out;
+}
+
+.vision-category {
+  display: block;
+  font-size: 0.9rem; /* Un poco más grande */
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  
+  /* ANTES: color: var(--crystal-gold); (Amarillo pálido) */
+  /* AHORA: Un dorado más oscuro y rico para contraste */
+  color: #d4af37; 
+  
+  margin-bottom: 10px;
+  font-weight: bold;
+  /* Añadimos una sombra sutil también al título */
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
+}
+
+/* 2. Mensaje Principal */
+.vision-message {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.5rem;
+  line-height: 1.4;
+  color: #fff; /* Mantenemos el texto blanco */
+  
+  /* ANTES: text-shadow: 0 0 10px rgba(255, 255, 255, 0.8), 0 0 20px rgba(179, 229, 252, 0.6); */
+  /* AHORA: Sombra negra intensa para un contraste máximo */
+  text-shadow: 
+    0 1px 3px rgba(0, 0, 0, 0.8),   /* Sombra negra nítida y cercana */
+    0 0 15px rgba(0, 0, 0, 0.5),    /* Sombra negra difusa para "levantar" el texto */
+    0 0 30px rgba(179, 229, 252, 0.4); /* Brillo azul suave detrás de la sombra negra */
+    
+  font-weight: 500;
+}
+
+/* Efecto borroso (cuando la visión no es clara) */
+.vision-result.blurry .vision-message {
+  filter: blur(3px);
+  opacity: 0.7;
+  color: transparent;
+  text-shadow: 0 0 15px rgba(255,255,255,0.9); /* Solo se ve el brillo, no la letra */
+  transition: all 1s ease;
+}
+
+/* Texto de "Visión inestable" */
+.blur-hint {
+  display: block;
+  margin-top: 10px;
+  font-size: 0.75rem;
+  /* Color más oscuro para que se lea mejor */
+  color: rgba(255, 255, 255, 0.7); 
+  font-style: italic;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.5);
+}
+
+/* --- PEDESTAL (STAND) --- */
+.crystal-stand {
+  width: 160px;
+  height: 45px;
+  background: linear-gradient(to right, #5d4037, #8d6e63, #5d4037); /* Bronce/Madera */
+  border-radius: 50%;
+  margin-top: -25px; /* Subirlo para que la bola "descanse" en él */
+  position: relative;
+  z-index: 5;
+  box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+  border: 1px solid rgba(0,0,0,0.2);
+}
+
+.crystal-stand::before {
+  content: '';
+  position: absolute;
+  top: -10px;
+  left: 20px;
+  width: 100px;
+  height: 20px;
+  background: #3e2723; /* Parte interior oscura del soporte */
+  border-radius: 50%;
+}
+
+/* --- CONTROLES DE USUARIO --- */
+/* --- CONTROLES (Estilo Talismán) --- */
+.crystal-controls {
+  margin-top: 2rem;
+  width: 100%;
+  max-width: 600px;
+  text-align: center;
+  transition: opacity 0.5s;
+}
+
+.crystal-controls.faded {
+  opacity: 0.5; /* Atenuar controles cuando se mira la bola */
+  pointer-events: none;
+}
+
+/* Área de Input */
+.input-area {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 2rem;
+  justify-content: center;
+}
+
+.mystic-input {
+  background: transparent;
+  border: none;
+  border-bottom: 2px solid var(--crystal-gold);
+  padding: 10px;
+  font-family: 'Playfair Display', serif;
+  font-size: 1.1rem;
+  width: 300px;
+  color: #2c241b;
+  outline: none;
+  transition: border 0.3s;
+}
+
+.mystic-input:focus {
+  border-bottom-color: #3a4a20;
+}
+
+.gaze-btn {
+  background: #3a4a20;
+  color: #fff;
+  border: 1px solid #405421;
+  padding: 15px 30px;
+  font-family: 'Cinzel', serif;
+  font-weight: bold;
+  letter-spacing: 1px;
+  cursor: pointer;
+  border-radius: 0 30px 30px 0;
+  transition: all 0.3s;
+}
+
+.gaze-btn:hover:not(:disabled) {
+  background: #3a4a20;
+  color: #fff;
+}
+
+.gaze-btn:disabled {
+  border-color: #ccc;
+  color: #ccc;
+  cursor: default;
+}
+
+/* Botones Rápidos (Focus) */
+.quick-focus span {
+  display: block;
+  margin-bottom: 10px;
+  font-size: 0.9rem;
+  color: #666;
+  font-style: italic;
+}
+
+.focus-buttons {
+  display: flex;
+  justify-content: center;
+  gap: 15px;
+  flex-wrap: wrap;
+}
+
+.focus-buttons button {
+  background: rgba(255,255,255,0.5);
+  border: 1px solid var(--crystal-gold);
+  padding: 8px 15px;
+  border-radius: 20px;
+  font-family: 'Cinzel', serif;
+  font-size: 0.85rem;
+  cursor: pointer;
+  transition: 0.3s;
+  color: #555;
+}
+
+.focus-buttons button:hover {
+  background: var(--crystal-gold);
+  color: #fff;
+  transform: translateY(-2px);
+}
+
+/* Reset Button */
+.reset-vision-btn {
+  margin-top: 2rem;
+  background: transparent;
+  border: 1px solid #3a4a20;
+  padding: 10px 30px;
+  cursor: pointer;
+  font-family: 'Cinzel', serif;
+  pointer-events: auto !important; /* Permitir click incluso si el padre está faded */
+  color: #3a4a20;
+}
+
+.reset-vision-btn:hover {
+  background: #3a4a20;
+  color: #fff;
+}
+
+@keyframes pulseText {
+  0%, 100% { opacity: 0.5; }
+  50% { opacity: 1; }
+}
+
+@keyframes fadeInMist {
+  from { opacity: 0; transform: scale(0.9); }
+  to { opacity: 1; transform: scale(1); }
+}
+
+@keyframes floatBall {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-15px); } /* Sube 15px */
+}

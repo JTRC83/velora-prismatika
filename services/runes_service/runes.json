@@ -5,7 +5,8 @@
     "symbol": "ᚠ",
     "meaning": "Abundancia, prosperidad, energía creadora.",
     "reversed": "Pérdida de recursos, codicia, desequilibrio.",
-    "keywords": ["riqueza", "flujo", "nuevo ciclo"]
+    "keywords": ["riqueza", "flujo", "nuevo ciclo"],
+    "symmetrical": false
   },
   {
     "id": "uruz",
@@ -13,7 +14,8 @@
     "symbol": "ᚢ",
     "meaning": "Fuerza, salud y voluntad indomable.",
     "reversed": "Temor, debilidad, estancamiento.",
-    "keywords": ["vitalidad", "valor", "resistencia"]
+    "keywords": ["vitalidad", "valor", "resistencia"],
+    "symmetrical": false
   },
   {
     "id": "thurisaz",
@@ -21,7 +23,8 @@
     "symbol": "ᚦ",
     "meaning": "Protección, desafío y despertar interior.",
     "reversed": "Conflicto, impaciencia, dolor inesperado.",
-    "keywords": ["defensa", "prueba", "conciencia"]
+    "keywords": ["defensa", "prueba", "conciencia"],
+    "symmetrical": false
   },
   {
     "id": "ansuz",
@@ -29,7 +32,8 @@
     "symbol": "ᚨ",
     "meaning": "Comunicación, inspiración divina.",
     "reversed": "Malentendidos, palabras hirientes, bloqueo.",
-    "keywords": ["voz", "mensaje", "intuición"]
+    "keywords": ["voz", "mensaje", "intuición"],
+    "symmetrical": false
   },
   {
     "id": "raidho",
@@ -37,7 +41,8 @@
     "symbol": "ᚱ",
     "meaning": "Viaje, movimiento con propósito.",
     "reversed": "Desorientación, retrasos, indecisión.",
-    "keywords": ["camino", "progreso", "ritmo"]
+    "keywords": ["camino", "progreso", "ritmo"],
+    "symmetrical": false
   },
   {
     "id": "kenaz",
@@ -45,7 +50,8 @@
     "symbol": "ᚲ",
     "meaning": "Conocimiento, transformación y fuego interior.",
     "reversed": "Oscuridad interna, bloqueo creativo, confusión.",
-    "keywords": ["iluminación", "arte", "cambio"]
+    "keywords": ["iluminación", "arte", "cambio"],
+    "symmetrical": false
   },
   {
     "id": "gebo",
@@ -53,7 +59,8 @@
     "symbol": "ᚷ",
     "meaning": "Generosidad, intercambio equilibrado.",
     "reversed": "Desequilibrio en dar y recibir, dependencia.",
-    "keywords": ["regalo", "alianza", "equidad"]
+    "keywords": ["regalo", "alianza", "equidad"],
+    "symmetrical": true
   },
   {
     "id": "wunjo",
@@ -61,7 +68,8 @@
     "symbol": "ᚹ",
     "meaning": "Alegría, armonía y plenitud.",
     "reversed": "Insatisfacción, discordia, pérdida de gozo.",
-    "keywords": ["felicidad", "unidad", "bienestar"]
+    "keywords": ["felicidad", "unidad", "bienestar"],
+    "symmetrical": false
   },
   {
     "id": "hagalaz",
@@ -69,7 +77,8 @@
     "symbol": "ᚺ",
     "meaning": "Cambio repentino, purificación.",
     "reversed": "Destrucción innecesaria, caos sin propósito.",
-    "keywords": ["crisis", "renovación", "transición"]
+    "keywords": ["crisis", "renovación", "transición"],
+    "symmetrical": true
   },
   {
     "id": "nauthiz",
@@ -77,7 +86,8 @@
     "symbol": "ᚾ",
     "meaning": "Necesidad, resistencia a la adversidad.",
     "reversed": "Miedo paralizante, obstáculo persistente.",
-    "keywords": ["restricción", "prueba", "autocontrol"]
+    "keywords": ["restricción", "prueba", "autocontrol"],
+    "symmetrical": false
   },
   {
     "id": "isa",
@@ -85,7 +95,8 @@
     "symbol": "ᛁ",
     "meaning": "Estasis, pausa y reflexión profunda.",
     "reversed": "Estancamiento destructivo, inacción prolongada.",
-    "keywords": ["silencio", "espera", "contemplación"]
+    "keywords": ["silencio", "espera", "contemplación"],
+    "symmetrical": true
   },
   {
     "id": "jera",
@@ -93,7 +104,8 @@
     "symbol": "ᛃ",
     "meaning": "Cosecha, ciclos y retribución.",
     "reversed": "Retraso en recompensas, injusticia.",
-    "keywords": ["tiempo", "recompensa", "maduración"]
+    "keywords": ["tiempo", "recompensa", "maduración"],
+    "symmetrical": true
   },
   {
     "id": "eihwaz",
@@ -101,7 +113,8 @@
     "symbol": "ᛇ",
     "meaning": "Protección, conexión entre mundos.",
     "reversed": "Desorientación, bloqueo espiritual.",
-    "keywords": ["defensa", "muerte-renacimiento", "eje"]
+    "keywords": ["defensa", "muerte-renacimiento", "eje"],
+    "symmetrical": true
   },
   {
     "id": "perthro",
@@ -109,7 +122,8 @@
     "symbol": "ᛈ",
     "meaning": "Destino, misterio y potencial oculto.",
     "reversed": "Secreto revelado prematuramente, incertidumbre.",
-    "keywords": ["azar", "profecía", "suerte"]
+    "keywords": ["azar", "profecía", "suerte"],
+    "symmetrical": false
   },
   {
     "id": "algiz",
@@ -117,7 +131,8 @@
     "symbol": "ᛉ",
     "meaning": "Defensa, guía espiritual.",
     "reversed": "Vulnerabilidad, falta de guía.",
-    "keywords": ["protección", "ángel", "señal"]
+    "keywords": ["protección", "ángel", "señal"],
+    "symmetrical": false
   },
   {
     "id": "sowilo",
@@ -125,7 +140,8 @@
     "symbol": "ᛋ",
     "meaning": "Éxito, energía vital y logro.",
     "reversed": "Derrota, falta de dirección.",
-    "keywords": ["victoria", "sol", "claridad"]
+    "keywords": ["victoria", "sol", "claridad"],
+    "symmetrical": true
   },
   {
     "id": "tiwaz",
@@ -133,7 +149,8 @@
     "symbol": "ᛏ",
     "meaning": "Justicia, coraje y sacrificio.",
     "reversed": "Injusticia, cobardía.",
-    "keywords": ["ley", "honor", "victoria"]
+    "keywords": ["ley", "honor", "victoria"],
+    "symmetrical": false
   },
   {
     "id": "berkano",
@@ -141,7 +158,8 @@
     "symbol": "ᛒ",
     "meaning": "Renacimiento, crecimiento y fertilidad.",
     "reversed": "Estancamiento creativo, infertilidad.",
-    "keywords": ["nacimiento", "madre", "nurtura"]
+    "keywords": ["nacimiento", "madre", "nurtura"],
+    "symmetrical": false
   },
   {
     "id": "ehwaz",
@@ -149,7 +167,8 @@
     "symbol": "ᛖ",
     "meaning": "Movimiento, cambio fluido y confianza.",
     "reversed": "Traición, desconfianza.",
-    "keywords": ["caballo", "viaje", "alianza"]
+    "keywords": ["caballo", "viaje", "alianza"],
+    "symmetrical": false
   },
   {
     "id": "mannaz",
@@ -157,7 +176,8 @@
     "symbol": "ᛗ",
     "meaning": "Humanidad, cooperación y comunidad.",
     "reversed": "Aislamiento, egoísmo.",
-    "keywords": ["hombre", "familia", "ayuda"]
+    "keywords": ["hombre", "familia", "ayuda"],
+    "symmetrical": false
   },
   {
     "id": "laguz",
@@ -165,7 +185,8 @@
     "symbol": "ᛚ",
     "meaning": "Intuición, emoción y fluir.",
     "reversed": "Resistencia al cambio, bloqueo emocional.",
-    "keywords": ["agua", "sueño", "psique"]
+    "keywords": ["agua", "sueño", "psique"],
+    "symmetrical": false
   },
   {
     "id": "ingwaz",
@@ -173,7 +194,8 @@
     "symbol": "ᛝ",
     "meaning": "Potencial creativo y gestación.",
     "reversed": "Bloqueo de proyectos, impulsos reprimidos.",
-    "keywords": ["semilla", "fertilidad", "espera"]
+    "keywords": ["semilla", "fertilidad", "espera"],
+    "symmetrical": true
   },
   {
     "id": "dagaz",
@@ -181,7 +203,8 @@
     "symbol": "ᛞ",
     "meaning": "Renacimiento, iluminación y claridad.",
     "reversed": "Estancamiento, confusión.",
-    "keywords": ["amanecer", "transformación", "visión"]
+    "keywords": ["amanecer", "transformación", "visión"],
+    "symmetrical": true
   },
   {
     "id": "othala",
@@ -189,6 +212,7 @@
     "symbol": "ᛟ",
     "meaning": "Herencia, legado y seguridad.",
     "reversed": "Desarraigo, desorden familiar.",
-    "keywords": ["hogar", "ancestral", "posesión"]
+    "keywords": ["hogar", "ancestral", "posesión"],
+    "symmetrical": false
   }
 ]

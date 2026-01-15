@@ -1,0 +1,365 @@
+/* KabbalahService.css - Geometría Sagrada */
+
+:root {
+  --kab-gold: #c5a028;
+  --kab-path: rgba(171, 130, 89, 0.5);
+  --kab-text: #2c241b;
+  --kab-bg-panel: rgba(58, 74, 32, 0.05); /* Verde muy sutil */
+}
+
+.kabbalah-container {
+  width: 100%;
+  min-height: 85vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  font-family: 'Cinzel', serif;
+  color: var(--kab-text);
+  animation: fadeIn 1s ease;
+}
+
+.kabbalah-header h2 {
+  font-size: 2.5rem;
+  color: #3a4a20;
+  text-transform: uppercase;
+  margin-bottom: 0.5rem;
+  text-shadow: 0 0 15px rgba(212, 175, 55, 0.2);
+}
+
+/* --- LAYOUT PRINCIPAL --- */
+.kabbalah-workspace {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center; /* Alineación vertical centrada */
+  width: 100%;
+  max-width: 1100px;
+  gap: 4rem;
+  margin-top: 2rem;
+}
+
+/* --- IZQUIERDA: EL ÁRBOL SVG --- */
+.tree-visual {
+  width: 450px; /* Tamaño controlado del árbol */
+  height: auto;
+  filter: drop-shadow(0 0 10px rgba(197, 160, 40, 0.2));
+}
+
+/* Efecto extra: Al pasar el mouse sobre el árbol, las líneas se oscurecen más */
+.tree-visual:hover .tree-path {
+  stroke: rgba(137, 97, 57, 0.8); /* Más opaco al interactuar */
+}
+
+.tree-svg {
+  width: 100%;
+  height: 100%;
+  overflow: visible; /* Permite que el brillo salga del borde */
+}
+
+/* Senderos */
+.tree-path {
+  stroke: var(--kab-path);
+  stroke-width: 1.0;
+  transition: all 0.5s ease;
+  stroke-linecap: round;
+}
+
+/* Nodos */
+.tree-node-group {
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.tree-node-group:hover {
+  transform: scale(1.1); /* Efecto zoom suave */
+}
+
+.node-halo {
+  opacity: 0.3;
+  transition: all 0.3s ease;
+}
+
+.node-core {
+  fill: #fff;
+  stroke: var(--kab-gold);
+  stroke-width: 0.5;
+}
+
+.node-text {
+  fill: var(--kab-text);
+  font-family: 'Cinzel', serif;
+  font-weight: bold;
+  pointer-events: none;
+}
+
+/* Estado Activo (Seleccionado) */
+.tree-node-group.active .node-halo {
+  opacity: 0.8;
+  filter: blur(2px);
+  stroke: #fff;
+  stroke-width: 0.5;
+}
+
+.tree-node-group.active .node-core {
+  fill: var(--kab-gold);
+}
+
+/* --- DERECHA: PANEL --- */
+.kabbalah-panel {
+  width: 350px;
+  min-height: 400px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+/* Tarjeta de Detalle */
+.sephira-card {
+  background: rgba(255, 255, 255, 0.6);
+  border: 1px solid var(--kab-gold);
+  border-radius: 10px;
+  padding: 2rem;
+  text-align: center;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+  backdrop-filter: blur(5px);
+}
+
+.sephira-header {
+  border-bottom: 3px solid; /* El color viene inline del JS */
+  padding-bottom: 1rem;
+  margin-bottom: 1.5rem;
+}
+
+.hebrew-big {
+  display: block;
+  font-family: 'Times New Roman', serif;
+  font-size: 2.5rem;
+  margin-bottom: 0.5rem;
+  color: #3a4a20;
+}
+
+.sephira-card h3 {
+  font-size: 1.8rem;
+  color: var(--kab-text);
+  margin: 0;
+}
+
+.sephira-id {
+  font-size: 0.8rem;
+  text-transform: uppercase;
+  color: #777;
+  letter-spacing: 2px;
+}
+
+.main-meaning {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.1rem;
+  line-height: 1.5;
+  margin-bottom: 1.5rem;
+}
+
+.shadow-box {
+  background: rgba(0,0,0,0.05);
+  padding: 10px;
+  border-radius: 5px;
+  font-size: 0.9rem;
+  color: #555;
+  border-left: 3px solid #888;
+  text-align: left;
+}
+
+.gematria-match-msg {
+  margin-top: 1rem;
+  color: var(--kab-gold);
+  font-weight: bold;
+  animation: pulse 2s infinite;
+}
+
+.close-btn {
+  margin-top: 2rem;
+  background: transparent;
+  border: 1px solid var(--kab-text);
+  padding: 8px 20px;
+  cursor: pointer;
+  font-family: 'Cinzel', serif;
+  transition: 0.3s;
+}
+
+.close-btn:hover {
+  background: var(--kab-text);
+  color: #fff;
+}
+
+/* Herramienta Gematria */
+.gematria-tool {
+  background: rgba(58, 74, 32, 0.05);
+  padding: 2rem;
+  border-radius: 15px;
+  border: 1px dashed var(--kab-gold);
+  text-align: center;
+}
+
+.gematria-tool h3 {
+  color: #3a4a20;
+  margin-bottom: 0.5rem;
+}
+
+.input-group {
+  display: flex;
+  gap: 10px;
+  margin: 1.5rem 0;
+}
+
+.input-group input {
+  flex: 1;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  font-family: 'Playfair Display', serif;
+  background: rgba(255,255,255,0.8);
+}
+
+.input-group button {
+  padding: 10px 20px;
+  background: #3a4a20;
+  color: #fff;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-family: 'Cinzel', serif;
+}
+
+.wisdom-note {
+  font-style: italic;
+  color: #777;
+  font-size: 0.9rem;
+}
+
+/* Responsive */
+@media (max-width: 800px) {
+  .kabbalah-workspace {
+    flex-direction: column;
+    gap: 2rem;
+  }
+  .tree-visual {
+    width: 300px;
+  }
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* --- NUEVA SECCIÓN DE EXPLICACIÓN --- */
+
+.kabbalah-explanation {
+  max-width: 600px;
+  text-align: center;
+  margin-top: 1.5rem;
+  padding: 0 20px;
+  animation: fadeIn 1.5s ease;
+}
+
+.kabbalah-explanation p {
+  font-family: 'Playfair Display', serif;
+  font-size: 1rem;
+  line-height: 1.6;
+  color: var(--kab-text);
+  /* Un fondo muy sutil para separarlo del resto */
+  background: linear-gradient(to right, transparent, rgba(197, 160, 40, 0.1), transparent);
+  padding: 10px;
+  border-radius: 8px;
+}
+
+.kabbalah-explanation strong {
+  color: #3a4a20; /* Verde oscuro Velora */
+  font-weight: bold;
+}
+
+.kabbalah-explanation em {
+  color: var(--kab-gold);
+  font-style: italic;
+  font-weight: bold;
+}
+
+.instruction-tag {
+  display: block;
+  margin-top: 5px;
+  font-size: 0.85rem;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  color: #2d4726;
+  font-weight: bold;
+  opacity: 0.8;
+}
+
+/* --- MEJORAS EN LA TARJETA SEPHIRÁ --- */
+
+.path-name {
+  display: block;
+  font-size: 0.9rem;
+  text-transform: uppercase;
+  letter-spacing: 3px;
+  color: #3a4a20; /* Verde Velora */
+  margin-top: 5px;
+  font-weight: bold;
+}
+
+/* Rejilla de 2 columnas para los datos */
+.attributes-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 15px;
+  margin: 1.5rem 0;
+  text-align: left;
+}
+
+.attr-item {
+  display: flex;
+  flex-direction: column;
+  background: rgba(255, 255, 255, 0.5);
+  padding: 8px;
+  border-radius: 5px;
+  border-left: 2px solid var(--kab-gold);
+}
+
+.attr-label {
+  font-size: 0.7rem;
+  text-transform: uppercase;
+  color: #777;
+  letter-spacing: 1px;
+  margin-bottom: 3px;
+}
+
+.attr-value {
+  font-family: 'Cinzel', serif;
+  font-weight: bold;
+  color: var(--kab-text);
+  font-size: 0.95rem;
+}
+
+.mantra-text {
+  font-style: italic;
+  color: #3a4a20;
+}
+
+/* Ajuste del cuadro de sombra */
+.shadow-box {
+  background: rgba(0,0,0,0.05);
+  padding: 12px;
+  border-radius: 5px;
+  font-size: 0.9rem;
+  color: #444;
+  border-left: 3px solid #5d4037; /* Marrón oscuro para la sombra */
+  text-align: left;
+  margin-top: 1rem;
+}
+
+.shadow-box strong {
+  display: block;
+  margin-bottom: 5px;
+  color: #2c241b;
+  text-transform: uppercase;
+  font-size: 0.8rem;
+}
