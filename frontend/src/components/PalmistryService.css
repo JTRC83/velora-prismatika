@@ -1,5 +1,6 @@
-/* PalmistryService.css */
+/* PalmistryService.css - Estilo Pergamino Antiguo & Místico */
 
+/* --- 1. CONTENEDOR PRINCIPAL --- */
 .palm-container {
   width: 100%;
   min-height: 85vh;
@@ -7,200 +8,268 @@
   flex-direction: column;
   align-items: center;
   font-family: 'Cinzel', serif;
-  color: #2c241b;
+  color: #2c241b; /* Tinta oscura */
   padding-bottom: 50px;
+}
+
+/* Header */
+.palm-header {
+  text-align: center;
+  margin-bottom: 2rem;
 }
 
 .palm-header h2 {
   font-size: 3rem;
-  color: #3a4a20;
+  color: #3a4a20; /* Verde Velora oscuro */
   text-transform: uppercase;
   margin-bottom: 0.5rem;
-  text-shadow: 0 1px 5px rgba(255,255,255,0.5);
+  text-shadow: 0 1px 2px rgba(0,0,0,0.1);
 }
 
-.palm-workspace {
+/* --- 2. NAVEGACIÓN (PESTAÑAS) --- */
+.palm-tabs {
   display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  align-items: center;
-  gap: 4rem;
-  margin-top: 2rem;
-  width: 100%;
-  max-width: 1000px;
+  gap: 20px;
+  margin-bottom: 3rem;
+  z-index: 5;
 }
 
-/* --- MANO SVG --- */
-.hand-visual {
-  position: relative;
-  width: 320px;
-  height: 420px;
-  /* Fondo estilo papel antiguo detrás de la mano */
-  background: radial-gradient(circle, rgba(255,255,255,0.4) 0%, transparent 70%);
-  border-radius: 50%;
-}
-
-.palm-svg {
-  width: 100%;
-  height: 100%;
-  filter: drop-shadow(0 5px 10px rgba(0,0,0,0.2));
-}
-
-/* Silueta de la mano */
-.hand-outline {
-  fill: rgba(235, 215, 180, 0.3); /* Color piel/pergamino muy sutil */
-  stroke: #5d4037; /* Marrón oscuro */
-  stroke-width: 2;
-  stroke-linejoin: round;
-}
-
-/* Líneas Interactivas */
-.palm-line {
-  fill: none;
-  stroke: #8d6e63; /* Marrón claro inactivo */
-  stroke-width: 4;
-  stroke-linecap: round;
+.tab-btn {
+  background: transparent;
+  border: 1px solid #c5a028;
+  color: #6d4c41;
+  padding: 12px 30px;
+  font-family: 'Cinzel', serif;
+  font-weight: 600;
+  letter-spacing: 1px;
   cursor: pointer;
   transition: all 0.3s ease;
-  opacity: 0.6;
+  border-radius: 2px;
 }
 
-.palm-line:hover {
-  stroke: #d4af37; /* Dorado al pasar el mouse */
-  stroke-width: 6;
-  opacity: 1;
-  filter: drop-shadow(0 0 5px rgba(212, 175, 55, 0.5));
+.tab-btn:hover {
+  background: rgba(197, 160, 40, 0.1);
+  transform: translateY(-2px);
 }
 
-/* Línea Activa (Animación de trazado) */
-.palm-line.active {
-  stroke: #d4af37;
-  stroke-width: 6;
-  opacity: 1;
-  stroke-dasharray: 1000;
-  stroke-dashoffset: 1000;
-  animation: drawLine 1.5s forwards ease-in-out;
+.tab-btn.active {
+  background: #3a4a20;
+  color: #f0e6d2; /* Texto claro sobre fondo oscuro */
+  border-color: #3a4a20;
+  box-shadow: 0 4px 15px rgba(58, 74, 32, 0.2);
 }
 
-@keyframes drawLine {
-  to { stroke-dashoffset: 0; }
+/* --- 3. AREA DE TRABAJO (WORKSPACE) --- */
+.palm-workspace {
+  width: 100%;
+  max-width: 1100px;
+  display: flex;
+  justify-content: center;
+  position: relative;
 }
 
-.line-label {
+/* Animación de entrada suave */
+.fade-in {
+  animation: fadeIn 0.8s ease-out;
+  width: 100%;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* --- 4. MODO GUÍA (LAYOUT SPLIT) --- */
+.guide-layout {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 3rem;
+}
+
+@media (min-width: 900px) {
+  .guide-layout {
+    flex-direction: row;
+    align-items: center; /* Centrado vertical */
+    justify-content: center;
+    gap: 4rem; /* Espacio generoso entre mano y texto */
+  }
+}
+
+.hand-visual-col, .info-panel-col {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+}
+
+/* PARCHMENT STYLE (Papel Antiguo Sutil) */
+.hand-diagram-parchment {
+  /* Fondo transparente o muy sutil, ya que ahora usamos la imagen de la mano como base */
+  background-color: transparent; 
+  /* Eliminamos borde y sombra rígidos para que parezca una ilustración sobre la mesa */
+  border: none;
+  box-shadow: none;
+  padding: 0;
+  width: 450px;
+  position: relative;
+  display: flex;
+  justify-content: center;
+}
+
+.diagram-instruction {
+  text-align: center;
+  margin-top: 10px;
   font-family: 'Playfair Display', serif;
-  font-size: 12px;
-  fill: #888;
-  opacity: 0; /* Ocultas por defecto */
-  transition: opacity 0.3s;
+  font-style: italic;
+  color: #8d6e63;
+  font-size: 0.9rem;
+  animation: pulse 2s infinite;
+}
+
+/* --- 5. ESTILOS DEL SVG (HAND COMPONENT) --- */
+.palmistry-hand-svg {
+  width: 100%;
+  height: auto;
+  /* Multiply ayuda a que la tinta de la imagen se funda con el fondo si es PNG transparente */
+  mix-blend-mode: multiply; 
+}
+
+/* Imagen de fondo dentro del SVG */
+.hand-image-bg {
+  /* Filtro sepia para unificar tono */
+  filter: sepia(0.3);
+}
+
+
+
+/* Grupos y Zonas de Click */
+.line-group {
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.click-zone {
+  fill: none;
+  stroke: transparent;
+  stroke-width: 40px; /* Zona de click MUY amplia */
+  stroke-linecap: round;
+  cursor: pointer;
+}
+
+.palm-line-stroke {
+  fill: none;
+  stroke: #8d6e63; /* Tinta pálida inicial */
+  stroke-width: 3;
+  stroke-linecap: round;
+  stroke-opacity: 0.6;
+  transition: all 0.3s;
+}
+
+/* Hover Effects */
+.line-group:hover .palm-line-stroke {
+  stroke: #c5a028; /* Dorado */
+  stroke-width: 5;
+  stroke-opacity: 1;
+}
+
+/* Active State */
+.line-group.active .palm-line-stroke {
+  stroke: #8b0000; /* Rojo intenso */
+  stroke-width: 5;
+  stroke-opacity: 1;
+  filter: url(#glow); /* Brillo suave */
+}
+
+/* Etiquetas dentro del SVG */
+.tag-text {
+  font-family: 'Cinzel', serif;
+  font-size: 14px;
+  fill: #8b0000;
+  font-weight: bold;
+  opacity: 0;
+  transition: opacity 0.5s;
   pointer-events: none;
 }
 
-.hand-visual:hover .line-label {
-  opacity: 1; /* Aparecen al acercar el mouse a la mano */
-}
-
-.hand-hint {
-  text-align: center;
-  margin-top: -20px;
-  font-style: italic;
-  color: #777;
-  font-size: 0.9rem;
-}
-
-/* --- PANEL DE LECTURA --- */
-.reading-panel {
-  width: 350px;
-  min-height: 250px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-/* Intro (Lista) */
-.palm-intro {
-  background: rgba(255, 255, 255, 0.4);
-  padding: 2rem;
-  border: 1px dashed #d4af37;
-  border-radius: 8px;
-}
-
-.palm-intro h3 {
-  color: #3a4a20;
-  margin-bottom: 1rem;
-  text-align: center;
-}
-
-.palm-intro ul {
-  list-style: none;
-  padding: 0;
-}
-
-.palm-intro li {
-  margin-bottom: 10px;
-  font-family: 'Playfair Display', serif;
-  font-size: 1rem;
-  color: #444;
-}
-
-/* Tarjeta de Resultado */
-.reading-card {
-  text-align: center;
-  background: #fff;
-  padding: 2rem;
-  border-radius: 4px;
-  box-shadow: 0 10px 30px rgba(0,0,0,0.1);
-  border-top: 4px solid #d4af37;
+.tag-line {
+  stroke: #8b0000;
+  stroke-width: 1;
+  stroke-dasharray: 4 2;
   opacity: 0;
-  transform: translateY(10px);
-  transition: all 0.5s ease;
+  transition: opacity 0.5s;
 }
 
-.reading-card.visible {
+.tag-text.visible, .tag-line.visible {
   opacity: 1;
-  transform: translateY(0);
 }
 
-.reading-card.loading {
-  opacity: 1;
-  border-color: #ccc;
+
+/* --- 6. PANEL DE INFORMACIÓN --- */
+.guide-info-box {
+  /* Fondo oscuro semi-transparente para legibilidad sobre el fondo dorado */
+  background-color: rgba(44, 36, 27, 0.15); 
+  border: 1px solid rgba(58, 74, 32, 0.4);
+  border-left: 4px solid #3a4a20; /* Acento verde */
+  padding: 2.5rem;
+  width: 350px;
+  min-height: 300px;
+  box-shadow: 0 10px 25px rgba(0,0,0,0.05);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  position: relative;
+  border-radius: 4px;
 }
 
-.reading-card h3 {
+.info-content h3 {
+  font-size: 1.8rem;
+  color: #2e3b1f;
+  margin-bottom: 0.5rem;
+}
+
+.divider-ornament {
   font-size: 1.5rem;
-  color: #3a4a20;
-  margin-bottom: 1rem;
+  color: #c5a028;
+  margin: 10px 0 20px 0;
 }
 
-.reading-text {
+.info-content p {
   font-family: 'Playfair Display', serif;
-  font-size: 1.1rem;
+  font-size: 1.15rem;
   line-height: 1.6;
-  color: #2c241b;
+  color: #4e342e;
 }
 
-.palm-separator {
-  margin: 1.5rem 0;
-  color: #d4af37;
-  font-size: 1.2rem;
-}
-
-.analyzing-text {
-  font-style: italic;
-  color: #777;
-  animation: pulse 1.5s infinite;
-}
-
-.reset-palm-btn {
+.clear-selection-btn {
+  margin-top: 2rem;
   background: transparent;
-  border: 1px solid #3a4a20;
-  color: #3a4a20;
+  border: 1px solid #8d6e63;
+  color: #8d6e63;
   padding: 8px 20px;
   font-family: 'Cinzel', serif;
   cursor: pointer;
   transition: 0.3s;
 }
 
-.reset-palm-btn:hover {
-  background: #3a4a20;
+.clear-selection-btn:hover {
+  background: #8d6e63;
   color: #fff;
+}
+
+.placeholder {
+  text-align: center;
+  color: #888;
+}
+
+.small-hint {
+  font-size: 0.9rem;
+  font-style: italic;
+  margin-top: 2rem;
+  color: #a1887f;
+}
+
+@keyframes pulse {
+  0% { opacity: 0.6; }
+  50% { opacity: 1; }
+  100% { opacity: 0.6; }
 }
