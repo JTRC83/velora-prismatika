@@ -1,99 +1,104 @@
-# orchestrator/router.py
 import re
-from fastapi import APIRouter, HTTPException
+from fastapi import APIRouter
 from pydantic import BaseModel
-from orchestrator.mock_llm import respuesta_avatar, generar_reflejo
-from services.tarot_service.tarot_service import TarotService
+
+# Importamos solo el cerebro narrativo, NO los servicios mecánicos
+from orchestrator.velora_weaver import VeloraWeaver
 
 router = APIRouter()
+weaver = VeloraWeaver()
 
-# Definimos los avatares y sus gatillos temáticos
-AVATARES = {
-    "sibylla": {
-        "firma": "Sibylla dixit.",
-        "gatillos": [r"\btarot\b", r"\bprofec[ií]a\b", r"\bsecreto\b"],
+# --- 1. CONFIGURACIÓN DE FACETAS ---
+# Mapa central de personalidades. Velora consulta esto para saber "quién ser".
+FACETAS = {
+    "tarot": {
+        "instruccion": "Adopta un tono ceremonial y solemne. Enfócate en el simbolismo arquetípico y la voluntad.",
+        "gatillos": [r"\btarot\b", r"\bprofec[ií]a\b", r"\bsecreto\b", r"\barcanos?\b", r"\bcartas?\b"],
     },
-    "dee": {
-        "firma": "Dee concluye el trazado estelar.",
-        "gatillos": [r"\bastrolog[ií]a\b", r"\bcarta nat[ae]l\b", r"\bazar celestial\b"],
+    "astrologia": {
+        "instruccion": "Adopta un tono erudito y preciso. Usa metáforas de relojería celeste, órbitas y geometría sagrada.",
+        "gatillos": [r"\bastrolog[ií]a\b", r"\bcarta nat[ae]l\b", r"\bazar celestial\b", r"\bplanetas?\b", r"\btránsito\b"],
     },
-    "nostradamus": {
-        "firma": "—M.",
-        "gatillos": [r"\bprediccion(?:es)?\b", r"\bmundial\b", r"\bfuturo\b"],
+    "profecia": {
+        "instruccion": "Adopta un tono críptico y atemporal. Habla en enigmas suaves o sentencias breves sobre el destino.",
+        "gatillos": [r"\bpredicci?on(?:es)?\b", r"\bmundial\b", r"\bfuturo\b", r"\bdestino\b"],
     },
-    "crowley": {
-        "firma": "Amor es la ley, amor bajo la voluntad.",
-        "gatillos": [r"\btarot\b", r"\bmagia ceremonial\b", r"\britual\b"],
+    "ritual": {
+        "instruccion": "Adopta un tono voluntariaso y mágico. Enfócate en la acción, el rito y la transformación de la realidad.",
+        "gatillos": [r"\bmagia\b", r"\britual\b", r"\bhechizo\b", r"\bvoluntad\b"],
     },
-    "blavatsky": {
-        "firma": "Que la verdad sea tu religión.",
-        "gatillos": [r"\bkarm[ae]\b", r"\breencarnaci[oó]n\b", r"\bkarma\b"],
+    "karma": {
+        "instruccion": "Adopta un tono teosófico y educativo. Habla de ciclos, reencarnación, lecciones y causa-efecto espiritual.",
+        "gatillos": [r"\bkarm[ae]\b", r"\breencarnaci[oó]n\b", r"\blecci[oó]n\b", r"\bvida pasada\b"],
     },
-    "vanga": {
-        "firma": "Así lo veo.",
-        "gatillos": [r"\bconsejo\b", r"\bdirecci[oó]n\b", r"\bvida cotidiana\b"],
+    "consejo": {
+        "instruccion": "Adopta un tono de consejera cotidiana, directa y empática. Aterriza los símbolos en la vida real.",
+        "gatillos": [r"\bconsejo\b", r"\bdirecci[oó]n\b", r"\bvida cotidiana\b", r"\bayuda\b"],
     },
-    "hermes": {
-        "firma": "Como es arriba, es abajo.",
-        "gatillos": [r"\bherm[eé]tico\b", r"\btalism[aá]n\b", r"\brei?nigeria\b"],  # ajusta “rei?nigeria” si es necesario
+    "hermetismo": {
+        "instruccion": "Adopta un tono hermético y axiomático. Basa tus respuestas en principios universales ('como es arriba es abajo').",
+        "gatillos": [r"\bherm[eé]tico\b", r"\btalism[aá]n\b", r"\bprincipio\b", r"\bcorrespondencia\b"],
     },
-    "paracelso": {
-        "firma": "In natura, la cura.",
-        "gatillos": [r"\bsalud\b", r"\balq?u?imia\b", r"\bhierbas\b", r"\bemergencias?\b"],
+    "salud": {
+        "instruccion": "Adopta un tono de alquimia natural. Usa metáforas de purificación, plantas y equilibrio de elementos (sin dar consejos médicos reales).",
+        "gatillos": [r"\bsalud\b", r"\balq?u?imia\b", r"\bhierbas\b", r"\bienestar\b"],
     },
 }
 
-# Precompilar los patrones de gatillo para cada avatar
-for datos in AVATARES.values():
+# Precompilar regex para optimizar la detección
+for key, datos in FACETAS.items():
     datos["gatillos"] = [re.compile(p, re.IGNORECASE) for p in datos["gatillos"]]
-
-# Patrón para invocación directa: "Convocar a Sibylla" o "Consultar a Dee"
-INVOCAR_DIRECTO = re.compile(r"\b(?:Convocar|Consultar)\s+a\s+([A-Za-záéíóúÁÉÍÓÚñÑ]+)\b", re.IGNORECASE)
 
 class Mensaje(BaseModel):
     usuario: str
 
+# --- 2. ENDPOINTS GENERALES ---
+
+@router.get("/servicio/{nombre_servicio}/intro")
+async def intro_servicio(nombre_servicio: str):
+    """
+    Endpoint Educativo [CAPA ETÉREA]:
+    Velora explica el origen y utilidad de cualquier servicio al entrar.
+    Este endpoint es genérico y sirve para Tarot, Astro, Runas, etc.
+    """
+    # Velora Weaver genera la explicación histórica/mística
+    explicacion = weaver.narrar_introduccion(nombre_servicio)
+    return {
+        "velora_voice": explicacion,
+        "servicio": nombre_servicio
+    }
+
 @router.post("/chat")
-async def chat(mensaje: Mensaje):
+async def chat_generico(mensaje: Mensaje):
+    """
+    Endpoint de Chat Libre [CAPA ETÉREA]:
+    El usuario habla con Velora sin estar usando una herramienta específica.
+    Velora detecta la intención (Faceta) y responde acorde.
+    """
     texto = mensaje.usuario.strip()
+    
+    # A. Detectar Faceta (Intención)
+    faceta_detectada = "consejo" # Default
+    instruccion_activa = FACETAS["consejo"]["instruccion"]
 
-    # 1) Detectar invocación directa
-    match = INVOCAR_DIRECTO.search(texto)
-    if match:
-        avatar_raw = match.group(1).lower()
-        avatar = avatar_raw.encode("ascii", "ignore").decode().lower()  # normalizar
-        if avatar not in AVATARES:
-            raise HTTPException(status_code=404, detail=f"Avatar '{avatar_raw}' desconocido.")
-        # Generar saludo de Velora
-        velora_msg = f"Invoco a {avatar_raw.capitalize()}, guardián(a) de su arte eterno."
-    else:
-        # 2) Detectar gatillos temáticos
-        avatar = None
-        for nombre, datos in AVATARES.items():
-            for pattern in datos["gatillos"]:
-                if pattern.search(texto):
-                    avatar = nombre
-                    break
-            if avatar:
+    for nombre, datos in FACETAS.items():
+        for pattern in datos["gatillos"]:
+            if pattern.search(texto):
+                faceta_detectada = nombre
+                instruccion_activa = datos["instruccion"]
                 break
-
-        if avatar:
-            velora_msg = f"Velora escucha tu pregunta y convoca a {avatar.capitalize()}."
-        else:
-            # 3) Si no hay coincidencias, pedir aclaración
-            return {
-                "velora": "No he descifrado claramente tu intención. ¿Te interesa un consejo cabalístico, astrológico, profecía tajante…?",
-                "avatar": None,
-                "reflejo": None
-            }
-
-    # 4) Llamar al mock_llm para obtener la respuesta del avatar (texto + firma)
-    respuesta = respuesta_avatar(avatar, texto)  # retorna cadena de varias líneas
-    # 5) Generar el reflejo prismátiko
-    reflejo = generar_reflejo(avatar, texto, respuesta)
+        if faceta_detectada != "consejo":
+            break
+            
+    # B. Generar respuesta con IA (Pasamos la instrucción invisible al usuario)
+    respuesta_velora = weaver.chat_libre(texto, instruccion_activa)
 
     return {
-        "velora": velora_msg,
-        "avatar": respuesta,
-        "reflejo": reflejo
+        "velora_voice": respuesta_velora["texto"],
+        "reflejo": respuesta_velora["reflejo"],
+        "faceta_usada": faceta_detectada 
     }
+
+# NOTA: El endpoint "/tarot/tirada" SE HA MOVIDO a:
+# services/tarot_service/router.py
+# Esto mantiene la lógica mecánica separada de la lógica conversacional.

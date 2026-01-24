@@ -1,231 +1,250 @@
-/* --- LAYOUT GENERAL --- */
-.chakra-container {
-  max-width: 900px;
+/* --- VARIABLES DE ALTO CONTRASTE --- */
+:root {
+  --chakra-text: #2d1a00;       /* Tinta oscura (muy legible) */
+  --chakra-accent: #b8860b;     /* Dorado oscuro para bordes */
+  --chakra-panel-bg: rgba(253, 246, 227, 0.8); /* Pergamino claro */
+  --font-heading: "Faculty Glyphic", serif;
+  --font-body: "Garamond", "Georgia", serif;
 }
 
+.chakra-container {
+  color: var(--chakra-text);
+  max-width: 1000px;
+  margin: 0 auto;
+  min-height: 80vh;
+  padding: 2rem;
+}
+
+.chakra-title {
+  font-family: var(--font-heading);
+  text-align: center;
+  font-size: 2.5rem;
+  color: #3e2b12; /* Marrón muy oscuro */
+  margin-bottom: 2rem;
+  text-transform: uppercase;
+  letter-spacing: 3px;
+  text-shadow: 0 1px 1px rgba(255,255,255,0.5);
+}
+
+/* --- LAYOUT --- */
 .chakra-layout {
   display: flex;
-  gap: 3rem;
+  gap: 4rem;
   align-items: flex-start;
   justify-content: center;
-  margin-top: 2rem;
+  flex-wrap: wrap;
 }
 
-/* --- EL CUERPO (IZQUIERDA) --- */
+/* --- COLUMNA IZQ: CUERPO ENERGÉTICO --- */
 .body-column {
+  position: relative;
   display: flex;
-  flex-direction: column;
+  flex-direction: column-reverse; 
   align-items: center;
   gap: 1.2rem;
-  position: relative;
-  padding: 1rem 0;
+  padding: 1rem;
 }
 
-/* Línea central */
+/* Línea sutil */
 .energy-line {
   position: absolute;
-  top: 15px;
-  bottom: 15px;
-  width: 3px;
-  background: linear-gradient(to bottom, rgba(218, 165, 32, 0.1), rgba(218, 165, 32, 0.6), rgba(218, 165, 32, 0.1));
+  top: 1rem;
+  bottom: 1rem;
+  width: 1px;
+  background: linear-gradient(to top, #8B0000, #DAA520, #9932CC);
+  opacity: 0.3;
   z-index: 0;
 }
 
-/* --- BOTONES DE CHAKRAS (JOYAS) --- */
 .chakra-node {
-  width: 50px;
-  height: 50px;
-  border-radius: 50%;
-  border: 2px solid #d4af37; /* Borde dorado */
-  
-  cursor: pointer;
-  z-index: 1;
-  transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
   position: relative;
-  
+  z-index: 1;
+  width: 55px;
+  height: 55px;
+  border-radius: 50%;
+  border: 2px solid rgba(255, 255, 255, 0.4);
+  cursor: pointer;
+  transition: all 0.3s ease;
   display: flex;
-  justify-content: center;
   align-items: center;
-  color: rgba(255, 255, 255, 0.9);
-}
-
-.node-symbol {
-  font-size: 1.2rem;
-  font-weight: bold;
-  text-shadow: 0 1px 2px rgba(0,0,0,0.5);
-  pointer-events: none;
+  justify-content: center;
+  color: #fff;
+  font-size: 1.1rem;
+  box-shadow: 0 4px 6px rgba(0,0,0,0.1);
 }
 
 .chakra-node:hover {
-  transform: scale(1.15);
+  transform: scale(1.1);
+  z-index: 2;
   border-color: #fff;
 }
 
 .chakra-node.active {
-  transform: scale(1.25);
+  transform: scale(1.2);
   border-color: #fff;
-  z-index: 2;
+  box-shadow: 0 0 15px rgba(255,255,255,0.6);
 }
 
-/* --- TOOLTIPS ELEGANTES (HOVER) --- */
-.node-tooltip {
-  position: absolute;
-  left: 65px;
-  top: 50%;
-  transform: translateY(-50%) translateX(-10px);
-  
-  background: rgba(30, 20, 10, 0.95);
-  color: #d4af37;
-  border: 1px solid rgba(212, 175, 55, 0.5);
-  
-  padding: 0.5rem 1rem;
-  border-radius: 4px;
-  font-size: 0.9rem;
-  font-family: var(--font-heading);
-  white-space: nowrap;
-  letter-spacing: 1px;
-  
-  opacity: 0;
-  pointer-events: none;
-  visibility: hidden;
-  
-  transition: all 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
-  box-shadow: 0 4px 15px rgba(0,0,0,0.3);
-  z-index: 10;
+.node-symbol {
+  font-family: "Segoe UI Symbol", sans-serif;
+  opacity: 0.9;
 }
 
-/* Flechita del tooltip */
-.node-tooltip::before {
-  content: "";
-  position: absolute;
-  left: -6px;
-  top: 50%;
-  transform: translateY(-50%);
-  border-width: 6px 6px 6px 0;
-  border-style: solid;
-  border-color: transparent rgba(212, 175, 55, 0.5) transparent transparent;
-}
-
-/* Acción Hover del Tooltip */
-.chakra-node:hover .node-tooltip {
-  opacity: 1;
-  visibility: visible;
-  transform: translateY(-50%) translateX(0);
-}
-
-/* --- LA INFO (DERECHA) --- */
+/* --- COLUMNA DER: PANEL DE INFO --- */
 .info-column {
   flex: 1;
-  min-width: 300px;
+  min-width: 350px;
+  max-width: 600px;
 }
 
-.placeholder-msg {
-  text-align: center;
+/* Caja de Diagnóstico (Input) */
+.diagnosis-box {
+  background: var(--chakra-panel-bg); /* Fondo claro */
+  border: 1px solid var(--chakra-accent);
+  padding: 2rem;
+  border-radius: 8px;
+  margin-bottom: 2rem;
+  box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+}
+
+.diagnosis-box h4 {
+  color: #3e2b12;
+  font-family: var(--font-heading);
+  margin-bottom: 1rem;
+  font-size: 1.1rem;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.diagnosis-input-group {
+  display: flex;
+  gap: 1rem;
+}
+
+.diagnosis-input {
+  flex: 1;
+  padding: 1rem;
+  background: #fff; /* Fondo blanco puro para escribir */
+  border: 1px solid #ccc;
+  border-bottom: 2px solid var(--chakra-accent);
+  color: #000;
+  border-radius: 4px;
+  font-family: var(--font-body);
+  font-size: 1rem;
+}
+
+.diagnosis-input::placeholder {
   color: #888;
   font-style: italic;
-  padding: 3rem;
-  border: 2px dashed rgba(184, 134, 11, 0.2);
-  border-radius: 12px;
 }
 
-/* --- TARJETA DE INFORMACIÓN Y ANIMACIÓN --- */
+.diagnosis-btn {
+  background: #3e2b12;
+  color: #fff;
+  border: none;
+  padding: 0 2rem;
+  border-radius: 4px;
+  cursor: pointer;
+  font-family: var(--font-heading);
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  transition: 0.3s;
+}
+
+.diagnosis-btn:hover {
+  background: var(--chakra-accent);
+}
+
+/* Tarjeta de Detalle (Estilo Astro) */
 .chakra-card {
-  /* Animación suave de entrada (Slide Up + Fade In) */
-  animation: cardEnter 0.6s cubic-bezier(0.22, 1, 0.36, 1) forwards;
-  transform-origin: center top;
-  will-change: transform, opacity;
-}
-
-@keyframes cardEnter {
-  0% {
-    opacity: 0;
-    transform: translateY(20px) scale(0.98);
-  }
-  100% {
-    opacity: 1;
-    transform: translateY(0) scale(1);
-  }
+  background: linear-gradient(to bottom right, #fffbf0, #f8f1e0);
+  color: var(--chakra-text);
+  border-radius: 12px;
+  padding: 2.5rem;
+  border: 1px solid #d4af37;
+  box-shadow: 0 10px 25px rgba(0,0,0,0.05);
+  animation: slideIn 0.5s ease;
 }
 
 .chakra-header {
   display: flex;
   align-items: center;
-  gap: 1rem;
-  margin-bottom: 1.5rem;
+  gap: 1.5rem;
+  margin-bottom: 2rem;
   border-bottom: 1px solid rgba(0,0,0,0.1);
   padding-bottom: 1rem;
 }
 
 .chakra-icon-large {
-  width: 60px;
-  height: 60px;
+  width: 80px;
+  height: 80px;
   border-radius: 50%;
   display: flex;
-  justify-content: center;
   align-items: center;
-  font-family: var(--font-heading);
-  font-size: 1.5rem;
+  justify-content: center;
+  font-size: 2.5rem;
   color: #fff;
-  font-weight: bold;
-  box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+  box-shadow: inset 0 0 20px rgba(0,0,0,0.2);
+  border: 4px solid #fff;
 }
 
 .sanskrit-name {
-  font-style: italic;
-  color: #777;
-  font-size: 0.9rem;
-}
-
-/* --- DETALLES Y GRID --- */
-.chakra-details p {
-  margin-bottom: 0.8rem;
-  font-size: 0.95rem;
-  color: #444;
-}
-
-.astro-stats-grid {
-  border-top: 1px solid rgba(184, 134, 11, 0.3);
-  border-bottom: 1px solid rgba(184, 134, 11, 0.3);
-  padding: 1.5rem 0;
-  margin: 1.5rem 0;
-}
-
-.stat-explanation {
   display: block;
-  font-family: var(--font-body);
-  font-size: 0.75rem;
-  color: #8a7e66;
   font-style: italic;
-  margin-top: 4px;
-  letter-spacing: 0.5px;
+  color: #666;
+  font-size: 1rem;
+  margin-top: 0.2rem;
+}
+
+.chakra-details p {
+  margin-bottom: 1rem;
+  line-height: 1.6;
+  font-size: 1.05rem;
 }
 
 .visualization-box {
-  background: rgba(255,255,255,0.4);
-  padding: 1rem;
-  border-radius: 8px;
-  margin-top: 1rem;
-  border-left: 3px solid #ccc;
+  background: rgba(255,255,255,0.5);
+  padding: 1.5rem;
+  border-left: 4px solid var(--chakra-accent);
+  margin-top: 2rem;
+  font-style: italic;
+  color: #444;
 }
 
-/* --- RESPONSIVE --- */
-@media (max-width: 600px) {
-  .chakra-layout {
-    flex-direction: column;
-    align-items: center;
-  }
-  .body-column {
-    flex-direction: row;
-    width: 100%;
-    justify-content: center;
-    padding: 1rem;
-  }
-  .energy-line {
-    width: 100%;
-    height: 2px;
-    top: 50%;
-  }
-  .node-tooltip {
-    display: none; /* Ocultar tooltips en móvil */
-  }
+/* Mensaje Velora */
+.velora-chakra-box {
+  margin-top: 2rem;
+  padding-top: 2rem;
+  border-top: 1px solid rgba(184, 134, 11, 0.2);
+}
+
+.velora-label {
+  display: block;
+  text-align: center;
+  font-family: var(--font-heading);
+  font-size: 0.85rem;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  margin-bottom: 1rem;
+}
+
+.velora-text {
+  text-align: justify;
+  font-style: italic;
+  font-size: 1.15rem;
+  line-height: 1.7;
+  color: #2d1a00;
+  margin-bottom: 1rem;
+}
+
+@keyframes slideIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+
+.placeholder-msg {
+    text-align: center;
+    color: #5a4a42;
+    font-style: italic;
+    font-size: 1.1rem;
+    padding: 3rem;
+    border: 1px dashed rgba(184, 134, 11, 0.3);
+    border-radius: 8px;
 }

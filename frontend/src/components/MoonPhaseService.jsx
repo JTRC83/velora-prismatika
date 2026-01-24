@@ -1,28 +1,35 @@
 import React, { useState, useEffect } from 'react';
-import './AstroService.css'; // Reusamos los estilos base (variables, botones, tarjetas)
-import './MoonPhaseService.css'; // Estilos específicos para la luna
+import './AstroService.css'; // Estilos base
+import './MoonPhaseService.css'; // Estilos lunares
 
 export default function MoonPhaseService() {
   const [data, setData] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
-  // Cargar datos al montar el componente (no requiere input del usuario)
   useEffect(() => {
     fetchMoonData();
   }, []);
 
   const fetchMoonData = async () => {
     setLoading(true);
+    setError(null);
     try {
-      const res = await fetch('/moon-phase/current'); // Usa el proxy configurado
+      // CORRECCIÓN: Usamos la URL completa del backend
+      const res = await fetch('http://localhost:8000/moon-phase/current'); 
+      
       if (!res.ok) throw new Error('La luna se oculta tras las nubes...');
+      
       const jsonData = await res.json();
-      setData(jsonData);
+      
+      // Pequeño delay artificial para disfrutar la animación de carga
+      setTimeout(() => {
+        setData(jsonData);
+        setLoading(false);
+      }, 1000);
+
     } catch (err) {
       setError("No se pudo conectar con el cielo nocturno.");
-      console.error(err);
-    } finally {
       setLoading(false);
     }
   };
@@ -30,21 +37,31 @@ export default function MoonPhaseService() {
   return (
     <div className="astro-service p-6">
       
-     <h2 className="astro-title" style={{ color: '#2c3e50', textShadow: '0 1px 2px rgba(255,255,255,0.5)' }}>
-  🌑 Espejo de Plata
-    </h2>
+     <h2 className="moon-title">
+        🌑 Espejo de Plata
+     </h2>
 
-      {/* Botón de recarga manual */}
-      <div style={{ textAlign: 'center', marginBottom: '2rem' }}>
-        <button onClick={fetchMoonData} disabled={loading} className="astro-btn moon-btn">
-          {loading ? 'Consultando marea...' : 'Actualizar Fase Lunar'}
-        </button>
-      </div>
+      {/* Botón de recarga */}
+      {!data && !loading && (
+        <div style={{ textAlign: 'center', marginBottom: '2rem' }}>
+          <button onClick={fetchMoonData} className="astro-btn moon-btn">
+            Intentar Conexión
+          </button>
+        </div>
+      )}
+
+      {/* Loading Místico */}
+      {loading && (
+        <div className="moon-loading">
+            <span className="moon-spinner">🌕</span>
+            <p>Sintonizando mareas...</p>
+        </div>
+      )}
 
       {error && <p className="astro-error">{error}</p>}
 
       <div className="astro-card-container">
-        {data && (
+        {data && !loading && (
           <div className="astro-card visible moon-card">
             
             {/* Cabecera: La Luna Visual */}
@@ -55,41 +72,52 @@ export default function MoonPhaseService() {
               <span className="zodiac-name moon-phase-name">
                 {data.phase_name}
               </span>
+              <span className="moon-date">{data.date}</span>
             </div>
 
-            {/* Grid de Datos Estilo Alquimia (Reusado) */}
+            {/* Grid de Datos */}
             <div className="astro-stats-grid moon-grid">
               
               {/* Iluminación */}
               <div className="stat-box">
                 <span className="stat-icon">💡</span>
                 <span className="stat-label">Luz</span>
-                <span className="stat-value">{data.illumination}</span>
+                <span className="stat-value">{data.illumination}%</span>
               </div>
 
               {/* Signo Lunar */}
               <div className="stat-box">
-                <span className="stat-icon">♓</span> {/* Icono genérico o dinámico si quieres */}
+                <span className="stat-icon">✨</span>
                 <span className="stat-label">Tránsito</span>
                 <span className="stat-value">{data.zodiac_sign}</span>
               </div>
 
-              {/* Elemento (Hardcodeado o calculado si quieres complicarlo) */}
+              {/* Elemento (Decorativo) */}
               <div className="stat-box">
                 <span className="stat-icon">🌊</span>
-                <span className="stat-label">Marea</span>
-                <span className="stat-value">Alta</span>
+                <span className="stat-label">Ciclo</span>
+                <span className="stat-value">
+                    {data.illumination > 50 ? "Plenitud" : "Gestación"}
+                </span>
               </div>
 
             </div>
 
             {/* Sección Velora (Reflejo) */}
             <div className="astro-horoscope moon-message">
-              <span className="velora-label" style={{ color: '#8aa' }}>✦ Susurro Lunar ✦</span>
-              <p className="velora-text" style={{ color: '#223' }}>
+              <span className="velora-label-moon">✦ Susurro Lunar ✦</span>
+              <p className="velora-text-moon">
                 "{data.velora_message}"
               </p>
+              <div className="moon-reflection">
+                {data.velora_reflection}
+              </div>
             </div>
+            
+            <button onClick={fetchMoonData} className="moon-refresh-btn">
+              Actualizar Cielo
+            </button>
+
           </div>
         )}
       </div>

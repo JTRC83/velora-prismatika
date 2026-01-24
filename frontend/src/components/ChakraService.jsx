@@ -1,31 +1,62 @@
-import React, { useState } from 'react';
-import './AstroService.css'; // Estilos base
-import './ChakraService.css'; // Estilos nuevos
+import React, { useState, useEffect } from 'react';
+import './ChakraService.css';
 
-// PALETA DE GEMAS VELORA + SÍMBOLOS SÁNSCRITOS
+// Configuración de colores (sin cambios en hex, solo presentación)
 const CHAKRA_COLORS = [
-  { id: 7, hex: "#9932CC", label: "Corona", symbol: "ॐ" },      // Amatista Oscura
-  { id: 6, hex: "#483D8B", label: "Tercer Ojo", symbol: "om" }, // Lapis Lázuli (Indigo)
-  { id: 5, hex: "#5F9EA0", label: "Garganta", symbol: "हं" },   // Turquesa apagado
-  { id: 4, hex: "#556B2F", label: "Corazón", symbol: "यं" },    // Verde Oliva/Musgo
-  { id: 3, hex: "#DAA520", label: "Plexo Solar", symbol: "रं" },// Oro Viejo
-  { id: 2, hex: "#CD853F", label: "Sacro", symbol: "वं" },      // Cobre/Ámbar
-  { id: 1, hex: "#8B0000", label: "Raíz", symbol: "लं" }        // Granate/Rubí
+  { id: 7, hex: "#9932CC", label: "Corona", symbol: "ॐ" },
+  { id: 6, hex: "#483D8B", label: "Tercer Ojo", symbol: "om" },
+  { id: 5, hex: "#5F9EA0", label: "Garganta", symbol: "हं" },
+  { id: 4, hex: "#556B2F", label: "Corazón", symbol: "यं" },
+  { id: 3, hex: "#DAA520", label: "Plexo Solar", symbol: "रं" },
+  { id: 2, hex: "#CD853F", label: "Sacro", symbol: "वं" },
+  { id: 1, hex: "#8B0000", label: "Raíz", symbol: "लं" }
 ];
 
 export default function ChakraService() {
-  const [selectedId, setSelectedId] = useState(null);
-  const [chakraData, setChakraData] = useState(null);
+  const [chakras, setChakras] = useState([]);
+  const [selectedChakra, setSelectedChakra] = useState(null);
+  const [symptom, setSymptom] = useState("");
   const [loading, setLoading] = useState(false);
+  const [veloraGuide, setVeloraGuide] = useState(null);
 
-  const fetchChakra = async (id) => {
-    setSelectedId(id);
+  useEffect(() => {
+    fetch('http://localhost:8000/chakra/list')
+      .then(res => res.json())
+      .then(data => {
+        setChakras(data.sort((a, b) => a.id - b.id));
+      })
+      .catch(err => console.error("Error cargando chakras:", err));
+  }, []);
+
+  const handleSelect = (chakra) => {
+    setSelectedChakra(chakra);
+    setVeloraGuide(null);
+    setSymptom("");
+  };
+
+  const handleDiagnosis = async (e) => {
+    e.preventDefault();
+    if (!symptom.trim()) return;
+
     setLoading(true);
-    setChakraData(null);
+    setVeloraGuide(null);
+
     try {
-      const res = await fetch(`/chakra/${id}`);
+      const res = await fetch('http://localhost:8000/chakra/align', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ symptom: symptom })
+      });
+
+      if (!res.ok) throw new Error("Error en la alineación");
+
       const data = await res.json();
-      setChakraData(data);
+      setSelectedChakra(data.chakra);
+      setVeloraGuide({
+        voice: data.velora_voice,
+        reflection: data.reflejo
+      });
+
     } catch (err) {
       console.error(err);
     } finally {
@@ -34,108 +65,124 @@ export default function ChakraService() {
   };
 
   return (
-    <div className="astro-service p-6 chakra-container">
-      <h2 className="astro-title" style={{color: '#5a4a42'}}>🧘 Alineación Energética</h2>
+    <div className="chakra-container">
+      {/* Título limpio sin emojis */}
+      <h2 className="chakra-title">Sistema Energético</h2>
 
       <div className="chakra-layout">
         
-        {/* COLUMNA IZQUIERDA: EL CUERPO DE LUZ */}
+        {/* COLUMNA IZQ: CUERPO */}
         <div className="body-column">
           <div className="energy-line"></div>
-          {CHAKRA_COLORS.map((c) => (
+          {chakras.map((c) => (
             <button
               key={c.id}
-              className={`chakra-node ${selectedId === c.id ? 'active' : ''}`}
+              className={`chakra-node ${selectedChakra?.id === c.id ? 'active' : ''}`}
               style={{ 
                 backgroundColor: c.hex,
-                // Si está activo, brillamos con su color, si no, sombra sutil
-                boxShadow: selectedId === c.id 
+                boxShadow: selectedChakra?.id === c.id 
                   ? `0 0 25px ${c.hex}` 
-                  : '0 4px 6px rgba(0,0,0,0.3)'
+                  : '0 4px 8px rgba(0,0,0,0.2)'
               }}
-              onClick={() => fetchChakra(c.id)}
-              title={c.label}
+              onClick={() => handleSelect(c)}
+              title={c.name}
             >
-              {/* Símbolo Sánscrito dentro del botón */}
               <span className="node-symbol">{c.symbol}</span>
-              
-              <span className="node-tooltip">{c.label}</span>
             </button>
           ))}
         </div>
 
-        {/* COLUMNA DERECHA: LA INFO */}
+        {/* COLUMNA DER: CONTENIDO */}
         <div className="info-column">
-         {!chakraData ? (
+          
+          {/* DIAGNÓSTICO (Texto legible) */}
+          <div className="diagnosis-box">
+            <h4>¿Cómo te sientes?</h4>
+            <form onSubmit={handleDiagnosis} className="diagnosis-input-group">
+              <input 
+                type="text" 
+                className="diagnosis-input"
+                placeholder="Describe tu síntoma físico o emocional..."
+                value={symptom}
+                onChange={(e) => setSymptom(e.target.value)}
+              />
+              <button type="submit" className="diagnosis-btn" disabled={loading}>
+                {loading ? "..." : "Sanar"}
+              </button>
+            </form>
+          </div>
+
+          {/* TARJETA */}
+          {!selectedChakra ? (
             <div className="placeholder-msg">
-              <p>Selecciona un centro de energía (Gemas) para leer su vibración.</p>
+              <p>Selecciona un punto de luz o describe tu síntoma para comenzar.</p>
             </div>
           ) : (
             <div 
-              /* 👇 ¡ESTO ES LO IMPORTANTE! Añadimos key para forzar la animación */
-              key={chakraData.id}
-              className="astro-card visible chakra-card"
-              style={{ borderTop: `4px solid ${chakraData.hex}` }}
+              key={selectedChakra.id} 
+              className="chakra-card"
+              style={{ borderTop: `6px solid ${selectedChakra.hex}` }}
             >
-              {/* Cabecera */}
               <div className="chakra-header">
                 <div 
                   className="chakra-icon-large" 
-                  style={{ background: chakraData.hex }}
+                  style={{ background: selectedChakra.hex }}
                 >
-                  {/* Aquí mostramos la inicial del sánscrito o el número */}
-                  {chakraData.sanskrit.charAt(0)}
+                  {selectedChakra.symbol}
                 </div>
                 <div>
-                  <h3>{chakraData.name}</h3>
-                  <span className="sanskrit-name">{chakraData.sanskrit}</span>
+                  <h3>{selectedChakra.name}</h3>
+                  <span className="sanskrit-name">{selectedChakra.sanskrit}</span>
                 </div>
               </div>
 
-              {/* Grid de Datos con Explicaciones */}
+              {/* Grid Técnico Limpio */}
               <div className="astro-stats-grid">
-                
                 <div className="stat-box">
                   <span className="stat-label">Mantra</span>
-                  <span className="stat-value">{chakraData.mantra}</span>
-                  <span className="stat-explanation">Sonido Semilla</span>
+                  <span className="stat-value">{selectedChakra.mantra}</span>
                 </div>
-
                 <div className="stat-box">
                   <span className="stat-label">Elemento</span>
-                  <span className="stat-value">{chakraData.element}</span>
-                  <span className="stat-explanation">Energía Base</span>
+                  <span className="stat-value">{selectedChakra.element}</span>
                 </div>
-
                 <div className="stat-box">
                   <span className="stat-label">Frecuencia</span>
-                  <span className="stat-value">{chakraData.frequency} Hz</span>
-                  <span className="stat-explanation">Vibración</span>
+                  <span className="stat-value">{selectedChakra.frequency} Hz</span>
                 </div>
-                
               </div>
 
-              {/* Contenido Rico */}
+              {/* Detalles sin emojis */}
               <div className="chakra-details">
-                <p><strong>💎 Cristales:</strong> {chakraData.crystals.join(", ")}</p>
-                <p><strong>⚠️ Bloqueos:</strong> {chakraData.imbalance.join(", ")}</p>
+                <p><strong>Cristales:</strong> {selectedChakra.crystals.join(", ")}</p>
+                <p><strong>Bloqueos:</strong> {selectedChakra.imbalance.join(", ")}</p>
                 
-                <div className="visualization-box">
-                  <strong>👁️ Visualización:</strong>
-                  <p>{chakraData.visualization}</p>
-                </div>
+                {!veloraGuide && (
+                  <div className="visualization-box">
+                    <strong>Visualización Sugerida:</strong>
+                    <p>{selectedChakra.visualization}</p>
+                  </div>
+                )}
               </div>
 
               {/* Mensaje Velora */}
-              <div className="astro-horoscope mt-4">
-                <span className="velora-label" style={{color: chakraData.hex}}>✦ Equilibrio Elemental ✦</span>
-                <p className="velora-text">"{chakraData.velora_message}"</p>
-              </div>
+              {veloraGuide && (
+                <div className="velora-chakra-box">
+                  <span className="velora-label" style={{color: selectedChakra.hex}}>
+                    Guía de Sanación
+                  </span>
+                  {veloraGuide.voice.split('\n').map((line, i) => (
+                    line.trim() && <p key={i} className="velora-text">{line}</p>
+                  ))}
+                  <div className="moon-reflection" style={{marginTop: '1.5rem', color: '#555', textAlign: 'center', fontStyle: 'italic'}}>
+                    "{veloraGuide.reflection}"
+                  </div>
+                </div>
+              )}
 
             </div>
           )}
         </div>
-
       </div>
     </div>
   );

@@ -7,7 +7,7 @@
   --velora-accent: #7e7e23;
   --glass-bg: rgba(255, 255, 255, 0.15);
   --glass-border: rgba(255, 255, 255, 0.3);
-  --font-heading: "Faculty Glyphic", serif; /* O la fuente que uses para títulos */
+  --font-heading: "Faculty Glyphic", serif; 
   --font-body: "Garamond", "Georgia", serif;
 }
 
@@ -31,7 +31,7 @@
 
 /* --- FORMULARIO ESTILO "LIBRO DE REGISTRO" --- */
 .astro-form-col {
-  background: rgba(253, 246, 227, 0.6); /* Pergamino semitransparente */
+  background: rgba(253, 246, 227, 0.6);
   padding: 1.5rem;
   border-radius: 1rem;
   box-shadow: 0 4px 15px rgba(0,0,0,0.1);
@@ -121,8 +121,8 @@
   border: 1px solid #d4af37;
   box-shadow: 
     0 10px 25px rgba(0,0,0,0.15),
-    inset 0 0 40px rgba(212, 175, 55, 0.1); /* Brillo interior dorado */
-  max-width: 500px;
+    inset 0 0 40px rgba(212, 175, 55, 0.1); 
+  max-width: 600px; /* Un poco más ancho para que quepan bien 5 columnas */
   width: 100%;
   animation: slideUp 0.6s cubic-bezier(0.22, 1, 0.36, 1);
   position: relative;
@@ -138,34 +138,45 @@
   padding-bottom: 1rem;
 }
 
-.zodiac-symbol-char {
-  font-size: 4rem;
-  line-height: 1;
-  color: var(--velora-gold);
-  text-shadow: 2px 2px 0px rgba(0,0,0,0.1);
-}
+/* Símbolo del zodiaco (Color Negro/Oscuro ahora) */
+/* En AstroService.css */
 
+.zodiac-symbol-char {
+  /* Forzamos fuentes de sistema aburridas para evitar la fuente de Emojis de Apple */
+  font-family: "Segoe UI Symbol", "DejaVu Sans", "Symbola", sans-serif;
+  
+  font-size: 5rem;
+  line-height: 1;
+  
+  /* Color negro directo, sin trucos de sombras */
+  color: #1a1a1a; 
+  
+  margin-bottom: 0.5rem;
+  
+  /* Quitamos cualquier filtro o sombra anterior */
+  text-shadow: none;
+  filter: none;
+}
 .zodiac-name {
   font-family: var(--font-heading);
-  font-size: 2rem;
+  font-size: 2.5rem;
   color: var(--velora-dark);
   text-transform: uppercase;
-  letter-spacing: 2px;
+  letter-spacing: 4px;
 }
 
-/* --- GRID DE ESTADÍSTICAS (ESTILO ALQUIMIA) --- */
+/* --- GRID DE ESTADÍSTICAS (ESTILO ALQUIMIA PURO) --- */
 .astro-stats-grid {
-  display: flex; /* Usamos flex para mejor control que grid */
+  display: flex;
   justify-content: space-between;
   align-items: flex-start;
   margin: 2rem 0;
   padding: 1.5rem 0;
-  border-top: 1px solid rgba(184, 134, 11, 0.3);    /* Línea sutil arriba */
-  border-bottom: 1px solid rgba(184, 134, 11, 0.3); /* Línea sutil abajo */
+  border-top: 1px solid rgba(184, 134, 11, 0.3);
+  border-bottom: 1px solid rgba(184, 134, 11, 0.3);
   position: relative;
 }
 
-/* Efecto decorativo: doble línea sutil */
 .astro-stats-grid::before {
   content: '';
   position: absolute;
@@ -180,9 +191,9 @@
 }
 
 .stat-box {
-  background: transparent; /* ADIÓS AL FONDO BLANCO */
+  background: transparent;
   border: none;
-  padding: 0 1rem;
+  padding: 0 0.5rem;
   flex: 1;
   text-align: center;
   position: relative;
@@ -190,9 +201,10 @@
   flex-direction: column;
   align-items: center;
   gap: 0.5rem;
+  padding: 0 0.2rem;
 }
 
-/* Separadores verticales entre elementos */
+/* Separadores verticales */
 .stat-box:not(:last-child)::after {
   content: '';
   position: absolute;
@@ -200,48 +212,46 @@
   top: 10%;
   height: 80%;
   width: 1px;
-  background: linear-gradient(to bottom, transparent, rgba(184,134,11,0.4), transparent);
+  background: linear-gradient(to bottom, transparent, rgba(184,134,11,0.3), transparent);
 }
 
-/* Etiquetas (ELEMENTO, CUALIDAD...) */
 .stat-label {
   font-family: var(--font-heading);
-  font-size: 0.75rem;
+  font-size: 0.7rem;
   text-transform: uppercase;
-  letter-spacing: 1.5px;
-  color: var(--velora-accent); /* Color oliva/dorado oscuro */
+  letter-spacing: 1px;
+  color: var(--velora-accent);
   opacity: 0.9;
   margin-bottom: 0.2rem;
 }
 
-/* Valores (Aire, Venus...) */
 .stat-value {
   font-family: var(--font-body);
   font-weight: bold;
-  font-size: 1.1rem;
+  font-size: 0.95rem;
   color: var(--velora-dark);
   line-height: 1.3;
+  word-wrap: break-word; 
+  max-width: 100%;
 }
 
-/* Para textos largos (como la descripción de cualidad) */
 .stat-value small {
   display: block;
   font-weight: normal;
-  font-size: 0.9rem;
+  font-size: 0.85rem;
   font-style: italic;
   opacity: 0.8;
-  margin-top: 0.3rem;
+  margin-top: 0.2rem;
 }
 
-/* Íconos decorativos opcionales */
 .stat-icon {
-  font-size: 1.5rem;
+  font-size: 1.4rem;
   color: var(--velora-gold);
   margin-bottom: 0.2rem;
   opacity: 0.8;
 }
 
-/* Descripción */
+/* Descripción Narrativa */
 .astro-desc {
   font-family: var(--font-body);
   color: #3e2b12;
@@ -251,33 +261,53 @@
   margin-bottom: 2rem;
 }
 
+.velora-subtitle {
+  font-family: var(--font-heading);
+  color: var(--velora-dark);
+  font-size: 1.2rem;
+  margin-bottom: 1rem;
+  border-bottom: 1px solid rgba(0,0,0,0.1);
+  padding-bottom: 0.5rem;
+  display: inline-block;
+}
+
 /* --- SECCIÓN VELORA (EL REFLEJO) --- */
 .astro-horoscope {
-  background: rgba(45, 26, 0, 0.05);
+  background: rgba(45, 26, 0, 0.03);
   border-left: 4px solid var(--velora-gold);
   padding: 1.5rem;
   border-radius: 0 8px 8px 0;
   position: relative;
   margin-top: 1rem;
+  text-align: center;
 }
 
 .velora-label {
   display: block;
   font-family: var(--font-heading);
   color: var(--velora-gold);
-  font-size: 0.9rem;
+  font-size: 0.85rem;
   text-transform: uppercase;
-  letter-spacing: 1px;
-  margin-bottom: 0.5rem;
-  text-align: center;
+  letter-spacing: 2px;
+  margin-bottom: 0.8rem;
 }
 
 .velora-text {
   font-family: var(--font-body);
   font-style: italic;
-  font-size: 1.15rem;
+  font-size: 1.2rem;
   color: var(--velora-dark);
-  text-align: center;
+  margin-bottom: 1rem;
+}
+
+.transit-note {
+  display: block;
+  font-size: 0.8rem;
+  color: #666;
+  border-top: 1px solid rgba(0,0,0,0.1);
+  padding-top: 0.5rem;
+  width: 80%;
+  margin: 0 auto;
 }
 
 /* Utilidades */

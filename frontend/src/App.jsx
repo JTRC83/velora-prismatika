@@ -17,7 +17,7 @@ import TarotService         from "./components/TarotService";
 import RunesService         from "./components/RunesService";
 import KabbalahService      from "./components/KabbalahService";
 import TransitsService      from "./components/TransitsService";
-import CrystalBallService   from "./components/CrystalBallService";
+import CrystalBallService   from "./components/CrystalService";
 import PalmistryService     from "./components/PalmistryService";
 
 const ICONS = {

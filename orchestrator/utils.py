@@ -1,52 +1,75 @@
 import os
 import json
 import random
+import logging
 
-# Definimos las rutas relativas a este archivo
+# Configuración de logs
+logger = logging.getLogger("Velora-Utils")
+
+# Rutas dinámicas (funciona en Mac, Linux y Windows)
 BASE_DIR = os.path.dirname(__file__)
-PROMPTS_PATH = os.path.join(BASE_DIR, "prompts", "core_identity.txt")
 LENSES_PATH = os.path.join(BASE_DIR, "data", "wisdom_lenses.json")
 
-# 1. Cargar la Identidad (System Prompt)
-def get_velora_voice():
-    """Lee el archivo core_identity.txt para inyectarlo en LLMs futuros."""
-    try:
-        with open(PROMPTS_PATH, "r", encoding="utf-8") as f:
-            return f.read()
-    except FileNotFoundError:
-        return "ERROR: La consciencia de Velora no se encuentra (core_identity.txt missing)."
+# 1. FRASES DE EMERGENCIA (Hardcoded)
+# Si el archivo JSON falla o no existe, Velora usará esto para no quedarse muda.
+BACKUP_QUOTES = [
+    "Como es arriba, es abajo; como es adentro, es afuera.",
+    "El silencio es el lenguaje de los dioses; todo lo demás es una pobre traducción.",
+    "No busques fuera lo que yace oculto en tu propio centro.",
+    "Los astros inclinan, pero no obligan.",
+    "En la oscuridad del misterio, la intención es tu única lámpara.",
+    "El azar no existe; solo es un patrón que aún no comprendes."
+]
 
-# 2. Cargar las Lentes (Frases Predefinidas)
 def load_lenses_data():
-    """Carga el JSON maestro de sabiduría en memoria de forma segura."""
+    """
+    Carga el JSON maestro de sabiduría en memoria.
+    Si falla, retorna None para usar el backup.
+    """
     if not os.path.exists(LENSES_PATH):
-        print(f"⚠️ [Velora] Archivo no encontrado: {LENSES_PATH}")
-        return {}
+        logger.warning(f"⚠️ [Utils] No se encuentra wisdom_lenses.json en {LENSES_PATH}")
+        return None
 
     try:
         with open(LENSES_PATH, "r", encoding="utf-8") as f:
-            return json.load(f)
+            data = json.load(f)
+            return data
     except json.JSONDecodeError:
-        print(f"❌ [Velora Error] El archivo {LENSES_PATH} está vacío o mal formado.")
-        return {} # Retorna vacío para no romper el servidor
+        logger.error(f"❌ [Utils] wisdom_lenses.json está corrupto.")
+        return None
     except Exception as e:
-        print(f"❌ [Velora Error] Error desconocido cargando lentes: {e}")
-        return {}
+        logger.error(f"❌ [Utils] Error cargando lentes: {e}")
+        return None
 
-# Cargamos los datos una sola vez al iniciar
+# Cargamos los datos una sola vez al iniciar la app (Caché en memoria)
 _WISDOM_CACHE = load_lenses_data()
 
-def get_velora_reflection(lens_id="hermetic_base"):
+def get_velora_reflection(lens_id="default"):
     """
-    Devuelve una frase aleatoria basada en la 'lente' solicitada.
+    Devuelve una frase aleatoria.
+    Prioridad:
+    1. Archivo JSON (wisdom_lenses.json) si existe y tiene la categoría.
+    2. Archivo JSON categoría 'hermetic_base' (fallback interno del JSON).
+    3. Lista BACKUP_QUOTES en código (si falla el archivo).
     """
-    # Si la caché está vacía, intentamos recargar (útil si arreglas el archivo sin reiniciar)
-    data = _WISDOM_CACHE if _WISDOM_CACHE else load_lenses_data()
-    
-    # Busca la lente, si no existe usa 'hermetic_base'
-    lens = data.get(lens_id, data.get("hermetic_base"))
-    
-    if lens and "quotes" in lens and len(lens["quotes"]) > 0:
-        return random.choice(lens["quotes"])
-    
-    return "Como es arriba, es abajo. (Sistema de respaldo activo)"
+    # Intentar recargar si la caché falló al inicio (reintento lazy)
+    global _WISDOM_CACHE
+    if _WISDOM_CACHE is None:
+        _WISDOM_CACHE = load_lenses_data()
+
+    # Si logramos cargar el JSON
+    if _WISDOM_CACHE:
+        # Buscamos la categoría específica (ej: 'tarot', 'astro')
+        lens_data = _WISDOM_CACHE.get(lens_id)
+        
+        # Si no existe esa categoría, buscamos una genérica
+        if not lens_data:
+            lens_data = _WISDOM_CACHE.get("hermetic_base") or _WISDOM_CACHE.get("default")
+
+        # Si encontramos datos y hay frases, elegimos una
+        if lens_data and "quotes" in lens_data and isinstance(lens_data["quotes"], list):
+            if len(lens_data["quotes"]) > 0:
+                return random.choice(lens_data["quotes"])
+
+    # SI TODO FALLA (JSON borrado, vacío o error de disco):
+    return random.choice(BACKUP_QUOTES)

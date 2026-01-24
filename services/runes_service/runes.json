@@ -1,218 +1,26 @@
 [
-  {
-    "id": "fehu",
-    "name": "Fehu",
-    "symbol": "ᚠ",
-    "meaning": "Abundancia, prosperidad, energía creadora.",
-    "reversed": "Pérdida de recursos, codicia, desequilibrio.",
-    "keywords": ["riqueza", "flujo", "nuevo ciclo"],
-    "symmetrical": false
-  },
-  {
-    "id": "uruz",
-    "name": "Uruz",
-    "symbol": "ᚢ",
-    "meaning": "Fuerza, salud y voluntad indomable.",
-    "reversed": "Temor, debilidad, estancamiento.",
-    "keywords": ["vitalidad", "valor", "resistencia"],
-    "symmetrical": false
-  },
-  {
-    "id": "thurisaz",
-    "name": "Thurisaz",
-    "symbol": "ᚦ",
-    "meaning": "Protección, desafío y despertar interior.",
-    "reversed": "Conflicto, impaciencia, dolor inesperado.",
-    "keywords": ["defensa", "prueba", "conciencia"],
-    "symmetrical": false
-  },
-  {
-    "id": "ansuz",
-    "name": "Ansuz",
-    "symbol": "ᚨ",
-    "meaning": "Comunicación, inspiración divina.",
-    "reversed": "Malentendidos, palabras hirientes, bloqueo.",
-    "keywords": ["voz", "mensaje", "intuición"],
-    "symmetrical": false
-  },
-  {
-    "id": "raidho",
-    "name": "Raido",
-    "symbol": "ᚱ",
-    "meaning": "Viaje, movimiento con propósito.",
-    "reversed": "Desorientación, retrasos, indecisión.",
-    "keywords": ["camino", "progreso", "ritmo"],
-    "symmetrical": false
-  },
-  {
-    "id": "kenaz",
-    "name": "Kenaz",
-    "symbol": "ᚲ",
-    "meaning": "Conocimiento, transformación y fuego interior.",
-    "reversed": "Oscuridad interna, bloqueo creativo, confusión.",
-    "keywords": ["iluminación", "arte", "cambio"],
-    "symmetrical": false
-  },
-  {
-    "id": "gebo",
-    "name": "Gebo",
-    "symbol": "ᚷ",
-    "meaning": "Generosidad, intercambio equilibrado.",
-    "reversed": "Desequilibrio en dar y recibir, dependencia.",
-    "keywords": ["regalo", "alianza", "equidad"],
-    "symmetrical": true
-  },
-  {
-    "id": "wunjo",
-    "name": "Wunjo",
-    "symbol": "ᚹ",
-    "meaning": "Alegría, armonía y plenitud.",
-    "reversed": "Insatisfacción, discordia, pérdida de gozo.",
-    "keywords": ["felicidad", "unidad", "bienestar"],
-    "symmetrical": false
-  },
-  {
-    "id": "hagalaz",
-    "name": "Hagal",
-    "symbol": "ᚺ",
-    "meaning": "Cambio repentino, purificación.",
-    "reversed": "Destrucción innecesaria, caos sin propósito.",
-    "keywords": ["crisis", "renovación", "transición"],
-    "symmetrical": true
-  },
-  {
-    "id": "nauthiz",
-    "name": "Nauthiz",
-    "symbol": "ᚾ",
-    "meaning": "Necesidad, resistencia a la adversidad.",
-    "reversed": "Miedo paralizante, obstáculo persistente.",
-    "keywords": ["restricción", "prueba", "autocontrol"],
-    "symmetrical": false
-  },
-  {
-    "id": "isa",
-    "name": "Isa",
-    "symbol": "ᛁ",
-    "meaning": "Estasis, pausa y reflexión profunda.",
-    "reversed": "Estancamiento destructivo, inacción prolongada.",
-    "keywords": ["silencio", "espera", "contemplación"],
-    "symmetrical": true
-  },
-  {
-    "id": "jera",
-    "name": "Jera",
-    "symbol": "ᛃ",
-    "meaning": "Cosecha, ciclos y retribución.",
-    "reversed": "Retraso en recompensas, injusticia.",
-    "keywords": ["tiempo", "recompensa", "maduración"],
-    "symmetrical": true
-  },
-  {
-    "id": "eihwaz",
-    "name": "Eihwaz",
-    "symbol": "ᛇ",
-    "meaning": "Protección, conexión entre mundos.",
-    "reversed": "Desorientación, bloqueo espiritual.",
-    "keywords": ["defensa", "muerte-renacimiento", "eje"],
-    "symmetrical": true
-  },
-  {
-    "id": "perthro",
-    "name": "Perthro",
-    "symbol": "ᛈ",
-    "meaning": "Destino, misterio y potencial oculto.",
-    "reversed": "Secreto revelado prematuramente, incertidumbre.",
-    "keywords": ["azar", "profecía", "suerte"],
-    "symmetrical": false
-  },
-  {
-    "id": "algiz",
-    "name": "Algiz",
-    "symbol": "ᛉ",
-    "meaning": "Defensa, guía espiritual.",
-    "reversed": "Vulnerabilidad, falta de guía.",
-    "keywords": ["protección", "ángel", "señal"],
-    "symmetrical": false
-  },
-  {
-    "id": "sowilo",
-    "name": "Sowilo",
-    "symbol": "ᛋ",
-    "meaning": "Éxito, energía vital y logro.",
-    "reversed": "Derrota, falta de dirección.",
-    "keywords": ["victoria", "sol", "claridad"],
-    "symmetrical": true
-  },
-  {
-    "id": "tiwaz",
-    "name": "Tiwaz",
-    "symbol": "ᛏ",
-    "meaning": "Justicia, coraje y sacrificio.",
-    "reversed": "Injusticia, cobardía.",
-    "keywords": ["ley", "honor", "victoria"],
-    "symmetrical": false
-  },
-  {
-    "id": "berkano",
-    "name": "Berkano",
-    "symbol": "ᛒ",
-    "meaning": "Renacimiento, crecimiento y fertilidad.",
-    "reversed": "Estancamiento creativo, infertilidad.",
-    "keywords": ["nacimiento", "madre", "nurtura"],
-    "symmetrical": false
-  },
-  {
-    "id": "ehwaz",
-    "name": "Ehwaz",
-    "symbol": "ᛖ",
-    "meaning": "Movimiento, cambio fluido y confianza.",
-    "reversed": "Traición, desconfianza.",
-    "keywords": ["caballo", "viaje", "alianza"],
-    "symmetrical": false
-  },
-  {
-    "id": "mannaz",
-    "name": "Mannaz",
-    "symbol": "ᛗ",
-    "meaning": "Humanidad, cooperación y comunidad.",
-    "reversed": "Aislamiento, egoísmo.",
-    "keywords": ["hombre", "familia", "ayuda"],
-    "symmetrical": false
-  },
-  {
-    "id": "laguz",
-    "name": "Laguz",
-    "symbol": "ᛚ",
-    "meaning": "Intuición, emoción y fluir.",
-    "reversed": "Resistencia al cambio, bloqueo emocional.",
-    "keywords": ["agua", "sueño", "psique"],
-    "symmetrical": false
-  },
-  {
-    "id": "ingwaz",
-    "name": "Ingwaz",
-    "symbol": "ᛝ",
-    "meaning": "Potencial creativo y gestación.",
-    "reversed": "Bloqueo de proyectos, impulsos reprimidos.",
-    "keywords": ["semilla", "fertilidad", "espera"],
-    "symmetrical": true
-  },
-  {
-    "id": "dagaz",
-    "name": "Dagaz",
-    "symbol": "ᛞ",
-    "meaning": "Renacimiento, iluminación y claridad.",
-    "reversed": "Estancamiento, confusión.",
-    "keywords": ["amanecer", "transformación", "visión"],
-    "symmetrical": true
-  },
-  {
-    "id": "othala",
-    "name": "Othala",
-    "symbol": "ᛟ",
-    "meaning": "Herencia, legado y seguridad.",
-    "reversed": "Desarraigo, desorden familiar.",
-    "keywords": ["hogar", "ancestral", "posesión"],
-    "symmetrical": false
-  }
+  {"id": "fehu", "name": "Fehu", "symbol": "ᚠ", "meaning": "Abundancia, prosperidad, energía creadora.", "reversed": "Pérdida de recursos, codicia.", "element": "Fuego"},
+  {"id": "uruz", "name": "Uruz", "symbol": "ᚢ", "meaning": "Fuerza, salud y voluntad indomable.", "reversed": "Debilidad, estancamiento.", "element": "Tierra"},
+  {"id": "thurisaz", "name": "Thurisaz", "symbol": "ᚦ", "meaning": "Protección, desafío y despertar.", "reversed": "Conflicto, peligro indefenso.", "element": "Fuego"},
+  {"id": "ansuz", "name": "Ansuz", "symbol": "ᚨ", "meaning": "Comunicación, inspiración divina.", "reversed": "Malentendidos, engaño.", "element": "Aire"},
+  {"id": "raido", "name": "Raido", "symbol": "ᚱ", "meaning": "Viaje, movimiento con propósito.", "reversed": "Crisis, rigidez.", "element": "Aire"},
+  {"id": "kenaz", "name": "Kenaz", "symbol": "ᚲ", "meaning": "Conocimiento, antorcha interior.", "reversed": "Oscuridad, falta de creatividad.", "element": "Fuego"},
+  {"id": "gebo", "name": "Gebo", "symbol": "ᚷ", "meaning": "Regalo, generosidad, unión.", "reversed": null, "element": "Aire"},
+  {"id": "wunjo", "name": "Wunjo", "symbol": "ᚹ", "meaning": "Alegría, armonía y éxito.", "reversed": "Tristeza, alienación.", "element": "Tierra"},
+  {"id": "hagalaz", "name": "Hagalaz", "symbol": "ᚺ", "meaning": "Cambio radical, granizo, destrucción necesaria.", "reversed": null, "element": "Hielo"},
+  {"id": "nauthiz", "name": "Nauthiz", "symbol": "ᚾ", "meaning": "Necesidad, fricción, resistencia.", "reversed": "Sufrimiento, restricción extrema.", "element": "Fuego"},
+  {"id": "isa", "name": "Isa", "symbol": "ᛁ", "meaning": "Hielo, estancamiento, silencio.", "reversed": null, "element": "Hielo"},
+  {"id": "jera", "name": "Jera", "symbol": "ᛃ", "meaning": "Cosecha, ciclo natural, justicia.", "reversed": null, "element": "Tierra"},
+  {"id": "eihwaz", "name": "Eihwaz", "symbol": "ᛇ", "meaning": "Tejo, resistencia, muerte-renacimiento.", "reversed": null, "element": "Tierra"},
+  {"id": "perthro", "name": "Perthro", "symbol": "ᛈ", "meaning": "Misterio, azar, lo oculto.", "reversed": "Desilusión, secretos revelados.", "element": "Agua"},
+  {"id": "algiz", "name": "Algiz", "symbol": "ᛉ", "meaning": "Protección divina, conexión superior.", "reversed": "Vulnerabilidad, peligro oculto.", "element": "Aire"},
+  {"id": "sowilo", "name": "Sowilo", "symbol": "ᛊ", "meaning": "Sol, victoria, claridad total.", "reversed": null, "element": "Fuego"},
+  {"id": "tiwaz", "name": "Tiwaz", "symbol": "ᛏ", "meaning": "Justicia, honor, sacrificio.", "reversed": "Injusticia, bloqueo mental.", "element": "Aire"},
+  {"id": "berkano", "name": "Berkano", "symbol": "ᛒ", "meaning": "Abedul, renacimiento, crecimiento.", "reversed": "Estancamiento, problemas domésticos.", "element": "Tierra"},
+  {"id": "ehwaz", "name": "Ehwaz", "symbol": "ᛖ", "meaning": "Caballo, movimiento, lealtad.", "reversed": "Desconfianza, traición.", "element": "Tierra"},
+  {"id": "mannaz", "name": "Mannaz", "symbol": "ᛗ", "meaning": "El Yo, la humanidad, la mente.", "reversed": "Aislamiento, ceguera interna.", "element": "Aire"},
+  {"id": "laguz", "name": "Laguz", "symbol": "ᛚ", "meaning": "Agua, intuición, fluir.", "reversed": "Confusión, miedo.", "element": "Agua"},
+  {"id": "ingwaz", "name": "Ingwaz", "symbol": "ᛜ", "meaning": "Semilla, gestación, potencial.", "reversed": null, "element": "Tierra"},
+  {"id": "dagaz", "name": "Dagaz", "symbol": "ᛞ", "meaning": "Día, despertar, luz.", "reversed": null, "element": "Fuego"},
+  {"id": "othala", "name": "Othala", "symbol": "ᛟ", "meaning": "Hogar, herencia, ancestros.", "reversed": "Pérdida de raíces, desorden.", "element": "Tierra"}
 ]

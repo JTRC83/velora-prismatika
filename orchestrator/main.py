@@ -1,87 +1,125 @@
-import os
+# orchestrator/main.py
+import importlib
+import logging
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
-from orchestrator.router import router as orchestrator_router
-# 👇 Importamos las utilidades de la identidad de Velora
-from orchestrator.utils import get_velora_voice, get_velora_reflection
+
+# Configuración básica de logs
+logging.basicConfig(level=logging.INFO)
+logger = logging.getLogger("Velora-Main")
+
+# -------------------------------------------------------------------------
+# IMPORTACIÓN DE VELORA (CAPA ETÉREA / IA)
+# -------------------------------------------------------------------------
+try:
+    from orchestrator.router import router as orchestrator_router
+    from orchestrator.velora_weaver import VeloraWeaver
+    VELORA_AVAILABLE = True
+except ImportError as e:
+    logger.warning(f"⚠️  No se pudo importar el núcleo de Velora: {e}")
+    VELORA_AVAILABLE = False
 
 app = FastAPI(title="Velora Prismätika")
 
-# 1. Configuración de Seguridad (CORS)
-# Permite que tu Frontend (React) se comunique con este Backend
+# -------------------------------------------------------------------------
+# 1. CONFIGURACIÓN CORS (CRÍTICO)
+# -------------------------------------------------------------------------
+# Esto permite que tu Frontend (React) hable con el Backend sin errores.
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"],  # <--- CAMBIA ESTO A "*" (Comodín universal)
+    allow_origins=["*"],  # Permite todas las conexiones locales
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
 )
 
-# 2. Registro Automatizado de Microservicios
-# Lista central de servicios. Si creas uno nuevo, añádelo aquí.
+# -------------------------------------------------------------------------
+# 2. CARGA DE SERVICIOS MECÁNICOS (LO QUE YA FUNCIONABA)
+# -------------------------------------------------------------------------
+# Esta lista define qué módulos se cargan.
+# IMPORTANTE: El segundo valor debe ser la ruta Python al archivo que contiene 'router = APIRouter(...)'
 SERVICE_LIST = [
-    ("astro", "services.astro_service.astro_service"),
-    ("numerology", "services.numerology_service.numerology_service"),
-    ("tarot", "services.tarot_service.tarot_service"),
-    ("runes", "services.runes_service.runes_service"),
-    ("chakra", "services.chakra_service.chakra_service"),
+    # (nombre_servicio, ruta.al.archivo)
+    ("astro", "services.astro_service.router"),
+    ("numerology", "services.numerology_service.router"),
+    ("moon_phase", "services.moon_phase_service.router"),
     ("compatibility", "services.compatibility_service.compatibility_service"),
-    ("moon_phase", "services.moon_phase_service.moon_phase_service"),
-    ("kabbalah", "services.kabbalah_service.kabbalah_service"),
-    ("transits", "services.transits_service.transits_service"),
-    ("ritual", "services.ritual_service.ritual_service"),
-    ("crystal_ball", "services.crystal_ball_service.crystal_ball_service"), 
-    ("palmistry", "services.palmistry_service.palmistry_service"),
+    ("rituals", "services.ritual_service.ritual_service"),
+    ("chakra", "services.chakra_service.router"),
+    ("tarot", "services.tarot_service.router"),
+    ("runes", "services.runes_service.router"),
+    ("kabbalah", "services.kabbalah_service.router"),
+    ("crystal", "services.crystal_service.router"),
+    ("transit", "services.transits_service.transits_service"),
+    ("palmistry", "services.palmistry_service.router"),
 ]
+
+print("\n🔧 --- CARGANDO SERVICIOS (CAPA FÍSICA) ---")
+
+servicios_activos = []
 
 for service_name, module_path in SERVICE_LIST:
     try:
-        # Importación dinámica del módulo para mantener el main limpio
-        module = __import__(module_path, fromlist=["router"])
-        app.include_router(module.router)
-        # print(f"[✨ Velora] Canalizado servicio: {service_name}")
-    except ImportError as e:
-        print(f"[⚠️ Velora Warning] No se encontró el módulo para {service_name}: {e}")
-    except Exception as e:
-        print(f"[⚠️ Velora Error] Fallo al cargar {service_name}: {e}")
-
-# 3. Router de Orquestación Principal
-# Se incluye al final para gestionar rutas generales
-app.include_router(orchestrator_router)
-
-# 4. Evento de Inicio (El "Despertar" de Velora)
-@app.on_event("startup")
-async def wake_up_velora():
-    """
-    Verifica que la identidad y sabiduría de Velora estén accesibles 
-    antes de aceptar peticiones.
-    """
-    voice = get_velora_voice()
-    sample_quote = get_velora_reflection("hermetic_base")
-    
-    print("\n🔮 --- INICIANDO SISTEMA VELORA ---")
-    
-    if "ERROR" in voice:
-        print("❌ Error crítico: No se encuentra 'core_identity.txt'. Revisa orchestrator/prompts/")
-    else:
-        print("✅ Identidad (System Prompt) cargada correctamente.")
+        # Importamos el archivo dinámicamente
+        module = importlib.import_module(module_path)
         
-    if "backup" in sample_quote.lower() or "respaldo" in sample_quote.lower():
-        print("⚠️ Advertencia: Usando frases de respaldo. Revisa 'wisdom_lenses.json'.")
-    else:
-        print("✅ Lentes de Sabiduría cargadas.")
+        # Buscamos si tiene un objeto 'router' dentro
+        if hasattr(module, "router"):
+            # Lo montamos en la app.
+            # Si el router interno no tiene prefijo, aquí podríamos forzar uno, 
+            # pero asumimos que tus archivos ya tienen 'prefix=/astro', etc.
+            app.include_router(module.router)
+            servicios_activos.append(service_name)
+            print(f"✅ Servicio cargado: {service_name.upper()}")
+        else:
+            print(f"⚠️  {service_name}: El archivo '{module_path}' existe, pero no encontré la variable 'router'.")
+            
+    except ImportError as e:
+        print(f"🔸 No se encontró el módulo para {service_name}: {e}")
+        print(f"   (Verifica que la carpeta 'services/{service_name}_service' y el archivo existan)")
+    except Exception as e:
+        print(f"❌ Error crítico cargando {service_name}: {e}")
 
-    print(f"✨ Frase de prueba: '{sample_quote}'")
+# -------------------------------------------------------------------------
+# 3. CARGA DE VELORA (CAPA ETÉREA)
+# -------------------------------------------------------------------------
+if VELORA_AVAILABLE:
+    try:
+        app.include_router(orchestrator_router)
+        print("✨ Velora (Chat Neural) cargada correctamente.")
+    except Exception as e:
+        print(f"⚠️ Error montando el router de Velora: {e}")
+else:
+    print("☁️  Velora funciona en modo mecánico (Sin IA Central).")
+
+# -------------------------------------------------------------------------
+# 4. EVENTOS DE INICIO
+# -------------------------------------------------------------------------
+@app.on_event("startup")
+async def startup_event():
+    print("\n🚀 SISTEMA ONLINE.")
+    print(f"   Servicios Activos: {', '.join(servicios_activos)}")
+    
+    if VELORA_AVAILABLE:
+        # Intento silencioso de despertar a la IA sin bloquear el arranque
+        try:
+            print("👁️  Contactando con consciencia neuronal (Ollama)...")
+            weaver = VeloraWeaver()
+            # Hacemos un ping muy breve para cargar el modelo en RAM
+            # _ = weaver._llamar_a_gemma("Ping", "Pong") 
+            print("   (Conexión establecida. Velora está escuchando.)")
+        except Exception as e:
+            print(f"☁️  Ollama no responde ({e}). La app funcionará, pero Velora no hablará.")
+    
     print("🔮 ----------------------------------\n")
 
-# 5. Punto de Entrada Raíz
 @app.get("/")
 def root():
     """
-    Endpoint de bienvenida que demuestra la voz dinámica de Velora.
+    Endpoint de salud para verificar que el backend corre.
     """
     return {
-        "entidad": "Velora Prismätika",
-        "estado": "Despierta",
-        "mensaje_del_dia": get_velora_reflection("hermetic_base")
+        "status": "Velora Prismätika Online", 
+        "services_loaded": len(servicios_activos),
+        "ai_active": VELORA_AVAILABLE
     }

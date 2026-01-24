@@ -1,71 +1,45 @@
 import json
 import os
 import random
-from typing import Optional, List
-from fastapi import APIRouter, HTTPException, Query
-from pydantic import BaseModel
+from typing import List, Dict, Optional
 
-# Importamos la voz de Velora
-from orchestrator.utils import get_velora_reflection
+class ChakraService:
+    def __init__(self):
+        self.base_path = os.path.dirname(__file__)
+        self.json_path = os.path.join(self.base_path, "chakras.json")
+        self.chakras = self._load_data()
 
-BASE = os.path.dirname(__file__)
-CHAKRAS_PATH = os.path.join(BASE, "chakras.json")
+    def _load_data(self) -> List[Dict]:
+        if not os.path.exists(self.json_path):
+            return []
+        try:
+            with open(self.json_path, "r", encoding="utf-8") as f:
+                return json.load(f)
+        except Exception as e:
+            print(f"Error cargando chakras: {e}")
+            return []
 
-router = APIRouter(prefix="/chakra", tags=["Chakras"])
+    def get_all(self) -> List[Dict]:
+        return self.chakras
 
-def load_data():
-    if not os.path.exists(CHAKRAS_PATH):
-        return []
-    with open(CHAKRAS_PATH, encoding="utf-8") as f:
-        return json.load(f)
+    def get_by_id(self, chakra_id: int) -> Optional[Dict]:
+        return next((c for c in self.chakras if c["id"] == chakra_id), None)
 
-CHAKRAS = load_data()
-
-# Modelo de respuesta para que la documentación sea clara
-class ChakraDetail(BaseModel):
-    id: int
-    name: str
-    sanskrit: str
-    symbol: str
-    element: str
-    location: str
-    color: str
-    hex: str
-    mantra: str
-    frequency: int
-    crystals: List[str]
-    imbalance: List[str]
-    advice: str
-    visualization: str
-    velora_message: str
-
-@router.get("/", summary="Lista todos los chakras")
-def list_chakras():
-    return CHAKRAS
-
-@router.get("/diagnose", summary="Encuentra tu bloqueo por síntoma")
-def diagnose_imbalance(symptom: str = Query(..., description="Ej: miedo, ansiedad, creatividad")):
-    """Busca qué chakra maneja ese síntoma."""
-    symptom = symptom.lower()
-    matches = []
-    
-    for c in CHAKRAS:
-        # Buscamos coincidencias en la lista de desequilibrios
-        if any(symptom in i.lower() for i in c["imbalance"]):
-            matches.append(c)
-    
-    if not matches:
-        # Si no encuentra nada exacto, devuelve uno aleatorio sugerido
-        return {"found": False, "suggestion": random.choice(CHAKRAS)}
+    def diagnose_by_symptom(self, symptom: str) -> Dict:
+        """
+        Busca chakras relacionados con un síntoma.
+        Retorna el mejor candidato.
+        """
+        symptom = symptom.lower()
+        matches = []
         
-    return {"found": True, "matches": matches}
-
-@router.get("/{chakra_id}", response_model=ChakraDetail)
-def get_chakra_details(chakra_id: int):
-    entry = next((c for c in CHAKRAS if c["id"] == chakra_id), None)
-    if not entry:
-        raise HTTPException(404, "Chakra no encontrado (1–7)")
-    
-    # Inyectamos mensaje de Velora (Estilo Paracelso/Elemental)
-    entry["velora_message"] = get_velora_reflection("elemental_balance")
-    return entry
+        for c in self.chakras:
+            # Buscamos en la lista de desequilibrios
+            if any(symptom in i.lower() for i in c["imbalance"]):
+                matches.append(c)
+        
+        if matches:
+            return {"found": True, "chakra": matches[0]} # Devuelve el primero que coincida
+        
+        # Si no encuentra nada, sugerimos el Corazón o Raíz por defecto para calmar
+        return {"found": False, "chakra": self.get_by_id(1)}

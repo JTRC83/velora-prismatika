@@ -1,90 +1,66 @@
 import json
 import os
 import random
-import re
-from fastapi import APIRouter, Query
-from pydantic import BaseModel
+from typing import Dict
 
-BASE = os.path.dirname(__file__)
-MSG_PATH = os.path.join(BASE, "messages.json")
-
-router = APIRouter(prefix="/crystal", tags=["Bola de Cristal"])
-
-# Cargar datos al iniciar
-try:
-    with open(MSG_PATH, encoding="utf-8") as f:
-        DATA = json.load(f)
-        TOPICS = DATA.get("topics", {})
-except FileNotFoundError:
-    DATA = {}
-    TOPICS = {}
-    print("Error: messages.json no encontrado.")
-
-# Modelo de respuesta
-class CrystalResponse(BaseModel):
-    category: str
-    message: str
-    is_clarity_high: bool # Para efectos visuales (niebla vs claridad)
-
-def detect_topic(text: str):
-    """
-    Busca palabras clave en el texto para asignar un tema automático.
-    Retorna la clave del tema (ej: 'love') o None.
-    """
-    text = text.lower()
-    for topic_key, content in TOPICS.items():
-        if topic_key in ["general", "yes_no"]: continue
+class CrystalService:
+    def __init__(self):
+        # Ruta absoluta para evitar confusiones
+        self.base_path = os.path.dirname(os.path.abspath(__file__))
+        self.json_path = os.path.join(self.base_path, "messages.json")
         
-        keywords = content.get("keywords", [])
-        for kw in keywords:
-            # Búsqueda simple de palabra completa o parcial
-            if kw in text:
-                return topic_key
-    return None
-
-@router.get("/gaze", response_model=CrystalResponse, summary="Consulta a la Bola de Cristal")
-def gaze_crystal(
-    focus: str = Query(None, description="Tema explícito: love, work, health, yes_no"),
-    question: str = Query(None, description="Pregunta libre del usuario")
-):
-    """
-    La Bola decide qué responder basándose en el 'focus' seleccionado
-    o analizando la 'question' escrita.
-    """
-    
-    selected_topic = "general"
-    
-    # 1. Prioridad: Foco explícito seleccionado por el usuario
-    if focus and focus in TOPICS:
-        selected_topic = focus
+        print(f"🔮 CRISTAL DEBUG: Buscando JSON en: {self.json_path}")
         
-    # 2. Si no hay foco, intentamos detectar tema en la pregunta
-    elif question:
-        detected = detect_topic(question)
-        if detected:
-            selected_topic = detected
+        self.data = self._load_data()
+        self.topics = self.data.get("topics", {})
+        
+        # Comprobación de carga
+        if self.topics:
+            print(f"🔮 CRISTAL DEBUG: ¡Carga Éxitosa! {len(self.topics)} temas encontrados.")
         else:
-            # Si hay pregunta pero no detectamos tema, ¿es una pregunta de Sí/No?
-            # Asumimos que preguntas cortas o sin keywords son para yes_no
-            selected_topic = "yes_no"
-    
-    # 3. Obtener mensajes del tema seleccionado
-    topic_data = TOPICS.get(selected_topic, TOPICS["general"])
-    messages = topic_data.get("messages", [])
-    
-    if not messages:
-        # Fallback de seguridad
-        final_message = "La niebla es demasiado densa... intenta de nuevo."
-    else:
-        final_message = random.choice(messages)
-    
-    # Factor de 'claridad': Para el frontend, si es 'yes_no' o 'general', 
-    # la visión puede ser más borrosa o más clara.
-    # Simulamos aleatoriedad visual.
-    clarity = random.choice([True, True, False]) if selected_topic != "yes_no" else True
+            print("🔮 CRISTAL ERROR: No se cargaron temas. Revisa el archivo messages.json")
 
-    return CrystalResponse(
-        category=selected_topic,
-        message=final_message,
-        is_clarity_high=clarity
-    )
+    def _load_data(self) -> Dict:
+        if not os.path.exists(self.json_path):
+            print(f"🔮 CRISTAL ERROR: El archivo NO EXISTE en la ruta especificada.")
+            return {}
+        try:
+            with open(self.json_path, "r", encoding="utf-8") as f:
+                return json.load(f)
+        except Exception as e:
+            print(f"🔮 CRISTAL ERROR: JSON inválido o corrupto: {e}")
+            return {}
+
+    def detect_topic(self, text: str) -> str:
+        text = text.lower()
+        for topic_key, content in self.topics.items():
+            if topic_key in ["general", "yes_no"]: continue
+            
+            keywords = content.get("keywords", [])
+            for kw in keywords:
+                if kw in text:
+                    return topic_key
+        return "general"
+
+    def get_vision_seed(self, question: str) -> Dict:
+        topic = self.detect_topic(question)
+        
+        # Lógica Yes/No para preguntas cortas
+        if topic == "general" and (len(question.split()) < 5 or "?" in question):
+             if random.random() > 0.5:
+                 topic = "yes_no"
+
+        topic_data = self.topics.get(topic, self.topics.get("general", {}))
+        messages = topic_data.get("messages", [])
+        
+        if not messages:
+            print(f"🔮 CRISTAL WARNING: No hay mensajes para el tema '{topic}'. Usando Fallback.")
+            base_message = "El destino es una niebla cambiante."
+        else:
+            base_message = random.choice(messages)
+            print(f"🔮 CRISTAL: Tema '{topic}' seleccionado. Mensaje base: '{base_message[:15]}...'")
+
+        return {
+            "topic": topic,
+            "base_message": base_message
+        }

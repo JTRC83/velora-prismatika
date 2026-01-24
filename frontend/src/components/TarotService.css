@@ -473,3 +473,12 @@
   line-height: 1.4;
   font-style: italic;
 }
+
+/* TarotService.css */
+.spread-five-card {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 1.5rem;
+  max-width: 900px; /* Un poco más ancho para 5 */
+}

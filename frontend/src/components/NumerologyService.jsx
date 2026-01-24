@@ -1,121 +1,164 @@
 import React, { useState } from 'react';
-import "./NumerologyService.css";
+import './NumerologyService.css';
 
 export default function NumerologyService() {
-  const [birthdate, setBirthdate] = useState('');
-  const [result, setResult] = useState(null);
+  // Ahora necesitamos nombre y fecha
+  const [formData, setFormData] = useState({
+    name: '',
+    birthdate: ''
+  });
+  
   const [loading, setLoading] = useState(false);
+  const [result, setResult] = useState(null);
   const [error, setError] = useState(null);
+
+  const handleChange = (e) => {
+    setFormData({
+      ...formData,
+      [e.target.name]: e.target.value
+    });
+  };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    setError(null);
-    setResult(null);
-    if (!birthdate) return;
+    if (!formData.name || !formData.birthdate) return;
 
     setLoading(true);
+    setResult(null);
+    setError(null);
+
     try {
-      const res = await fetch(`http://localhost:8000/numerology/life-path?birthdate=${birthdate}`);
-      
+      // CAMBIO IMPORTANTE: Ahora usamos POST y el endpoint '/informe'
+      const res = await fetch('http://localhost:8000/numerology/informe', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          nombre: formData.name,
+          fecha_nacimiento: formData.birthdate
+        }),
+      });
+
       if (!res.ok) {
-        throw new Error("Velora no pudo sintonizar la frecuencia.");
+        throw new Error("Velora no pudo acceder a los registros akásicos.");
       }
-      
+
       const data = await res.json();
-      console.log("🔮 DATOS:", data); 
-      setResult(data);
+      
+      // Pequeño retardo para dar dramatismo al cálculo
+      setTimeout(() => {
+        setResult(data);
+        setLoading(false);
+      }, 1500);
 
     } catch (err) {
       console.error(err);
-      setError(err.message);
-    } finally {
+      setError("Error en la conexión. Verifica que el Backend esté encendido.");
       setLoading(false);
     }
   };
 
-  const getRevelationData = () => {
-    if (!result) return null;
-    
-    // --- CORRECCIÓN AQUÍ ---
-    // Buscamos dentro de 'sendero_de_vida' que es como lo envía tu backend ahora
-    if (result.sendero_de_vida && result.sendero_de_vida.revelacion) {
-      return {
-        num: result.sendero_de_vida.numero,
-        titulo: result.sendero_de_vida.revelacion.titulo,
-        esencia: result.sendero_de_vida.revelacion.esencia,
-        historia: result.sendero_de_vida.revelacion.historia,
-        reflejo: result.sendero_de_vida.revelacion.reflejo
-      };
-    }
-    
-    // Soporte retroactivo (por si acaso)
-    if (result.revelacion) {
-        return {
-            num: result.life_path,
-            titulo: result.revelacion.titulo,
-            esencia: result.revelacion.esencia,
-            historia: result.revelacion.historia,
-            reflejo: result.revelacion.reflejo
-        };
-    }
-
-    // Si llegamos aquí, mostramos el error de estructura
-    return {
-        num: "?",
-        titulo: "Estructura Desconocida",
-        esencia: "Los datos llegaron pero no coinciden con la ruta esperada.",
-        historia: JSON.stringify(result).substring(0, 100) + "...", 
-        reflejo: "Revisa getRevelationData en tu código React."
-    };
-  };
-
-  const data = getRevelationData();
+  // Helper para acceder a los datos técnicos de forma segura
+  const datos = result?.datos_tecnicos || {};
 
   return (
-    <div className="numerology-service">
-      <h2 className="num-title">✨ Sendero de Vida</h2>
-      <p className="num-subtitle">Descubre la vibración de tu llegada</p>
+    <div className="num-container">
+      <h2 className="num-title">Arquitectura del Alma</h2>
       
-      <form onSubmit={handleSubmit} className="numerology-form">
-        <label htmlFor="birthdate">Fecha de nacimiento:</label>
-        <input
-          id="birthdate"
-          type="date"
-          value={birthdate}
-          onChange={(e) => setBirthdate(e.target.value)}
-          className="num-input"
-          required
-        />
-        <button type="submit" className="num-btn" disabled={loading}>
-          {loading ? "Sintonizando..." : "Revelar Destino"}
-        </button>
-      </form>
+      {/* FORMULARIO (Solo se muestra si no hay resultado o cargando) */}
+      {!result && !loading && (
+        <form onSubmit={handleSubmit} className="num-form fade-in">
+          <div className="form-group-num">
+            <label>Nombre Completo</label>
+            <input 
+              type="text" 
+              name="name" 
+              placeholder="Nombre de nacimiento"
+              value={formData.name}
+              onChange={handleChange}
+              autoComplete="off"
+              required
+            />
+          </div>
+          <div className="form-group-num">
+            <label>Fecha de Nacimiento</label>
+            <input 
+              type="date" 
+              name="birthdate" 
+              value={formData.birthdate}
+              onChange={handleChange}
+              required
+            />
+          </div>
+          <button type="submit" className="num-btn">Calcular Vibración</button>
+        </form>
+      )}
 
+      {/* ERROR */}
       {error && <p className="num-error">❗ {error}</p>}
 
-      {result && data && (
-        <div className="num-result">
-          <div className="num-result-header">
-            {/* El número ahora se toma de data.num */}
-            <span className="num-large-number">{data.num}</span>
-            <div className="num-titles">
-              <h3>{data.titulo}</h3>
-              <p className="num-date-ref">Viajero del {birthdate}</p>
-            </div>
+      {/* LOADING (Animación Geométrica) */}
+      {loading && (
+        <div className="num-loading">
+          <div className="geometry-spinner">
+            <div className="triangle"></div>
+            <div className="circle"></div>
           </div>
+          <p>Trazando líneas del destino...</p>
+        </div>
+      )}
+
+      {/* RESULTADOS */}
+      {result && (
+        <div className="num-results fade-in-up">
           
-          <div className="num-content">
-            <p className="num-esencia"><strong>Esencia:</strong> {data.esencia}</p>
+          {/* LA TRÍADA SAGRADA (Visualización Geométrica) */}
+          <div className="sacred-triad">
             
-            {data.historia && (
-              <p className="num-historia"><em>{data.historia}</em></p>
-            )}
+            {/* CÚSPIDE: CAMINO DE VIDA */}
+            <div className="triad-point top-point">
+              <span className="point-label">Esencia</span>
+              <div className="point-number">{datos.camino_vida}</div>
+              <span className="point-archetype">{datos.arquetipo_vida}</span>
+            </div>
+
+            {/* BASE IZQ: DESTINO */}
+            <div className="triad-point left-point">
+              <span className="point-label">Destino</span>
+              <div className="point-number">{datos.numero_destino}</div>
+              <span className="point-archetype">{datos.arquetipo_destino}</span>
+            </div>
+
+            {/* BASE DER: AÑO PERSONAL */}
+            <div className="triad-point right-point">
+              <span className="point-label">Ciclo {datos.ano_personal}</span>
+              <div className="point-number">{datos.ano_personal}</div>
+              <span className="point-archetype">Año Personal</span>
+            </div>
             
-            <div className="velora-reflection">
-              <h4>El Reflejo de Velora</h4>
-              <p>{data.reflejo}</p>
+            {/* LÍNEAS DECORATIVAS SVG */}
+            <svg className="triad-lines">
+              <line x1="50%" y1="15%" x2="20%" y2="85%" />
+              <line x1="50%" y1="15%" x2="80%" y2="85%" />
+              <line x1="20%" y1="85%" x2="80%" y2="85%" />
+            </svg>
+          </div>
+
+          {/* LA VOZ DE VELORA */}
+          <div className="num-velora-box">
+            <h4>La Resonancia</h4>
+            {/* Procesamos el texto para respetar los párrafos de la IA */}
+            {result.velora_voice && result.velora_voice.split('\n').map((line, i) => (
+              line.trim() && <p key={i}>{line}</p>
+            ))}
+            
+            <div className="num-reflection">
+              ✨ "{result.reflejo}"
             </div>
           </div>
+
+          <button className="num-reset-btn" onClick={() => setResult(null)}>
+            Realizar otro cálculo
+          </button>
         </div>
       )}
     </div>

@@ -1,68 +1,144 @@
-/* Heredamos variables, pero sobreescribimos colores locales */
-
-.moon-btn {
-  background: linear-gradient(135deg, #4a5a6a 0%, #2c3e50 100%);
-  border: 1px solid #7a8a9a;
-  box-shadow: 0 4px 10px rgba(44, 62, 80, 0.4);
-  max-width: 300px;
-  margin: 0 auto;
+/* --- VARIABLES NOCTURNAS --- */
+:root {
+  --moon-silver: #e0e0e0;
+  --moon-glow: rgba(200, 220, 255, 0.5);
+  --moon-night: #0f172a; /* Azul noche profundo */
+  --moon-card-bg: linear-gradient(to bottom right, #1e293b, #0f172a);
+  --moon-accent: #94a3b8;
 }
 
-.moon-btn:hover:not(:disabled) {
-  background: linear-gradient(135deg, #5b6e82 0%, #34495e 100%);
-  transform: translateY(-2px);
-  box-shadow: 0 0 15px rgba(100, 200, 255, 0.2);
+/* Título */
+.moon-title {
+  font-family: var(--font-heading);
+  font-size: 2.2rem;
+  text-align: center;
+  margin-bottom: 2rem;
+  color: #2c3e50;
+  text-shadow: 0 0 10px rgba(100, 149, 237, 0.3);
 }
 
+/* --- TARJETA LUNAR (El Espejo) --- */
 .moon-card {
-  /* Fondo más frío/plateado que el solar */
-  background-image: linear-gradient(to bottom right, #f0f4f8, #dbe2e8);
-  border: 1px solid #aab7c4;
+  /* Sobrescribimos el fondo pergamino por uno nocturno */
+  background: var(--moon-card-bg) !important; 
+  border: 1px solid #475569 !important;
+  color: var(--moon-silver) !important;
   box-shadow: 
-    0 10px 30px rgba(0,0,0,0.2),
-    inset 0 0 50px rgba(255, 255, 255, 0.5);
+    0 10px 30px rgba(0,0,0,0.5),
+    inset 0 0 50px rgba(148, 163, 184, 0.1) !important; /* Brillo interno frío */
+  max-width: 600px;
 }
 
+/* Emoji de la Luna gigante */
 .moon-emoji-display {
   font-size: 5rem;
-  filter: drop-shadow(0 0 15px rgba(200, 200, 255, 0.4));
+  margin-bottom: 0.5rem;
+  filter: drop-shadow(0 0 15px rgba(255, 255, 255, 0.6)); /* Resplandor */
   animation: floatMoon 4s ease-in-out infinite;
 }
 
-.moon-phase-name {
-  color: #2c3e50;
-  margin-top: 0.5rem;
-}
-
-/* Ajustes al grid para tonos azules/plata */
-.moon-grid {
-  border-top: 1px solid rgba(44, 62, 80, 0.2);
-  border-bottom: 1px solid rgba(44, 62, 80, 0.2);
-}
-
-.moon-grid::before, .moon-grid::after {
-  border-color: rgba(44, 62, 80, 0.1);
-}
-
-.moon-grid .stat-label {
-  color: #5d6d7e; /* Azul grisáceo */
-}
-
-.moon-grid .stat-value {
-  color: #1a252f;
-}
-
-.moon-grid .stat-icon {
-  color: #34495e;
-}
-
-.moon-message {
-  background: rgba(255, 255, 255, 0.3);
-  border-left-color: #5d6d7e;
-}
-
 @keyframes floatMoon {
-  0% { transform: translateY(0px); }
-  50% { transform: translateY(-10px); }
-  100% { transform: translateY(0px); }
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-5px); }
 }
+
+.moon-phase-name {
+  color: #f1f5f9 !important; /* Blanco hielo */
+  text-shadow: 0 0 5px var(--moon-glow);
+  margin-bottom: 0.2rem;
+}
+
+.moon-date {
+  font-family: var(--font-body);
+  font-size: 0.9rem;
+  color: var(--moon-accent);
+  font-style: italic;
+}
+
+/* --- GRID DE ESTADÍSTICAS NOCTURNO --- */
+.moon-grid {
+  border-color: rgba(148, 163, 184, 0.3) !important;
+}
+.moon-grid::before, .moon-grid::after {
+  border-color: rgba(148, 163, 184, 0.1) !important;
+}
+
+/* Textos dentro del grid */
+.moon-card .stat-label {
+  color: #94a3b8 !important; /* Gris azulado */
+}
+.moon-card .stat-value {
+  color: #fff !important;
+  text-shadow: 0 0 5px rgba(255,255,255,0.3);
+}
+
+/* --- MENSAJE DE VELORA (Susurro) --- */
+.moon-message {
+  background: rgba(255, 255, 255, 0.05) !important; /* Cristal oscuro */
+  border-left: 4px solid #cbd5e1 !important; /* Borde plateado */
+}
+
+.velora-label-moon {
+  display: block;
+  font-family: var(--font-heading);
+  color: #cbd5e1;
+  font-size: 0.85rem;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  margin-bottom: 1rem;
+  text-align: center;
+}
+
+.velora-text-moon {
+  font-family: var(--font-body);
+  font-style: italic;
+  font-size: 1.15rem;
+  color: #e2e8f0;
+  text-align: center;
+  line-height: 1.6;
+}
+
+.moon-reflection {
+  margin-top: 1.5rem;
+  text-align: center;
+  font-size: 0.9rem;
+  color: #94a3b8;
+  border-top: 1px solid rgba(255,255,255,0.1);
+  padding-top: 0.5rem;
+}
+
+/* --- BOTONES --- */
+.moon-btn {
+  background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%) !important;
+  border: 1px solid #475569 !important;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.3) !important;
+}
+.moon-btn:hover {
+  background: linear-gradient(135deg, #334155 0%, #1e293b 100%) !important;
+}
+
+.moon-refresh-btn {
+  display: block;
+  margin: 1.5rem auto 0;
+  background: transparent;
+  color: var(--moon-accent);
+  border: 1px solid rgba(148, 163, 184, 0.3);
+  padding: 0.5rem 1rem;
+  border-radius: 20px;
+  cursor: pointer;
+  font-size: 0.8rem;
+  transition: all 0.3s;
+}
+.moon-refresh-btn:hover {
+  background: rgba(255,255,255,0.1);
+  color: white;
+}
+
+/* Loading Spinner */
+.moon-loading { text-align: center; margin: 3rem 0; color: #475569; }
+.moon-spinner {
+  display: inline-block;
+  font-size: 3rem;
+  animation: spinMoon 3s linear infinite;
+}
+@keyframes spinMoon { 0% { opacity: 0.5; transform: scale(0.9); } 50% { opacity: 1; transform: scale(1.1); } 100% { opacity: 0.5; transform: scale(0.9); } }

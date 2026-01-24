@@ -1,100 +1,106 @@
 import json
 import os
 import random
-from collections import Counter
 from typing import List, Dict, Any
-
-# Importamos el orquestador para el mensaje final
-from orchestrator.utils import get_velora_reflection
-
-BASE = os.path.dirname(__file__)
-CARDS_PATH = os.path.join(BASE, "cards.json")
 
 class TarotService:
     def __init__(self):
+        # 1. Definimos la ruta del mazo. 
+        # Asegúrate de que tu archivo 'cards.json' esté en esta carpeta o ajusta la ruta.
+        self.base_path = os.path.dirname(__file__)
+        self.json_path = os.path.join(self.base_path, "cards.json")
+        
+        # Si decidiste moverlo a una carpeta data, descomenta esto:
+        # self.json_path = os.path.join(self.base_path, "data", "tarot_deck.json")
+
         self.cards = self._load_data()
-        # Mapa rápido para buscar por ID
-        self.deck_map = {c["id"]: c for c in self.cards}
+        
+        # Mapa rápido por si necesitamos buscar quintasencias
+        self.deck_map = {c["id"]: c for c in self.cards} if self.cards else {}
 
     def _load_data(self):
-        if not os.path.exists(CARDS_PATH):
+        """Carga el JSON de cartas de forma segura."""
+        if not os.path.exists(self.json_path):
+            print(f"⚠️ [TarotService] No encuentro el mazo en: {self.json_path}")
             return []
-        with open(CARDS_PATH, "r", encoding="utf-8") as f:
-            return json.load(f)
+        try:
+            with open(self.json_path, "r", encoding="utf-8") as f:
+                return json.load(f)
+        except Exception as e:
+            print(f"❌ [TarotService] Error leyendo JSON: {e}")
+            return []
 
-    def _calculate_quintessence(self, drawn_cards: List[Dict]) -> Dict:
+    def tirar_cartas(self, cantidad: int = 3) -> List[Dict[str, Any]]:
         """
-        Suma los valores de las cartas para encontrar el Arcano Mayor oculto (La Sombra).
-        Regla: Se suman los IDs (o números). Si es > 21, se reducen los dígitos (ej: 25 = 2+5 = 7).
+        Método Principal llamado por el Router.
+        Retorna la lista de cartas formateada para que el Frontend las pinte
+        y Velora las lea.
         """
-        total_val = sum(c.get("id", 0) for c in drawn_cards)
-        
-        # Reducción numerológica si supera 21 (El Mundo)
-        while total_val > 21:
-            digits = [int(d) for d in str(total_val)]
-            total_val = sum(digits)
-            
-        # Buscamos esa carta en el mazo (debe ser Arcano Mayor)
-        # Nota: Asumimos que IDs 0-21 son los Mayores.
-        shadow_card = self.deck_map.get(total_val)
-        
-        if shadow_card:
-            return {
-                "name": shadow_card["name"],
-                "meaning": shadow_card["significado"],
-                "archetype": "La Lección Oculta"
-            }
-        return None
+        if not self.cards:
+            # Fallback de emergencia si no hay JSON, para no romper la app
+            return self._mazo_emergencia(cantidad)
 
-    def _analyze_elements(self, drawn_cards: List[Dict]) -> str:
-        """Analiza qué elemento predomina en la tirada."""
-        elements = [c.get("element", "Éter") for c in drawn_cards]
-        counts = Counter(elements)
-        most_common, qty = counts.most_common(1)[0]
-        
-        if qty >= 2:
-            if most_common == "Fuego": return "🔥 El clima es intenso y de acción rápida."
-            if most_common == "Agua": return "💧 Las emociones profundas dominan la lectura."
-            if most_common == "Aire": return "🌪️ La mente, la lógica y la verdad prevalecen."
-            if most_common == "Tierra": return "🌿 El enfoque está en lo material y tangible."
-        
-        return "✨ Hay un equilibrio alquímico entre los elementos."
-
-    def draw_reading(self) -> Dict[str, Any]:
-        """Realiza la tirada completa con análisis profundo."""
-        # 1. Sacar 3 cartas
-        drawn = random.sample(self.cards, 3)
+        drawn = random.sample(self.cards, cantidad)
         posiciones = ["El Origen (Pasado)", "El Foco (Presente)", "El Destino (Futuro)"]
         
-        reading_cards = []
+        resultado = []
         
         for i, card in enumerate(drawn):
             is_inverted = random.choice([True, False])
-            reading_cards.append({
-                "position": posiciones[i],
-                "name": card["name"],
-                "image_id": card["id"], # Para el frontend
-                "is_inverted": is_inverted,
-                "keywords": card.get("keywords", []),
-                "text": card["significado_invertido"] if is_inverted else card["significado"],
-                "element": card.get("element", "Misterio")
-            })
+            
+            # Construimos el objeto que espera el Frontend y Velora
+            carta_procesada = {
+                "id": card.get("id"),
+                "nombre": card.get("name", "Arcano"),
+                # Esto asume que tus imágenes se llaman "0.jpg", "1.jpg", etc.
+                "img": f"{card.get('id')}.png", 
+                "invertida": is_inverted,
+                "position": posiciones[i] if i < len(posiciones) else f"Posición {i+1}",
+                
+                # Datos para ayudar a Velora a interpretar mejor
+                "palabras_clave": card.get("keywords", []) if not is_inverted else card.get("keywords_rev", []),
+                "elemento": card.get("element", "Éter"),
+                "significado_texto": card.get("significado", "") # Opcional, por si Velora lo necesita
+            }
+            resultado.append(carta_procesada)
 
-        # 2. Cálculos Metafísicos
-        quintessence = self._calculate_quintessence(drawn)
-        elemental_vibe = self._analyze_elements(drawn)
+        return resultado
+
+    def _mazo_emergencia(self, n):
+        """Retorna cartas dummy si falla la carga del archivo, para debug."""
+        return [{
+            "id": 0, 
+            "nombre": "El Loco (Backup)", 
+            "img": "0.png", 
+            "invertida": False, 
+            "palabras_clave": ["Inicio", "Caos"],
+            "position": "Fallo de Carga"
+        }] * n
+
+    # --- LÓGICA PRESERVADA (Para uso futuro o interno) ---
+    
+    def _calculate_quintessence(self, drawn_cards: List[Dict]) -> Dict:
+        """Suma numerológica de la tirada."""
+        total_val = sum(c.get("id", 0) for c in drawn_cards)
+        while total_val > 21:
+            total_val = sum(int(d) for d in str(total_val))
         
-        # 3. Reflexión de Velora
-        velora_msg = get_velora_reflection("tarot_reading")
+        shadow_card = self.deck_map.get(total_val)
+        return shadow_card if shadow_card else None
 
-        return {
-            "cards": reading_cards,
-            "analysis": {
-                "elemental_climate": elemental_vibe,
-                "quintessence": quintessence
-            },
-            "velora_message": velora_msg
-        }
-
-# Instancia global para importar en main.py
-tarot_service = TarotService()
+    def _analyze_elements(self, drawn_cards: List[Dict]) -> str:
+        """Analiza el clima elemental de la tirada."""
+        # Esta lógica es genial, la guardamos aquí. 
+        # En el futuro podemos pasar este string a Velora en el Router.
+        from collections import Counter
+        elements = [c.get("element", "Éter") for c in drawn_cards]
+        counts = Counter(elements)
+        if not counts: return "Vacío"
+        most_common, qty = counts.most_common(1)[0]
+        
+        if qty >= 2:
+            if most_common == "Fuego": return "Intenso y rápido"
+            if most_common == "Agua": return "Emocional y profundo"
+            if most_common == "Aire": return "Mental y lógico"
+            if most_common == "Tierra": return "Material y tangible"
+        return "Equilibrio alquímico"
