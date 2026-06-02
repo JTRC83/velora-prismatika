@@ -74,6 +74,7 @@ export default function App() {
   const [input,           setInput]           = React.useState("");
   const [selectedService, setSelectedService] = React.useState(null);
   const [curtainPhase,    setCurtainPhase]    = React.useState("idle"); // idle | closing | opening
+  const [isSending,       setIsSending]       = React.useState(false);
 
   const handleSelectService = svc => {
     // Si la cortina ya se está moviendo, no hacer nada para evitar glitches
@@ -100,10 +101,47 @@ export default function App() {
     }, 1200);
   };
 
-  const handleSend = () => {
-    if (!input.trim()) return;
-    setMessages(prev => [...prev, { text: input, user: true }]);
+  const handleSend = async () => {
+    const text = input.trim();
+    if (!text || isSending) return;
+
+    setMessages(prev => [...prev, { text, user: true }]);
     setInput("");
+    setIsSending(true);
+
+    try {
+      const response = await fetch("/chat", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ usuario: text }),
+      });
+
+      if (!response.ok) {
+        throw new Error(`Backend respondió con estado ${response.status}`);
+      }
+
+      const data = await response.json();
+      setMessages(prev => [
+        ...prev,
+        {
+          text: data.velora_voice || "La bóveda permanece en silencio por ahora.",
+          user: false,
+          reflejo: data.reflejo,
+          sources: data.knowledge_sources || [],
+        },
+      ]);
+    } catch (error) {
+      setMessages(prev => [
+        ...prev,
+        {
+          text: "No he podido abrir el puente con Velora. Revisa que el backend esté encendido.",
+          user: false,
+          error: error.message,
+        },
+      ]);
+    } finally {
+      setIsSending(false);
+    }
   };
 
   return (
@@ -213,12 +251,17 @@ export default function App() {
       )}
 
       {/* Chat + Input */}
-      <div className="w-full max-w-3xl flex flex-col flex-grow px-4 pb-4">
-        <div className="flex-grow overflow-y-auto">
+      <div className="chat-shell w-full max-w-3xl flex flex-col flex-grow px-4 pb-4">
+        <div className="chat-scroll flex-grow overflow-y-auto">
           <ChatWindow messages={messages} />
         </div>
-        <div className="pt-2">
-          <InputBar value={input} onChange={setInput} onSend={handleSend} />
+        <div className="chat-input-wrap pt-2">
+          <InputBar
+            value={input}
+            onChange={setInput}
+            onSend={handleSend}
+            disabled={isSending}
+          />
         </div>
       </div>
     </div>

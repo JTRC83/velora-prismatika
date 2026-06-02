@@ -57,6 +57,27 @@ Monorepo con backend en **FastAPI** y frontend **React** (enfoque local-first):
 
 > Nota: aunque existan “módulos” simbólicos, **no se presentan como servicios públicos**. Son componentes internos del motor.
 
+### Puente con la bóveda de Obsidian
+
+El código de la aplicación vive en este repositorio. El conocimiento canónico de
+Velora vive en la bóveda local:
+
+```bash
+/Users/joantoniramoncrespi/Documents/Velora Prismätika
+```
+
+El backend expone una capa de conocimiento que indexa notas Markdown de esa
+bóveda en modo lectura y las hace consultables por la app:
+
+- `GET /knowledge/status`: estado del índice y ruta activa de la bóveda.
+- `POST /knowledge/reload`: reconstruye el índice en memoria.
+- `GET /knowledge/search?q=tarot`: busca fragmentos relevantes.
+- `POST /chat`: recupera contexto de la bóveda y lo entrega a Velora si ayuda.
+
+La ruta puede cambiarse con la variable `VELORA_VAULT_PATH`. Esta capa no escribe
+en la bóveda: solo lee notas, frontmatter, etiquetas, enlaces internos y
+secciones para preparar el futuro sistema RAG/IA local.
+
 ---
 
 ## ✅ Estado del proyecto
@@ -78,25 +99,27 @@ python3 -m venv venv
 source venv/bin/activate
 pip install -r requirements.txt
 
-Ejecutar backend (modo desarrollo)
+Ejecutar backend (modo desarrollo):
 
 uvicorn orchestrator.main:app --reload
 
-Frontend (si aplica)
+Frontend (si aplica):
 cd frontend
 npm install
 npm run dev
+```
 
-🧭 Roadmap
-	•	UX de lecturas: flujo guiado (intención → símbolos → síntesis → journaling).
-	•	Journaling local: sesiones, etiquetas, búsquedas, exportación (Markdown/JSON).
-	•	Motor de correspondencias: tablas y reglas configurables (sin hardcode).
-	•	Voz local-first (opcional): STT/TTS con Whisper-cpp y Coqui TTS.
-	•	Multi-idioma: ES/EN inicialmente.
-	•	Dashboard interno: trazabilidad de módulos (qué símbolos influyeron en la síntesis).
-	•	App móvil (a futuro): experiencia offline.
+## 🧭 Roadmap
 
-    ⚖️ Nota importante
+- UX de lecturas: flujo guiado (intención → símbolos → síntesis → journaling).
+- Journaling local: sesiones, etiquetas, búsquedas, exportación (Markdown/JSON).
+- Motor de correspondencias: tablas y reglas configurables (sin hardcode).
+- Voz local-first (opcional): STT/TTS con Whisper-cpp y Coqui TTS.
+- Multi-idioma: ES/EN inicialmente.
+- Dashboard interno: trazabilidad de módulos (qué símbolos influyeron en la síntesis).
+- App móvil (a futuro): experiencia offline.
+
+## ⚖️ Nota importante
 
 Velora Prismátika es una herramienta creativa y reflexiva.
 No sustituye consejo médico, legal, financiero ni psicológico.

@@ -1,12 +1,15 @@
 import re
+import logging
 from fastapi import APIRouter
 from pydantic import BaseModel
 
 # Importamos solo el cerebro narrativo, NO los servicios mecánicos
 from orchestrator.velora_weaver import VeloraWeaver
+from services.knowledge_service.store import knowledge_base
 
 router = APIRouter()
 weaver = VeloraWeaver()
+logger = logging.getLogger("VeloraRouter")
 
 # --- 1. CONFIGURACIÓN DE FACETAS ---
 # Mapa central de personalidades. Velora consulta esto para saber "quién ser".
@@ -90,13 +93,35 @@ async def chat_generico(mensaje: Mensaje):
         if faceta_detectada != "consejo":
             break
             
-    # B. Generar respuesta con IA (Pasamos la instrucción invisible al usuario)
-    respuesta_velora = weaver.chat_libre(texto, instruccion_activa)
+    # B. Recuperar contexto local de la bóveda si existe y es relevante
+    knowledge_sources = []
+    contexto_conocimiento = ""
+    try:
+        knowledge_sources = knowledge_base.search(texto, limit=4)
+        contexto_conocimiento = knowledge_base.format_context(knowledge_sources)
+    except Exception as e:
+        logger.warning(f"No se pudo consultar la bóveda de conocimiento: {e}")
+
+    # C. Generar respuesta con IA (Pasamos la instrucción invisible al usuario)
+    respuesta_velora = weaver.chat_libre(
+        texto,
+        instruccion_activa,
+        contexto_conocimiento=contexto_conocimiento,
+    )
 
     return {
         "velora_voice": respuesta_velora["texto"],
         "reflejo": respuesta_velora["reflejo"],
-        "faceta_usada": faceta_detectada 
+        "faceta_usada": faceta_detectada,
+        "knowledge_sources": [
+            {
+                "title": source["title"],
+                "relative_path": source["relative_path"],
+                "heading": source["heading"],
+                "score": source["score"],
+            }
+            for source in knowledge_sources
+        ],
     }
 
 # NOTA: El endpoint "/tarot/tirada" SE HA MOVIDO a:

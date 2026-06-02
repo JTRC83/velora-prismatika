@@ -25,6 +25,8 @@ export default defineConfig({
       '/transits': { target: 'http://127.0.0.1:8000', changeOrigin: true },
       '/crystal': { target: 'http://127.0.0.1:8000', changeOrigin: true },
       '/palmistry': { target: 'http://127.0.0.1:8000', changeOrigin: true },
+      '/chat': { target: 'http://127.0.0.1:8000', changeOrigin: true },
+      '/knowledge': { target: 'http://127.0.0.1:8000', changeOrigin: true },
       // ... puedes añadir más según los necesites
     }
   }

@@ -92,16 +92,35 @@ class VeloraWeaver:
         parsed = self._procesar_respuesta(raw)
         return parsed["texto"]
 
-    def chat_libre(self, mensaje_usuario: str, instruccion_faceta: str) -> Dict[str, str]:
+    def chat_libre(
+        self,
+        mensaje_usuario: str,
+        instruccion_faceta: str,
+        contexto_conocimiento: str = "",
+    ) -> Dict[str, str]:
         system_instruction = f"""
         ERES VELORA PRISMÄTIKA.
         INSTRUCCIÓN DE TONO ACTIVA: {instruccion_faceta}
+        Si recibes CONTEXTO LOCAL DE LA BÓVEDA, úsalo solo cuando ayude a responder.
+        No inventes fuentes ni afirmes que una nota dice algo si no aparece en ese contexto.
         FORMATO OBLIGATORIO:
         [VELORA]: (Breve apertura)
         [LECTURA]: (Respuesta principal)
         [REFLEJO]: (Frase final críptica, máx 10 palabras)
         """
-        raw = self._llamar_a_gemma(system_instruction, mensaje_usuario)
+        user_prompt = mensaje_usuario
+        if contexto_conocimiento:
+            user_prompt = f"""
+            PREGUNTA DEL USUARIO:
+            {mensaje_usuario}
+
+            CONTEXTO LOCAL DE LA BÓVEDA:
+            {contexto_conocimiento}
+
+            Responde a la pregunta del usuario integrando el contexto solo si es relevante.
+            """
+
+        raw = self._llamar_a_gemma(system_instruction, user_prompt)
         return self._procesar_respuesta(raw)
 
     def interpretar_tirada_tarot(self, cartas: List[Dict[str, Any]], tipo_tirada: str = "Lectura General") -> Dict[str, str]:

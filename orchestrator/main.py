@@ -52,6 +52,7 @@ SERVICE_LIST = [
     ("crystal", "services.crystal_service.router"),
     ("transit", "services.transits_service.transits_service"),
     ("palmistry", "services.palmistry_service.router"),
+    ("knowledge", "services.knowledge_service.router"),
 ]
 
 print("\n🔧 --- CARGANDO SERVICIOS (CAPA FÍSICA) ---")
