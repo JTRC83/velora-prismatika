@@ -41,6 +41,7 @@ MATERIAL_KEYWORDS = {
 # Modelo de Respuesta
 class RitualResponse(BaseModel):
     sign: str
+    element: str
     moon_phase: str
     ritual_title: str
     ritual_materials: List[str]
@@ -111,6 +112,8 @@ def get_daily_ritual(
     try:
         y, m, d = map(int, birthdate.split("-"))
         entry = get_sun_sign_entry(m, d)
+        if not entry:
+            raise ValueError("Signo no encontrado")
         sign_name = entry.sign # Ej: "Aries"
     except:
         raise HTTPException(400, "Fecha inválida")
@@ -145,6 +148,7 @@ def get_daily_ritual(
 
     return RitualResponse(
         sign=sign_name,
+        element=entry.element.split(",")[0].strip(),
         moon_phase=phase,
         ritual_title=title,
         ritual_materials=mats,

@@ -1,5 +1,6 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import './TarotService.css';
+import VeloraLoader from './VeloraLoader';
 
 // --- CONFIGURACIÓN DE LAS 3 TIRADAS ---
 const SPREAD_OPTIONS = [
@@ -26,15 +27,14 @@ const SPREAD_OPTIONS = [
   }
 ];
 
-const TarotService = () => {
+const TarotService = ({ onServiceResult }) => {
   const [readingState, setReadingState] = useState('menu');
   const [selectedSpread, setSelectedSpread] = useState(null);
   
   const [cards, setCards] = useState([]);
-  const [veloraVoice, setVeloraVoice] = useState("");
-  const [veloraReflection, setVeloraReflection] = useState("");
   
   const [revealedCards, setRevealedCards] = useState({});
+  const [failedImages, setFailedImages] = useState({});
   const [isLoading, setIsLoading] = useState(false);
 
   // Seleccionar tipo de tirada
@@ -46,6 +46,7 @@ const TarotService = () => {
   const startReading = async () => {
     setReadingState('shuffling');
     setIsLoading(true);
+    setFailedImages({});
 
     try {
       const response = await fetch('http://localhost:8000/tarot/tirada', {
@@ -65,11 +66,10 @@ const TarotService = () => {
 
       setTimeout(() => {
         setCards(cardsWithPos);
-        setVeloraVoice(data.velora_voice);
-        setVeloraReflection(data.reflejo);
         setReadingState('dealt');
         setIsLoading(false);
         setRevealedCards({});
+        setFailedImages({});
       }, 2000);
 
     } catch (error) {
@@ -86,27 +86,43 @@ const TarotService = () => {
     }
   };
 
-  const handleImageError = (e) => {
-    e.target.onerror = null;
-    e.target.src = "/assets/tarot_cards/back.png"; 
+  const handleImageError = (index) => {
+    setFailedImages(prev => ({ ...prev, [index]: true }));
+  };
+
+  const getCardImagePath = (card) => {
+    const imageName = card?.img || `${card?.id}.png`;
+    return `/assets/tarot_cards/${imageName}`;
   };
 
   const resetReading = () => {
     setReadingState('menu');
     setSelectedSpread(null);
     setCards([]);
-    setVeloraVoice("");
-    setVeloraReflection("");
+    onServiceResult?.(null);
     setRevealedCards({});
+    setFailedImages({});
   };
 
   const allRevealed = cards.length > 0 && Object.keys(revealedCards).length === cards.length;
 
+  useEffect(() => {
+    if (!allRevealed) return;
+
+    onServiceResult?.({
+      spread: selectedSpread,
+      cards,
+    });
+  }, [allRevealed, cards, onServiceResult, selectedSpread]);
+
   return (
     <div className="tarot-service-container">
+      <section className={`tarot-panel tarot-panel--${readingState}`} aria-labelledby="tarot-title">
+        <div className="tarot-card-geometry" aria-hidden="true" />
       
       <div className="tarot-header">
-        <h2>{selectedSpread ? selectedSpread.title : "El Espejo de los Arcanos"}</h2>
+        <span className="tarot-kicker">Tarot ceremonial</span>
+        <h2 id="tarot-title">{selectedSpread ? selectedSpread.title : "El Espejo de los Arcanos"}</h2>
         <p className="velora-whisper">
           {selectedSpread ? "Concéntrate en tu intención..." : "Elige la puerta por la que deseas entrar."}
         </p>
@@ -147,7 +163,10 @@ const TarotService = () => {
                 <img src="/assets/tarot_cards/back.png" className="stack-layer layer-2" alt="" />
                 <img src="/assets/tarot_cards/back.png" className="stack-layer layer-3" alt="" />
               </div>
-              <div className="deck-instruction">{isLoading ? 'VELORA INTERPRETA...' : 'TOCAR PARA INICIAR'}</div>
+              <div className="deck-instruction">{isLoading ? 'BARAJANDO CARTAS...' : 'TOCAR PARA INICIAR'}</div>
+              {isLoading && (
+                <VeloraLoader message="Barajando arcanos..." compact />
+              )}
             </div>
           )}
 
@@ -162,8 +181,20 @@ const TarotService = () => {
                       <div className="card-face card-back-face">
                         <img src="/assets/tarot_cards/back.png" alt="Reverso" />
                       </div>
-                      <div className="card-face card-front-face">
-                        <img src={`/assets/tarot_cards/${card.img}`} alt={card.nombre} className={card.invertida ? 'inverted-image' : ''} onError={handleImageError} />
+                      <div className={`card-face card-front-face ${failedImages[index] ? 'is-missing' : ''}`}>
+                        {failedImages[index] ? (
+                          <div className="tarot-missing-card">
+                            <span>Imagen pendiente</span>
+                            <strong>{card.nombre}</strong>
+                          </div>
+                        ) : (
+                          <img
+                            src={getCardImagePath(card)}
+                            alt={card.nombre}
+                            className={card.invertida ? 'inverted-image' : ''}
+                            onError={() => handleImageError(index)}
+                          />
+                        )}
                         <div className="texture-overlay"></div>
                       </div>
                     </div>
@@ -179,23 +210,11 @@ const TarotService = () => {
       )}
 
       {allRevealed && (
-        <div className="velora-reading-box fade-in-up">
-          <div className="velora-avatar-icon">🔮</div>
-          <div className="velora-text-content">
-            <h4>La Voz de Velora</h4>
-            <div className="velora-prose">
-              {veloraVoice.split('\n').map((line, i) => <p key={i}>{line}</p>)}
-            </div>
-            <div className="velora-reflection-highlight">✨ "{veloraReflection}"</div>
-          </div>
-        </div>
-      )}
-
-      {readingState !== 'menu' && (
         <button className="reset-btn" onClick={resetReading}>
-          {allRevealed ? "Nueva Lectura" : "Cancelar"}
+          <span>Nueva Lectura</span>
         </button>
       )}
+      </section>
     </div>
   );
 };

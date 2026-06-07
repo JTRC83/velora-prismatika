@@ -1,7 +1,8 @@
-import React, { useState, useRef } from 'react';
+import React, { useState } from 'react';
 import './PalmistryService.css';
+import VeloraLoader from './VeloraLoader';
 
-const PalmistryService = () => {
+const PalmistryService = ({ onServiceResult }) => {
   const [mode, setMode] = useState('guide');
   const [activeLine, setActiveLine] = useState(null);
   
@@ -9,16 +10,12 @@ const PalmistryService = () => {
   const [reading, setReading] = useState(null);
   const [loading, setLoading] = useState(false);
 
-  // Estados Upload
-  const [selectedImage, setSelectedImage] = useState(null);
-  const [isScanning, setIsScanning] = useState(false);
-  const [analysis, setAnalysis] = useState(null);
-  
   // --- FUNCIÓN PRINCIPAL: Conecta con el Backend ---
   const handleLineClick = async (lineId) => {
     setActiveLine(lineId);
     setLoading(true);
     setReading(null); // Limpiamos lectura anterior
+    onServiceResult?.(null);
 
     try {
       // Llamamos a nuestro backend en el puerto 8000
@@ -30,6 +27,10 @@ const PalmistryService = () => {
       // Simular un pequeño delay para dar sensación de "tacto"
       setTimeout(() => {
         setReading(data);
+        onServiceResult?.({
+          input: { line_id: lineId },
+          ...data,
+        });
         setLoading(false);
       }, 800);
 
@@ -39,22 +40,18 @@ const PalmistryService = () => {
     }
   };
 
-  // Handlers Upload (Sin cambios)
-  const handleImageUpload = (event) => {
-    const file = event.target.files[0];
-    if (file) { setSelectedImage(URL.createObjectURL(file)); setAnalysis(null); }
-  };
-
   return (
     <div className="palm-container">
+      <div className="palm-card-geometry" aria-hidden="true" />
       <div className="palm-header">
+        <span className="palm-kicker">Lectura de mano</span>
         <h2>La Lectura de la Palma</h2>
         <p className="velora-whisper">"El mapa de tu destino está grabado en tu piel."</p>
       </div>
 
       <div className="palm-tabs">
-        <button className={`tab-btn ${mode === 'guide' ? 'active' : ''}`} onClick={() => setMode('guide')}>📖 Guía Interactiva</button>
-        <button className={`tab-btn ${mode === 'upload' ? 'active' : ''}`} onClick={() => setMode('upload')}>📷 Lectura por Foto (IA)</button>
+        <button className={`tab-btn ${mode === 'guide' ? 'active' : ''}`} onClick={() => setMode('guide')}>Guía Interactiva</button>
+        <button className={`tab-btn ${mode === 'upload' ? 'active' : ''}`} onClick={() => setMode('upload')}>Lectura por Foto</button>
       </div>
 
       <div className="palm-workspace">
@@ -126,7 +123,7 @@ const PalmistryService = () => {
 
                 {!activeLine && (
                   <div className="diagram-instruction">
-                    ☝️ Toca una línea para leerla
+                    Toca una línea para leerla
                   </div>
                 )}
               </div>
@@ -139,10 +136,7 @@ const PalmistryService = () => {
                   <div className="info-content active fade-in">
                     
                     {loading ? (
-                      <div className="palm-loading-state">
-                        <span className="pulse-hand">✋</span>
-                        <p>Velora está trazando tu piel...</p>
-                      </div>
+                      <VeloraLoader message="Velora está trazando tu piel..." compact />
                     ) : reading ? (
                       <>
                         <h3>{reading.line_name}</h3>
@@ -153,16 +147,19 @@ const PalmistryService = () => {
                             <p>"{reading.base_reading}"</p>
                         </div>
 
-                        {/* Texto generado por IA */}
-                        <div className="velora-reading-text">
-                             {reading.velora_voice.split('\n').map((line, i) => (
-                                line.trim() && <p key={i}>{line}</p>
-                             ))}
-                        </div>
-                        
-                        <div className="palm-reflection">
-                           ✨ {reading.reflejo}
-                        </div>
+                        {reading.velora_voice && (
+                          <div className="velora-reading-text">
+                            {reading.velora_voice.split('\n').map((line, i) => (
+                              line.trim() && <p key={i}>{line}</p>
+                            ))}
+                          </div>
+                        )}
+
+                        {reading.reflejo && (
+                          <div className="palm-reflection">
+                            {reading.reflejo}
+                          </div>
+                        )}
 
                         <button className="clear-selection-btn" onClick={() => setActiveLine(null)}>
                           Ver otra línea

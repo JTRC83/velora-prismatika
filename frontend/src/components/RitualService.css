@@ -1,137 +1,416 @@
-/* --- CONTENEDOR PRINCIPAL --- */
+/* --- Rituales diarios: card editorial Velora --- */
 .ritual-container {
-  max-width: 700px;
+  max-width: 1080px;
+  width: 100%;
   margin: 0 auto;
-  color: var(--velora-dark); /* Color texto base oscuro */
+  color: var(--velora-dark);
 }
 
-/* Reutilizamos clases de AstroService, pero definimos especificidades aquí */
+.ritual-container .astro-card-container {
+  width: 100%;
+  justify-content: center;
+  padding: 0 0.75rem 2rem;
+}
+
+.ritual-panel,
 .ritual-card {
-  /* Fondo pergamino igual que en Astrología */
-  background-image: linear-gradient(to bottom right, #fffbf0, #f3e5ab);
-  border: 1px solid #d4af37;
-  padding: 2rem;
-  box-shadow: 
-    0 10px 25px rgba(0,0,0,0.1),
-    inset 0 0 60px rgba(212, 175, 55, 0.15); /* Brillo interior dorado */
+  position: relative;
+  overflow: hidden;
+  width: min(100%, 900px);
+  margin: 0 auto;
+  border: 1px solid rgba(45, 26, 0, 0.18);
+  border-radius: 30px;
+  background:
+    radial-gradient(circle at 14% 8%, rgba(255, 255, 255, 0.74), transparent 30%),
+    radial-gradient(circle at 82% 12%, rgba(184, 134, 11, 0.2), transparent 32%),
+    linear-gradient(135deg, rgba(255, 249, 233, 0.9), rgba(232, 191, 92, 0.22) 58%, rgba(126, 126, 35, 0.12)),
+    rgba(253, 246, 227, 0.74);
+  box-shadow:
+    0 22px 38px rgba(45, 26, 0, 0.16),
+    inset 0 1px 0 rgba(255, 255, 255, 0.54);
+  backdrop-filter: blur(8px);
 }
 
-/* --- CABECERA --- */
+.ritual-panel {
+  padding: 1rem;
+  min-height: 450px;
+}
+
+.ritual-card {
+  max-width: 900px !important;
+  min-height: 680px;
+  padding: 1rem !important;
+  border-color: rgba(45, 26, 0, 0.22) !important;
+  border-radius: 30px !important;
+  background:
+    radial-gradient(circle at 10% 9%, rgba(255, 255, 255, 0.78), transparent 27%),
+    radial-gradient(circle at 82% 12%, rgba(126, 126, 35, 0.14), transparent 32%),
+    linear-gradient(135deg, rgba(255, 251, 240, 0.94), rgba(239, 213, 148, 0.36) 58%, rgba(126, 126, 35, 0.12)),
+    rgba(253, 246, 227, 0.8) !important;
+  box-shadow:
+    0 24px 42px rgba(45, 26, 0, 0.18),
+    inset 0 0 0 1px rgba(255, 255, 255, 0.38) !important;
+}
+
+.ritual-panel::before,
+.ritual-card::before {
+  content: "";
+  position: absolute;
+  inset: 0.9rem;
+  z-index: 4;
+  border: 1px solid rgba(126, 126, 35, 0.2);
+  border-radius: 24px;
+  pointer-events: none;
+}
+
+.ritual-card-geometry {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  overflow: hidden;
+  border-radius: inherit;
+  pointer-events: none;
+  opacity: 0.72;
+}
+
+.ritual-card-geometry::before {
+  content: "";
+  position: absolute;
+  inset: 1rem;
+  border-radius: 24px;
+  background:
+    radial-gradient(circle at 50% 42%, rgba(184, 134, 11, 0.18), transparent 0 5rem, transparent 7rem),
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 900 560'%3E%3Cg fill='none' stroke='%235a4a1c' stroke-opacity='.2' stroke-width='2'%3E%3Ccircle cx='450' cy='280' r='190'/%3E%3Ccircle cx='450' cy='280' r='132'/%3E%3Ccircle cx='450' cy='280' r='72'/%3E%3Cpath d='M450 78v404M248 280h404M310 140l280 280M590 140 310 420M450 78 310 420 652 280 310 140 450 482 590 140 248 280 590 420Z'/%3E%3Cellipse cx='450' cy='280' rx='292' ry='88'/%3E%3Cellipse cx='450' cy='280' rx='292' ry='88' transform='rotate(35 450 280)'/%3E%3Cellipse cx='450' cy='280' rx='292' ry='88' transform='rotate(-35 450 280)'/%3E%3C/g%3E%3Cg fill='%23b8860b' fill-opacity='.34'%3E%3Ccircle cx='450' cy='280' r='6'/%3E%3Ccircle cx='310' cy='140' r='4'/%3E%3Ccircle cx='590' cy='140' r='4'/%3E%3Ccircle cx='652' cy='280' r='4'/%3E%3Ccircle cx='590' cy='420' r='4'/%3E%3Ccircle cx='310' cy='420' r='4'/%3E%3Ccircle cx='248' cy='280' r='4'/%3E%3C/g%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: min(110%, 52rem) auto;
+  opacity: 0.86;
+  transform: translateX(3rem) translateY(0.5rem) scale(1.02);
+}
+
+.ritual-card-geometry::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(circle at 20% 22%, rgba(255, 255, 255, 0.68) 0 0.16rem, transparent 0.28rem),
+    radial-gradient(circle at 78% 32%, rgba(184, 134, 11, 0.26) 0 0.18rem, transparent 0.34rem),
+    radial-gradient(circle at 62% 78%, rgba(126, 126, 35, 0.22) 0 0.16rem, transparent 0.3rem),
+    linear-gradient(120deg, transparent 18%, rgba(255, 255, 255, 0.18), transparent 55%);
+  opacity: 0.68;
+}
+
+.ritual-card-geometry--result {
+  opacity: 0.48;
+}
+
+.ritual-intro,
+.ritual-form,
+.ritual-header,
+.ritual-body,
+.ritual-velora,
+.reset-link {
+  position: relative;
+  z-index: 3;
+}
+
+.ritual-intro {
+  display: grid;
+  gap: 0.75rem;
+  padding: 0.7rem 0.75rem 1rem;
+}
+
+.ritual-kicker {
+  display: inline-flex;
+  width: fit-content;
+  padding: 0.3rem 0.55rem;
+  border: 1px solid rgba(45, 26, 0, 0.22);
+  border-radius: 999px;
+  color: #5a4a1c;
+  background: rgba(255, 255, 255, 0.25);
+  font-family: var(--font-heading);
+  font-size: 0.72rem;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+}
+
+.ritual-intro h2,
+.ritual-title-text {
+  margin: 0;
+  color: #4a3e1b;
+  font-family: var(--font-heading);
+  line-height: 1;
+  text-transform: uppercase;
+  text-shadow: 0 1px 2px rgba(255, 255, 255, 0.42);
+}
+
+.ritual-intro h2 {
+  font-size: 2.25rem;
+}
+
+.ritual-intro p {
+  max-width: 38rem;
+  color: rgba(45, 26, 0, 0.78);
+  font-family: var(--font-body);
+  font-size: 1rem;
+  line-height: 1.45;
+}
+
+.ritual-form {
+  display: grid;
+  gap: 1.25rem;
+  padding: 1rem 0.75rem 1.05rem;
+}
+
+.ritual-field {
+  display: flex;
+  max-width: 32rem;
+  min-height: 8rem;
+  margin: 0 auto;
+  padding: 1.05rem;
+  justify-content: center;
+  border: 1px solid rgba(45, 26, 0, 0.13);
+  border-radius: 24px;
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.34), transparent),
+    rgba(255, 251, 240, 0.62);
+  backdrop-filter: blur(3px);
+}
+
+.ritual-field label {
+  display: flex;
+  align-items: center;
+  gap: 0.55rem;
+  min-height: 1.65rem;
+  margin-bottom: 0.65rem;
+  color: var(--velora-dark);
+  font-family: var(--font-heading);
+  font-size: 0.82rem;
+  font-weight: 600;
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+}
+
+.ritual-field label span {
+  display: inline-grid;
+  place-items: center;
+  width: 1.65rem;
+  height: 1.65rem;
+  border-radius: 999px;
+  color: #fdf6e3;
+  background:
+    linear-gradient(135deg, #2d1a00, var(--velora-olive-deep));
+  font-size: 0.68rem;
+}
+
+.ritual-input {
+  width: 100%;
+  min-height: 3rem;
+  padding: 0.75rem 0.85rem;
+  border: 1px solid rgba(45, 26, 0, 0.15);
+  border-radius: 18px;
+  color: #4a3e1b;
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.62), rgba(253, 246, 227, 0.48));
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.45);
+  font-family: var(--font-body);
+  font-size: 1rem;
+}
+
+.ritual-input:focus {
+  outline: none;
+  border-color: rgba(126, 126, 35, 0.75);
+  box-shadow: 0 0 0 3px rgba(126, 126, 35, 0.14);
+}
+
+.ritual-submit {
+  justify-self: center;
+  width: min(100%, 22rem);
+  min-height: 3.2rem;
+  margin-top: 0.35rem;
+  padding: 0.72rem 1.25rem;
+  border-radius: 999px;
+  background:
+    linear-gradient(135deg, #2d1a00, var(--velora-olive-deep) 42%, #8a7024 100%);
+  box-shadow:
+    0 12px 22px rgba(45, 26, 0, 0.18),
+    inset 0 1px 0 rgba(255, 255, 255, 0.18);
+  font-size: 0.95rem;
+  letter-spacing: 0.08em;
+}
+
+/* --- CABECERA DEL RITO --- */
 .ritual-header {
-  text-align: center;
-  margin-bottom: 2rem;
-  border-bottom: 1px solid rgba(184, 134, 11, 0.3);
-  padding-bottom: 1rem;
+  display: grid;
+  gap: 0.8rem;
+  margin-bottom: 0.75rem;
+  padding: 1rem;
+  border: 1px solid rgba(45, 26, 0, 0.14);
+  border-radius: 24px;
+  background:
+    linear-gradient(100deg, rgba(126, 126, 35, 0.13), transparent 52%),
+    rgba(255, 251, 240, 0.58);
+  text-align: left;
 }
 
 .ritual-title-text {
-  font-family: var(--font-heading);
-  font-size: 1.8rem;
-  color: #4a3e1b; /* Marrón oscuro */
-  text-transform: uppercase;
-  letter-spacing: 2px;
-  margin-bottom: 0.5rem;
-  text-shadow: 0 1px 0 rgba(255,255,255,0.8);
+  font-size: clamp(1.45rem, 3.6vw, 2.45rem);
+  letter-spacing: 0.05em;
+  overflow-wrap: anywhere;
 }
 
 .ritual-meta-grid {
   display: flex;
-  justify-content: center;
-  gap: 1rem;
   flex-wrap: wrap;
+  gap: 0.6rem;
 }
 
 .meta-tag {
-  background: rgba(255, 255, 255, 0.5);
-  border: 1px solid rgba(184, 134, 11, 0.3);
-  padding: 0.3rem 0.8rem;
-  border-radius: 15px;
-  font-size: 0.85rem;
+  display: inline-flex;
+  align-items: center;
+  min-height: 2.25rem;
+  padding: 0.38rem 0.78rem;
+  border: 1px solid rgba(45, 26, 0, 0.16);
+  border-radius: 999px;
   color: #5a4a42;
-  font-weight: 600;
+  background: rgba(255, 255, 255, 0.36);
+  font-family: var(--font-heading);
+  font-size: 0.82rem;
 }
 
-/* --- SECCIONES (MATERIALES Y PASOS) --- */
+.ritual-body {
+  display: grid;
+  grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.1fr);
+  gap: 0.75rem;
+  align-items: start;
+}
+
+.ritual-section,
+.ritual-mantra-box,
+.ritual-velora {
+  border: 1px solid rgba(45, 26, 0, 0.14);
+  border-radius: 22px;
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.24), transparent),
+    rgba(255, 251, 240, 0.54);
+}
+
 .ritual-section {
-  margin-bottom: 1.5rem;
+  margin: 0;
+  padding: 1rem 1.1rem;
+}
+
+.steps-box {
+  align-self: stretch;
 }
 
 .ritual-section h4 {
+  margin: 0 0 0.75rem;
+  color: #5a4a1c;
   font-family: var(--font-heading);
-  color: #7e7e23; /* Verde oliva acento */
-  font-size: 1.1rem;
-  margin-bottom: 0.8rem;
-  border-left: 3px solid #d4af37;
-  padding-left: 0.5rem;
+  font-size: 0.84rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
 }
 
-.ritual-section ul, 
+.ritual-section ul,
 .ritual-section ol {
-  padding-left: 1.5rem;
-  font-family: var(--font-body);
+  margin: 0;
+  padding-left: 1.15rem;
   color: #2d1a00;
-  line-height: 1.6;
+  font-family: var(--font-body);
+  line-height: 1.48;
 }
 
 .ritual-section li {
-  margin-bottom: 0.4rem;
+  margin-bottom: 0.42rem;
 }
 
-/* Caja especial para materiales */
 .materials-box {
-  background: rgba(255, 255, 255, 0.3);
-  padding: 1rem;
-  border-radius: 8px;
-  border: 1px dashed rgba(184, 134, 11, 0.3);
+  border-style: solid;
 }
 
-/* --- MANTRA --- */
 .ritual-mantra-box {
+  grid-column: 1 / -1;
+  padding: 0.95rem 1.1rem;
   text-align: center;
-  background: rgba(45, 26, 0, 0.03);
-  padding: 1.5rem;
-  margin: 2rem 0;
-  border-radius: 8px;
-  border-top: 1px solid var(--velora-gold);
-  border-bottom: 1px solid var(--velora-gold);
-  position: relative;
 }
 
 .mantra-label {
   display: block;
+  margin-bottom: 0.45rem;
+  color: #5a4a1c;
   font-family: var(--font-heading);
-  font-size: 0.8rem;
+  font-size: 0.78rem;
+  letter-spacing: 0.08em;
   text-transform: uppercase;
-  letter-spacing: 2px;
-  color: #b8860b;
-  margin-bottom: 0.5rem;
 }
 
 .mantra-text {
-  font-family: var(--font-body); /* O una fuente cursiva si tienes */
-  font-style: italic;
-  font-size: 1.3rem;
+  margin: 0;
   color: #2d1a00;
-  font-weight: bold;
+  font-family: var(--font-body);
+  font-size: 1.15rem;
+  font-style: italic;
+  font-weight: 700;
+  line-height: 1.35;
 }
 
-/* --- UTILIDADES --- */
+.ritual-velora {
+  margin-top: 0.75rem;
+  padding: 1rem 1.1rem;
+}
+
+.ritual-velora .velora-label {
+  color: #5a4a1c;
+}
+
+.ritual-velora .velora-text {
+  margin: 0;
+  color: #3e2b12;
+  font-size: 1.04rem;
+  line-height: 1.45;
+}
+
 .reset-link {
-  display: block;
-  width: 100%;
-  text-align: center;
-  margin-top: 1.5rem;
-  background: none;
-  border: none;
-  color: #7e7e23;
-  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: min(100%, 15.5rem);
+  height: 3.15rem;
+  margin: 1rem auto 0;
+  padding: 0 1.1rem;
+  border: 1px solid rgba(45, 26, 0, 0.2);
+  border-radius: 999px;
+  color: #2d1a00;
+  background: rgba(255, 251, 240, 0.56);
+  font-family: var(--font-heading);
   font-size: 0.9rem;
-  text-decoration: underline;
-  opacity: 0.8;
-  transition: opacity 0.2s;
+  letter-spacing: 0.08em;
+  line-height: 1.2;
+  text-align: center;
+  text-decoration: none;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: transform 0.2s ease, background 0.2s ease, box-shadow 0.2s ease;
 }
 
 .reset-link:hover {
-  opacity: 1;
-  color: #5a4a42;
+  transform: translateY(-2px);
+  background: rgba(255, 251, 240, 0.82);
+  box-shadow: 0 10px 18px rgba(45, 26, 0, 0.14);
+}
+
+@media (max-width: 760px) {
+  .ritual-body {
+    grid-template-columns: 1fr;
+  }
+
+  .ritual-mantra-box {
+    grid-column: auto;
+  }
+
+  .ritual-card {
+    padding: 0.85rem !important;
+  }
 }

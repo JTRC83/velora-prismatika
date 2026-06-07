@@ -1,7 +1,8 @@
-from fastapi import APIRouter, HTTPException
+from fastapi import APIRouter, HTTPException, Query
 from pydantic import BaseModel
 from datetime import date
 import logging
+from typing import Optional
 
 # Importamos TU mecánica refactorizada
 from services.astro_service.astro_service import AstroService
@@ -22,11 +23,25 @@ weaver = VeloraWeaver()
 
 class NatalRequest(BaseModel):
     fecha_nacimiento: date
+    hora_nacimiento: Optional[str] = None
     nombre: str = "Consultante"
     lugar: str = "Desconocido"
+    coordenadas: Optional[str] = None
+
+
+@router.get("/geocode")
+async def resolver_lugar(q: str = Query(..., min_length=2)):
+    if not mechanics:
+        raise HTTPException(status_code=500, detail="Error mecánico.")
+
+    coordinates = mechanics.resolve_place_coordinates(q)
+    if not coordinates:
+        raise HTTPException(status_code=404, detail="No se pudieron resolver coordenadas para ese lugar.")
+
+    return coordinates
 
 @router.post("/carta-natal")
-async def calcular_carta_natal(datos: NatalRequest):
+async def calcular_carta_natal(datos: NatalRequest, include_ai: bool = False):
     if not mechanics:
         raise HTTPException(status_code=500, detail="Error mecánico.")
 
@@ -38,23 +53,23 @@ async def calcular_carta_natal(datos: NatalRequest):
     transito_hoy = mechanics.obtener_transito_actual()
     nombre_dia, regente_dia = mechanics.obtener_info_dia(datos.fecha_nacimiento) # <--- NUEVO CÁLCULO
 
-    # 2. MAGIA (Velora con contexto geográfico y temporal)
-    frase_backup = mechanics.obtener_horoscopo_base(astro_data.sign)
-    velora_voice = frase_backup
-    velora_reflection = "El tiempo es un círculo."
+    # 2. INTERPRETACIÓN IA OPCIONAL
+    velora_voice = ""
+    velora_reflection = ""
 
-    try:
-        lectura = weaver.interpretar_carta_astral(
-            signo=astro_data.sign,
-            elemento=astro_data.element,
-            transito=transito_hoy,
-            dia_semana=nombre_dia,   # <--- PASAMOS EL DÍA
-            ciudad=datos.lugar       # <--- PASAMOS LA CIUDAD
-        )
-        velora_voice = lectura["texto"]
-        velora_reflection = lectura["reflejo"]
-    except Exception as e:
-        logger.warning(f"Velora calló: {e}")
+    if include_ai:
+        try:
+            lectura = weaver.interpretar_carta_astral(
+                signo=astro_data.sign,
+                elemento=astro_data.element,
+                transito=transito_hoy,
+                dia_semana=nombre_dia,
+                ciudad=datos.lugar
+            )
+            velora_voice = lectura["texto"]
+            velora_reflection = lectura["reflejo"]
+        except Exception as e:
+            logger.warning(f"Velora calló: {e}")
 
     # 3. RESPUESTA
     return {
@@ -67,7 +82,11 @@ async def calcular_carta_natal(datos: NatalRequest):
             # NUEVOS DATOS PARA EL FRONTEND
             "dia_nacimiento": nombre_dia,
             "regente_dia": regente_dia,
-            "lugar": datos.lugar
+            "dia_del_mes": datos.fecha_nacimiento.day,
+            "mes_nacimiento": datos.fecha_nacimiento.month,
+            "lugar": datos.lugar,
+            "hora_nacimiento": datos.hora_nacimiento,
+            "coordenadas": datos.coordenadas
         },
         "velora_voice": velora_voice,
         "reflejo": velora_reflection

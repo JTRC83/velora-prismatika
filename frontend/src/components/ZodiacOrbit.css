@@ -1,36 +1,67 @@
 .zodiac-wrapper {
-  position: absolute;
-  top: 75%;
-  left: 2rem;
-  transform: translateY(-50%);
-  width: 28rem;
-  height: 28rem;
+  position: relative;
+  width: 34rem;
+  height: 34rem;
   pointer-events: none;
-  z-index: 0;
+  z-index: 1;
+  perspective: 900px;
+  transform-style: preserve-3d;
+}
+
+.orbit-layer {
+  position: absolute;
+  inset: 0;
+  transform-style: preserve-3d;
+}
+
+.orbit-layer-back {
+  z-index: 1;
+  clip-path: inset(0 0 50% 0);
+}
+
+.orbit-layer-front {
+  z-index: 5;
+  clip-path: inset(50% 0 0 0);
 }
 
 .orbit {
   position: absolute;
   top: 50%;
   left: 50%;
-  width: 28rem;
-  height: 28rem;
-  margin-left: -14rem;
-  margin-top: -14rem;
+  width: 33rem;
+  height: 33rem;
+  margin-left: -16.5rem;
+  margin-top: -16.5rem;
   border-radius: 50%;
+  border: 1px solid rgba(45, 26, 0, 0.28);
+  box-shadow:
+    inset 0 0 18px rgba(253, 246, 227, 0.18),
+    0 0 18px rgba(45, 26, 0, 0.08);
   animation-timing-function: linear;
   animation-iteration-count: infinite;
   transform-origin: center center;
+  transform-style: preserve-3d;
 }
 
 .orbit.zodiac {
-  animation-name: rotate-zodiac;
-  animation-duration: 25s;
+  animation-name: rotate-zodiac-ring;
+  animation-duration: 38s;
+  transform: rotateX(76deg) rotateZ(8deg);
 }
 
 .orbit.planets {
-  animation-name: rotate-planets;
-  animation-duration: 25s;
+  width: 23rem;
+  height: 23rem;
+  margin-left: -11.5rem;
+  margin-top: -11.5rem;
+  border-color: rgba(126, 126, 35, 0.38);
+  animation-name: rotate-planet-ring;
+  animation-duration: 24s;
+  transform: rotateX(52deg) rotateY(-24deg) rotateZ(-66deg) translateZ(2.2rem);
+}
+
+.orbit-front {
+  box-shadow: 0 0 14px rgba(253, 246, 227, 0.12);
 }
 
 .symbol {
@@ -38,29 +69,38 @@
   top: 50%;
   left: 50%;
   font-size: 1.5rem;
-  opacity: 0.65;
+  opacity: 0.72;
   transform-origin: center center;
+  text-shadow: 0 1px 3px rgba(253, 246, 227, 0.35);
 }
 
 .zodiac-symbol {
-  transform: rotate(calc(var(--i) * 30deg)) translateX(10.5rem) rotate(calc(var(--i) * -30deg));
+  transform: rotate(calc(var(--i) * 30deg)) translateX(15.25rem) rotate(calc(var(--i) * -30deg));
   color: #2d1a00;
   font-family: 'Segoe UI Symbol', 'Arial Unicode MS', 'Noto Sans Symbols', serif;
 }
 
 .planet-symbol {
-  transform: rotate(calc(var(--i) * 51deg)) translateX(7.2rem) rotate(calc(var(--i) * -51deg));
-  color: #2d1a00;
+  transform: rotate(calc(var(--i) * 51deg)) translateX(10rem) rotate(calc(var(--i) * -51deg));
+  color: #4f4d16;
+}
+
+.orbit-layer-back .symbol {
+  opacity: 0.5;
+}
+
+.orbit-layer-front .symbol {
+  opacity: 0.92;
 }
 
 .sun {
   position: absolute;
   top: 50%;
   left: 50%;
-  width: 6.5rem;
-  height: 6.5rem;
-  transform: translate(-50%, -50%);
-  z-index: 2;
+  width: 8.85rem;
+  height: 8.85rem;
+  transform: translate(-50%, -50%) translateZ(0);
+  z-index: 3;
 }
 
 .sun-img {
@@ -68,17 +108,19 @@
   height: 100%;
   object-fit: contain;
   opacity: 0.7;
-  filter: drop-shadow(0 0 6px rgba(255, 200, 100, 0.6));
+  filter:
+    drop-shadow(0 0 6px rgba(255, 200, 100, 0.58))
+    drop-shadow(0 8px 12px rgba(45, 26, 0, 0.16));
 }
 
-@keyframes rotate-zodiac {
-  0%   { transform: rotate(0deg); }
-  100% { transform: rotate(360deg); }
+@keyframes rotate-zodiac-ring {
+  0%   { transform: rotateX(76deg) rotateZ(8deg); }
+  100% { transform: rotateX(76deg) rotateZ(368deg); }
 }
 
-@keyframes rotate-planets {
-  0%   { transform: rotate(0deg); }
-  100% { transform: rotate(-360deg); }
+@keyframes rotate-planet-ring {
+  0%   { transform: rotateX(52deg) rotateY(-24deg) rotateZ(-66deg) translateZ(2.2rem); }
+  100% { transform: rotateX(52deg) rotateY(-24deg) rotateZ(-426deg) translateZ(2.2rem); }
 }
 
 .zodiac-grid {
@@ -86,8 +128,8 @@
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  width: 28rem;
-  height: 28rem;
+  width: 100%;
+  height: 100%;
   z-index: 0;
   pointer-events: none;
   stroke: #3d2a0b;

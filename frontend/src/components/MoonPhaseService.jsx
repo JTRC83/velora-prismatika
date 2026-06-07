@@ -1,17 +1,14 @@
 import React, { useState, useEffect } from 'react';
 import './AstroService.css'; // Estilos base
 import './MoonPhaseService.css'; // Estilos lunares
+import VeloraLoader from './VeloraLoader';
 
-export default function MoonPhaseService() {
+export default function MoonPhaseService({ onServiceResult }) {
   const [data, setData] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
-  useEffect(() => {
-    fetchMoonData();
-  }, []);
-
-  const fetchMoonData = async () => {
+  const fetchMoonData = React.useCallback(async () => {
     setLoading(true);
     setError(null);
     try {
@@ -25,17 +22,22 @@ export default function MoonPhaseService() {
       // Pequeño delay artificial para disfrutar la animación de carga
       setTimeout(() => {
         setData(jsonData);
+        onServiceResult?.(jsonData);
         setLoading(false);
       }, 1000);
 
-    } catch (err) {
+    } catch {
       setError("No se pudo conectar con el cielo nocturno.");
       setLoading(false);
     }
-  };
+  }, [onServiceResult]);
+
+  useEffect(() => {
+    fetchMoonData();
+  }, [fetchMoonData]);
 
   return (
-    <div className="astro-service p-6">
+    <div className="astro-service moon-service p-6">
       
      <h2 className="moon-title">
         🌑 Espejo de Plata
@@ -52,10 +54,7 @@ export default function MoonPhaseService() {
 
       {/* Loading Místico */}
       {loading && (
-        <div className="moon-loading">
-            <span className="moon-spinner">🌕</span>
-            <p>Sintonizando mareas...</p>
-        </div>
+        <VeloraLoader message="Sintonizando mareas..." />
       )}
 
       {error && <p className="astro-error">{error}</p>}
@@ -103,16 +102,21 @@ export default function MoonPhaseService() {
 
             </div>
 
-            {/* Sección Velora (Reflejo) */}
-            <div className="astro-horoscope moon-message">
-              <span className="velora-label-moon">✦ Susurro Lunar ✦</span>
-              <p className="velora-text-moon">
-                "{data.velora_message}"
-              </p>
-              <div className="moon-reflection">
-                {data.velora_reflection}
+            {(data.velora_message || data.velora_reflection) && (
+              <div className="astro-horoscope moon-message">
+                <span className="velora-label-moon">✦ Susurro Lunar ✦</span>
+                {data.velora_message && (
+                  <p className="velora-text-moon">
+                    "{data.velora_message}"
+                  </p>
+                )}
+                {data.velora_reflection && (
+                  <div className="moon-reflection">
+                    {data.velora_reflection}
+                  </div>
+                )}
               </div>
-            </div>
+            )}
             
             <button onClick={fetchMoonData} className="moon-refresh-btn">
               Actualizar Cielo

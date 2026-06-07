@@ -1,365 +1,499 @@
-/* KabbalahService.css - Geometría Sagrada */
-
+/* --- Cabala: arbol de la vida editorial Velora --- */
 :root {
-  --kab-gold: #c5a028;
-  --kab-path: rgba(171, 130, 89, 0.5);
-  --kab-text: #2c241b;
-  --kab-bg-panel: rgba(58, 74, 32, 0.05); /* Verde muy sutil */
+  --kab-gold: #b8860b;
+  --kab-olive: #5a5a1a;
+  --kab-ink: #2d1a00;
+  --kab-line: rgba(90, 74, 28, 0.28);
 }
 
 .kabbalah-container {
-  width: 100%;
-  min-height: 85vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  font-family: 'Cinzel', serif;
-  color: var(--kab-text);
-  animation: fadeIn 1s ease;
+  position: relative;
+  overflow: hidden;
+  width: min(100%, 980px);
+  min-height: 680px;
+  margin: 0 auto 2rem;
+  padding: 1rem;
+  border: 1px solid rgba(45, 26, 0, 0.18);
+  border-radius: 30px;
+  color: var(--velora-dark);
+  background:
+    radial-gradient(circle at 13% 8%, rgba(255, 255, 255, 0.76), transparent 30%),
+    radial-gradient(circle at 84% 12%, rgba(184, 134, 11, 0.22), transparent 32%),
+    radial-gradient(circle at 18% 84%, rgba(126, 126, 35, 0.12), transparent 34%),
+    linear-gradient(135deg, rgba(255, 251, 240, 0.93), rgba(239, 213, 148, 0.31) 58%, rgba(126, 126, 35, 0.12)),
+    rgba(253, 246, 227, 0.78);
+  box-shadow:
+    0 24px 42px rgba(45, 26, 0, 0.18),
+    inset 0 1px 0 rgba(255, 255, 255, 0.54);
+  backdrop-filter: blur(8px);
+  animation: kabbalahFadeIn 0.45s ease both;
+}
+
+.kabbalah-container::before {
+  content: "";
+  position: absolute;
+  inset: 0.9rem;
+  z-index: 4;
+  border: 1px solid rgba(126, 126, 35, 0.2);
+  border-radius: 24px;
+  pointer-events: none;
+}
+
+.kabbalah-card-geometry {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  overflow: hidden;
+  border-radius: inherit;
+  pointer-events: none;
+  opacity: 0.7;
+}
+
+.kabbalah-card-geometry::before {
+  content: "";
+  position: absolute;
+  inset: 1rem;
+  border-radius: 24px;
+  background:
+    radial-gradient(circle at 50% 44%, rgba(184, 134, 11, 0.17), transparent 0 5rem, transparent 7rem),
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 900 620'%3E%3Cg fill='none' stroke='%235a4a1c' stroke-opacity='.2' stroke-width='2'%3E%3Ccircle cx='450' cy='310' r='224'/%3E%3Ccircle cx='450' cy='310' r='154'/%3E%3Ccircle cx='450' cy='310' r='82'/%3E%3Cellipse cx='450' cy='310' rx='322' ry='94'/%3E%3Cellipse cx='450' cy='310' rx='322' ry='94' transform='rotate(35 450 310)'/%3E%3Cellipse cx='450' cy='310' rx='322' ry='94' transform='rotate(-35 450 310)'/%3E%3Cpath d='M450 70v470M238 310h424M305 148l290 324M595 148 305 472M450 70 305 472 662 310 305 148 450 540 595 148 238 310 595 472Z'/%3E%3C/g%3E%3Cg fill='%23b8860b' fill-opacity='.32'%3E%3Ccircle cx='450' cy='70' r='5'/%3E%3Ccircle cx='662' cy='310' r='5'/%3E%3Ccircle cx='450' cy='540' r='5'/%3E%3Ccircle cx='238' cy='310' r='5'/%3E%3Ccircle cx='450' cy='310' r='7'/%3E%3C/g%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: 55% 52%;
+  background-size: min(112%, 55rem) auto;
+  opacity: 0.9;
+  transform: translateX(2.2rem) translateY(0.3rem) scale(1.03);
+}
+
+.kabbalah-card-geometry::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(circle at 20% 22%, rgba(255, 255, 255, 0.66) 0 0.16rem, transparent 0.29rem),
+    radial-gradient(circle at 76% 27%, rgba(184, 134, 11, 0.26) 0 0.18rem, transparent 0.34rem),
+    radial-gradient(circle at 64% 78%, rgba(126, 126, 35, 0.2) 0 0.16rem, transparent 0.3rem),
+    linear-gradient(120deg, transparent 18%, rgba(255, 255, 255, 0.18), transparent 55%);
+  opacity: 0.68;
+}
+
+.kabbalah-header,
+.kabbalah-workspace {
+  position: relative;
+  z-index: 3;
+}
+
+.kabbalah-header {
+  display: grid;
+  gap: 0.75rem;
+  padding: 0.7rem 0.75rem 1rem;
+}
+
+.kabbalah-kicker {
+  display: inline-flex;
+  width: fit-content;
+  padding: 0.3rem 0.55rem;
+  border: 1px solid rgba(45, 26, 0, 0.22);
+  border-radius: 999px;
+  color: #5a4a1c;
+  background: rgba(255, 255, 255, 0.25);
+  font-family: var(--font-heading);
+  font-size: 0.72rem;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+}
+
+.kabbalah-header h2,
+.sephira-card h3,
+.gematria-tool h3 {
+  margin: 0;
+  color: #4a3e1b;
+  font-family: var(--font-heading);
+  line-height: 1;
+  text-transform: uppercase;
+  text-shadow: 0 1px 2px rgba(255, 255, 255, 0.42);
 }
 
 .kabbalah-header h2 {
-  font-size: 2.5rem;
-  color: #3a4a20;
-  text-transform: uppercase;
-  margin-bottom: 0.5rem;
-  text-shadow: 0 0 15px rgba(212, 175, 55, 0.2);
+  font-size: clamp(2rem, 4.4vw, 3rem);
 }
 
-/* --- LAYOUT PRINCIPAL --- */
+.kabbalah-header .velora-whisper {
+  max-width: 42rem;
+  margin: 0;
+  color: rgba(45, 26, 0, 0.78);
+  font-family: var(--font-body);
+  font-size: 1rem;
+  font-style: italic;
+  line-height: 1.45;
+}
+
+.kabbalah-explanation {
+  max-width: 48rem;
+}
+
+.kabbalah-explanation p {
+  margin: 0;
+  padding: 0.85rem 1rem;
+  border: 1px solid rgba(45, 26, 0, 0.12);
+  border-radius: 18px;
+  color: rgba(45, 26, 0, 0.78);
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.22), transparent),
+    rgba(255, 251, 240, 0.45);
+  font-family: var(--font-body);
+  font-size: 1rem;
+  line-height: 1.5;
+}
+
+.kabbalah-explanation strong {
+  color: #4a3e1b;
+}
+
 .kabbalah-workspace {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  align-items: center; /* Alineación vertical centrada */
-  width: 100%;
-  max-width: 1100px;
-  gap: 4rem;
-  margin-top: 2rem;
+  display: grid;
+  grid-template-columns: minmax(18rem, 1fr) minmax(18rem, 23rem);
+  gap: 1rem;
+  align-items: stretch;
+  padding: 0.75rem;
 }
 
-/* --- IZQUIERDA: EL ÁRBOL SVG --- */
+.tree-visual,
+.kabbalah-panel {
+  border: 1px solid rgba(45, 26, 0, 0.14);
+  border-radius: 24px;
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.28), transparent),
+    rgba(255, 251, 240, 0.46);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.42),
+    0 12px 22px rgba(45, 26, 0, 0.08);
+}
+
 .tree-visual {
-  width: 450px; /* Tamaño controlado del árbol */
-  height: auto;
-  filter: drop-shadow(0 0 10px rgba(197, 160, 40, 0.2));
-}
-
-/* Efecto extra: Al pasar el mouse sobre el árbol, las líneas se oscurecen más */
-.tree-visual:hover .tree-path {
-  stroke: rgba(137, 97, 57, 0.8); /* Más opaco al interactuar */
+  display: grid;
+  place-items: center;
+  min-height: 31rem;
+  padding: 1.2rem;
+  filter: drop-shadow(0 12px 18px rgba(45, 26, 0, 0.12));
 }
 
 .tree-svg {
-  width: 100%;
-  height: 100%;
-  overflow: visible; /* Permite que el brillo salga del borde */
+  width: min(100%, 28rem);
+  height: auto;
+  overflow: visible;
 }
 
-/* Senderos */
 .tree-path {
-  stroke: var(--kab-path);
-  stroke-width: 1.0;
-  transition: all 0.5s ease;
+  stroke: rgba(90, 74, 28, 0.34);
+  stroke-width: 0.86;
   stroke-linecap: round;
+  transition: stroke 0.35s ease, stroke-width 0.35s ease;
 }
 
-/* Nodos */
+.tree-visual:hover .tree-path {
+  stroke: rgba(90, 74, 28, 0.58);
+  stroke-width: 1;
+}
+
 .tree-node-group {
   cursor: pointer;
-  transition: all 0.3s ease;
+  transform-box: fill-box;
+  transform-origin: center;
+  transition: transform 0.25s ease;
 }
 
 .tree-node-group:hover {
-  transform: scale(1.1); /* Efecto zoom suave */
+  transform: scale(1.12);
 }
 
 .node-halo {
-  opacity: 0.3;
-  transition: all 0.3s ease;
+  opacity: 0.26;
+  transition: opacity 0.25s ease, filter 0.25s ease;
 }
 
 .node-core {
-  fill: #fff;
+  fill: rgba(255, 251, 240, 0.94);
   stroke: var(--kab-gold);
   stroke-width: 0.5;
 }
 
 .node-text {
-  fill: var(--kab-text);
-  font-family: 'Cinzel', serif;
-  font-weight: bold;
+  fill: var(--kab-ink);
+  font-family: var(--font-heading);
+  font-weight: 700;
   pointer-events: none;
 }
 
-/* Estado Activo (Seleccionado) */
 .tree-node-group.active .node-halo {
-  opacity: 0.8;
-  filter: blur(2px);
-  stroke: #fff;
-  stroke-width: 0.5;
+  opacity: 0.78;
+  filter: blur(1.4px);
 }
 
 .tree-node-group.active .node-core {
   fill: var(--kab-gold);
 }
 
-/* --- DERECHA: PANEL --- */
 .kabbalah-panel {
-  width: 350px;
-  min-height: 400px;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
+  display: grid;
+  min-height: 31rem;
+  padding: 0.9rem;
 }
 
-/* Tarjeta de Detalle */
-.sephira-card {
-  background: rgba(255, 255, 255, 0.6);
-  border: 1px solid var(--kab-gold);
-  border-radius: 10px;
-  padding: 2rem;
-  text-align: center;
-  box-shadow: 0 10px 30px rgba(0,0,0,0.05);
-  backdrop-filter: blur(5px);
+.sephira-card,
+.gematria-tool {
+  display: grid;
+  align-content: center;
+  gap: 1rem;
+  width: 100%;
+  min-height: 100%;
+  padding: 1rem;
+  border-radius: 20px;
+  background:
+    radial-gradient(circle at 16% 8%, rgba(255, 255, 255, 0.46), transparent 36%),
+    rgba(255, 251, 240, 0.52);
 }
 
 .sephira-header {
-  border-bottom: 3px solid; /* El color viene inline del JS */
-  padding-bottom: 1rem;
-  margin-bottom: 1.5rem;
+  display: grid;
+  justify-items: center;
+  gap: 0.45rem;
+  padding-bottom: 0.95rem;
+  border-bottom: 2px solid rgba(184, 134, 11, 0.38);
+  text-align: center;
 }
 
 .hebrew-big {
-  display: block;
-  font-family: 'Times New Roman', serif;
-  font-size: 2.5rem;
-  margin-bottom: 0.5rem;
-  color: #3a4a20;
+  display: grid;
+  place-items: center;
+  width: 4.5rem;
+  height: 4.5rem;
+  border: 1px solid rgba(45, 26, 0, 0.16);
+  border-radius: 999px;
+  color: #4a3e1b;
+  background:
+    radial-gradient(circle at 36% 25%, rgba(255, 255, 255, 0.76), transparent 32%),
+    linear-gradient(135deg, rgba(255, 251, 240, 0.82), rgba(232, 191, 92, 0.22));
+  box-shadow: 0 12px 20px rgba(45, 26, 0, 0.12);
+  font-family: "Times New Roman", serif;
+  font-size: 2.1rem;
 }
 
-.sephira-card h3 {
-  font-size: 1.8rem;
-  color: var(--kab-text);
-  margin: 0;
+.sephira-card h3,
+.gematria-tool h3 {
+  font-size: clamp(1.45rem, 3vw, 1.9rem);
 }
 
-.sephira-id {
-  font-size: 0.8rem;
+.path-name {
+  color: rgba(45, 26, 0, 0.62);
+  font-family: var(--font-heading);
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.14em;
   text-transform: uppercase;
-  color: #777;
-  letter-spacing: 2px;
+}
+
+.sephira-body {
+  display: grid;
+  gap: 0.9rem;
+}
+
+.main-meaning,
+.gematria-tool p,
+.wisdom-note,
+.shadow-box p,
+.velora-kabbalah-msg p {
+  margin: 0;
+  color: rgba(45, 26, 0, 0.78);
+  font-family: var(--font-body);
+  line-height: 1.45;
 }
 
 .main-meaning {
-  font-family: 'Playfair Display', serif;
-  font-size: 1.1rem;
-  line-height: 1.5;
-  margin-bottom: 1.5rem;
-}
-
-.shadow-box {
-  background: rgba(0,0,0,0.05);
-  padding: 10px;
-  border-radius: 5px;
-  font-size: 0.9rem;
-  color: #555;
-  border-left: 3px solid #888;
-  text-align: left;
-}
-
-.gematria-match-msg {
-  margin-top: 1rem;
-  color: var(--kab-gold);
-  font-weight: bold;
-  animation: pulse 2s infinite;
-}
-
-.close-btn {
-  margin-top: 2rem;
-  background: transparent;
-  border: 1px solid var(--kab-text);
-  padding: 8px 20px;
-  cursor: pointer;
-  font-family: 'Cinzel', serif;
-  transition: 0.3s;
-}
-
-.close-btn:hover {
-  background: var(--kab-text);
-  color: #fff;
-}
-
-/* Herramienta Gematria */
-.gematria-tool {
-  background: rgba(58, 74, 32, 0.05);
-  padding: 2rem;
-  border-radius: 15px;
-  border: 1px dashed var(--kab-gold);
-  text-align: center;
-}
-
-.gematria-tool h3 {
-  color: #3a4a20;
-  margin-bottom: 0.5rem;
-}
-
-.input-group {
-  display: flex;
-  gap: 10px;
-  margin: 1.5rem 0;
-}
-
-.input-group input {
-  flex: 1;
-  padding: 10px;
-  border: 1px solid #ccc;
-  border-radius: 4px;
-  font-family: 'Playfair Display', serif;
-  background: rgba(255,255,255,0.8);
-}
-
-.input-group button {
-  padding: 10px 20px;
-  background: #3a4a20;
-  color: #fff;
-  border: none;
-  border-radius: 4px;
-  cursor: pointer;
-  font-family: 'Cinzel', serif;
-}
-
-.wisdom-note {
-  font-style: italic;
-  color: #777;
-  font-size: 0.9rem;
-}
-
-/* Responsive */
-@media (max-width: 800px) {
-  .kabbalah-workspace {
-    flex-direction: column;
-    gap: 2rem;
-  }
-  .tree-visual {
-    width: 300px;
-  }
-}
-
-@keyframes fadeIn {
-  from { opacity: 0; transform: translateY(10px); }
-  to { opacity: 1; transform: translateY(0); }
-}
-
-/* --- NUEVA SECCIÓN DE EXPLICACIÓN --- */
-
-.kabbalah-explanation {
-  max-width: 600px;
-  text-align: center;
-  margin-top: 1.5rem;
-  padding: 0 20px;
-  animation: fadeIn 1.5s ease;
-}
-
-.kabbalah-explanation p {
-  font-family: 'Playfair Display', serif;
   font-size: 1rem;
-  line-height: 1.6;
-  color: var(--kab-text);
-  /* Un fondo muy sutil para separarlo del resto */
-  background: linear-gradient(to right, transparent, rgba(197, 160, 40, 0.1), transparent);
-  padding: 10px;
-  border-radius: 8px;
 }
 
-.kabbalah-explanation strong {
-  color: #3a4a20; /* Verde oscuro Velora */
-  font-weight: bold;
-}
-
-.kabbalah-explanation em {
-  color: var(--kab-gold);
-  font-style: italic;
-  font-weight: bold;
-}
-
-.instruction-tag {
-  display: block;
-  margin-top: 5px;
-  font-size: 0.85rem;
-  text-transform: uppercase;
-  letter-spacing: 2px;
-  color: #2d4726;
-  font-weight: bold;
-  opacity: 0.8;
-}
-
-/* --- MEJORAS EN LA TARJETA SEPHIRÁ --- */
-
-.path-name {
-  display: block;
-  font-size: 0.9rem;
-  text-transform: uppercase;
-  letter-spacing: 3px;
-  color: #3a4a20; /* Verde Velora */
-  margin-top: 5px;
-  font-weight: bold;
-}
-
-/* Rejilla de 2 columnas para los datos */
 .attributes-grid {
   display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 15px;
-  margin: 1.5rem 0;
-  text-align: left;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0.65rem;
+}
+
+.attr-item,
+.shadow-box,
+.velora-kabbalah-msg {
+  border: 1px solid rgba(45, 26, 0, 0.12);
+  border-radius: 16px;
+  background: rgba(255, 251, 240, 0.5);
 }
 
 .attr-item {
-  display: flex;
-  flex-direction: column;
-  background: rgba(255, 255, 255, 0.5);
-  padding: 8px;
-  border-radius: 5px;
-  border-left: 2px solid var(--kab-gold);
+  display: grid;
+  gap: 0.24rem;
+  padding: 0.75rem;
 }
 
 .attr-label {
-  font-size: 0.7rem;
+  color: rgba(45, 26, 0, 0.58);
+  font-family: var(--font-heading);
+  font-size: 0.68rem;
+  letter-spacing: 0.12em;
   text-transform: uppercase;
-  color: #777;
-  letter-spacing: 1px;
-  margin-bottom: 3px;
 }
 
 .attr-value {
-  font-family: 'Cinzel', serif;
-  font-weight: bold;
-  color: var(--kab-text);
-  font-size: 0.95rem;
+  color: #2d1a00;
+  font-family: var(--font-heading);
+  font-size: 0.92rem;
+  font-weight: 700;
+  line-height: 1.2;
 }
 
 .mantra-text {
+  color: #4a3e1b;
   font-style: italic;
-  color: #3a4a20;
 }
 
-/* Ajuste del cuadro de sombra */
 .shadow-box {
-  background: rgba(0,0,0,0.05);
-  padding: 12px;
-  border-radius: 5px;
-  font-size: 0.9rem;
-  color: #444;
-  border-left: 3px solid #5d4037; /* Marrón oscuro para la sombra */
-  text-align: left;
-  margin-top: 1rem;
+  display: grid;
+  gap: 0.45rem;
+  padding: 0.85rem;
+  border-left: 4px solid rgba(93, 64, 55, 0.62);
 }
 
-.shadow-box strong {
-  display: block;
-  margin-bottom: 5px;
-  color: #2c241b;
+.shadow-box strong,
+.gematria-match-msg {
+  color: #4a3e1b;
+  font-family: var(--font-heading);
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
   text-transform: uppercase;
-  font-size: 0.8rem;
+}
+
+.velora-kabbalah-msg {
+  display: grid;
+  gap: 0.7rem;
+  padding: 0.9rem;
+}
+
+.velora-kabbalah-msg .velora-text-content {
+  display: grid;
+  gap: 0.45rem;
+}
+
+.velora-reflection {
+  padding: 0.8rem 0.9rem;
+  border-radius: 14px;
+  color: #fdf6e3;
+  background: linear-gradient(135deg, #2d1a00, var(--velora-olive-deep));
+  font-family: var(--font-heading);
+  line-height: 1.35;
+}
+
+.input-group {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: 0.7rem;
+}
+
+.input-group input {
+  width: 100%;
+  min-height: 3.15rem;
+  padding: 0.85rem 1rem;
+  border: 1px solid rgba(45, 26, 0, 0.18);
+  border-radius: 999px;
+  color: #2d1a00;
+  background: rgba(255, 251, 240, 0.68);
+  font-family: var(--font-body);
+  font-size: 1rem;
+  outline: none;
+}
+
+.input-group input:focus {
+  border-color: rgba(126, 126, 35, 0.46);
+  box-shadow: 0 0 0 3px rgba(184, 134, 11, 0.14);
+}
+
+.input-group button,
+.close-btn {
+  display: inline-grid;
+  place-items: center;
+  min-height: 3.1rem;
+  padding: 0 1.25rem;
+  border: 1px solid rgba(45, 26, 0, 0.2);
+  border-radius: 999px;
+  color: #fdf6e3;
+  background: linear-gradient(135deg, #2d1a00, var(--velora-olive-deep));
+  box-shadow:
+    0 10px 18px rgba(45, 26, 0, 0.14),
+    inset 0 1px 0 rgba(255, 255, 255, 0.18);
+  font-family: var(--font-heading);
+  font-size: 0.86rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.close-btn {
+  width: fit-content;
+  margin: 0.3rem auto 0;
+  color: #2d1a00;
+  background: rgba(255, 251, 240, 0.62);
+}
+
+.input-group button:hover,
+.close-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 14px 24px rgba(45, 26, 0, 0.16);
+}
+
+.wisdom-note {
+  text-align: center;
+}
+
+.fade-in {
+  animation: kabbalahFadeIn 0.42s ease both;
+}
+
+@keyframes kabbalahFadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@media (max-width: 860px) {
+  .kabbalah-container {
+    min-height: 0;
+    padding: 0.85rem;
+  }
+
+  .kabbalah-card-geometry::before {
+    transform: translateX(0) translateY(3rem) scale(1.08);
+  }
+
+  .kabbalah-workspace {
+    grid-template-columns: 1fr;
+  }
+
+  .tree-visual,
+  .kabbalah-panel {
+    min-height: 0;
+  }
+
+  .tree-svg {
+    width: min(100%, 21rem);
+  }
+
+  .attributes-grid,
+  .input-group {
+    grid-template-columns: 1fr;
+  }
 }

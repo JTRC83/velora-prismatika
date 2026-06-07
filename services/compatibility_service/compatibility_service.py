@@ -31,7 +31,7 @@ def get_planet_sign(planet_obj, date_now):
     observer = ephem.Observer()
     observer.date = date_now
     planet_obj.compute(observer)
-    degrees = math.degrees(planet_obj.hlon)
+    degrees = math.degrees(ephem.Ecliptic(planet_obj).lon)
     sign_index = int(degrees / 30)
     return ZODIAC_SIGNS[sign_index % 12]
 

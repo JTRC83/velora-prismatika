@@ -16,28 +16,28 @@ class VisionRequest(BaseModel):
     question: str
 
 @router.post("/gaze")
-async def consultar_bola(datos: VisionRequest):
+async def consultar_bola(datos: VisionRequest, include_ai: bool = False):
     if not datos.question.strip():
         raise HTTPException(status_code=400, detail="La bola requiere una pregunta.")
 
     # 1. MECÁNICA
     seed = mechanics.get_vision_seed(datos.question)
 
-    # 2. MAGIA (Velora)
-    velora_voice = "La niebla se arremolina..."
-    velora_reflection = "El futuro no está escrito."
+    # 2. Visión base inmediata. La interpretación larga de Velora se genera aparte.
+    velora_voice = seed["base_message"]
+    velora_reflection = ""
 
-    try:
-        # Usamos la función que ya tienes en velora_weaver.py
-        lectura = weaver.interpretar_vision_cristal(
-            pregunta=datos.question,
-            tema=seed["topic"],
-            mensaje_base=seed["base_message"]
-        )
-        velora_voice = lectura["texto"]
-        velora_reflection = lectura["reflejo"]
-    except Exception as e:
-        logger.warning(f"Velora calló en la bola: {e}")
+    if include_ai:
+        try:
+            lectura = weaver.interpretar_vision_cristal(
+                pregunta=datos.question,
+                tema=seed["topic"],
+                mensaje_base=seed["base_message"]
+            )
+            velora_voice = lectura["texto"]
+            velora_reflection = lectura["reflejo"]
+        except Exception as e:
+            logger.warning(f"Velora calló en la bola: {e}")
 
     return {
         "topic": seed["topic"],

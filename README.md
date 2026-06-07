@@ -78,6 +78,34 @@ La ruta puede cambiarse con la variable `VELORA_VAULT_PATH`. Esta capa no escrib
 en la bóveda: solo lee notas, frontmatter, etiquetas, enlaces internos y
 secciones para preparar el futuro sistema RAG/IA local.
 
+### Grafo de conocimiento controlado
+
+Para regenerar un grafo local de la bóveda con Graphify y los enlaces
+`[[wikilink]]` de Obsidian:
+
+```bash
+python3 -m pip install -r requirements-graphify.txt
+npm run knowledge:graph
+```
+
+También puede ejecutarse de forma directa:
+
+```bash
+VELORA_VAULT_PATH="/Users/joantoniramoncrespi/Documents/Velora Prismätika" \
+python3 scripts/build_knowledge_graph.py
+```
+
+La salida queda en `.cache/knowledge-graph/graphify-out/` e incluye:
+
+- `graph.json`: grafo enriquecido con relaciones `links_to`.
+- `GRAPH_REPORT.md`: resumen de comunidades y nodos centrales.
+- `graph.html`: visualización local del grafo.
+- `CONTROLLED_SUMMARY.json`: resumen estable para automatizaciones futuras.
+
+Esta pasada controlada no usa LLM, no etiqueta comunidades con IA y no extrae
+PDFs: sólo copia temporalmente Markdown de la bóveda a `.cache/` y escribe ahí
+los artefactos generados.
+
 ---
 
 ## ✅ Estado del proyecto

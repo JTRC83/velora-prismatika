@@ -1,19 +1,17 @@
 import json
 import os
 import random
+from pathlib import Path
 from typing import List, Dict, Any
 
 class TarotService:
     def __init__(self):
-        # 1. Definimos la ruta del mazo. 
-        # Asegúrate de que tu archivo 'cards.json' esté en esta carpeta o ajusta la ruta.
         self.base_path = os.path.dirname(__file__)
         self.json_path = os.path.join(self.base_path, "cards.json")
-        
-        # Si decidiste moverlo a una carpeta data, descomenta esto:
-        # self.json_path = os.path.join(self.base_path, "data", "tarot_deck.json")
-
         self.cards = self._load_data()
+        self.card_assets_path = self._resolve_card_assets_path()
+        self.available_image_ids = self._load_available_image_ids()
+        self.drawable_cards = self._filter_drawable_cards()
         
         # Mapa rápido por si necesitamos buscar quintasencias
         self.deck_map = {c["id"]: c for c in self.cards} if self.cards else {}
@@ -30,37 +28,73 @@ class TarotService:
             print(f"❌ [TarotService] Error leyendo JSON: {e}")
             return []
 
+    def _resolve_card_assets_path(self) -> Path:
+        repo_root = Path(__file__).resolve().parents[2]
+        return repo_root / "frontend" / "public" / "assets" / "tarot_cards"
+
+    def _load_available_image_ids(self):
+        if not self.card_assets_path.exists():
+            print(f"⚠️ [TarotService] No encuentro imágenes del tarot en: {self.card_assets_path}")
+            return set()
+
+        available = set()
+        for image_path in self.card_assets_path.glob("*.png"):
+            if image_path.stem.isdigit():
+                available.add(int(image_path.stem))
+
+        return available
+
+    def _filter_drawable_cards(self):
+        if not self.cards or not self.available_image_ids:
+            return self.cards
+
+        drawable = [
+            card for card in self.cards
+            if int(card.get("id", -1)) in self.available_image_ids
+        ]
+
+        if drawable:
+            return drawable
+
+        print("⚠️ [TarotService] Ninguna carta del JSON coincide con las imágenes disponibles.")
+        return self.cards
+
     def tirar_cartas(self, cantidad: int = 3) -> List[Dict[str, Any]]:
         """
         Método Principal llamado por el Router.
         Retorna la lista de cartas formateada para que el Frontend las pinte
         y Velora las lea.
         """
-        if not self.cards:
+        deck = self.drawable_cards or self.cards
+
+        if not deck:
             # Fallback de emergencia si no hay JSON, para no romper la app
             return self._mazo_emergencia(cantidad)
 
-        drawn = random.sample(self.cards, cantidad)
+        drawn = random.sample(deck, min(cantidad, len(deck)))
         posiciones = ["El Origen (Pasado)", "El Foco (Presente)", "El Destino (Futuro)"]
         
         resultado = []
         
         for i, card in enumerate(drawn):
             is_inverted = random.choice([True, False])
+            keywords = card.get("keywords", [])
+            reversed_keywords = card.get("keywords_rev") or keywords
+            meaning = card.get("significado_invertido") if is_inverted else card.get("significado")
             
             # Construimos el objeto que espera el Frontend y Velora
             carta_procesada = {
                 "id": card.get("id"),
                 "nombre": card.get("name", "Arcano"),
-                # Esto asume que tus imágenes se llaman "0.jpg", "1.jpg", etc.
                 "img": f"{card.get('id')}.png", 
                 "invertida": is_inverted,
                 "position": posiciones[i] if i < len(posiciones) else f"Posición {i+1}",
                 
                 # Datos para ayudar a Velora a interpretar mejor
-                "palabras_clave": card.get("keywords", []) if not is_inverted else card.get("keywords_rev", []),
+                "palabras_clave": keywords if not is_inverted else reversed_keywords,
                 "elemento": card.get("element", "Éter"),
-                "significado_texto": card.get("significado", "") # Opcional, por si Velora lo necesita
+                "significado_texto": meaning or "",
+                "imagen_disponible": int(card.get("id", -1)) in self.available_image_ids
             }
             resultado.append(carta_procesada)
 

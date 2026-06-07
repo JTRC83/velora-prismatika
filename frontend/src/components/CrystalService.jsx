@@ -1,13 +1,11 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState } from 'react';
 import './CrystalService.css'; // Asegúrate de que el CSS tenga este nombre
 
-const CrystalService = () => {
+const CrystalService = ({ onServiceResult }) => {
   const [inputQuestion, setInputQuestion] = useState("");
   const [state, setState] = useState('idle'); // idle, gazing, revealed
   const [response, setResponse] = useState(null);
   const [fogIntensity, setFogIntensity] = useState(0); 
-
-  const timeoutRef = useRef(null);
 
   // Función modificada para usar POST y conectar con Velora
   const consultOracle = async (presetQuestion = null) => {
@@ -39,11 +37,16 @@ const CrystalService = () => {
       const [_, data] = await Promise.all([minTimePromise, fetchPromise]);
 
       // 3. Formateamos la respuesta de Velora
-      setResponse({
+      const vision = {
         text: data.velora_voice,
         reflection: data.reflejo,
         topic: data.topic === 'yes_no' ? 'Sí / No' : data.topic.toUpperCase(),
         isClarityHigh: true // Velora siempre ve claro, pero mantenemos tu variable visual
+      };
+      setResponse(vision);
+      onServiceResult?.({
+        input: { question: questionToSend },
+        ...vision,
       });
         
       setState('revealed');
@@ -51,12 +54,14 @@ const CrystalService = () => {
 
     } catch (error) {
       console.error(error);
-      setResponse({
+      const errorVision = {
         text: "El éter está perturbado. Las sombras ocultan la verdad.",
         reflection: "Intenta de nuevo más tarde.",
         topic: "Error",
         isClarityHigh: false
-      });
+      };
+      setResponse(errorVision);
+      onServiceResult?.(errorVision);
       setState('revealed');
     }
   };
@@ -66,23 +71,22 @@ const CrystalService = () => {
     setInputQuestion("");
     setResponse(null);
     setFogIntensity(0);
+    onServiceResult?.(null);
   };
-
-  useEffect(() => {
-    return () => clearTimeout(timeoutRef.current);
-  }, []);
 
   return (
     <div className="crystal-container">
+      <div className="crystal-card-geometry" aria-hidden="true" />
       
       <div className="crystal-header">
+        <span className="crystal-kicker">Bola de cristal</span>
         <h2>La Visión Etérea</h2>
         <p className="velora-whisper">
           "El cristal no muestra lo que quieres ver, sino lo que es."
         </p>
       </div>
 
-      <div className="scrying-stage">
+      <div className={`scrying-stage ${state === 'gazing' ? 'is-gazing' : ''}`}>
         
         {/* Tus partículas mágicas */}
         <div className="particles-container">
@@ -105,8 +109,14 @@ const CrystalService = () => {
           {/* Niebla dinámica */}
           <div 
             className="ball-fog" 
-            style={{ opacity: state === 'gazing' ? 0.9 : (state === 'revealed' ? 0.4 : 0.15) }}
+            style={{ opacity: state === 'idle' ? 0.15 : fogIntensity }}
           ></div>
+          <img
+            className="ball-eye-sigil"
+            src="/assets/ojo_velora.png"
+            alt=""
+            aria-hidden="true"
+          />
 
           <div className="ball-content">
             {state === 'gazing' && (
@@ -124,9 +134,11 @@ const CrystalService = () => {
                     ))}
                 </div>
 
-                <div className="vision-reflection">
-                   ✨ "{response.reflection}"
-                </div>
+                {response.reflection && (
+                  <div className="vision-reflection">
+                    "{response.reflection}"
+                  </div>
+                )}
               </div>
             )}
           </div>
@@ -134,7 +146,6 @@ const CrystalService = () => {
 
         <div className="crystal-stand">
           <div className="stand-base"></div>
-          <div className="stand-neck"></div>
         </div>
       </div>
 

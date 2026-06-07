@@ -5,6 +5,10 @@
   --velora-gold: #b8860b;
   --velora-cream: #fdf6e3;
   --velora-accent: #7e7e23;
+  --velora-olive-deep: #4d4b15;
+  --velora-amber-soft: #e8bf5c;
+  --velora-card-light: #fff9e9;
+  --velora-card-shadow: rgba(45, 26, 0, 0.2);
   --glass-bg: rgba(255, 255, 255, 0.15);
   --glass-border: rgba(255, 255, 255, 0.3);
   --font-heading: "Faculty Glyphic", serif; 
@@ -19,6 +23,23 @@
   margin: 0 auto;
 }
 
+.astro-service--natal {
+  max-width: 1120px;
+  width: 100%;
+}
+
+.astro-hero-grid {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 37rem;
+  overflow: visible;
+  isolation: isolate;
+  padding: 1.6rem 0 2.1rem;
+  margin-bottom: 2rem;
+}
+
 /* --- TÍTULOS --- */
 .astro-title {
   font-family: var(--font-heading);
@@ -27,6 +48,204 @@
   margin-bottom: 2rem;
   color: #4a3e1b;
   text-shadow: 0 1px 2px rgba(255,255,255,0.4);
+}
+
+.astro-title--panel {
+  text-align: left;
+  margin: 0;
+  font-size: 2.25rem;
+  line-height: 1;
+}
+
+.astro-kicker {
+  display: inline-flex;
+  width: fit-content;
+  padding: 0.3rem 0.55rem;
+  border: 1px solid rgba(45, 26, 0, 0.22);
+  border-radius: 999px;
+  color: #5a4a1c;
+  font-family: var(--font-heading);
+  font-size: 0.72rem;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  background: rgba(255, 255, 255, 0.25);
+}
+
+.astro-form-card {
+  position: relative;
+  overflow: hidden;
+  border: 1px solid rgba(45, 26, 0, 0.18);
+  border-radius: 30px;
+  background:
+    radial-gradient(circle at 16% 4%, rgba(255, 255, 255, 0.74), transparent 31%),
+    linear-gradient(135deg, rgba(255, 249, 233, 0.86), rgba(232, 191, 92, 0.19) 58%, rgba(126, 126, 35, 0.1)),
+    rgba(253, 246, 227, 0.5);
+  box-shadow:
+    0 18px 34px rgba(45, 26, 0, 0.14),
+    inset 0 1px 0 rgba(255, 255, 255, 0.54);
+  backdrop-filter: blur(8px);
+}
+
+.astro-form-card {
+  z-index: 2;
+  width: min(100%, 640px);
+  padding: 1rem;
+}
+
+.astro-flip-card .astro-form-card {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  height: 100%;
+}
+
+.astro-form-card::before {
+  content: "";
+  position: absolute;
+  inset: 0.9rem;
+  border: 1px solid rgba(126, 126, 35, 0.2);
+  border-radius: 24px;
+  pointer-events: none;
+}
+
+.astro-form-card::after {
+  content: "";
+  position: absolute;
+  inset: -35% -20%;
+  z-index: 0;
+  background:
+    radial-gradient(circle at 22% 24%, rgba(253, 246, 227, 0.9), transparent 18%),
+    radial-gradient(circle at 78% 8%, rgba(184, 134, 11, 0.2), transparent 24%),
+    linear-gradient(115deg, transparent 22%, rgba(255, 255, 255, 0.38) 48%, transparent 68%);
+  opacity: 0;
+  transform: translateX(-10%) rotate(8deg);
+  transition: opacity 0.4s ease, transform 0.55s ease;
+  pointer-events: none;
+}
+
+.astro-flip-card:not(.is-flipped):hover .astro-form-card::after {
+  opacity: 1;
+  transform: translateX(8%) rotate(8deg);
+}
+
+.astro-form-header {
+  display: grid;
+  gap: 0.75rem;
+  padding: 0.7rem 0.75rem 1rem;
+  position: relative;
+  z-index: 1;
+}
+
+.astro-form-header p {
+  max-width: 32rem;
+  color: rgba(45, 26, 0, 0.78);
+  font-family: var(--font-body);
+  font-size: 1rem;
+  line-height: 1.45;
+}
+
+.astro-orbit-panel {
+  position: absolute;
+  top: 50%;
+  right: clamp(-30rem, calc(50% - 54rem), -8rem);
+  z-index: 3;
+  display: grid;
+  place-items: center;
+  width: 34rem;
+  height: 34rem;
+  transform: translateY(-50%);
+  pointer-events: none;
+  opacity: 0.86;
+  filter: drop-shadow(0 18px 24px rgba(45, 26, 0, 0.18));
+}
+
+.astro-flip-card {
+  position: relative;
+  z-index: 2;
+  width: min(100%, 820px);
+  height: 740px;
+  perspective: 1600px;
+  transform: translateZ(0);
+}
+
+.astro-flip-card.is-flipped {
+  width: min(100%, 780px);
+  height: 500px;
+}
+
+.astro-flip-card::before {
+  content: "";
+  position: absolute;
+  inset: -2px;
+  z-index: -1;
+  border-radius: 30px;
+  background:
+    linear-gradient(135deg, rgba(126, 126, 35, 0.5), rgba(184, 134, 11, 0.42), rgba(253, 246, 227, 0.36)),
+    radial-gradient(circle at 18% 8%, rgba(255, 255, 255, 0.65), transparent 32%);
+  opacity: 0.22;
+  transition: opacity 0.35s ease, filter 0.35s ease, transform 0.35s ease;
+  pointer-events: none;
+}
+
+.astro-flip-card:not(.is-flipped):hover::before,
+.astro-flip-card.is-loading::before {
+  opacity: 0.92;
+  filter: drop-shadow(0 0 24px rgba(126, 126, 35, 0.28));
+  transform: scale(1.012);
+}
+
+.astro-flip-inner {
+  display: grid;
+  height: 100%;
+  transform-style: preserve-3d;
+  transition: transform 0.86s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.astro-flip-card.is-flipped .astro-flip-inner {
+  transform: rotateY(180deg);
+}
+
+.astro-flip-face {
+  grid-area: 1 / 1;
+  width: 100%;
+  height: 100%;
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+  transform-style: preserve-3d;
+}
+
+.astro-flip-face--front {
+  transform: rotateY(0deg);
+  transition:
+    transform 0.35s cubic-bezier(0.22, 1, 0.36, 1),
+    border-color 0.35s ease,
+    box-shadow 0.35s ease;
+}
+
+.astro-flip-face--back {
+  max-width: none;
+  margin: 0;
+  transform: rotateY(180deg);
+  pointer-events: none;
+  animation: none;
+  overflow: hidden;
+}
+
+.astro-flip-card.is-flipped .astro-flip-face--front {
+  pointer-events: none;
+}
+
+.astro-flip-card.is-flipped .astro-flip-face--back {
+  pointer-events: auto;
+}
+
+.astro-flip-card:not(.is-flipped):hover .astro-flip-face--front {
+  transform: rotateY(0deg) translateY(-5px) scale(0.992);
+  border-color: rgba(126, 126, 35, 0.56);
+  box-shadow:
+    0 24px 48px rgba(45, 26, 0, 0.18),
+    0 0 0 1px rgba(253, 246, 227, 0.64) inset,
+    0 0 30px rgba(126, 126, 35, 0.2);
 }
 
 /* --- FORMULARIO ESTILO "LIBRO DE REGISTRO" --- */
@@ -40,10 +259,37 @@
   margin-bottom: 2rem;
 }
 
+.astro-form-col--natal {
+  position: relative;
+  z-index: 1;
+  display: grid;
+  gap: 1rem;
+  flex: 0 0 auto;
+  align-content: center;
+  margin: 0;
+  padding: 0.85rem 0.75rem 0.35rem;
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+  box-shadow: none;
+  backdrop-filter: none;
+}
+
 .form-row {
   display: flex;
   gap: 1.5rem;
   margin-bottom: 1rem;
+}
+
+.astro-form-row--natal {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 1rem;
+  margin-bottom: 0;
+}
+
+.astro-form-row--place {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
 }
 
 .form-group {
@@ -53,6 +299,32 @@
   margin-bottom: 1rem;
 }
 
+.astro-form-col--natal .form-group {
+  margin: 0;
+  min-width: 0;
+  min-height: 7.6rem;
+  padding: 1.05rem;
+  justify-content: center;
+  border: 1px solid rgba(45, 26, 0, 0.13);
+  border-radius: 24px;
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.24), transparent),
+    rgba(255, 251, 240, 0.48);
+  transition: border-color 0.25s ease, box-shadow 0.25s ease, transform 0.25s ease;
+}
+
+.astro-flip-card:not(.is-flipped):hover .astro-form-col--natal .form-group {
+  border-color: rgba(126, 126, 35, 0.24);
+}
+
+.astro-form-col--natal .astro-field-primary {
+  min-height: auto;
+  justify-content: center;
+  background:
+    linear-gradient(90deg, rgba(126, 126, 35, 0.12), transparent),
+    rgba(255, 251, 240, 0.52);
+}
+
 .form-group label {
   font-family: var(--font-heading);
   font-size: 0.95rem;
@@ -60,6 +332,29 @@
   color: var(--velora-dark);
   font-weight: 600;
   letter-spacing: 0.5px;
+}
+
+.astro-form-col--natal label {
+  display: flex;
+  align-items: center;
+  gap: 0.55rem;
+  margin-bottom: 0.65rem;
+  font-size: 0.82rem;
+  text-transform: uppercase;
+  min-height: 1.65rem;
+}
+
+.astro-form-col--natal label span {
+  display: inline-grid;
+  place-items: center;
+  width: 1.65rem;
+  height: 1.65rem;
+  border-radius: 999px;
+  color: #fdf6e3;
+  background:
+    linear-gradient(135deg, #2d1a00, var(--velora-olive-deep));
+  font-size: 0.68rem;
+  letter-spacing: 0;
 }
 
 /* Inputs personalizados */
@@ -75,10 +370,53 @@
   transition: all 0.3s ease;
 }
 
+.astro-form-col--natal .astro-input {
+  width: 100%;
+  min-height: 3rem;
+  padding: 0.75rem 0.85rem;
+  border: 1px solid rgba(45, 26, 0, 0.15);
+  border-radius: 18px;
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.54), rgba(253, 246, 227, 0.42));
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.45);
+}
+
+.astro-form-col--natal .astro-input[readonly] {
+  color: rgba(45, 26, 0, 0.72);
+  cursor: default;
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.34), rgba(253, 246, 227, 0.3));
+}
+
+.astro-geo-status {
+  display: block;
+  min-height: 1rem;
+  margin-top: 0.38rem;
+  color: rgba(45, 26, 0, 0.62);
+  font-family: var(--font-body);
+  font-size: 0.78rem;
+  line-height: 1.15;
+}
+
+.astro-geo-status--loading,
+.astro-geo-status--online,
+.astro-geo-status--resolved {
+  color: #5a4a1c;
+}
+
+.astro-geo-status--error {
+  color: #7a0000;
+}
+
 .astro-input:focus {
   outline: none;
   background: rgba(255, 255, 255, 0.8);
   border-bottom-color: var(--velora-dark);
+}
+
+.astro-form-col--natal .astro-input:focus {
+  border-color: rgba(126, 126, 35, 0.75);
+  box-shadow: 0 0 0 3px rgba(126, 126, 35, 0.14);
 }
 
 /* Botón Místico */
@@ -96,6 +434,30 @@
   width: 100%;
   transition: transform 0.2s, box-shadow 0.2s;
   box-shadow: 0 4px 6px rgba(0,0,0,0.2);
+}
+
+.astro-btn--natal {
+  justify-self: center;
+  width: min(100%, 22rem);
+  min-height: 3.2rem;
+  margin-top: 0.25rem;
+  padding: 0.72rem 1.25rem;
+  border-radius: 999px;
+  font-size: 0.95rem;
+  letter-spacing: 0.08em;
+  background:
+    linear-gradient(135deg, #2d1a00, var(--velora-olive-deep) 42%, #8a7024 100%);
+  box-shadow:
+    0 12px 22px rgba(45, 26, 0, 0.18),
+    inset 0 1px 0 rgba(255, 255, 255, 0.18);
+}
+
+.astro-flip-card:not(.is-flipped):hover .astro-btn--natal:not(:disabled) {
+  transform: translateY(-3px);
+  box-shadow:
+    0 16px 26px rgba(45, 26, 0, 0.24),
+    0 0 22px rgba(126, 126, 35, 0.24),
+    inset 0 1px 0 rgba(255, 255, 255, 0.18);
 }
 
 .astro-btn:hover:not(:disabled) {
@@ -126,6 +488,350 @@
   width: 100%;
   animation: slideUp 0.6s cubic-bezier(0.22, 1, 0.36, 1);
   position: relative;
+}
+
+.astro-result-card {
+  max-width: 820px;
+  width: min(calc(100% - 1.5rem), 820px);
+  padding: 0.78rem;
+  border-radius: 30px;
+  border-color: rgba(45, 26, 0, 0.24);
+  background:
+    radial-gradient(circle at 8% 9%, rgba(255, 255, 255, 0.84), transparent 26%),
+    linear-gradient(135deg, rgba(255, 251, 240, 0.93), rgba(239, 213, 148, 0.36) 58%, rgba(126, 126, 35, 0.12)),
+    rgba(253, 246, 227, 0.78);
+  box-shadow:
+    0 22px 38px rgba(45, 26, 0, 0.18),
+    inset 0 0 0 1px rgba(255, 255, 255, 0.38);
+}
+
+.astro-flip-card .astro-result-card {
+  display: flex;
+  flex-direction: column;
+  gap: 0.55rem;
+  max-width: none;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+}
+
+.astro-result-card::before {
+  content: "";
+  position: absolute;
+  inset: 0.9rem;
+  border: 1px solid rgba(126, 126, 35, 0.18);
+  border-radius: 24px;
+  pointer-events: none;
+}
+
+.astro-result-hero,
+.astro-result-grid,
+.astro-reading-panel,
+.astro-reflection-card {
+  position: relative;
+  z-index: 1;
+}
+
+.astro-result-hero {
+  display: grid;
+  grid-template-columns: minmax(5.5rem, 0.32fr) minmax(0, 1.48fr) minmax(7rem, 0.4fr);
+  gap: 0.65rem;
+  align-items: stretch;
+  padding: 0.55rem;
+  border-radius: 24px;
+  background:
+    linear-gradient(100deg, rgba(126, 126, 35, 0.13), transparent 52%),
+    rgba(255, 251, 240, 0.58);
+}
+
+.astro-sign-seal {
+  display: grid;
+  place-items: center;
+  min-height: 6.4rem;
+  border: 1px solid rgba(45, 26, 0, 0.16);
+  border-radius: 22px;
+  background:
+    radial-gradient(circle, rgba(253, 246, 227, 0.8) 0 35%, transparent 36%),
+    repeating-radial-gradient(circle, rgba(45, 26, 0, 0.13) 0 1px, transparent 1px 1.25rem);
+}
+
+.astro-sign-symbol {
+  font-family: "Segoe UI Symbol", "DejaVu Sans", "Symbola", sans-serif;
+  font-size: clamp(3.2rem, 7vw, 4.8rem);
+  line-height: 1;
+  color: #2d1a00;
+  text-shadow: 0 2px 0 rgba(255, 255, 255, 0.52);
+}
+
+.astro-result-heading {
+  display: flex;
+  min-width: 0;
+  flex-direction: column;
+  justify-content: center;
+  padding: 0.4rem 0;
+}
+
+.astro-result-kicker {
+  width: fit-content;
+  margin-bottom: 0.4rem;
+  padding: 0.25rem 0.5rem;
+  border: 1px solid rgba(45, 26, 0, 0.18);
+  border-radius: 999px;
+  color: #5a4a1c;
+  font-family: var(--font-heading);
+  font-size: 0.68rem;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  background: rgba(255, 255, 255, 0.32);
+}
+
+.astro-result-heading h3 {
+  margin: 0;
+  color: #2d1a00;
+  font-family: var(--font-heading);
+  font-size: clamp(1.9rem, 4.6vw, 3rem);
+  line-height: 0.95;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+
+.astro-result-heading p {
+  max-width: 31rem;
+  margin-top: 0.42rem;
+  color: rgba(45, 26, 0, 0.74);
+  font-family: var(--font-body);
+  font-size: 0.96rem;
+  line-height: 1.34;
+}
+
+.astro-result-date {
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 0.35rem;
+  min-height: 6.4rem;
+  padding: 0.7rem;
+  border: 1px solid rgba(45, 26, 0, 0.16);
+  border-radius: 22px;
+  background: rgba(255, 251, 240, 0.46);
+}
+
+.astro-date-copy {
+  position: relative;
+  z-index: 1;
+  display: grid;
+  gap: 0.3rem;
+}
+
+.astro-result-date span {
+  color: rgba(45, 26, 0, 0.64);
+  font-family: var(--font-heading);
+  font-size: 0.78rem;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+}
+
+.astro-result-date strong {
+  position: relative;
+  z-index: 1;
+  color: #2d1a00;
+  font-family: var(--font-body);
+  font-size: 1.12rem;
+  line-height: 1;
+}
+
+.astro-month-number {
+  position: absolute;
+  right: 0.68rem;
+  top: 50%;
+  color: rgba(45, 26, 0, 0.14);
+  font-family: var(--font-heading);
+  font-size: clamp(3.4rem, 7vw, 5.2rem);
+  line-height: 0.78;
+  transform: translateY(-50%);
+  pointer-events: none;
+}
+
+.astro-result-grid {
+  display: grid;
+  grid-template-columns: repeat(6, minmax(0, 1fr));
+  gap: 0.38rem;
+  width: calc(100% - 1.4rem);
+  margin: 0.1rem auto 0;
+  align-items: stretch;
+}
+
+.astro-data-tile {
+  display: grid;
+  grid-column: span 2;
+  grid-template-columns: auto 1fr;
+  gap: 0.3rem 0.6rem;
+  align-content: start;
+  min-height: 3.95rem;
+  padding: 0.48rem 0.55rem;
+  border: 1px solid rgba(45, 26, 0, 0.14);
+  border-radius: 20px;
+  background: rgba(255, 251, 240, 0.5);
+}
+
+.astro-data-tile--primary {
+  background:
+    linear-gradient(135deg, rgba(126, 126, 35, 0.16), transparent),
+    rgba(255, 251, 240, 0.58);
+}
+
+.astro-data-tile--wide {
+  grid-column: span 3;
+}
+
+.astro-data-tile--origin {
+  grid-column: span 3;
+}
+
+.astro-data-mark {
+  display: inline-grid;
+  place-items: center;
+  width: 1.35rem;
+  height: 1.35rem;
+  border-radius: 999px;
+  color: #fdf6e3;
+  background: #5a4a1c;
+  font-family: var(--font-heading);
+  font-size: 0.68rem;
+}
+
+.astro-data-label {
+  align-self: center;
+  color: rgba(45, 26, 0, 0.62);
+  font-family: var(--font-heading);
+  font-size: 0.68rem;
+  letter-spacing: 0.8px;
+  text-transform: uppercase;
+}
+
+.astro-data-value {
+  grid-column: 1 / -1;
+  align-self: end;
+  min-width: 0;
+  color: #2d1a00;
+  font-family: var(--font-body);
+  font-size: 0.96rem;
+  font-weight: 700;
+  line-height: 1.15;
+  overflow-wrap: anywhere;
+}
+
+.astro-data-value small {
+  display: block;
+  margin-top: 0.22rem;
+  color: rgba(45, 26, 0, 0.6);
+  font-family: var(--font-heading);
+  font-size: 0.7rem;
+  font-weight: 400;
+  letter-spacing: 0.04em;
+}
+
+.astro-reading-panel {
+  padding: 0.78rem 0.9rem 0.85rem;
+  border: 1px solid rgba(45, 26, 0, 0.16);
+  border-radius: 22px;
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.24), transparent),
+    rgba(255, 251, 240, 0.52);
+}
+
+.astro-reading-heading {
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+  gap: 0.85rem;
+  align-items: center;
+  margin-bottom: 0.7rem;
+}
+
+.astro-reading-heading h4 {
+  margin: 0;
+  color: #4a3e1b;
+  font-family: var(--font-heading);
+  font-size: 0.98rem;
+  letter-spacing: 0.05em;
+  text-align: center;
+  text-transform: uppercase;
+}
+
+.astro-reading-rule {
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(184, 134, 11, 0.45), transparent);
+}
+
+.astro-reading-copy {
+  color: #3e2b12;
+  font-family: var(--font-body);
+  font-size: 0.95rem;
+  line-height: 1.36;
+}
+
+.astro-reading-copy p + p {
+  margin-top: 0.65rem;
+}
+
+.astro-reflection-card {
+  margin-top: 0.6rem;
+  padding: 0.78rem 0.95rem;
+  border-radius: 22px;
+  color: #fdf6e3;
+  background:
+    linear-gradient(135deg, rgba(45, 26, 0, 0.95), rgba(86, 75, 24, 0.92)),
+    #2d1a00;
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.12);
+}
+
+.astro-reflection-label {
+  display: block;
+  margin-bottom: 0.45rem;
+  color: rgba(253, 246, 227, 0.72);
+  font-family: var(--font-heading);
+  font-size: 0.72rem;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+}
+
+.astro-reflection-card p {
+  margin: 0;
+  font-family: var(--font-body);
+  font-size: 1.02rem;
+  font-style: italic;
+  line-height: 1.45;
+}
+
+.astro-result-reset {
+  position: relative;
+  z-index: 1;
+  flex: 0 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: min(100%, 15.5rem);
+  min-height: 3.1rem;
+  margin: 0.72rem auto 0;
+  padding: 0.72rem 1.1rem;
+  border: 1px solid rgba(45, 26, 0, 0.2);
+  border-radius: 999px;
+  color: #2d1a00;
+  background: rgba(255, 251, 240, 0.56);
+  font-family: var(--font-heading);
+  font-size: 0.9rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: transform 0.2s ease, background 0.2s ease, box-shadow 0.2s ease;
+}
+
+.astro-result-reset:hover {
+  transform: translateY(-2px);
+  background: rgba(255, 251, 240, 0.82);
+  box-shadow: 0 10px 18px rgba(45, 26, 0, 0.14);
 }
 
 /* Cabecera del Signo */
@@ -324,4 +1030,98 @@
 @keyframes slideUp {
   from { opacity: 0; transform: translateY(20px); }
   to { opacity: 1; transform: translateY(0); }
+}
+
+@media (max-width: 640px) {
+  .astro-hero-grid {
+    min-height: auto;
+    padding-top: 12.5rem;
+  }
+
+  .astro-orbit-panel {
+    top: 0;
+    right: 50%;
+    width: 21rem;
+    height: 21rem;
+    transform: translateX(50%);
+    opacity: 0.48;
+    filter: blur(0.2px) drop-shadow(0 14px 22px rgba(45, 26, 0, 0.14));
+  }
+
+  .astro-orbit-panel .zodiac-wrapper {
+    transform: scale(0.58);
+  }
+
+  .astro-service--natal {
+    padding-left: 0.75rem;
+    padding-right: 0.75rem;
+  }
+
+  .astro-form-card {
+    padding: 0.85rem;
+  }
+
+  .astro-flip-card {
+    width: 100%;
+  }
+
+  .astro-title--panel {
+    font-size: 1.8rem;
+  }
+
+  .astro-form-row--natal {
+    grid-template-columns: 1fr;
+  }
+
+  .astro-result-card {
+    padding: 0.85rem;
+  }
+
+  .astro-result-hero {
+    grid-template-columns: minmax(5.8rem, 0.42fr) minmax(0, 1fr);
+    padding: 0.65rem;
+  }
+
+  .astro-sign-seal {
+    min-height: 7.2rem;
+  }
+
+  .astro-result-heading h3 {
+    font-size: 2.3rem;
+  }
+
+  .astro-result-heading p {
+    font-size: 0.95rem;
+  }
+
+  .astro-result-date {
+    grid-column: 1 / -1;
+    min-height: auto;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .astro-result-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .astro-data-tile,
+  .astro-data-tile--wide {
+    grid-column: auto;
+    min-height: auto;
+  }
+
+  .astro-reading-panel {
+    padding: 1rem;
+  }
+
+  .astro-reading-heading {
+    grid-template-columns: 1fr;
+    gap: 0.45rem;
+  }
+
+  .astro-reading-rule {
+    display: none;
+  }
 }

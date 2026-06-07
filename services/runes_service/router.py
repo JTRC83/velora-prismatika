@@ -16,7 +16,7 @@ class RuneCastRequest(BaseModel):
     tipo: str = "three" # "one" (Consejo), "three" (Nornas), "five" (Cruz)
 
 @router.post("/cast")
-async def lanzar_runas(datos: RuneCastRequest):
+async def lanzar_runas(datos: RuneCastRequest, include_ai: bool = False):
     # 1. Configuración de la tirada
     cantidad = 1
     nombres_posicion = ["El Consejo de Odín"]
@@ -46,17 +46,17 @@ async def lanzar_runas(datos: RuneCastRequest):
         logger.error(f"Error lanzando runas: {e}")
         raise HTTPException(status_code=500, detail="Las piedras se han roto.")
 
-    # 3. MAGIA (Velora)
-    velora_voice = "El viento del norte guarda silencio."
-    velora_reflection = "El destino es ineludible."
+    # 3. Interpretación IA opcional. La app genera la explicación aparte.
+    velora_voice = ""
+    velora_reflection = ""
 
-    try:
-        # Usamos el método que ya pegaste en velora_weaver.py
-        lectura = weaver.interpretar_runas(runas_sacadas, tipo_tirada=nombre_tirada)
-        velora_voice = lectura["texto"]
-        velora_reflection = lectura["reflejo"]
-    except Exception as e:
-        logger.warning(f"Velora calló en runas: {e}")
+    if include_ai:
+        try:
+            lectura = weaver.interpretar_runas(runas_sacadas, tipo_tirada=nombre_tirada)
+            velora_voice = lectura["texto"]
+            velora_reflection = lectura["reflejo"]
+        except Exception as e:
+            logger.warning(f"Velora calló en runas: {e}")
 
     return {
         "visual_data": runas_sacadas,

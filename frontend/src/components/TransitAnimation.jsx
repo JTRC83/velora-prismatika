@@ -31,7 +31,7 @@ export default function TransitAnimation({ positions, size = 300 }) {
         className="absolute inset-0 rounded-full border border-gray-400"
       />
 
-      {positions.map((pos, i) => {
+      {positions.map((pos) => {
         const angle = pos.longitude; // grados
         // posición en el círculo
         const x = radius * Math.cos((angle - 90) * Math.PI / 180);

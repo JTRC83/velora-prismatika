@@ -21,7 +21,7 @@ def listar_chakras():
     return mechanics.get_all()
 
 @router.post("/align")
-async def alinear_chakra(datos: DiagnosisRequest):
+async def alinear_chakra(datos: DiagnosisRequest, include_ai: bool = False):
     """
     Recibe un síntoma (o el nombre de un chakra) y devuelve la cura.
     """
@@ -40,20 +40,21 @@ async def alinear_chakra(datos: DiagnosisRequest):
     if not target_chakra:
          raise HTTPException(status_code=404, detail="Energía no encontrada.")
 
-    # 2. MAGIA (Sanación)
-    velora_voice = "Respira profundo..."
-    velora_reflection = "La energía fluye donde va la atención."
+    # 2. Interpretación IA opcional. La app genera la explicación aparte.
+    velora_voice = ""
+    velora_reflection = ""
 
-    try:
-        lectura = weaver.interpretar_sanacion_chakra(
-            chakra_nombre=target_chakra["name"],
-            sintoma=sintoma if resultado["found"] else "",
-            mantra=target_chakra["mantra"]
-        )
-        velora_voice = lectura["texto"]
-        velora_reflection = lectura["reflejo"]
-    except Exception as e:
-        logger.warning(f"Velora calló en chakras: {e}")
+    if include_ai:
+        try:
+            lectura = weaver.interpretar_sanacion_chakra(
+                chakra_nombre=target_chakra["name"],
+                sintoma=sintoma if resultado["found"] else "",
+                mantra=target_chakra["mantra"]
+            )
+            velora_voice = lectura["texto"]
+            velora_reflection = lectura["reflejo"]
+        except Exception as e:
+            logger.warning(f"Velora calló en chakras: {e}")
 
     return {
         "chakra": target_chakra,

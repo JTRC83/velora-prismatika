@@ -29,27 +29,28 @@ def get_lines():
     return mechanics.get_lines_info()
 
 @router.get("/read/{line_id}", response_model=PalmReadingResponse)
-async def read_palm(line_id: str = Path(..., description="ID: heart, head, life, fate")):
+async def read_palm(line_id: str = Path(..., description="ID: heart, head, life, fate"), include_ai: bool = False):
     
     # 1. MECÁNICA
     data = mechanics.read_line(line_id)
     if not data:
         raise HTTPException(status_code=404, detail="Esa línea se ha borrado de tu piel.")
 
-    # 2. MAGIA
-    velora_voice = "Tus manos cuentan una historia..."
-    velora_reflection = "El destino está en tus manos."
+    # 2. Interpretación IA opcional. La app genera la explicación aparte.
+    velora_voice = ""
+    velora_reflection = ""
 
-    try:
-        lectura = weaver.interpretar_quiromancia(
-            linea=data["line_name"],
-            significado=data["description"],
-            lectura_base=data["base_reading"]
-        )
-        velora_voice = lectura["texto"]
-        velora_reflection = lectura["reflejo"]
-    except Exception as e:
-        logger.warning(f"Velora no pudo leer la mano: {e}")
+    if include_ai:
+        try:
+            lectura = weaver.interpretar_quiromancia(
+                linea=data["line_name"],
+                significado=data["description"],
+                lectura_base=data["base_reading"]
+            )
+            velora_voice = lectura["texto"]
+            velora_reflection = lectura["reflejo"]
+        except Exception as e:
+            logger.warning(f"Velora no pudo leer la mano: {e}")
 
     return {
         "line_name": data["line_name"],

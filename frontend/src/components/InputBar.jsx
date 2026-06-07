@@ -1,6 +1,6 @@
 import React from 'react';
 
-export default function InputBar({ value, onChange, onSend, disabled = false }) {
+export default function InputBar({ value, onChange, onSend, disabled = false, placeholder = "Escribe tu pregunta…" }) {
   return (
     <div className="input-bar">
       <input
@@ -10,7 +10,7 @@ export default function InputBar({ value, onChange, onSend, disabled = false }) 
         onKeyDown={e => {
           if (e.key === 'Enter') onSend();
         }}
-        placeholder="Escribe tu pregunta…"
+        placeholder={placeholder}
         disabled={disabled}
       />
       <button onClick={onSend} disabled={disabled}>

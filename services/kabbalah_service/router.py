@@ -20,7 +20,7 @@ def get_tree():
     return mechanics.get_all()
 
 @router.post("/calculate")
-async def calculate_gematria(datos: GematriaRequest):
+async def calculate_gematria(datos: GematriaRequest, include_ai: bool = False):
     """
     Calcula la Sephirá personal y pide interpretación a Velora.
     """
@@ -34,21 +34,22 @@ async def calculate_gematria(datos: GematriaRequest):
     if not sephira:
         raise HTTPException(status_code=404, detail="La esfera está oculta.")
 
-    # 2. MAGIA
-    velora_voice = "El Árbol susurra tu nombre."
-    velora_reflection = "Todo es Uno."
+    # 2. Interpretación IA opcional. La app genera la explicación aparte.
+    velora_voice = ""
+    velora_reflection = ""
 
-    try:
-        lectura = weaver.interpretar_cabala(
-            nombre_usuario=datos.name,
-            sephira=sephira["name"],
-            virtud=sephira["virtue"],
-            angel=sephira["angel"]
-        )
-        velora_voice = lectura["texto"]
-        velora_reflection = lectura["reflejo"]
-    except Exception as e:
-        logger.warning(f"Velora calló en cábala: {e}")
+    if include_ai:
+        try:
+            lectura = weaver.interpretar_cabala(
+                nombre_usuario=datos.name,
+                sephira=sephira["name"],
+                virtud=sephira["virtue"],
+                angel=sephira["angel"]
+            )
+            velora_voice = lectura["texto"]
+            velora_reflection = lectura["reflejo"]
+        except Exception as e:
+            logger.warning(f"Velora calló en cábala: {e}")
 
     return {
         "calculation": resultado,

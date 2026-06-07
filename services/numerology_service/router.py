@@ -1,18 +1,15 @@
 from fastapi import APIRouter, HTTPException
 from pydantic import BaseModel
 from datetime import date
-from typing import List, Dict, Any
 import logging
 
 from services.numerology_service.numerology_service import NumerologyService
-from orchestrator.velora_weaver import VeloraWeaver
 
 router = APIRouter(prefix="/numerology", tags=["numerology"])
 logger = logging.getLogger("NumerologyRouter")
 
 # Instancias
 mechanics = NumerologyService()
-weaver = VeloraWeaver()
 
 class NumerologyRequest(BaseModel):
     nombre: str
@@ -34,23 +31,9 @@ async def calcular_numerologia(datos: NumerologyRequest):
         logger.error(f"Error cálculo numerología: {e}")
         raise HTTPException(status_code=500, detail="Error en los cálculos numéricos.")
 
-    # 2. MAGIA (Interpretación de Velora)
-    velora_voice = f"Tu sendero es el {path_num}. Los números aguardan interpretación."
-    velora_reflection = "Todo es número."
-    
-    try:
-        lectura = weaver.interpretar_numerologia(
-            camino_vida=path_num,
-            destino=destiny_num,
-            personal_year=personal_year,
-            nombre=datos.nombre
-        )
-        velora_voice = lectura["texto"]
-        velora_reflection = lectura["reflejo"]
-    except Exception as e:
-        logger.warning(f"Velora calló en numerología: {e}")
-
-    # 3. RESPUESTA AL FRONTEND
+    # 2. RESPUESTA AL FRONTEND
+    # La interpretación de Velora se genera después desde el chat contextual,
+    # para no bloquear ni deformar la card principal del servicio.
     return {
         "datos_tecnicos": {
             "camino_vida": path_num,
@@ -58,7 +41,5 @@ async def calcular_numerologia(datos: NumerologyRequest):
             "numero_destino": destiny_num,
             "arquetipo_destino": arq_destiny,
             "ano_personal": personal_year
-        },
-        "velora_voice": velora_voice,
-        "reflejo": velora_reflection
+        }
     }

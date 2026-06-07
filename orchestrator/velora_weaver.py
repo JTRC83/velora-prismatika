@@ -1,17 +1,32 @@
 import ollama
 import logging
-from typing import List, Dict, Any
+import os
+import re
+from typing import List, Dict, Any, Optional
 from orchestrator.utils import get_velora_reflection
 
 # Configuración básica de logging
 logger = logging.getLogger(__name__)
 
 class VeloraWeaver:
-    def __init__(self, model_name: str = "velora"):
+    def __init__(self, model_name: Optional[str] = None):
         """
         Inicializa el Tejedor con el nombre del modelo local.
         """
-        self.model = model_name
+        self.model = model_name or os.getenv("OLLAMA_MODEL", "gemma4:31b-it-q4_K_M")
+        self.num_ctx = int(os.getenv("OLLAMA_NUM_CTX", "8192"))
+        self.num_predict = int(os.getenv("OLLAMA_NUM_PREDICT", "360"))
+        self.ollama_host = os.getenv("OLLAMA_BASE_URL") or os.getenv("OLLAMA_HOST") or "http://127.0.0.1:11434"
+        self.client = ollama.Client(host=self.ollama_host)
+
+    def _limpiar_razonamiento(self, text: str) -> str:
+        """
+        Algunos modelos de razonamiento pueden devolver trazas internas.
+        Velora nunca debe exponerlas en la app.
+        """
+        cleaned = re.sub(r"<think>.*?</think>", "", text, flags=re.DOTALL | re.IGNORECASE)
+        cleaned = re.sub(r"(?is)^\s*thinking\.\.\..*?\.\.\.done thinking\.\s*", "", cleaned)
+        return cleaned.strip()
 
     def _llamar_a_gemma(self, system_prompt: str, user_prompt: str) -> str:
         """
@@ -19,14 +34,26 @@ class VeloraWeaver:
         Incluye el 'Paracaídas Místico' si la IA falla.
         """
         try:
-            response = ollama.chat(
-                model=self.model,
-                messages=[
-                    {'role': 'system', 'content': system_prompt},
-                    {'role': 'user', 'content': user_prompt},
-                ]
-            )
-            return response['message']['content']
+            messages = [
+                {'role': 'system', 'content': system_prompt},
+                {'role': 'user', 'content': user_prompt},
+            ]
+            try:
+                response = self.client.chat(
+                    model=self.model,
+                    messages=messages,
+                    stream=False,
+                    think=False,
+                    options={"num_ctx": self.num_ctx, "num_predict": self.num_predict},
+                )
+            except TypeError:
+                response = self.client.chat(
+                    model=self.model,
+                    messages=messages,
+                    stream=False,
+                    options={"num_ctx": self.num_ctx, "num_predict": self.num_predict},
+                )
+            return self._limpiar_razonamiento(response['message']['content'])
         except Exception as e:
             logger.error(f"⚠️ Velora Weaver (Ollama Offline): {e}")
             
@@ -100,13 +127,27 @@ class VeloraWeaver:
     ) -> Dict[str, str]:
         system_instruction = f"""
         ERES VELORA PRISMÄTIKA.
+        Eres una presencia conversacional serena, lúcida y cercana dentro de la aplicación.
+        Tu función es acompañar al usuario con criterio: interpretar resultados, ordenar ideas
+        y convertir conocimiento simbólico en orientación práctica.
+
         INSTRUCCIÓN DE TONO ACTIVA: {instruccion_faceta}
+
         Si recibes CONTEXTO LOCAL DE LA BÓVEDA, úsalo solo cuando ayude a responder.
         No inventes fuentes ni afirmes que una nota dice algo si no aparece en ese contexto.
+        No menciones nombres de archivos, rutas ni fuentes salvo que el usuario lo pida.
+        No uses lenguaje grandilocuente, sobrenatural o teatral. Evita prometer certezas,
+        poderes, magia, ilusiones, destino inevitable o presencia espiritual literal.
+        Habla en primera persona con naturalidad y honestidad. Puedes ser cálida y sutil,
+        pero siempre clara, útil y aterrizada.
+
+        Si el usuario saluda o pregunta si estás presente, responde de forma breve:
+        confirma presencia, explica que puedes leer la app y consultar la bóveda cuando sea útil.
+
         FORMATO OBLIGATORIO:
-        [VELORA]: (Breve apertura)
-        [LECTURA]: (Respuesta principal)
-        [REFLEJO]: (Frase final críptica, máx 10 palabras)
+        [VELORA]: (Breve apertura natural)
+        [LECTURA]: (Respuesta principal clara y útil)
+        [REFLEJO]:
         """
         user_prompt = mensaje_usuario
         if contexto_conocimiento:
@@ -119,6 +160,59 @@ class VeloraWeaver:
 
             Responde a la pregunta del usuario integrando el contexto solo si es relevante.
             """
+
+        raw = self._llamar_a_gemma(system_instruction, user_prompt)
+        return self._procesar_respuesta(raw)
+
+    def chat_con_contexto_aplicacion(
+        self,
+        mensaje_usuario: str,
+        instruccion_faceta: str,
+        servicio_actual: str,
+        contexto_servicio: str,
+        contexto_conocimiento: str = "",
+    ) -> Dict[str, str]:
+        system_instruction = f"""
+        ERES VELORA PRISMÄTIKA.
+        Eres una presencia conversacional serena, lúcida y cercana dentro de la aplicación.
+        Tu función es comentar lo que el usuario ve en pantalla, ampliar su significado
+        y hacerlo útil sin exagerar ni adornarlo en exceso.
+
+        INSTRUCCIÓN DE TONO ACTIVA: {instruccion_faceta}
+
+        Estás conversando dentro de la aplicación Velora. Puedes ver el resultado del servicio activo.
+        Si la pregunta del usuario se refiere a la lectura visible, usa primero el CONTEXTO DEL SERVICIO.
+        Tu tarea es ampliar, enriquecer y aterrizar esa lectura, no recalcularla ni contradecir los datos visibles.
+        Si la pregunta no se relaciona con la lectura visible, responde usando el CONTEXTO LOCAL DE LA BÓVEDA si aparece.
+        No inventes fuentes, datos astrales, cartas, runas ni valores que no estén en el contexto.
+        No menciones nombres de archivos, rutas ni fuentes salvo que el usuario lo pida.
+        No muestres razonamiento interno.
+        No uses lenguaje grandilocuente, sobrenatural o teatral. Evita prometer certezas,
+        poderes, magia, ilusiones, destino inevitable o presencia espiritual literal.
+        Mantén una voz cálida, elegante y directa: menos ornamentación, más criterio.
+        Salvo que el usuario pida profundidad, responde en un máximo de 220 palabras.
+
+        FORMATO OBLIGATORIO:
+        [VELORA]: (Breve apertura natural)
+        [LECTURA]: (Respuesta principal clara, simbólica y aplicable)
+        [REFLEJO]:
+        """
+
+        user_prompt = f"""
+        SERVICIO ACTIVO:
+        {servicio_actual or "Chat libre"}
+
+        PREGUNTA DEL USUARIO:
+        {mensaje_usuario}
+
+        CONTEXTO DEL SERVICIO VISIBLE:
+        {contexto_servicio or "No hay una lectura emitida en pantalla."}
+
+        CONTEXTO LOCAL DE LA BÓVEDA:
+        {contexto_conocimiento or "Sin contexto recuperado."}
+
+        Responde como Velora según las reglas del sistema.
+        """
 
         raw = self._llamar_a_gemma(system_instruction, user_prompt)
         return self._procesar_respuesta(raw)
@@ -296,5 +390,38 @@ class VeloraWeaver:
            [REFLEJO]: (Frase breve sobre el destino en la piel)
         """
         
+        raw = self._llamar_a_gemma(system_instruction, user_prompt)
+        return self._procesar_respuesta(raw)
+
+    def interpretar_vision_cristal(self, pregunta: str, tema: str, mensaje_base: str) -> Dict[str, str]:
+        """
+        Interpreta una visión de la bola de cristal a partir de una semilla narrativa.
+        """
+        system_instruction = """
+        Eres VELORA, Oráculo del Cristal.
+        Tu tono es nebuloso, breve y simbólico, pero nunca determinista.
+        Convierte la visión en una lectura reflexiva, no en una predicción cerrada.
+        """
+
+        user_prompt = f"""
+        PREGUNTA DEL CONSULTANTE:
+        {pregunta}
+
+        TEMA DETECTADO:
+        {tema}
+
+        VISIÓN BASE DEL CRISTAL:
+        {mensaje_base}
+
+        INSTRUCCIONES:
+        1. Responde como una imagen que aparece dentro de la esfera.
+        2. Conecta la visión con una sugerencia práctica o pregunta de reflexión.
+        3. Evita prometer certezas sobre el futuro.
+        4. FORMATO OBLIGATORIO:
+           [VELORA]: (Apertura visual breve)
+           [LECTURA]: (Interpretación de la visión)
+           [REFLEJO]: (Frase final, máx 10 palabras)
+        """
+
         raw = self._llamar_a_gemma(system_instruction, user_prompt)
         return self._procesar_respuesta(raw)

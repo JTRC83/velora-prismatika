@@ -19,6 +19,7 @@ import KabbalahService      from "./components/KabbalahService";
 import TransitsService      from "./components/TransitsService";
 import CrystalBallService   from "./components/CrystalService";
 import PalmistryService     from "./components/PalmistryService";
+import VeloraInsightCard    from "./components/VeloraInsightCard";
 
 const ICONS = {
   "Astrología Natal":  "/assets/icons/horoscopo.png",
@@ -68,13 +69,69 @@ const TOOLTIP_TEXT = {
   'Lectura de Mano':  'Lectura de Mano',
 };
 
+const AI_CONTEXT_KEYS = new Set([
+  'velora_voice',
+  'velora_message',
+  'velora_reflection',
+  'reflejo',
+  'reflection',
+  'voice',
+]);
+
+function sanitizeServicePayload(payload) {
+  if (Array.isArray(payload)) {
+    return payload.map(sanitizeServicePayload);
+  }
+
+  if (payload && typeof payload === 'object') {
+    return Object.fromEntries(
+      Object.entries(payload)
+        .filter(([key]) => !AI_CONTEXT_KEYS.has(key))
+        .map(([key, value]) => [key, sanitizeServicePayload(value)])
+    );
+  }
+
+  return payload;
+}
+
 export default function App() {
   const [selectedAvatar,  setSelectedAvatar]  = React.useState("sibylla");
   const [messages,        setMessages]        = React.useState([]);
   const [input,           setInput]           = React.useState("");
   const [selectedService, setSelectedService] = React.useState(null);
+  const [serviceContext,  setServiceContext]  = React.useState(null);
+  const [veloraInsight,   setVeloraInsight]   = React.useState({ status: 'idle' });
   const [curtainPhase,    setCurtainPhase]    = React.useState("idle"); // idle | closing | opening
   const [isSending,       setIsSending]       = React.useState(false);
+
+  const publishServiceContext = React.useCallback((service, payload) => {
+    if (!payload) {
+      setServiceContext(null);
+      setVeloraInsight({ status: 'idle' });
+      return;
+    }
+
+    setServiceContext({
+      service,
+      captured_at: new Date().toISOString(),
+      result: sanitizeServicePayload(payload),
+    });
+  }, []);
+
+  const serviceContextPublishers = React.useMemo(() => ({
+    astro: (payload) => publishServiceContext('Astrología Natal', payload),
+    numerology: (payload) => publishServiceContext('Numerología', payload),
+    moon: (payload) => publishServiceContext('Fases Lunares', payload),
+    compatibility: (payload) => publishServiceContext('Compatibilidad', payload),
+    rituals: (payload) => publishServiceContext('Rituales', payload),
+    chakra: (payload) => publishServiceContext('Chakras', payload),
+    tarot: (payload) => publishServiceContext('Tarot 3 Cartas', payload),
+    runes: (payload) => publishServiceContext('Runas', payload),
+    kabbalah: (payload) => publishServiceContext('Cábala', payload),
+    transits: (payload) => publishServiceContext('Tránsitos', payload),
+    crystal: (payload) => publishServiceContext('Bola de Cristal', payload),
+    palmistry: (payload) => publishServiceContext('Lectura de Mano', payload),
+  }), [publishServiceContext]);
 
   const handleSelectService = svc => {
     // Si la cortina ya se está moviendo, no hacer nada para evitar glitches
@@ -96,10 +153,61 @@ export default function App() {
     setCurtainPhase("closing");
     setTimeout(() => {
       setSelectedService(svc);
+      setServiceContext(null);
+      setVeloraInsight({ status: 'idle' });
       setCurtainPhase("opening");
       setTimeout(() => setCurtainPhase("idle"), 1200);
     }, 1200);
   };
+
+  React.useEffect(() => {
+    if (!serviceContext) {
+      setVeloraInsight({ status: 'idle' });
+      return undefined;
+    }
+
+    const controller = new AbortController();
+    setVeloraInsight({
+      status: 'loading',
+      service: serviceContext.service,
+    });
+
+    fetch('/chat', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      signal: controller.signal,
+      body: JSON.stringify({
+        usuario: 'Amplía la lectura visible para el usuario. Resume el patrón principal en un máximo de cuatro párrafos, con lenguaje claro, útil y sin repetir todos los datos.',
+        current_service: serviceContext.service || selectedService,
+        service_context: serviceContext,
+        use_knowledge: false,
+      }),
+    })
+      .then(response => {
+        if (!response.ok) {
+          throw new Error(`Backend respondió con estado ${response.status}`);
+        }
+        return response.json();
+      })
+      .then(data => {
+        if (controller.signal.aborted) return;
+        setVeloraInsight({
+          status: 'ready',
+          service: serviceContext.service,
+          text: data.velora_voice || '',
+        });
+      })
+      .catch(error => {
+        if (controller.signal.aborted) return;
+        console.error(error);
+        setVeloraInsight({
+          status: 'error',
+          service: serviceContext.service,
+        });
+      });
+
+    return () => controller.abort();
+  }, [selectedService, serviceContext]);
 
   const handleSend = async () => {
     const text = input.trim();
@@ -113,7 +221,11 @@ export default function App() {
       const response = await fetch("/chat", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ usuario: text }),
+        body: JSON.stringify({
+          usuario: text,
+          current_service: selectedService,
+          service_context: serviceContext,
+        }),
       });
 
       if (!response.ok) {
@@ -127,7 +239,8 @@ export default function App() {
           text: data.velora_voice || "La bóveda permanece en silencio por ahora.",
           user: false,
           reflejo: data.reflejo,
-          sources: data.knowledge_sources || [],
+          serviceContextUsed: data.service_context_used,
+          currentService: data.current_service,
         },
       ]);
     } catch (error) {
@@ -197,20 +310,22 @@ export default function App() {
       </div>
 
       {/* 4) Zona de servicio dinámico */}
-      {selectedService === 'Astrología Natal' && <AstroService />}
-      {selectedService === 'Numerología'      && <NumerologyService />}
-      {selectedService === 'Fases Lunares'    && <MoonPhaseService />}
-      {selectedService === 'Compatibilidad'   && <CompatibilityService />}
-      {selectedService === 'Rituales'         && <RitualService />}
-      {selectedService === 'Chakras'          && <ChakraService />}
+      {selectedService === 'Astrología Natal' && <AstroService onServiceResult={serviceContextPublishers.astro} />}
+      {selectedService === 'Numerología'      && <NumerologyService onServiceResult={serviceContextPublishers.numerology} />}
+      {selectedService === 'Fases Lunares'    && <MoonPhaseService onServiceResult={serviceContextPublishers.moon} />}
+      {selectedService === 'Compatibilidad'   && <CompatibilityService onServiceResult={serviceContextPublishers.compatibility} />}
+      {selectedService === 'Rituales'         && <RitualService onServiceResult={serviceContextPublishers.rituals} />}
+      {selectedService === 'Chakras'          && <ChakraService onServiceResult={serviceContextPublishers.chakra} />}
       
       {/* AQUÍ ESTABA EL CAMBIO CLAVE: Coincidir string exacto "Tarot 3 Cartas" */}
-      {selectedService === 'Tarot 3 Cartas'   && <TarotService />}
-      {selectedService === 'Runas'            && <RunesService />}
-      {selectedService === 'Cábala'           && <KabbalahService />}
-      {selectedService === 'Tránsitos'        && <TransitsService />}
-      {selectedService === 'Bola de Cristal'  && <CrystalBallService />}
-      {selectedService === 'Lectura de Mano'  && <PalmistryService />}
+      {selectedService === 'Tarot 3 Cartas'   && <TarotService onServiceResult={serviceContextPublishers.tarot} />}
+      {selectedService === 'Runas'            && <RunesService onServiceResult={serviceContextPublishers.runes} />}
+      {selectedService === 'Cábala'           && <KabbalahService onServiceResult={serviceContextPublishers.kabbalah} />}
+      {selectedService === 'Tránsitos'        && <TransitsService onServiceResult={serviceContextPublishers.transits} />}
+      {selectedService === 'Bola de Cristal'  && <CrystalBallService onServiceResult={serviceContextPublishers.crystal} />}
+      {selectedService === 'Lectura de Mano'  && <PalmistryService onServiceResult={serviceContextPublishers.palmistry} />}
+
+      {selectedService && <VeloraInsightCard insight={veloraInsight} />}
       
 
       {/* Contenido principal: Árbol, Carrusel, Rueda */}
@@ -251,19 +366,34 @@ export default function App() {
       )}
 
       {/* Chat + Input */}
-      <div className="chat-shell w-full max-w-3xl flex flex-col flex-grow px-4 pb-4">
-        <div className="chat-scroll flex-grow overflow-y-auto">
-          <ChatWindow messages={messages} />
+      {
+        <div className={`chat-shell w-full max-w-3xl flex flex-col flex-grow px-4 pb-4 ${selectedService ? 'chat-shell--service' : ''}`}>
+          {selectedService && (
+            <div className="chat-context-strip">
+              <span>Velora ve: {serviceContext?.service || selectedService}</span>
+              <small>{serviceContext ? 'lectura disponible' : 'esperando resultado del servicio'}</small>
+            </div>
+          )}
+          <div className="chat-scroll flex-grow overflow-y-auto">
+            <ChatWindow messages={messages} />
+          </div>
+          <div className="chat-input-wrap pt-2">
+            <InputBar
+              value={input}
+              onChange={setInput}
+              onSend={handleSend}
+              disabled={isSending}
+              placeholder={
+                serviceContext
+                  ? `Pregunta a Velora sobre ${serviceContext.service}…`
+                  : selectedService
+                    ? `Pregunta a Velora sobre ${selectedService}…`
+                    : "Escribe tu pregunta…"
+              }
+            />
+          </div>
         </div>
-        <div className="chat-input-wrap pt-2">
-          <InputBar
-            value={input}
-            onChange={setInput}
-            onSend={handleSend}
-            disabled={isSending}
-          />
-        </div>
-      </div>
+      }
     </div>
   );
 }

@@ -1,4 +1,7 @@
 {
+  "scripts": {
+    "knowledge:graph": "python3 scripts/build_knowledge_graph.py"
+  },
   "devDependencies": {
     "concurrently": "^9.2.0"
   }

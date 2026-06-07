@@ -28,7 +28,7 @@ class TiradaRequest(BaseModel):
     tipo: str = "three-card"
 
 @router.post("/tirada")
-async def realizar_tirada(datos: TiradaRequest):
+async def realizar_tirada(datos: TiradaRequest, include_ai: bool = False):
     if not mechanics:
         raise HTTPException(status_code=500, detail="Error mecánico en el Tarot.")
 
@@ -42,16 +42,17 @@ async def realizar_tirada(datos: TiradaRequest):
         logger.error(f"Fallo mecánico: {e}")
         raise HTTPException(status_code=500, detail="Error al barajar.")
 
-    # FASE MAGIA (Velora)
-    velora_voice = "El velo está denso. Las cartas hablan por sí mismas."
-    velora_reflection = "Observa en silencio."
+    # Interpretación IA opcional. La app genera la explicación aparte.
+    velora_voice = ""
+    velora_reflection = ""
 
-    try:
-        interpretacion = weaver.interpretar_tirada_tarot(cartas, tipo_tirada=config["nombre"])
-        velora_voice = interpretacion["texto"]
-        velora_reflection = interpretacion["reflejo"]
-    except Exception as e:
-        logger.warning(f"Velora calló: {e}")
+    if include_ai:
+        try:
+            interpretacion = weaver.interpretar_tirada_tarot(cartas, tipo_tirada=config["nombre"])
+            velora_voice = interpretacion["texto"]
+            velora_reflection = interpretacion["reflejo"]
+        except Exception as e:
+            logger.warning(f"Velora calló: {e}")
 
     return {
         "visual_data": cartas,

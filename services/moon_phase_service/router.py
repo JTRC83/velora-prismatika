@@ -23,7 +23,8 @@ class MoonResponse(BaseModel):
 
 @router.get("/current", response_model=MoonResponse)
 async def get_moon_phase(
-    target_date: str = Query(None, description="Fecha YYYY-MM-DD (Opcional)")
+    target_date: str = Query(None, description="Fecha YYYY-MM-DD (Opcional)"),
+    include_ai: bool = False,
 ):
     # 1. Gestionar Fecha
     try:
@@ -41,23 +42,22 @@ async def get_moon_phase(
         logger.error(f"Error cálculo lunar: {e}")
         raise HTTPException(status_code=500, detail="Nubes oscuras cubren el cielo.")
 
-    # 3. MAGIA (Velora)
-    # Enriquecemos el contexto para Velora: Fase + Signo
-    contexto_velora = f"{data['description_base']} La Luna transita por el signo de {data['zodiac_sign']}."
-    
-    velora_voice = f"La Luna brilla en {data['zodiac_sign']}."
-    velora_reflection = "Como es arriba, es abajo."
+    # 3. INTERPRETACIÓN IA OPCIONAL
+    velora_voice = ""
+    velora_reflection = ""
 
-    try:
-        lectura = weaver.interpretar_fase_lunar(
-            fase=data['phase_name'],
-            iluminacion=data['illumination'],
-            descripcion_base=contexto_velora 
-        )
-        velora_voice = lectura["texto"]
-        velora_reflection = lectura["reflejo"]
-    except Exception as e:
-        logger.warning(f"Velora calló en la luna: {e}")
+    if include_ai:
+        contexto_velora = f"{data['description_base']} La Luna transita por el signo de {data['zodiac_sign']}."
+        try:
+            lectura = weaver.interpretar_fase_lunar(
+                fase=data['phase_name'],
+                iluminacion=data['illumination'],
+                descripcion_base=contexto_velora
+            )
+            velora_voice = lectura["texto"]
+            velora_reflection = lectura["reflejo"]
+        except Exception as e:
+            logger.warning(f"Velora calló en la luna: {e}")
 
     return MoonResponse(
         date=data["date"],

@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import './TransitsService.css';
+import VeloraLoader from './VeloraLoader';
 
 // ... (MANTÉN TUS CONSTANTES DE GLIFOS AQUÍ IGUAL QUE ANTES) ...
 const PLANET_GLYPHS = {
@@ -35,7 +36,7 @@ const MOCK_TRANSITS = {
 };
 // ... (FIN CONSTANTES) ...
 
-const TransitsService = () => {
+const TransitsService = ({ onServiceResult }) => {
   const [date, setDate] = useState(new Date().toISOString().split('T')[0]);
   const [data, setData] = useState(null);
   const [loading, setLoading] = useState(false);
@@ -43,16 +44,20 @@ const TransitsService = () => {
   useEffect(() => {
     setLoading(true);
     setTimeout(() => {
-      setData({ ...MOCK_TRANSITS, date: date });
+      const transitData = { ...MOCK_TRANSITS, date: date };
+      setData(transitData);
+      onServiceResult?.(transitData);
       setLoading(false);
     }, 1000);
-  }, [date]);
+  }, [date, onServiceResult]);
 
   return (
     <div className="transits-container">
+      <div className="transits-card-geometry" aria-hidden="true" />
       
       {/* TÍTULO PRINCIPAL (Fuera del marco) */}
       <div className="transits-header-title">
+        <span className="transits-kicker">Tránsitos planetarios</span>
         <h2>La Danza de los Astros</h2>
         <p className="velora-whisper">
           "Como es arriba, es abajo. Observa los ciclos que mueven el mundo."
@@ -84,10 +89,7 @@ const TransitsService = () => {
         </div>
 
         {loading && (
-          <div className="loading-state">
-            <div className="spinner-orbit"></div>
-            <p>Calculando efemérides...</p>
-          </div>
+          <VeloraLoader message="Calculando efemérides..." />
         )}
 
         {!loading && data && (

@@ -1,0 +1,128 @@
+.velora-insight-card {
+  width: min(100%, 940px);
+  margin: 0.85rem auto 1.55rem;
+  padding: 0 1.5rem;
+  color: #2d1a00;
+}
+
+.velora-insight-frame {
+  position: relative;
+  overflow: hidden;
+  border: 1px solid rgba(45, 26, 0, 0.18);
+  border-radius: 26px;
+  background:
+    radial-gradient(circle at 14% 8%, rgba(255, 255, 255, 0.72), transparent 31%),
+    linear-gradient(135deg, rgba(255, 249, 233, 0.88), rgba(232, 191, 92, 0.18) 62%, rgba(126, 126, 35, 0.08)),
+    rgba(253, 246, 227, 0.56);
+  box-shadow:
+    0 16px 28px rgba(45, 26, 0, 0.12),
+    inset 0 1px 0 rgba(255, 255, 255, 0.6);
+  backdrop-filter: blur(8px);
+  min-height: 22rem;
+  padding: 1.35rem 1.75rem 1.55rem;
+}
+
+.velora-insight-frame::before {
+  content: "";
+  position: absolute;
+  inset: 0.9rem;
+  border: 1px solid rgba(126, 126, 35, 0.18);
+  border-radius: 20px;
+  pointer-events: none;
+}
+
+.velora-insight-frame::after {
+  content: "";
+  position: absolute;
+  inset: -40% -15%;
+  background:
+    radial-gradient(circle at 76% 30%, rgba(184, 134, 11, 0.2), transparent 20%),
+    linear-gradient(115deg, transparent 20%, rgba(255, 255, 255, 0.28) 48%, transparent 70%);
+  opacity: 0.62;
+  pointer-events: none;
+}
+
+.velora-insight-header,
+.velora-insight-loading,
+.velora-insight-copy,
+.velora-insight-error {
+  position: relative;
+  z-index: 2;
+}
+
+.velora-insight-header {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: 0.15rem 0.35rem 0.9rem;
+}
+
+.velora-insight-kicker {
+  display: inline-flex;
+  width: fit-content;
+  padding: 0.28rem 0.58rem;
+  border: 1px solid rgba(45, 26, 0, 0.22);
+  border-radius: 999px;
+  color: #5a4a1c;
+  background: rgba(255, 255, 255, 0.32);
+  font-family: var(--font-heading, "Faculty Glyphic", serif);
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+}
+
+.velora-insight-header h3 {
+  margin: 0;
+  color: #3b2b0d;
+  font-family: var(--font-heading, "Faculty Glyphic", serif);
+  font-size: clamp(1.1rem, 2.35vw, 1.65rem);
+  line-height: 1;
+  text-align: right;
+}
+
+.velora-insight-loading {
+  display: grid;
+  justify-items: center;
+  gap: 0.2rem;
+  min-height: 14rem;
+}
+
+.velora-insight-loading p,
+.velora-insight-error {
+  color: rgba(45, 26, 0, 0.7);
+  font-family: var(--font-body, "Garamond", "Georgia", serif);
+  font-size: 1rem;
+  font-style: italic;
+}
+
+.velora-insight-copy {
+  display: grid;
+  gap: 0.82rem;
+  max-width: 100%;
+  padding: 0.4rem 0.35rem 0;
+}
+
+.velora-insight-copy p {
+  margin: 0;
+  color: rgba(45, 26, 0, 0.84);
+  font-family: var(--font-body, "Garamond", "Georgia", serif);
+  font-size: clamp(0.95rem, 1.55vw, 1.04rem);
+  line-height: 1.5;
+}
+
+@media (max-width: 720px) {
+  .velora-insight-card {
+    padding: 0 1rem;
+  }
+
+  .velora-insight-header {
+    display: grid;
+    justify-items: start;
+  }
+
+  .velora-insight-header h3 {
+    text-align: left;
+  }
+}

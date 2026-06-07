@@ -1,250 +1,558 @@
-/* --- VARIABLES DE ALTO CONTRASTE --- */
-:root {
-  --chakra-text: #2d1a00;       /* Tinta oscura (muy legible) */
-  --chakra-accent: #b8860b;     /* Dorado oscuro para bordes */
-  --chakra-panel-bg: rgba(253, 246, 227, 0.8); /* Pergamino claro */
-  --font-heading: "Faculty Glyphic", serif;
-  --font-body: "Garamond", "Georgia", serif;
+/* --- Lectura de chakras: card editorial Velora --- */
+.chakra-container {
+  width: 100%;
+  max-width: 1080px;
+  margin: 0 auto;
+  padding: 0 0.75rem 2rem;
+  color: var(--velora-dark);
 }
 
-.chakra-container {
-  color: var(--chakra-text);
-  max-width: 1000px;
+.chakra-panel {
+  position: relative;
+  overflow: hidden;
+  width: min(100%, 940px);
+  min-height: 700px;
   margin: 0 auto;
-  min-height: 80vh;
-  padding: 2rem;
+  padding: 1rem;
+  border: 1px solid rgba(45, 26, 0, 0.18);
+  border-radius: 30px;
+  background:
+    radial-gradient(circle at 13% 8%, rgba(255, 255, 255, 0.76), transparent 30%),
+    radial-gradient(circle at 86% 15%, rgba(184, 134, 11, 0.2), transparent 34%),
+    linear-gradient(135deg, rgba(255, 251, 240, 0.92), rgba(239, 213, 148, 0.32) 58%, rgba(126, 126, 35, 0.12)),
+    rgba(253, 246, 227, 0.78);
+  box-shadow:
+    0 24px 42px rgba(45, 26, 0, 0.18),
+    inset 0 1px 0 rgba(255, 255, 255, 0.52);
+  backdrop-filter: blur(8px);
+}
+
+.chakra-panel::before {
+  content: "";
+  position: absolute;
+  inset: 0.9rem;
+  z-index: 4;
+  border: 1px solid rgba(126, 126, 35, 0.2);
+  border-radius: 24px;
+  pointer-events: none;
+}
+
+.chakra-card-geometry {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  overflow: hidden;
+  border-radius: inherit;
+  pointer-events: none;
+  opacity: 0.72;
+}
+
+.chakra-card-geometry::before {
+  content: "";
+  position: absolute;
+  inset: 1rem;
+  border-radius: 24px;
+  background:
+    radial-gradient(circle at 50% 50%, rgba(184, 134, 11, 0.18), transparent 0 4.8rem, transparent 7rem),
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 900 620'%3E%3Cg fill='none' stroke='%235a4a1c' stroke-opacity='.18' stroke-width='2'%3E%3Ccircle cx='450' cy='310' r='210'/%3E%3Ccircle cx='450' cy='310' r='156'/%3E%3Ccircle cx='450' cy='310' r='98'/%3E%3Cpath d='M450 80v460M278 310h344M326 156l296 308M622 156 326 464M450 80 326 464 622 310 326 156 450 540 622 156 278 310 622 464Z'/%3E%3Cellipse cx='450' cy='310' rx='305' ry='92'/%3E%3Cellipse cx='450' cy='310' rx='305' ry='92' transform='rotate(28 450 310)'/%3E%3Cellipse cx='450' cy='310' rx='305' ry='92' transform='rotate(-28 450 310)'/%3E%3C/g%3E%3Cg fill='%23b8860b' fill-opacity='.32'%3E%3Ccircle cx='450' cy='80' r='5'/%3E%3Ccircle cx='450' cy='156' r='5'/%3E%3Ccircle cx='450' cy='232' r='5'/%3E%3Ccircle cx='450' cy='310' r='7'/%3E%3Ccircle cx='450' cy='388' r='5'/%3E%3Ccircle cx='450' cy='464' r='5'/%3E%3Ccircle cx='450' cy='540' r='5'/%3E%3C/g%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: 56% 52%;
+  background-size: min(112%, 55rem) auto;
+  opacity: 0.9;
+  transform: translateX(2.6rem) translateY(0.5rem) scale(1.03);
+}
+
+.chakra-card-geometry::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(circle at 19% 20%, rgba(255, 255, 255, 0.66) 0 0.16rem, transparent 0.29rem),
+    radial-gradient(circle at 75% 28%, rgba(184, 134, 11, 0.26) 0 0.18rem, transparent 0.34rem),
+    radial-gradient(circle at 62% 78%, rgba(126, 126, 35, 0.22) 0 0.16rem, transparent 0.3rem),
+    linear-gradient(120deg, transparent 18%, rgba(255, 255, 255, 0.18), transparent 55%);
+  opacity: 0.68;
+}
+
+.chakra-intro,
+.chakra-layout {
+  position: relative;
+  z-index: 3;
+}
+
+.chakra-intro {
+  display: grid;
+  gap: 0.75rem;
+  padding: 0.7rem 0.75rem 1rem;
+}
+
+.chakra-kicker {
+  display: inline-flex;
+  width: fit-content;
+  padding: 0.3rem 0.55rem;
+  border: 1px solid rgba(45, 26, 0, 0.22);
+  border-radius: 999px;
+  color: #5a4a1c;
+  background: rgba(255, 255, 255, 0.25);
+  font-family: var(--font-heading);
+  font-size: 0.72rem;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+}
+
+.chakra-title,
+.chakra-header h3 {
+  margin: 0;
+  color: #4a3e1b;
+  font-family: var(--font-heading);
+  line-height: 1;
+  text-transform: uppercase;
+  text-shadow: 0 1px 2px rgba(255, 255, 255, 0.42);
 }
 
 .chakra-title {
-  font-family: var(--font-heading);
-  text-align: center;
-  font-size: 2.5rem;
-  color: #3e2b12; /* Marrón muy oscuro */
-  margin-bottom: 2rem;
-  text-transform: uppercase;
-  letter-spacing: 3px;
-  text-shadow: 0 1px 1px rgba(255,255,255,0.5);
+  font-size: clamp(2rem, 4.2vw, 2.8rem);
 }
 
-/* --- LAYOUT --- */
+.chakra-intro p {
+  max-width: 40rem;
+  margin: 0;
+  color: rgba(45, 26, 0, 0.78);
+  font-family: var(--font-body);
+  font-size: 1rem;
+  line-height: 1.45;
+}
+
 .chakra-layout {
-  display: flex;
-  gap: 4rem;
-  align-items: flex-start;
-  justify-content: center;
-  flex-wrap: wrap;
+  display: grid;
+  grid-template-columns: minmax(9rem, 13rem) minmax(0, 1fr);
+  gap: 1rem;
+  align-items: stretch;
+  padding: 0.75rem;
 }
 
-/* --- COLUMNA IZQ: CUERPO ENERGÉTICO --- */
 .body-column {
   position: relative;
   display: flex;
-  flex-direction: column-reverse; 
+  flex-direction: column-reverse;
   align-items: center;
-  gap: 1.2rem;
+  justify-content: center;
+  gap: 0.9rem;
+  min-height: 36rem;
   padding: 1rem;
+  border: 1px solid rgba(45, 26, 0, 0.14);
+  border-radius: 24px;
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.34), transparent),
+    rgba(255, 251, 240, 0.56);
+  backdrop-filter: blur(3px);
 }
 
-/* Línea sutil */
 .energy-line {
   position: absolute;
-  top: 1rem;
-  bottom: 1rem;
-  width: 1px;
-  background: linear-gradient(to top, #8B0000, #DAA520, #9932CC);
-  opacity: 0.3;
+  top: 2rem;
+  bottom: 2rem;
   z-index: 0;
+  width: 2px;
+  border-radius: 999px;
+  background:
+    linear-gradient(to top, #8b0000, #cd853f, #daa520, #556b2f, #5f9ea0, #483d8b, #9932cc);
+  opacity: 0.34;
+  box-shadow: 0 0 18px rgba(184, 134, 11, 0.22);
 }
 
 .chakra-node {
   position: relative;
   z-index: 1;
-  width: 55px;
-  height: 55px;
-  border-radius: 50%;
-  border: 2px solid rgba(255, 255, 255, 0.4);
-  cursor: pointer;
-  transition: all 0.3s ease;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  display: grid;
+  place-items: center;
+  width: 3.55rem;
+  height: 3.55rem;
+  padding: 0;
+  border: 2px solid rgba(255, 255, 255, 0.56);
+  border-radius: 999px;
   color: #fff;
-  font-size: 1.1rem;
-  box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+  cursor: pointer;
+  font-size: 1.05rem;
+  outline: none;
+  transition:
+    transform 0.25s ease,
+    border-color 0.25s ease,
+    filter 0.25s ease;
+  box-shadow:
+    0 8px 14px rgba(45, 26, 0, 0.18),
+    inset 0 1px 5px rgba(255, 255, 255, 0.26);
 }
 
 .chakra-node:hover {
-  transform: scale(1.1);
   z-index: 2;
-  border-color: #fff;
+  border-color: rgba(255, 255, 255, 0.88);
+  filter: saturate(1.08) brightness(1.04);
+  transform: scale(1.1);
+}
+
+.chakra-node:focus-visible {
+  box-shadow:
+    0 0 0 3px rgba(255, 255, 255, 0.58),
+    0 0 0 6px rgba(126, 126, 35, 0.24),
+    0 8px 14px rgba(45, 26, 0, 0.18);
 }
 
 .chakra-node.active {
-  transform: scale(1.2);
-  border-color: #fff;
-  box-shadow: 0 0 15px rgba(255,255,255,0.6);
+  border-color: rgba(255, 255, 255, 0.95);
+  transform: scale(1.18);
 }
 
 .node-symbol {
-  font-family: "Segoe UI Symbol", sans-serif;
-  opacity: 0.9;
+  font-family: "Segoe UI Symbol", "Noto Sans Devanagari", sans-serif;
+  line-height: 1;
+  opacity: 0.95;
 }
 
-/* --- COLUMNA DER: PANEL DE INFO --- */
 .info-column {
-  flex: 1;
-  min-width: 350px;
-  max-width: 600px;
+  display: grid;
+  align-content: start;
+  gap: 1rem;
+  min-width: 0;
 }
 
-/* Caja de Diagnóstico (Input) */
+.diagnosis-box,
+.placeholder-msg,
+.chakra-card {
+  border: 1px solid rgba(45, 26, 0, 0.14);
+  border-radius: 24px;
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.34), transparent),
+    rgba(255, 251, 240, 0.62);
+  box-shadow:
+    0 14px 24px rgba(45, 26, 0, 0.09),
+    inset 0 1px 0 rgba(255, 255, 255, 0.42);
+  backdrop-filter: blur(3px);
+}
+
 .diagnosis-box {
-  background: var(--chakra-panel-bg); /* Fondo claro */
-  border: 1px solid var(--chakra-accent);
-  padding: 2rem;
-  border-radius: 8px;
-  margin-bottom: 2rem;
-  box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+  display: grid;
+  gap: 0.85rem;
+  padding: 1rem;
 }
 
 .diagnosis-box h4 {
-  color: #3e2b12;
+  margin: 0;
+  color: #4a3e1b;
   font-family: var(--font-heading);
-  margin-bottom: 1rem;
-  font-size: 1.1rem;
+  font-size: 0.9rem;
+  letter-spacing: 0.08em;
   text-transform: uppercase;
-  letter-spacing: 1px;
 }
 
 .diagnosis-input-group {
-  display: flex;
-  gap: 1rem;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: 0.75rem;
+  align-items: center;
 }
 
 .diagnosis-input {
-  flex: 1;
-  padding: 1rem;
-  background: #fff; /* Fondo blanco puro para escribir */
-  border: 1px solid #ccc;
-  border-bottom: 2px solid var(--chakra-accent);
-  color: #000;
-  border-radius: 4px;
+  width: 100%;
+  min-height: 3.05rem;
+  padding: 0.75rem 0.9rem;
+  border: 1px solid rgba(45, 26, 0, 0.15);
+  border-radius: 18px;
+  color: #4a3e1b;
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.66), rgba(253, 246, 227, 0.5));
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.45);
   font-family: var(--font-body);
   font-size: 1rem;
 }
 
 .diagnosis-input::placeholder {
-  color: #888;
+  color: rgba(45, 26, 0, 0.48);
   font-style: italic;
 }
 
+.diagnosis-input:focus {
+  outline: none;
+  border-color: rgba(126, 126, 35, 0.75);
+  box-shadow: 0 0 0 3px rgba(126, 126, 35, 0.14);
+}
+
 .diagnosis-btn {
-  background: #3e2b12;
-  color: #fff;
-  border: none;
-  padding: 0 2rem;
-  border-radius: 4px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 8.5rem;
+  min-height: 3.05rem;
+  padding: 0.72rem 1.2rem;
+  border: 0;
+  border-radius: 999px;
+  color: #fdf6e3;
+  background:
+    linear-gradient(135deg, #2d1a00, var(--velora-olive-deep) 42%, #8a7024 100%);
+  box-shadow:
+    0 12px 22px rgba(45, 26, 0, 0.18),
+    inset 0 1px 0 rgba(255, 255, 255, 0.18);
   cursor: pointer;
   font-family: var(--font-heading);
+  font-size: 0.82rem;
+  letter-spacing: 0.08em;
   text-transform: uppercase;
-  letter-spacing: 1px;
-  transition: 0.3s;
+  transition:
+    transform 0.2s ease,
+    box-shadow 0.2s ease,
+    opacity 0.2s ease;
 }
 
-.diagnosis-btn:hover {
-  background: var(--chakra-accent);
+.diagnosis-btn:hover:not(:disabled) {
+  transform: translateY(-1px);
+  box-shadow:
+    0 15px 24px rgba(45, 26, 0, 0.22),
+    inset 0 1px 0 rgba(255, 255, 255, 0.2);
 }
 
-/* Tarjeta de Detalle (Estilo Astro) */
+.diagnosis-btn:disabled {
+  cursor: wait;
+  opacity: 0.72;
+}
+
 .chakra-card {
-  background: linear-gradient(to bottom right, #fffbf0, #f8f1e0);
-  color: var(--chakra-text);
-  border-radius: 12px;
-  padding: 2.5rem;
-  border: 1px solid #d4af37;
-  box-shadow: 0 10px 25px rgba(0,0,0,0.05);
-  animation: slideIn 0.5s ease;
+  padding: 1rem;
+  animation: chakraSlideIn 0.42s ease both;
 }
 
 .chakra-header {
-  display: flex;
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr);
+  gap: 1rem;
   align-items: center;
-  gap: 1.5rem;
-  margin-bottom: 2rem;
-  border-bottom: 1px solid rgba(0,0,0,0.1);
-  padding-bottom: 1rem;
+  margin-bottom: 0.9rem;
+  padding: 1rem;
+  border: 1px solid rgba(45, 26, 0, 0.12);
+  border-radius: 22px;
+  background:
+    radial-gradient(circle at 12% 22%, rgba(255, 255, 255, 0.46), transparent 32%),
+    linear-gradient(100deg, rgba(126, 126, 35, 0.13), transparent 58%),
+    rgba(255, 251, 240, 0.54);
+}
+
+.chakra-header h3 {
+  margin-top: 0.4rem;
+  font-size: clamp(1.45rem, 3vw, 2rem);
+  letter-spacing: 0.04em;
+  overflow-wrap: anywhere;
 }
 
 .chakra-icon-large {
-  width: 80px;
-  height: 80px;
-  border-radius: 50%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 2.5rem;
+  display: grid;
+  place-items: center;
+  width: 5.15rem;
+  height: 5.15rem;
+  border: 4px solid rgba(255, 255, 255, 0.76);
+  border-radius: 999px;
   color: #fff;
-  box-shadow: inset 0 0 20px rgba(0,0,0,0.2);
-  border: 4px solid #fff;
+  box-shadow:
+    0 10px 20px rgba(45, 26, 0, 0.18),
+    inset 0 0 22px rgba(0, 0, 0, 0.24);
+  font-family: "Segoe UI Symbol", "Noto Sans Devanagari", sans-serif;
+  font-size: 2.35rem;
 }
 
 .sanskrit-name {
   display: block;
-  font-style: italic;
-  color: #666;
+  margin-top: 0.35rem;
+  color: rgba(45, 26, 0, 0.64);
+  font-family: var(--font-body);
   font-size: 1rem;
-  margin-top: 0.2rem;
+  font-style: italic;
+}
+
+.chakra-stats-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 0.75rem;
+  margin-bottom: 0.85rem;
+}
+
+.chakra-card .stat-box {
+  min-height: 6.3rem;
+  padding: 0.9rem;
+  border: 1px solid rgba(45, 26, 0, 0.12);
+  border-radius: 20px;
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.34), transparent),
+    rgba(255, 251, 240, 0.54);
+}
+
+.chakra-card .stat-label {
+  color: rgba(45, 26, 0, 0.58);
+  font-size: 0.72rem;
+  letter-spacing: 0.08em;
+}
+
+.chakra-card .stat-value {
+  color: #2d1a00;
+  font-size: clamp(1.05rem, 2.4vw, 1.3rem);
+}
+
+.chakra-details,
+.visualization-box,
+.velora-chakra-box {
+  border: 1px solid rgba(45, 26, 0, 0.12);
+  border-radius: 22px;
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.28), transparent),
+    rgba(255, 251, 240, 0.48);
+}
+
+.chakra-details {
+  display: grid;
+  gap: 0.65rem;
+  padding: 1rem;
 }
 
 .chakra-details p {
-  margin-bottom: 1rem;
-  line-height: 1.6;
-  font-size: 1.05rem;
+  margin: 0;
+  color: rgba(45, 26, 0, 0.78);
+  font-family: var(--font-body);
+  font-size: 1rem;
+  line-height: 1.55;
+}
+
+.chakra-details strong {
+  color: #2d1a00;
+  font-family: var(--font-heading);
+  font-size: 0.82rem;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
 }
 
 .visualization-box {
-  background: rgba(255,255,255,0.5);
-  padding: 1.5rem;
-  border-left: 4px solid var(--chakra-accent);
-  margin-top: 2rem;
-  font-style: italic;
-  color: #444;
+  display: grid;
+  gap: 0.45rem;
+  margin-top: 0.25rem;
+  padding: 0.9rem 1rem;
+  border-color: rgba(126, 126, 35, 0.22);
 }
 
-/* Mensaje Velora */
+.visualization-box p {
+  font-style: italic;
+}
+
 .velora-chakra-box {
-  margin-top: 2rem;
-  padding-top: 2rem;
-  border-top: 1px solid rgba(184, 134, 11, 0.2);
+  display: grid;
+  gap: 0.75rem;
+  margin-top: 0.85rem;
+  padding: 1rem;
 }
 
-.velora-label {
-  display: block;
-  text-align: center;
+.velora-chakra-box .velora-label {
+  display: inline-flex;
+  width: fit-content;
+  padding: 0.3rem 0.55rem;
+  border: 1px solid rgba(45, 26, 0, 0.18);
+  border-radius: 999px;
+  color: #5a4a1c;
+  background: rgba(255, 255, 255, 0.24);
   font-family: var(--font-heading);
-  font-size: 0.85rem;
+  font-size: 0.72rem;
+  letter-spacing: 1px;
   text-transform: uppercase;
-  letter-spacing: 2px;
-  margin-bottom: 1rem;
 }
 
-.velora-text {
-  text-align: justify;
+.velora-chakra-box .velora-text {
+  margin: 0;
+  color: rgba(45, 26, 0, 0.82);
+  font-family: var(--font-body);
+  font-size: 1.03rem;
   font-style: italic;
-  font-size: 1.15rem;
-  line-height: 1.7;
-  color: #2d1a00;
-  margin-bottom: 1rem;
+  line-height: 1.58;
 }
 
-@keyframes slideIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+.chakra-reflection {
+  padding: 0.9rem 1rem;
+  border-radius: 18px;
+  color: #fdf6e3;
+  background:
+    linear-gradient(135deg, #2d1a00, var(--velora-olive-deep));
+  font-family: var(--font-heading);
+  font-size: 1rem;
+  line-height: 1.4;
+}
 
 .placeholder-msg {
-    text-align: center;
-    color: #5a4a42;
-    font-style: italic;
-    font-size: 1.1rem;
-    padding: 3rem;
-    border: 1px dashed rgba(184, 134, 11, 0.3);
-    border-radius: 8px;
+  display: grid;
+  min-height: 17rem;
+  padding: 1.5rem;
+  place-items: center;
+  text-align: center;
+}
+
+.placeholder-msg p {
+  max-width: 26rem;
+  margin: 0;
+  color: rgba(45, 26, 0, 0.62);
+  font-family: var(--font-body);
+  font-size: 1.12rem;
+  font-style: italic;
+  line-height: 1.45;
+}
+
+@keyframes chakraSlideIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@media (max-width: 760px) {
+  .chakra-panel {
+    min-height: 0;
+  }
+
+  .chakra-card-geometry::before {
+    transform: translateX(0) translateY(4rem) scale(1.06);
+  }
+
+  .chakra-layout {
+    grid-template-columns: 1fr;
+    padding: 0.55rem;
+  }
+
+  .body-column {
+    flex-direction: row;
+    min-height: 6.8rem;
+    padding: 1rem 0.75rem;
+  }
+
+  .energy-line {
+    top: 50%;
+    bottom: auto;
+    left: 1.5rem;
+    right: 1.5rem;
+    width: auto;
+    height: 2px;
+    background:
+      linear-gradient(to right, #8b0000, #cd853f, #daa520, #556b2f, #5f9ea0, #483d8b, #9932cc);
+  }
+
+  .chakra-node {
+    width: 3rem;
+    height: 3rem;
+    font-size: 0.95rem;
+  }
+
+  .diagnosis-input-group,
+  .chakra-header,
+  .chakra-stats-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .diagnosis-btn {
+    width: 100%;
+  }
 }

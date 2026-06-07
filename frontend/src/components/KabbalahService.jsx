@@ -22,7 +22,7 @@ const PATHS = [
   [7,8], [7,9], [7,10], [8,9], [8,10], [9,10]
 ];
 
-const KabbalahService = () => {
+const KabbalahService = ({ onServiceResult }) => {
   const [selectedNode, setSelectedNode] = useState(null);
   const [inputName, setInputName] = useState("");
   const [loading, setLoading] = useState(false);
@@ -42,9 +42,14 @@ const KabbalahService = () => {
         const fullData = data.find(s => s.id === visualNode.id);
         if (fullData) {
           // Fusionamos coordenadas visuales con datos del backend
-          setSelectedNode({ ...visualNode, ...fullData });
+          const node = { ...visualNode, ...fullData };
+          setSelectedNode(node);
           setGematriaResult(null);
           setVeloraMessage(null);
+          onServiceResult?.({
+            mode: "selected_sephira",
+            sephira: node,
+          });
         }
       });
   };
@@ -55,6 +60,7 @@ const KabbalahService = () => {
     setLoading(true);
     setVeloraMessage(null);
     setSelectedNode(null);
+    onServiceResult?.(null);
 
     try {
       const res = await fetch('http://localhost:8000/kabbalah/calculate', {
@@ -82,9 +88,19 @@ const KabbalahService = () => {
       });
       
       // Guardamos el mensaje de Velora
-      setVeloraMessage({
-        voice: data.velora_voice,
-        reflection: data.reflejo
+      const velora = (data.velora_voice || data.reflejo)
+        ? {
+            voice: data.velora_voice,
+            reflection: data.reflejo
+          }
+        : null;
+      setVeloraMessage(velora);
+      onServiceResult?.({
+        mode: "gematria",
+        input: { name: inputName },
+        calculation: data.calculation,
+        selected_node: completeNode,
+        velora_message: velora,
       });
 
     } catch (err) {
@@ -96,8 +112,10 @@ const KabbalahService = () => {
 
   return (
     <div className="kabbalah-container">
+      <div className="kabbalah-card-geometry" aria-hidden="true" />
       
       <div className="kabbalah-header">
+        <span className="kabbalah-kicker">Árbol de la Vida</span>
         <h2>El Árbol de la Vida</h2>
         <p className="velora-whisper">
             "Diez esferas de luz. Conoce tu estructura interior."
@@ -178,7 +196,7 @@ const KabbalahService = () => {
                 </div>
 
                 <div className="shadow-box">
-                  <strong>⚠️ Sombra (Qlifot):</strong>
+                  <strong>Sombra (Qlifot)</strong>
                   <p>{selectedNode.shadow}</p>
                 </div>
                 
@@ -186,17 +204,21 @@ const KabbalahService = () => {
                 {veloraMessage && gematriaResult?.sephira.id === selectedNode.id && (
                   <div className="velora-kabbalah-msg fade-in">
                     <div className="gematria-match-msg">
-                       ★ {inputName}, tu vibración es {gematriaResult.reduced} ★
+                       {inputName}, tu vibración es {gematriaResult.reduced}
                     </div>
                     
-                    <div className="velora-text-content">
+                    {veloraMessage.voice && (
+                      <div className="velora-text-content">
                         {veloraMessage.voice.split('\n').map((line, i) => (
                             line.trim() && <p key={i}>{line}</p>
                         ))}
-                    </div>
-                    <div className="velora-reflection">
+                      </div>
+                    )}
+                    {veloraMessage.reflection && (
+                      <div className="velora-reflection">
                         "{veloraMessage.reflection}"
-                    </div>
+                      </div>
+                    )}
                   </div>
                 )}
 
