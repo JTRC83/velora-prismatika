@@ -3,7 +3,9 @@ import ephem
 import math
 from datetime import datetime, timedelta
 from fastapi import APIRouter, HTTPException, Query
-from pydantic import BaseModel, Field
+from pydantic import BaseModel
+
+from services.astro_utils import ZODIAC_SIGNS, get_zodiac_position
 
 BASE = os.path.dirname(__file__)
 BODIES_PATH = os.path.join(BASE, "bodies.json")
@@ -19,11 +21,6 @@ except (FileNotFoundError, json.JSONDecodeError, OSError) as e:
     BODIES = []
 
 # --- CONSTANTES ASTROLÓGICAS ---
-ZODIAC_SIGNS = [
-    "Aries", "Tauro", "Géminis", "Cáncer", "Leo", "Virgo", 
-    "Libra", "Escorpio", "Sagitario", "Capricornio", "Acuario", "Piscis"
-]
-
 ASPECTS = {
     0:   {"name": "Conjunción", "nature": "Intensidad / Fusión", "type": "neutral"},
     60:  {"name": "Sextil",     "nature": "Oportunidad / Flujo", "type": "soft"},
@@ -60,18 +57,6 @@ class TransitResponse(BaseModel):
     retrograde_alert: list[str] # Lista de planetas retrógrados para avisos rápidos
 
 # --- UTILIDADES ---
-
-def get_zodiac_position(lon_deg):
-    """Convierte longitud absoluta (0-360) a Signo + Grados."""
-    # Cada signo son 30 grados
-    index = int(lon_deg / 30)
-    sign = ZODIAC_SIGNS[index % 12]
-    
-    degree_total = lon_deg % 30
-    degree = int(degree_total)
-    minute = int((degree_total - degree) * 60)
-    
-    return sign, degree, minute
 
 def is_body_retrograde(body_cls, eph_date):
     """

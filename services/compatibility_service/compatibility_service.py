@@ -1,17 +1,22 @@
 import json
 import os
 import math
-import ephem  # 👈 Librería astronómica nueva
+import ephem
 import random
 from datetime import datetime
 from fastapi import APIRouter, HTTPException, Query
 from pydantic import BaseModel
 
-# Importamos herramientas centrales
 from orchestrator.utils import get_velora_reflection
+from orchestrator.incidentes import TipoIncidencia, registrar_incidente
 from services.astro_service.astro_service import load_signs, get_sun_sign_entry
+import logging
 
-# Definimos la ruta y DEPURAMOS
+from services.astro_utils import get_planet_sign
+
+logger = logging.getLogger("CompatibilityService")
+
+# Definimos la ruta
 BASE = os.path.dirname(__file__)
 DATA_PATH = os.path.join(BASE, "compatibility.json")
 
@@ -20,42 +25,39 @@ print(f"📂 [Velora Diagnóstico] Buscando archivo de datos en: {DATA_PATH}")
 
 router = APIRouter(prefix="/compatibility", tags=["Compatibilidad"])
 
-# --- Utiles Astronómicos (NUEVO) ---
-ZODIAC_SIGNS = [
-    "Aries", "Tauro", "Géminis", "Cáncer", "Leo", "Virgo", 
-    "Libra", "Escorpio", "Sagitario", "Capricornio", "Acuario", "Piscis"
-]
-
-def get_planet_sign(planet_obj, date_now):
-    """Calcula en qué signo está un planeta hoy."""
-    observer = ephem.Observer()
-    observer.date = date_now
-    planet_obj.compute(observer)
-    degrees = math.degrees(ephem.Ecliptic(planet_obj).lon)
-    sign_index = int(degrees / 30)
-    return ZODIAC_SIGNS[sign_index % 12]
-
 # --- Carga de Datos ---
 def load_compat_rules():
     """Carga las reglas con mensajes de error explícitos para depuración."""
     if not os.path.exists(DATA_PATH):
-        print(f"❌ [Velora ERROR] ¡El archivo NO EXISTE! Asegúrate de que compatibility.json esté en la carpeta {BASE}")
+        registrar_incidente(
+            TipoIncidencia.JSON_NO_ENCONTRADO,
+            f"compatibility.json no existe en {BASE}",
+            {"archivo": DATA_PATH},
+        )
         return {}
-    
+
     try:
         with open(DATA_PATH, encoding="utf-8") as f:
             data = json.load(f)
             if "scores" not in data:
-                print("⚠️ [Velora ALERTA] El JSON existe pero TIENE LA ESTRUCTURA ANTIGUA.")
+                logger.warning("compatibility.json tiene estructura antigua (sin 'scores').")
                 return {}
-            print("✅ [Velora ÉXITO] Datos de compatibilidad cargados correctamente.")
+            logger.info("Datos de compatibilidad cargados correctamente.")
             return data
-            
+
     except json.JSONDecodeError as e:
-        print(f"❌ [Velora ERROR] El JSON está mal escrito (error de sintaxis): {e}")
+        registrar_incidente(
+            TipoIncidencia.JSON_CORRUPTO,
+            f"compatibility.json tiene un error de sintaxis: {e}",
+            {"archivo": DATA_PATH},
+        )
         return {}
-    except Exception as e:
-        print(f"❌ [Velora ERROR] Error desconocido leyendo archivo: {e}")
+    except OSError as e:
+        registrar_incidente(
+            TipoIncidencia.ERROR_INTERNO,
+            f"Error leyendo compatibility.json: {e}",
+            {"archivo": DATA_PATH},
+        )
         return {}
 
 COMPAT_DATA = load_compat_rules()
@@ -142,7 +144,10 @@ def calculate_dynamic_transits(s1_name, s2_name):
         mars_sign = get_planet_sign(ephem.Mars(), now)
         sun_sign = get_planet_sign(ephem.Sun(), now)
     except Exception as e:
-        print(f"Error calculando tránsitos: {e}")
+        registrar_incidente(
+            TipoIncidencia.ERROR_INTERNO,
+            f"Error calculando tránsitos dinámicos: {e}",
+        )
         return 0, "Cielo nublado (error de cálculo)."
     
     bonus = 0

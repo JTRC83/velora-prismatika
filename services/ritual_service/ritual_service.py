@@ -1,13 +1,14 @@
 import os
 import json
-import ephem
 from datetime import datetime
 from fastapi import APIRouter, HTTPException, Query
 from pydantic import BaseModel
 from typing import List
 
 from orchestrator.utils import get_velora_reflection
+from orchestrator.incidentes import TipoIncidencia, registrar_incidente
 from services.astro_service.astro_service import get_sun_sign_entry
+from services.astro_utils import get_moon_phase
 
 BASE = os.path.dirname(__file__)
 RITUALS_PATH = os.path.join(BASE, "rituals.json")
@@ -52,27 +53,6 @@ class RitualResponse(BaseModel):
     ritual_steps: List[str]
     ritual_mantra: str
     velora_message: str
-
-def get_detailed_moon_phase(dt):
-    """
-    Calcula una de las 8 fases exactas que usas en tu JSON.
-    """
-    date_ephem = ephem.Date(dt)
-    prev_new = ephem.previous_new_moon(date_ephem)
-    next_new = ephem.next_new_moon(date_ephem)
-    
-    # Progreso del ciclo (0.0 a 1.0)
-    lunation = (date_ephem - prev_new) / (next_new - prev_new)
-    
-    # Mapeo preciso a tus claves del JSON
-    if lunation < 0.03: return "Luna Nueva"
-    if lunation < 0.22: return "Creciente Iluminante" # Waxing Crescent
-    if lunation < 0.28: return "Primer Cuarto"        # First Quarter
-    if lunation < 0.47: return "Gibosa Iluminante"    # Waxing Gibbous
-    if lunation < 0.53: return "Luna Llena"
-    if lunation < 0.72: return "Gibosa Menguante"     # Waning Gibbous
-    if lunation < 0.78: return "Último Cuarto"        # Last Quarter
-    return "Menguante Iluminante"                     # Waning Crescent
 
 def smart_parse_ritual(instruction_text, affirmation_text):
     """
@@ -124,7 +104,7 @@ def get_daily_ritual(
 
     # 2. Calcular Fase Lunar Exacta
     now = datetime.now()
-    phase = get_detailed_moon_phase(now)
+    phase, _icon, _desc = get_moon_phase(now)
 
     # 3. Buscar en TU JSON
     sign_data = RITUALS_DB.get(sign_name, {})
