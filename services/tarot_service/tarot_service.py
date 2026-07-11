@@ -59,12 +59,19 @@ class TarotService:
         print("⚠️ [TarotService] Ninguna carta del JSON coincide con las imágenes disponibles.")
         return self.cards
 
+    def _refresh_drawable_cards(self):
+        latest_image_ids = self._load_available_image_ids()
+        if latest_image_ids != self.available_image_ids:
+            self.available_image_ids = latest_image_ids
+            self.drawable_cards = self._filter_drawable_cards()
+
     def tirar_cartas(self, cantidad: int = 3) -> List[Dict[str, Any]]:
         """
         Método Principal llamado por el Router.
         Retorna la lista de cartas formateada para que el Frontend las pinte
         y Velora las lea.
         """
+        self._refresh_drawable_cards()
         deck = self.drawable_cards or self.cards
 
         if not deck:

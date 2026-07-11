@@ -17,8 +17,12 @@ router = APIRouter(prefix="/ritual", tags=["Rituales"])
 def load_rituals():
     if not os.path.exists(RITUALS_PATH):
         return {}
-    with open(RITUALS_PATH, encoding="utf-8") as f:
-        return json.load(f)
+    try:
+        with open(RITUALS_PATH, encoding="utf-8") as f:
+            return json.load(f)
+    except (json.JSONDecodeError, OSError) as e:
+        print(f"❌ Error cargando rituals.json: {e}")
+        return {}
 
 RITUALS_DB = load_rituals()
 
@@ -115,7 +119,7 @@ def get_daily_ritual(
         if not entry:
             raise ValueError("Signo no encontrado")
         sign_name = entry.sign # Ej: "Aries"
-    except:
+    except (ValueError, TypeError):
         raise HTTPException(400, "Fecha inválida")
 
     # 2. Calcular Fase Lunar Exacta

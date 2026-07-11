@@ -132,7 +132,7 @@ export default function CompatibilityService({ onServiceResult }) {
   return (
     <div className="astro-service p-6 compat-container">
       <div className="compat-shell">
-        <section className={`compat-panel ${openSelect ? 'has-open-select' : ''}`} aria-labelledby="compat-title">
+        <section className="compat-panel" aria-labelledby="compat-title">
           <div className="compat-card-geometry" aria-hidden="true" />
 
           <div className="compat-header">

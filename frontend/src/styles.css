@@ -215,39 +215,116 @@ html, body { overflow-x:hidden; }
 .chat-error {
   color: #7f1d1d;
 }
+.chat-bubble--incidencia {
+  border-left: 3px solid #b45309;
+  background: rgba(254, 243, 199, 0.45);
+}
+.chat-incidencia {
+  margin-top: 6px;
+  font-size: 0.68rem;
+  color: #92400e;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
 
 /* Input bar */
 .input-bar {
-  height: 48px;
+  height: 56px;
   display: flex;
   align-items: center;
-  padding: 0 8px;
-  background: #d7a341;
+  gap: 0.65rem;
+  padding: 0.45rem 0.5rem;
+  background: transparent;
   flex-shrink: 0;
 }
 .input-bar input {
   flex-grow: 1;
-  height: 32px;
-  padding: 4px 8px;
-  border: 1px solid #ccc;
-  border-radius: 24px;
+  height: 2.75rem;
+  padding: 0.45rem 0.9rem;
+  border: 1px solid rgba(45, 26, 0, 0.18);
+  border-radius: 999px;
+  color: #2d1a00;
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.64), rgba(255, 251, 240, 0.74)),
+    rgba(255, 251, 240, 0.68);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.72),
+    0 4px 9px rgba(45, 26, 0, 0.08);
+  font-family: var(--font-body);
+  outline: none;
+}
+.input-bar input:focus {
+  border-color: rgba(126, 126, 35, 0.48);
+  box-shadow:
+    0 0 0 3px rgba(184, 134, 11, 0.14),
+    inset 0 1px 0 rgba(255, 255, 255, 0.72),
+    0 4px 9px rgba(45, 26, 0, 0.08);
 }
 .input-bar input:disabled {
   opacity: 0.75;
 }
 .input-bar button {
-  margin-left: 8px;
-  height: 32px;
-  padding: 0 12px;
-  background: #968f2a;
-  color: white;
-  border: none;
-  border-radius: 24px;
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  flex: 0 0 auto;
+  min-width: 6.8rem;
+  height: 2.75rem;
+  padding: 0 1rem 0.05rem;
+  border: 1px solid rgba(78, 57, 9, 0.58);
+  border-radius: 999px;
+  color: #fdf6e3;
+  background-image:
+    linear-gradient(to top, #2d1a00 0%, #4f4c0e 62%, #95842d 100%);
+  box-shadow:
+    0 4px 3px 1px rgba(255, 247, 209, 0.44),
+    0 8px 13px rgba(45, 26, 0, 0.18),
+    0 -4px 5px rgba(255, 242, 184, 0.34),
+    inset 0 1px 0 rgba(255, 255, 255, 0.28),
+    inset 0 -2px 4px rgba(18, 7, 2, 0.26);
+  font-family: var(--font-heading);
+  font-size: 0.78rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-shadow: 0 1px rgba(18, 7, 2, 0.62);
+  text-transform: uppercase;
   cursor: pointer;
+  transition: transform 0.2s ease, box-shadow 0.2s ease, background-image 0.2s ease;
+}
+.input-bar button::before {
+  content: "";
+  position: absolute;
+  inset: 0.18rem 0.32rem auto;
+  z-index: -1;
+  height: 42%;
+  border-radius: inherit;
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.34), transparent);
+  opacity: 0.82;
+  pointer-events: none;
+}
+.input-bar button:hover:not(:disabled) {
+  transform: translateY(-2px);
+  background-image:
+    linear-gradient(to top, #331d02 0%, #5b5711 62%, #a29135 100%);
+  box-shadow:
+    0 4px 3px 1px rgba(255, 247, 209, 0.58),
+    0 12px 20px rgba(45, 26, 0, 0.22),
+    0 -5px 7px rgba(255, 242, 184, 0.46),
+    inset 0 0 3px 3px rgba(184, 156, 55, 0.16),
+    inset 0 1px 0 rgba(255, 255, 255, 0.36);
+}
+.input-bar button:active:not(:disabled) {
+  transform: translateY(1px);
+  box-shadow:
+    0 3px 3px rgba(255, 247, 209, 0.32),
+    0 5px 9px rgba(45, 26, 0, 0.18),
+    inset 0 0 5px 3px rgba(86, 72, 23, 0.22),
+    inset 0 0 22px rgba(91, 80, 28, 0.18);
 }
 .input-bar button:disabled {
   cursor: wait;
-  opacity: 0.75;
+  opacity: 0.62;
+  transform: none;
 }
 
 /* Lado derecho: Rueda del Zodiaco */

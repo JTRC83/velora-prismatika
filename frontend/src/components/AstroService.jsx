@@ -2,7 +2,6 @@ import React, { useState } from 'react';
 import './AstroService.css';
 import ZodiacOrbit from './ZodiacOrbit';
 import './ZodiacOrbit.css';
-import VeloraLoader from './VeloraLoader';
 
 // El código \uFE0E fuerza al navegador a usar la versión "Texto" (Blanco y negro)
 // en lugar de la versión "Emoji" (Color/Botón lila)
@@ -66,7 +65,7 @@ export default function AstroService({ onServiceResult }) {
 
     try {
       const response = await fetch(
-        `http://localhost:8000/astro/geocode?q=${encodeURIComponent(trimmedPlace)}`
+        `/astro/geocode?q=${encodeURIComponent(trimmedPlace)}`
       );
 
       if (!response.ok) {
@@ -102,7 +101,7 @@ export default function AstroService({ onServiceResult }) {
       const coordinates = formData.coordinates || (await resolveCoordinates(formData.location));
 
       // 1. LLAMADA AL NUEVO ENDPOINT UNIFICADO (POST)
-      const res = await fetch('http://localhost:8000/astro/carta-natal', {
+      const res = await fetch('/astro/carta-natal', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ 
@@ -246,10 +245,6 @@ export default function AstroService({ onServiceResult }) {
                 <button type="submit" disabled={loading} className="astro-btn astro-btn--natal">
                   {loading ? 'Consultando los astros...' : 'Revelar mi carta'}
                 </button>
-
-                {loading && (
-                  <VeloraLoader message="Girando el reloj simbólico..." compact />
-                )}
               </form>
             </section>
 

@@ -15,10 +15,12 @@ db.sqlite3
 # Archivos de logs y dumps
 *.log
 *.dump
+.runtime/
 
 # Cachés de herramientas
 .cache/
 *.bak
+launcher/assets/*.iconset/
 
 # VSCode / JetBrains / editores
 .vscode/

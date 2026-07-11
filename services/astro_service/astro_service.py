@@ -11,7 +11,6 @@ from pydantic import BaseModel
 # Rutas
 BASE = os.path.dirname(__file__)
 SIGNS_PATH = os.path.join(BASE, "sun_signs.json")
-HORO_PATH = os.path.join(BASE, "horoscopes.json")
 
 KNOWN_PLACES = {
     "madrid": ("Madrid, España", 40.4168, -3.7038),
@@ -47,7 +46,6 @@ class SunSignData(BaseModel):
 class AstroService:
     def __init__(self):
         self.signs_cache = self._load_json(SIGNS_PATH)
-        self.horo_cache = self._load_json(HORO_PATH)
 
     def _load_json(self, path) -> List[Dict]:
         if not os.path.exists(path):
@@ -89,16 +87,6 @@ class AstroService:
                     desc=e["desc"]
                 )
         return None
-
-    def obtener_horoscopo_base(self, signo: str) -> str:
-        """Devuelve una frase predefinida si la IA falla."""
-        if not self.horo_cache:
-            return "Los astros te invitan a la reflexión silenciosa."
-        
-        frases = self.horo_cache.get(signo, [])
-        if frases:
-            return random.choice(frases)
-        return "Tu luz interior guía el camino hoy."
 
     def obtener_transito_actual(self):
         transitos = [

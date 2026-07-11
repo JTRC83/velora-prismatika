@@ -36,7 +36,7 @@ const KabbalahService = ({ onServiceResult }) => {
     // Simulamos la estructura completa buscando en el array visual (o podríamos hacer un fetch by ID)
     // Para simplificar y no romper tu diseño, usaremos los datos visuales + placeholders
     // O mejor: Hacemos fetch al backend para tener la info completa (virtud, angel, etc)
-    fetch(`http://localhost:8000/kabbalah/tree`)
+    fetch(`/kabbalah/tree`)
       .then(res => res.json())
       .then(data => {
         const fullData = data.find(s => s.id === visualNode.id);
@@ -63,7 +63,7 @@ const KabbalahService = ({ onServiceResult }) => {
     onServiceResult?.(null);
 
     try {
-      const res = await fetch('http://localhost:8000/kabbalah/calculate', {
+      const res = await fetch('/kabbalah/calculate', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ name: inputName })

@@ -24,7 +24,7 @@ const CrystalService = ({ onServiceResult }) => {
 
     try {
       // 1. Llamada al Backend (POST)
-      const fetchPromise = fetch('http://localhost:8000/crystal/gaze', {
+      const fetchPromise = fetch('/crystal/gaze', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ question: questionToSend })
@@ -175,10 +175,27 @@ const CrystalService = ({ onServiceResult }) => {
               <span>O enfoca tu energía rápidamente:</span>
               <div className="focus-buttons">
                 {/* Enviamos preguntas predefinidas para activar los topics del backend */}
-                <button onClick={() => consultOracle('¿Qué me depara el amor?')}>♥ Amor</button>
-                <button onClick={() => consultOracle('¿Tendré éxito en el trabajo?')}>♦ Trabajo</button>
-                <button onClick={() => consultOracle('¿Cómo estará mi energía y salud?')}>♣ Salud</button>
-                <button onClick={() => consultOracle('¿Sí o No?')}>? Sí/No</button>
+                <button onClick={() => consultOracle('¿Qué me depara el amor?')}>
+                  <span className="focus-icon">♥</span>
+                  <span>Amor</span>
+                </button>
+                <button onClick={() => consultOracle('¿Tendré éxito en el trabajo?')}>
+                  <span className="focus-icon" aria-hidden="true">
+                    <svg viewBox="0 0 24 24" focusable="false">
+                      <path d="M14.4 5.2a4.2 4.2 0 0 0 4.4 4.4l-8.9 8.9a2 2 0 0 1-2.8 0l-1.6-1.6a2 2 0 0 1 0-2.8l8.9-8.9Z" />
+                      <path d="M12.8 6.8 17.2 11.2" />
+                    </svg>
+                  </span>
+                  <span>Trabajo</span>
+                </button>
+                <button onClick={() => consultOracle('¿Cómo estará mi energía y salud?')}>
+                  <span className="focus-icon">✚</span>
+                  <span>Salud</span>
+                </button>
+                <button onClick={() => consultOracle('¿Sí o No?')}>
+                  <span className="focus-icon">?</span>
+                  <span>Sí/No</span>
+                </button>
               </div>
             </div>
           </>

@@ -14,7 +14,8 @@ router = APIRouter(prefix="/transits", tags=["Tránsitos Planetarios"])
 try:
     with open(BODIES_PATH, encoding="utf-8") as f:
         BODIES = json.load(f)
-except FileNotFoundError:
+except (FileNotFoundError, json.JSONDecodeError, OSError) as e:
+    print(f"❌ Error cargando bodies.json: {e}")
     BODIES = []
 
 # --- CONSTANTES ASTROLÓGICAS ---

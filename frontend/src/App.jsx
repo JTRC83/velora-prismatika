@@ -100,6 +100,7 @@ export default function App() {
   const [input,           setInput]           = React.useState("");
   const [selectedService, setSelectedService] = React.useState(null);
   const [serviceContext,  setServiceContext]  = React.useState(null);
+  const [serviceDisplayName, setServiceDisplayName] = React.useState(null);
   const [veloraInsight,   setVeloraInsight]   = React.useState({ status: 'idle' });
   const [curtainPhase,    setCurtainPhase]    = React.useState("idle"); // idle | closing | opening
   const [isSending,       setIsSending]       = React.useState(false);
@@ -125,7 +126,10 @@ export default function App() {
     compatibility: (payload) => publishServiceContext('Compatibilidad', payload),
     rituals: (payload) => publishServiceContext('Rituales', payload),
     chakra: (payload) => publishServiceContext('Chakras', payload),
-    tarot: (payload) => publishServiceContext('Tarot 3 Cartas', payload),
+    tarot: (payload) => {
+      const tarotServiceName = payload?.serviceName || payload?.spread?.title || 'Tarot';
+      publishServiceContext(tarotServiceName, payload);
+    },
     runes: (payload) => publishServiceContext('Runas', payload),
     kabbalah: (payload) => publishServiceContext('Cábala', payload),
     transits: (payload) => publishServiceContext('Tránsitos', payload),
@@ -154,11 +158,16 @@ export default function App() {
     setTimeout(() => {
       setSelectedService(svc);
       setServiceContext(null);
+      setServiceDisplayName(null);
       setVeloraInsight({ status: 'idle' });
       setCurtainPhase("opening");
       setTimeout(() => setCurtainPhase("idle"), 1200);
     }, 1200);
   };
+
+  const activeServiceLabel = serviceContext?.service
+    || serviceDisplayName
+    || (selectedService === 'Tarot 3 Cartas' ? 'Tarot' : selectedService);
 
   React.useEffect(() => {
     if (!serviceContext) {
@@ -177,10 +186,10 @@ export default function App() {
       headers: { 'Content-Type': 'application/json' },
       signal: controller.signal,
       body: JSON.stringify({
-        usuario: 'Amplía la lectura visible para el usuario. Resume el patrón principal en un máximo de cuatro párrafos, con lenguaje claro, útil y sin repetir todos los datos.',
+        usuario: 'Amplía la lectura visible para el usuario con una interpretación extensa, simbólica y útil, con voz de Velora: mística sobria, elegante y cercana. Consulta la bóveda para enriquecer el contexto del servicio, pero no muestres fuentes ni nombres de notas. Estructura la respuesta sólo con estos dos apartados: Los signos revelados y El hilo oculto. En Los signos revelados explica cada carta, número, signo o dato visible por separado y qué aporta a la lectura. En El hilo oculto explica cómo esas partes encajan entre sí, qué corriente común forman, qué tensión o armonía revelan y qué orientación práctica dejan. No uses Las piezas, El engranaje ni Síntesis. Cuando nombres cartas o datos clave, usa negrita Markdown como **La Estrella** para que se destaquen. No comprimas la respuesta en un único párrafo por apartado: escribe al menos dos párrafos bajo Los signos revelados y dos bajo El hilo oculto cuando haya datos suficientes. Desarrolla lo necesario para que el usuario entienda las partes y el conjunto. Termina siempre con una frase completa y punto final.',
         current_service: serviceContext.service || selectedService,
         service_context: serviceContext,
-        use_knowledge: false,
+        use_knowledge: true,
       }),
     })
       .then(response => {
@@ -223,7 +232,7 @@ export default function App() {
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
           usuario: text,
-          current_service: selectedService,
+          current_service: serviceContext?.service || activeServiceLabel || selectedService,
           service_context: serviceContext,
         }),
       });
@@ -233,6 +242,27 @@ export default function App() {
       }
 
       const data = await response.json();
+
+      if (data.incidencia) {
+        const inc = data.incidencia;
+        const mensajesPorTipo = {
+          backend_no_responde: 'No puedo conectar con el servidor de Velora. Verifica que la aplicación esté iniciada.',
+          ollama_no_responde: 'El modelo de IA no responde. Ollama puede estar caído o el modelo no está descargado.',
+          error_ia: 'Velora no pudo generar una respuesta coherente. Intenta reformular tu pregunta.',
+          servicio_no_cargado: 'Uno de los servicios no se cargó correctamente al arrancar.',
+          error_interno: `Error interno: ${inc.mensaje}`,
+        };
+        setMessages(prev => [
+          ...prev,
+          {
+            text: mensajesPorTipo[inc.tipo] || `Incidencia: ${inc.mensaje}`,
+            user: false,
+            incidencia: inc,
+          },
+        ]);
+        return;
+      }
+
       setMessages(prev => [
         ...prev,
         {
@@ -244,10 +274,13 @@ export default function App() {
         },
       ]);
     } catch (error) {
+      const esFalloConexion = error instanceof TypeError;
       setMessages(prev => [
         ...prev,
         {
-          text: "No he podido abrir el puente con Velora. Revisa que el backend esté encendido.",
+          text: esFalloConexion
+            ? "No puedo conectar con el servidor de Velora. Comprueba que la aplicación esté iniciada por completo."
+            : `No he podido abrir el puente con Velora: ${error.message}`,
           user: false,
           error: error.message,
         },
@@ -318,7 +351,12 @@ export default function App() {
       {selectedService === 'Chakras'          && <ChakraService onServiceResult={serviceContextPublishers.chakra} />}
       
       {/* AQUÍ ESTABA EL CAMBIO CLAVE: Coincidir string exacto "Tarot 3 Cartas" */}
-      {selectedService === 'Tarot 3 Cartas'   && <TarotService onServiceResult={serviceContextPublishers.tarot} />}
+      {selectedService === 'Tarot 3 Cartas'   && (
+        <TarotService
+          onServiceResult={serviceContextPublishers.tarot}
+          onServiceLabelChange={setServiceDisplayName}
+        />
+      )}
       {selectedService === 'Runas'            && <RunesService onServiceResult={serviceContextPublishers.runes} />}
       {selectedService === 'Cábala'           && <KabbalahService onServiceResult={serviceContextPublishers.kabbalah} />}
       {selectedService === 'Tránsitos'        && <TransitsService onServiceResult={serviceContextPublishers.transits} />}
@@ -370,7 +408,7 @@ export default function App() {
         <div className={`chat-shell w-full max-w-3xl flex flex-col flex-grow px-4 pb-4 ${selectedService ? 'chat-shell--service' : ''}`}>
           {selectedService && (
             <div className="chat-context-strip">
-              <span>Velora ve: {serviceContext?.service || selectedService}</span>
+              <span>Velora ve: {activeServiceLabel}</span>
               <small>{serviceContext ? 'lectura disponible' : 'esperando resultado del servicio'}</small>
             </div>
           )}
@@ -386,8 +424,8 @@ export default function App() {
               placeholder={
                 serviceContext
                   ? `Pregunta a Velora sobre ${serviceContext.service}…`
-                  : selectedService
-                    ? `Pregunta a Velora sobre ${selectedService}…`
+                  : activeServiceLabel
+                    ? `Pregunta a Velora sobre ${activeServiceLabel}…`
                     : "Escribe tu pregunta…"
               }
             />

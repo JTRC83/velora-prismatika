@@ -29,7 +29,7 @@ export default function NumerologyService({ onServiceResult }) {
 
     try {
       // CAMBIO IMPORTANTE: Ahora usamos POST y el endpoint '/informe'
-      const res = await fetch('http://localhost:8000/numerology/informe', {
+      const res = await fetch('/numerology/informe', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
@@ -226,9 +226,9 @@ export default function NumerologyService({ onServiceResult }) {
                     </div>
 
                     <svg className="triad-lines">
-                      <line x1="50%" y1="15%" x2="20%" y2="85%" />
-                      <line x1="50%" y1="15%" x2="80%" y2="85%" />
-                      <line x1="20%" y1="85%" x2="80%" y2="85%" />
+                      <line x1="50%" y1="18%" x2="15%" y2="80%" />
+                      <line x1="50%" y1="18%" x2="85%" y2="80%" />
+                      <line x1="15%" y1="80%" x2="85%" y2="80%" />
                     </svg>
                   </div>
 

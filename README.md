@@ -139,6 +139,7 @@ npm run dev
 
 ## 🧭 Roadmap
 
+- Lista viva para retomar el trabajo: [docs/CONTINUIDAD.md](docs/CONTINUIDAD.md).
 - UX de lecturas: flujo guiado (intención → símbolos → síntesis → journaling).
 - Journaling local: sesiones, etiquetas, búsquedas, exportación (Markdown/JSON).
 - Motor de correspondencias: tablas y reglas configurables (sin hardcode).

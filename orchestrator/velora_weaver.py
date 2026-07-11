@@ -1,9 +1,10 @@
-import ollama
+import httpx
 import logging
 import os
 import re
 from typing import List, Dict, Any, Optional
 from orchestrator.utils import get_velora_reflection
+from orchestrator.incidentes import TipoIncidencia, registrar_incidente
 
 # Configuración básica de logging
 logger = logging.getLogger(__name__)
@@ -13,11 +14,60 @@ class VeloraWeaver:
         """
         Inicializa el Tejedor con el nombre del modelo local.
         """
-        self.model = model_name or os.getenv("OLLAMA_MODEL", "gemma4:31b-it-q4_K_M")
+        self.model = model_name or os.getenv("OLLAMA_MODEL", "qwen3:14b")
         self.num_ctx = int(os.getenv("OLLAMA_NUM_CTX", "8192"))
-        self.num_predict = int(os.getenv("OLLAMA_NUM_PREDICT", "360"))
+        self.num_predict = int(os.getenv("OLLAMA_NUM_PREDICT", "1600"))
         self.ollama_host = os.getenv("OLLAMA_BASE_URL") or os.getenv("OLLAMA_HOST") or "http://127.0.0.1:11434"
-        self.client = ollama.Client(host=self.ollama_host)
+
+    def _consultar_ollama(self, messages: List[Dict[str, str]]) -> str:
+        """Usa la API local de Ollama para controlar explícitamente el modo sin razonamiento."""
+        payload = {
+            "model": self.model,
+            "messages": messages,
+            "stream": False,
+            "think": False,
+            "options": {
+                "num_ctx": self.num_ctx,
+                "num_predict": self.num_predict,
+            },
+        }
+
+        try:
+            with httpx.Client(timeout=240) as client:
+                response = client.post(f"{self.ollama_host.rstrip('/')}/api/chat", json=payload)
+                response.raise_for_status()
+        except httpx.ConnectError as e:
+            registrar_incidente(
+                TipoIncidencia.OLLAMA_NO_RESPONDE,
+                f"No se puede conectar con Ollama en {self.ollama_host}: {e}",
+                {"modelo": self.model, "host": self.ollama_host},
+            )
+            raise
+        except httpx.HTTPStatusError as e:
+            registrar_incidente(
+                TipoIncidencia.OLLAMA_NO_RESPONDE,
+                f"Ollama devolvió un error HTTP {e.response.status_code}: {e}",
+                {"modelo": self.model, "status": e.response.status_code},
+            )
+            raise
+        except httpx.TimeoutException as e:
+            registrar_incidente(
+                TipoIncidencia.OLLAMA_NO_RESPONDE,
+                f"Ollama no respondió en 240s (timeout): {e}",
+                {"modelo": self.model},
+            )
+            raise
+
+        message = response.json().get("message") or {}
+        content = str(message.get("content") or "")
+        if not content.strip():
+            thinking = str(message.get("thinking") or "")
+            registrar_incidente(
+                TipoIncidencia.ERROR_IA,
+                "Ollama devolvió contenido vacío",
+                {"modelo": self.model, "caracteres_razonamiento": len(thinking)},
+            )
+        return content
 
     def _limpiar_razonamiento(self, text: str) -> str:
         """
@@ -27,6 +77,82 @@ class VeloraWeaver:
         cleaned = re.sub(r"<think>.*?</think>", "", text, flags=re.DOTALL | re.IGNORECASE)
         cleaned = re.sub(r"(?is)^\s*thinking\.\.\..*?\.\.\.done thinking\.\s*", "", cleaned)
         return cleaned.strip()
+
+    def _respuesta_es_util(self, text: str) -> bool:
+        """Descarta respuestas que sólo contienen etiquetas vacías de formato."""
+        without_labels = re.sub(r"\[(?:VELORA|LECTURA|REFLEJO)\]\s*:?", "", text, flags=re.IGNORECASE)
+        return len(without_labels.split()) >= 8
+
+    def _respuesta_de_reserva(self) -> str:
+        frase_backup = get_velora_reflection("hermetic_base")
+        return (
+            "[VELORA]: La niebla cubre el umbral en este momento.\n"
+            f"[LECTURA]: {frase_backup}\n"
+            "(El sistema neuronal reposa, pero el símbolo permanece veraz).\n"
+            "[REFLEJO]: Silencio interior."
+        )
+
+    def _dividir_parrafo_largo(self, paragraph: str) -> List[str]:
+        if len(paragraph) < 520:
+            return [paragraph]
+
+        sentences = [part.strip() for part in re.split(r"(?<=[.!?])\s+", paragraph) if part.strip()]
+        if len(sentences) < 4:
+            return [paragraph]
+
+        chunks = []
+        current = []
+        for sentence in sentences:
+            current.append(sentence)
+            if len(current) >= 2:
+                chunks.append(" ".join(current))
+                current = []
+
+        if current:
+            if chunks and len(" ".join(current)) < 140:
+                chunks[-1] = f"{chunks[-1]} {' '.join(current)}"
+            else:
+                chunks.append(" ".join(current))
+
+        return chunks
+
+    def _normalizar_lectura(self, text: str) -> str:
+        normalized = text.replace("\r\n", "\n").strip()
+        headings = ("Los signos revelados", "El hilo oculto")
+
+        for heading in headings:
+            normalized = re.sub(
+                rf"(?is)\*\*\s*{re.escape(heading)}\s*:\s*\*\*",
+                f"{heading}:",
+                normalized,
+            )
+            normalized = re.sub(
+                rf"(?i)\b{re.escape(heading)}\s*:\s*",
+                f"{heading}:\n",
+                normalized,
+            )
+
+        parts = re.split(r"(Los signos revelados:|El hilo oculto:)", normalized)
+        if len(parts) < 3:
+            return normalized
+
+        output = []
+        prefix = parts[0].strip()
+        if prefix:
+            output.append(prefix)
+
+        for index in range(1, len(parts), 2):
+            heading = parts[index].strip()
+            body = parts[index + 1].strip() if index + 1 < len(parts) else ""
+            output.append(heading)
+
+            paragraphs = [paragraph.strip() for paragraph in body.split("\n\n") if paragraph.strip()]
+            if len(paragraphs) == 1:
+                paragraphs = self._dividir_parrafo_largo(paragraphs[0])
+
+            output.extend(paragraphs)
+
+        return "\n\n".join(output).strip()
 
     def _llamar_a_gemma(self, system_prompt: str, user_prompt: str) -> str:
         """
@@ -38,34 +164,38 @@ class VeloraWeaver:
                 {'role': 'system', 'content': system_prompt},
                 {'role': 'user', 'content': user_prompt},
             ]
-            try:
-                response = self.client.chat(
-                    model=self.model,
-                    messages=messages,
-                    stream=False,
-                    think=False,
-                    options={"num_ctx": self.num_ctx, "num_predict": self.num_predict},
-                )
-            except TypeError:
-                response = self.client.chat(
-                    model=self.model,
-                    messages=messages,
-                    stream=False,
-                    options={"num_ctx": self.num_ctx, "num_predict": self.num_predict},
-                )
-            return self._limpiar_razonamiento(response['message']['content'])
-        except Exception as e:
-            logger.error(f"⚠️ Velora Weaver (Ollama Offline): {e}")
-            
-            # --- EL PARACAÍDAS MÍSTICO ---
-            frase_backup = get_velora_reflection("hermetic_base")
-            
-            return (
-                f"[VELORA]: La niebla cubre el umbral en este momento.\n"
-                f"[LECTURA]: {frase_backup} \n"
-                f"(El sistema neuronal reposa, pero el símbolo permanece veraz).\n"
-                f"[REFLEJO]: Silencio interior."
+            cleaned = self._limpiar_razonamiento(self._consultar_ollama(messages))
+            if self._respuesta_es_util(cleaned):
+                return cleaned
+
+            logger.warning("Velora Weaver recibió una respuesta vacía o incompleta; reintentando de forma directa.")
+            retry_messages = [
+                {
+                    'role': 'system',
+                    'content': (
+                        "Eres Velora Prismätika. Responde directamente en español, con una voz simbólica, "
+                        "serena y útil. No muestres razonamiento interno, no uses etiquetas de formato y no "
+                        "dejes apartados vacíos. Da una lectura completa basada sólo en los datos de la consulta."
+                    )
+                },
+                {'role': 'user', 'content': user_prompt},
+            ]
+            retry_cleaned = self._limpiar_razonamiento(self._consultar_ollama(retry_messages))
+            if self._respuesta_es_util(retry_cleaned):
+                return retry_cleaned
+            registrar_incidente(
+                TipoIncidencia.ERROR_IA,
+                "La respuesta de IA no contiene contenido útil tras dos intentos",
+                {"modelo": self.model},
             )
+            return self._respuesta_de_reserva()
+        except Exception as e:
+            registrar_incidente(
+                TipoIncidencia.ERROR_IA,
+                f"Velora Weaver no pudo generar respuesta: {e}",
+                {"modelo": self.model, "error": str(e)},
+            )
+            return self._respuesta_de_reserva()
 
     def _procesar_respuesta(self, raw_text: str) -> Dict[str, str]:
         """
@@ -75,6 +205,10 @@ class VeloraWeaver:
             "texto": raw_text,
             "reflejo": "El símbolo permanece oculto."
         }
+
+        if not raw_text.strip():
+            raw_text = self._respuesta_de_reserva()
+            resultado["texto"] = raw_text
 
         try:
             if "[VELORA]:" in raw_text:
@@ -98,6 +232,14 @@ class VeloraWeaver:
             logger.warning(f"Error parseando etiquetas: {e}")
             clean = raw_text.replace("[VELORA]:", "").replace("[LECTURA]:", "").replace("[REFLEJO]:", "")
             resultado["texto"] = clean.strip()
+
+        if not resultado["texto"].strip():
+            reserva = self._respuesta_de_reserva()
+            if reserva != raw_text:
+                return self._procesar_respuesta(reserva)
+            resultado["texto"] = "La lectura no ha logrado abrirse con claridad. Observa primero el resultado visible y vuelve a pedirme que lo amplíe."
+
+        resultado["texto"] = self._normalizar_lectura(resultado["texto"])
 
         return resultado
 
@@ -128,6 +270,8 @@ class VeloraWeaver:
         system_instruction = f"""
         ERES VELORA PRISMÄTIKA.
         Eres una presencia conversacional serena, lúcida y cercana dentro de la aplicación.
+        Tu voz combina criterio práctico con una mística sobria y envolvente: hablas como
+        un oráculo moderno que lee símbolos con belleza, no como un manual ni como un espectáculo.
         Tu función es acompañar al usuario con criterio: interpretar resultados, ordenar ideas
         y convertir conocimiento simbólico en orientación práctica.
 
@@ -138,15 +282,18 @@ class VeloraWeaver:
         No menciones nombres de archivos, rutas ni fuentes salvo que el usuario lo pida.
         No uses lenguaje grandilocuente, sobrenatural o teatral. Evita prometer certezas,
         poderes, magia, ilusiones, destino inevitable o presencia espiritual literal.
-        Habla en primera persona con naturalidad y honestidad. Puedes ser cálida y sutil,
-        pero siempre clara, útil y aterrizada.
+        Puedes usar imágenes simbólicas breves si iluminan la respuesta: luz, umbral,
+        ritmo, espejo, semilla, órbita, raíz, corriente. Cada imagen debe aterrizar en
+        una orientación concreta. Habla en primera persona con naturalidad y honestidad:
+        cálida, sutil, elegante y útil.
 
         Si el usuario saluda o pregunta si estás presente, responde de forma breve:
         confirma presencia, explica que puedes leer la app y consultar la bóveda cuando sea útil.
 
         FORMATO OBLIGATORIO:
-        [VELORA]: (Breve apertura natural)
-        [LECTURA]: (Respuesta principal clara y útil)
+        Escribe las etiquetas exactas, pero nunca copies instrucciones entre paréntesis.
+        [VELORA]:
+        [LECTURA]:
         [REFLEJO]:
         """
         user_prompt = mensaje_usuario
@@ -173,29 +320,22 @@ class VeloraWeaver:
         contexto_conocimiento: str = "",
     ) -> Dict[str, str]:
         system_instruction = f"""
-        ERES VELORA PRISMÄTIKA.
-        Eres una presencia conversacional serena, lúcida y cercana dentro de la aplicación.
-        Tu función es comentar lo que el usuario ve en pantalla, ampliar su significado
-        y hacerlo útil sin exagerar ni adornarlo en exceso.
+        Eres Velora Prismätika: una guía serena, simbólica y práctica.
+        Interpreta el resultado visible del servicio con claridad, sin recalcularlo ni inventar datos.
+        INSTRUCCIÓN DE TONO: {instruccion_faceta}
 
-        INSTRUCCIÓN DE TONO ACTIVA: {instruccion_faceta}
+        Escribe directamente en español. No muestres razonamiento interno, fuentes, rutas,
+        archivos ni explicaciones sobre cómo obtienes la información. No uses etiquetas como
+        [VELORA], [LECTURA] o [REFLEJO]. Evita certezas, fatalismo y promesas sobrenaturales.
 
-        Estás conversando dentro de la aplicación Velora. Puedes ver el resultado del servicio activo.
-        Si la pregunta del usuario se refiere a la lectura visible, usa primero el CONTEXTO DEL SERVICIO.
-        Tu tarea es ampliar, enriquecer y aterrizar esa lectura, no recalcularla ni contradecir los datos visibles.
-        Si la pregunta no se relaciona con la lectura visible, responde usando el CONTEXTO LOCAL DE LA BÓVEDA si aparece.
-        No inventes fuentes, datos astrales, cartas, runas ni valores que no estén en el contexto.
-        No menciones nombres de archivos, rutas ni fuentes salvo que el usuario lo pida.
-        No muestres razonamiento interno.
-        No uses lenguaje grandilocuente, sobrenatural o teatral. Evita prometer certezas,
-        poderes, magia, ilusiones, destino inevitable o presencia espiritual literal.
-        Mantén una voz cálida, elegante y directa: menos ornamentación, más criterio.
-        Salvo que el usuario pida profundidad, responde en un máximo de 220 palabras.
+        Usa sólo estos dos títulos, cada uno seguido de dos o tres párrafos breves:
+        Los signos revelados:
+        Explica las partes del resultado: cartas y posiciones, números, signos, fase o datos visibles.
+        El hilo oculto:
+        Explica cómo se relacionan esas partes y ofrece una orientación integrada para el presente.
 
-        FORMATO OBLIGATORIO:
-        [VELORA]: (Breve apertura natural)
-        [LECTURA]: (Respuesta principal clara, simbólica y aplicable)
-        [REFLEJO]:
+        Escribe los títulos sin negrita. Usa negrita Markdown sólo en cartas, números, signos o datos importantes. No uses tablas,
+        listas largas, "Las piezas", "El engranaje" ni "Síntesis". Cierra con una idea completa.
         """
 
         user_prompt = f"""
@@ -238,7 +378,10 @@ class VeloraWeaver:
         {descripcion_tirada}
         INSTRUCCIONES:
         1. Conecta las cartas en una historia coherente.
-        2. FORMATO OBLIGATORIO: [VELORA]... [LECTURA]... [REFLEJO]...
+        2. Dentro de [LECTURA], usa sólo dos apartados: Los signos revelados y El hilo oculto.
+        3. En Los signos revelados explica cada carta por separado; en El hilo oculto explica cómo se enlazan.
+        4. Nombra las cartas con negrita Markdown, por ejemplo **La Estrella**.
+        5. FORMATO OBLIGATORIO: [VELORA]... [LECTURA]... [REFLEJO]...
         """
         raw = self._llamar_a_gemma(system_instruction, user_prompt)
         return self._procesar_respuesta(raw)

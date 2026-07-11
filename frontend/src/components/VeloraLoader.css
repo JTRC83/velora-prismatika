@@ -89,29 +89,7 @@
 .velora-hourglass-cap-top::after,
 .velora-hourglass-cap-bottom::before,
 .velora-hourglass-cap-bottom::after {
-  content: "";
-  position: absolute;
-  left: 0.25rem;
-  width: 2.25rem;
-  height: 0.22rem;
-  border-radius: 999px;
-  background: rgba(45, 26, 0, 0.22);
-}
-
-.velora-hourglass-cap-top::before {
-  top: -1.55rem;
-}
-
-.velora-hourglass-cap-top::after {
-  top: -1.25rem;
-}
-
-.velora-hourglass-cap-bottom::before {
-  bottom: -1.55rem;
-}
-
-.velora-hourglass-cap-bottom::after {
-  bottom: -1.25rem;
+  display: none;
 }
 
 .velora-hourglass-glass-top {

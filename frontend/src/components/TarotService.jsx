@@ -27,11 +27,17 @@ const SPREAD_OPTIONS = [
   }
 ];
 
-const TarotService = ({ onServiceResult }) => {
+const getSpreadServiceName = (spread) => {
+  if (!spread) return 'Tarot';
+  return spread.title;
+};
+
+const TarotService = ({ onServiceResult, onServiceLabelChange }) => {
   const [readingState, setReadingState] = useState('menu');
   const [selectedSpread, setSelectedSpread] = useState(null);
   
   const [cards, setCards] = useState([]);
+  const [readingMeta, setReadingMeta] = useState(null);
   
   const [revealedCards, setRevealedCards] = useState({});
   const [failedImages, setFailedImages] = useState({});
@@ -40,6 +46,7 @@ const TarotService = ({ onServiceResult }) => {
   // Seleccionar tipo de tirada
   const selectSpread = (spread) => {
     setSelectedSpread(spread);
+    onServiceLabelChange?.(getSpreadServiceName(spread));
     setReadingState('idle');
   };
 
@@ -49,7 +56,7 @@ const TarotService = ({ onServiceResult }) => {
     setFailedImages({});
 
     try {
-      const response = await fetch('http://localhost:8000/tarot/tirada', {
+      const response = await fetch('/tarot/tirada', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ tipo: selectedSpread.id }),
@@ -66,6 +73,12 @@ const TarotService = ({ onServiceResult }) => {
 
       setTimeout(() => {
         setCards(cardsWithPos);
+        setReadingMeta({
+          tipo_tirada: data.tipo_tirada,
+          tipo_tirada_nombre: data.tipo_tirada_nombre,
+          deck_size: data.deck_size,
+          available_image_count: data.available_image_count,
+        });
         setReadingState('dealt');
         setIsLoading(false);
         setRevealedCards({});
@@ -99,6 +112,8 @@ const TarotService = ({ onServiceResult }) => {
     setReadingState('menu');
     setSelectedSpread(null);
     setCards([]);
+    setReadingMeta(null);
+    onServiceLabelChange?.(null);
     onServiceResult?.(null);
     setRevealedCards({});
     setFailedImages({});
@@ -110,10 +125,13 @@ const TarotService = ({ onServiceResult }) => {
     if (!allRevealed) return;
 
     onServiceResult?.({
+      serviceName: getSpreadServiceName(selectedSpread),
+      serviceType: 'Tarot',
       spread: selectedSpread,
       cards,
+      meta: readingMeta,
     });
-  }, [allRevealed, cards, onServiceResult, selectedSpread]);
+  }, [allRevealed, cards, onServiceResult, readingMeta, selectedSpread]);
 
   return (
     <div className="tarot-service-container">

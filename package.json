@@ -1,6 +1,8 @@
 {
   "scripts": {
-    "knowledge:graph": "python3 scripts/build_knowledge_graph.py"
+    "knowledge:graph": "python3 scripts/build_knowledge_graph.py",
+    "velora:start": "bash scripts/start_velora.sh --restart-stuck-ollama",
+    "velora:app": "python3 scripts/create_macos_launcher.py"
   },
   "devDependencies": {
     "concurrently": "^9.2.0"

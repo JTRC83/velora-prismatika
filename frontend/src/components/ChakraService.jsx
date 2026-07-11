@@ -10,7 +10,7 @@ export default function ChakraService({ onServiceResult }) {
   const [veloraGuide, setVeloraGuide] = useState(null);
 
   useEffect(() => {
-    fetch('http://localhost:8000/chakra/list')
+    fetch('/chakra/list')
       .then(res => res.json())
       .then(data => {
         setChakras(data.sort((a, b) => a.id - b.id));
@@ -36,7 +36,7 @@ export default function ChakraService({ onServiceResult }) {
     setVeloraGuide(null);
 
     try {
-      const res = await fetch('http://localhost:8000/chakra/align', {
+      const res = await fetch('/chakra/align', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ symptom: symptom })

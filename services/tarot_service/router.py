@@ -58,5 +58,8 @@ async def realizar_tirada(datos: TiradaRequest, include_ai: bool = False):
         "visual_data": cartas,
         "velora_voice": velora_voice,
         "reflejo": velora_reflection,
-        "tipo_tirada": datos.tipo
+        "tipo_tirada": datos.tipo,
+        "tipo_tirada_nombre": config["nombre"],
+        "deck_size": len(mechanics.drawable_cards or mechanics.cards),
+        "available_image_count": len(mechanics.available_image_ids),
     }

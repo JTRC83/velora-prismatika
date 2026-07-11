@@ -1,0 +1,9 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+PROJECT_ROOT="/Users/joantoniramoncrespi/velora-prismatika"
+LOG_DIR="$PROJECT_ROOT/.runtime/logs"
+mkdir -p "$LOG_DIR"
+
+osascript -e 'display notification "Arrancando Ollama, Qwen y Velora…" with title "Velora Prismätika"' >/dev/null 2>&1 || true
+"$PROJECT_ROOT/scripts/start_velora.sh" --restart-stuck-ollama >>"$LOG_DIR/macos-launcher.log" 2>&1 &

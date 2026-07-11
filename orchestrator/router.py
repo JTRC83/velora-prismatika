@@ -79,7 +79,7 @@ class Mensaje(BaseModel):
     use_knowledge: Optional[bool] = None
 
 
-def _compactar_contexto_servicio(contexto: Optional[dict[str, Any]], max_chars: int = 4200) -> str:
+def _compactar_contexto_servicio(contexto: Optional[dict[str, Any]], max_chars: int = 2600) -> str:
     if not contexto:
         return ""
 
@@ -92,6 +92,37 @@ def _compactar_contexto_servicio(contexto: Optional[dict[str, Any]], max_chars: 
         return payload
 
     return payload[: max_chars - 1].rsplit("\n", 1)[0].strip() + "\n…"
+
+
+def _consulta_conocimiento(texto: str, current_service: Optional[str], service_context: Optional[dict[str, Any]]) -> str:
+    partes = [texto]
+    service_name = current_service or ""
+
+    if service_context:
+        service_name = service_name or str(service_context.get("service") or "")
+        spread_name = service_context.get("spread") or service_context.get("reading_type") or service_context.get("tirada")
+        if spread_name:
+            partes.append(str(spread_name))
+
+    if service_name:
+        partes.insert(0, service_name)
+
+    service_hint = service_name.lower()
+    if (
+        "tarot" in service_hint
+        or "arcano" in service_hint
+        or "estrella de la verdad" in service_hint
+        or "pasado" in service_hint
+    ):
+        partes.append("Tarot arcanos tirada cartas")
+    if "lunar" in service_hint or "luna" in service_hint:
+        partes.append("Fases Lunares ciclo soli-lunar")
+    if "compatibilidad" in service_hint or "afinidad" in service_hint:
+        partes.append("Compatibilidad relacional sinastria no determinista")
+    if "mano" in service_hint or "quiromancia" in service_hint:
+        partes.append("Quiromancia lectura de mano lineas montes privacidad")
+
+    return "\n".join(parte for parte in partes if parte)
 
 
 def _es_saludo_simple(texto: str) -> bool:
@@ -170,8 +201,9 @@ async def chat_generico(mensaje: Mensaje):
     contexto_conocimiento = ""
     if mensaje.use_knowledge is not False:
         try:
-            knowledge_sources = knowledge_base.search(texto, limit=4)
-            contexto_conocimiento = knowledge_base.format_context(knowledge_sources)
+            knowledge_query = _consulta_conocimiento(texto, mensaje.current_service, mensaje.service_context)
+            knowledge_sources = knowledge_base.search(knowledge_query, limit=5)
+            contexto_conocimiento = knowledge_base.format_context(knowledge_sources, max_chars=2200)
         except Exception as e:
             logger.warning(f"No se pudo consultar la bóveda de conocimiento: {e}")
 

@@ -41,7 +41,7 @@ export default function RunesService({ onServiceResult }) {
     onServiceResult?.(null);
 
     try {
-      const res = await fetch('http://localhost:8000/runes/cast', {
+      const res = await fetch('/runes/cast', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ tipo: type }),

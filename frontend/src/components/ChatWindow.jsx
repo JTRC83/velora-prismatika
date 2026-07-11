@@ -5,7 +5,7 @@ export default function ChatWindow({ messages }) {
     <div className="chat-window">
       {messages.map((m,i) => (
         <div key={i}
-             className={`chat-bubble ${m.user ? 'user' : 'bot'}`}>
+             className={`chat-bubble ${m.user ? 'user' : 'bot'} ${m.incidencia ? 'chat-bubble--incidencia' : ''}`}>
           <div className="chat-text">{m.text}</div>
           {!m.user && m.serviceContextUsed && (
             <div className="chat-context-note">
@@ -14,6 +14,11 @@ export default function ChatWindow({ messages }) {
           )}
           {!m.user && m.reflejo && (
             <div className="chat-reflection">{m.reflejo}</div>
+          )}
+          {!m.user && m.incidencia && (
+            <div className="chat-incidencia">
+              <small>Tipo: {m.incidencia.tipo}</small>
+            </div>
           )}
           {!m.user && m.error && (
             <div className="chat-error">{m.error}</div>

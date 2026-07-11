@@ -387,27 +387,28 @@
 .crystal-stand {
   position: relative;
   z-index: 8;
-  width: clamp(13.5rem, 29vw, 17rem);
-  height: 3.45rem;
-  margin-top: -0.96rem;
+  width: clamp(15.6rem, 33vw, 20.8rem);
+  height: 6.25rem;
+  margin-top: -1rem;
 }
 
 .crystal-stand::before {
   content: "";
   position: absolute;
-  top: 0.04rem;
+  top: 0.02rem;
   left: 50%;
-  z-index: 2;
-  width: 84.5%;
-  height: 1.04rem;
+  z-index: 5;
+  width: 80%;
+  height: 1.22rem;
   border: 1px solid rgba(31, 12, 3, 0.5);
   border-radius: 50%;
   background:
-    radial-gradient(ellipse at 54% 18%, rgba(255, 232, 188, 0.42), transparent 38%),
+    radial-gradient(ellipse at 54% 16%, rgba(255, 232, 188, 0.5), transparent 40%),
     linear-gradient(90deg, #271006 0%, #62300e 22%, #a95f21 50%, #62300e 78%, #271006 100%);
   box-shadow:
-    inset 0 0.18rem 0 rgba(255, 226, 180, 0.2),
-    inset 0 -0.28rem 0 rgba(18, 7, 2, 0.5);
+    inset 0 0.2rem 0 rgba(255, 226, 180, 0.22),
+    inset 0 -0.3rem 0 rgba(18, 7, 2, 0.52),
+    0 0.1rem 0.25rem rgba(18, 7, 2, 0.24);
   transform: translateX(-50%);
 }
 
@@ -415,21 +416,21 @@
   content: "";
   position: absolute;
   left: 50%;
-  bottom: -0.08rem;
+  bottom: 0.2rem;
   z-index: 1;
-  width: 107%;
-  height: 1.36rem;
-  border: 1px solid rgba(31, 12, 3, 0.56);
-  border-radius: 50%;
+  width: 138%;
+  height: 3.35rem;
+  border: 1px solid rgba(31, 12, 3, 0.6);
+  border-radius: 50% / 48%;
   background:
-    radial-gradient(ellipse at 52% 18%, rgba(255, 220, 164, 0.2), transparent 38%),
-    linear-gradient(180deg, rgba(122, 57, 18, 0.58), rgba(36, 13, 3, 0.9) 72%, rgba(15, 5, 1, 0.98)),
+    radial-gradient(ellipse at 52% 20%, rgba(255, 220, 164, 0.4), transparent 42%),
+    radial-gradient(ellipse at 50% 76%, rgba(255, 184, 92, 0.22), transparent 52%),
+    linear-gradient(180deg, rgba(154, 72, 22, 0.86), rgba(68, 25, 6, 0.96) 58%, rgba(14, 5, 1, 0.99)),
     linear-gradient(90deg, #190702 0%, #4b1d04 24%, #7a3510 50%, #4b1d04 76%, #190702 100%);
   box-shadow:
-    inset 0 0.18rem 0 rgba(255, 224, 171, 0.12),
-    inset 0 -0.36rem 0 rgba(12, 4, 1, 0.66),
-    0 0.8rem 1.1rem rgba(45, 26, 0, 0.18);
-  clip-path: inset(18% 0 0 0);
+    inset 0 0.36rem 0 rgba(255, 224, 171, 0.23),
+    inset 0 -1.1rem 0 rgba(12, 4, 1, 0.8),
+    0 1.15rem 1.55rem rgba(45, 26, 0, 0.24);
   transform: translateX(-50%);
 }
 
@@ -441,18 +442,20 @@
 
 .stand-base {
   z-index: 4;
-  top: 0.44rem;
-  width: 84.6%;
-  height: 2.22rem;
-  border-inline: 1px solid rgba(31, 12, 3, 0.48);
-  border-radius: 0.28rem 0.28rem 1.05rem 1.05rem / 0.18rem 0.18rem 0.5rem 0.5rem;
+  top: 0.48rem;
+  width: 82.5%;
+  height: 4.02rem;
+  border-inline: 1px solid rgba(31, 12, 3, 0.52);
+  border-radius: 0.42rem 0.42rem 1.62rem 1.62rem / 0.24rem 0.24rem 0.88rem 0.88rem;
   background:
-    linear-gradient(180deg, rgba(255, 210, 141, 0.08), transparent 28%, rgba(20, 8, 2, 0.22) 100%),
-    linear-gradient(90deg, #251006 0%, #60300f 16%, #904816 38%, #d59b63 58%, #79360f 78%, #251006 100%);
+    radial-gradient(ellipse at 50% 8%, rgba(255, 220, 154, 0.26), transparent 40%),
+    linear-gradient(180deg, rgba(255, 210, 141, 0.16), transparent 26%, rgba(20, 8, 2, 0.38) 100%),
+    linear-gradient(90deg, #1b0a03 0%, #5a2a0b 14%, #944a16 36%, #dba16c 57%, #79360f 79%, #1b0a03 100%);
   box-shadow:
     inset 0.34rem 0 0.7rem rgba(18, 7, 2, 0.36),
     inset -0.34rem 0 0.7rem rgba(18, 7, 2, 0.34),
-    inset 0 -0.3rem 0 rgba(18, 7, 2, 0.42);
+    inset 0 -1.02rem 0 rgba(18, 7, 2, 0.6),
+    0 0.18rem 0 rgba(54, 23, 7, 0.34);
   pointer-events: none;
 }
 
@@ -465,21 +468,21 @@
 }
 
 .stand-base::before {
-  top: 0.36rem;
-  width: 101%;
-  height: 0.2rem;
+  top: 0.42rem;
+  width: 102%;
+  height: 0.22rem;
   border-radius: 999px;
   background:
     linear-gradient(90deg, rgba(18, 7, 2, 0.66), rgba(255, 222, 166, 0.24), rgba(18, 7, 2, 0.66));
 }
 
 .stand-base::after {
-  bottom: 0.26rem;
-  width: 106%;
-  height: 0.24rem;
+  bottom: 0.34rem;
+  width: 114%;
+  height: 0.58rem;
   border-radius: 999px;
   background:
-    linear-gradient(90deg, rgba(18, 7, 2, 0.52), rgba(255, 220, 151, 0.14), rgba(18, 7, 2, 0.52));
+    linear-gradient(90deg, rgba(18, 7, 2, 0.66), rgba(255, 220, 151, 0.22), rgba(18, 7, 2, 0.66));
 }
 
 .crystal-controls {
@@ -524,42 +527,90 @@
 .gaze-btn,
 .focus-buttons button,
 .reset-vision-btn {
-  display: inline-grid;
-  place-items: center;
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.45rem;
   min-height: 3.1rem;
   padding: 0 1.2rem;
-  border: 1px solid rgba(45, 26, 0, 0.2);
+  border: 1px solid rgba(78, 57, 9, 0.58);
   border-radius: 999px;
   color: #2d1a00;
-  background: rgba(255, 251, 240, 0.6);
+  background-image:
+    linear-gradient(to top, rgba(225, 213, 181, 0.86) 0%, rgba(255, 251, 240, 0.94) 72%, #fffefa 100%);
   box-shadow:
-    0 10px 18px rgba(45, 26, 0, 0.12),
-    inset 0 1px 0 rgba(255, 255, 255, 0.5);
+    0 4px 3px 1px rgba(255, 247, 209, 0.48),
+    0 8px 13px rgba(45, 26, 0, 0.18),
+    0 -4px 5px rgba(255, 242, 184, 0.38),
+    inset 0 1px 0 rgba(255, 255, 255, 0.76),
+    inset 0 -2px 4px rgba(78, 57, 9, 0.16);
   font-family: var(--font-heading);
   font-size: 0.86rem;
   font-weight: 700;
   letter-spacing: 0.08em;
+  text-shadow: 0 1px rgba(255, 255, 255, 0.72);
   text-transform: uppercase;
   cursor: pointer;
-  transition: transform 0.2s ease, box-shadow 0.2s ease, background 0.2s ease;
+  transition: transform 0.2s ease, box-shadow 0.2s ease, background-image 0.2s ease, border-color 0.2s ease;
+}
+
+.gaze-btn::before,
+.focus-buttons button::before,
+.reset-vision-btn::before {
+  content: "";
+  position: absolute;
+  inset: 0.18rem 0.3rem auto;
+  z-index: 0;
+  height: 42%;
+  border-radius: inherit;
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.46), transparent);
+  opacity: 0.76;
+  pointer-events: none;
 }
 
 .gaze-btn {
   color: #fdf6e3;
-  background: linear-gradient(135deg, #2d1a00, var(--velora-olive-deep));
+  background-image:
+    linear-gradient(to top, #2d1a00 0%, #4f4c0e 62%, #95842d 100%);
+  text-shadow: 0 1px rgba(18, 7, 2, 0.62);
 }
 
 .gaze-btn:hover:not(:disabled),
 .focus-buttons button:hover,
 .reset-vision-btn:hover {
   transform: translateY(-2px);
-  background: rgba(255, 251, 240, 0.82);
-  box-shadow: 0 14px 24px rgba(45, 26, 0, 0.16);
+  border-color: rgba(78, 57, 9, 0.74);
+  background-image:
+    linear-gradient(to top, rgba(234, 223, 192, 0.9) 0%, rgba(255, 252, 244, 0.98) 72%, #ffffff 100%);
+  box-shadow:
+    0 4px 3px 1px rgba(255, 247, 209, 0.62),
+    0 12px 20px rgba(45, 26, 0, 0.22),
+    0 -5px 7px rgba(255, 242, 184, 0.5),
+    inset 0 0 3px 3px rgba(184, 156, 55, 0.18),
+    inset 0 1px 0 rgba(255, 255, 255, 0.84);
 }
 
 .gaze-btn:hover:not(:disabled) {
   color: #fdf6e3;
-  background: linear-gradient(135deg, #2d1a00, var(--velora-olive-deep));
+  background-image:
+    linear-gradient(to top, #331d02 0%, #5b5711 62%, #a29135 100%);
+}
+
+.gaze-btn:active,
+.focus-buttons button:active,
+.reset-vision-btn:active,
+.gaze-btn:focus-visible,
+.focus-buttons button:focus-visible,
+.reset-vision-btn:focus-visible {
+  transform: translateY(1px);
+  box-shadow:
+    0 3px 3px rgba(255, 247, 209, 0.34),
+    0 5px 9px rgba(45, 26, 0, 0.18),
+    inset 0 0 5px 3px rgba(86, 72, 23, 0.22),
+    inset 0 0 22px rgba(91, 80, 28, 0.18);
 }
 
 .gaze-btn:disabled {
@@ -585,6 +636,42 @@
   flex-wrap: wrap;
   justify-content: center;
   gap: 0.7rem;
+}
+
+.focus-icon {
+  position: relative;
+  z-index: 1;
+  display: inline-grid;
+  place-items: center;
+  width: 1.35rem;
+  height: 1.35rem;
+  border: 1px solid rgba(78, 57, 9, 0.2);
+  border-radius: 999px;
+  color: rgba(74, 62, 27, 0.78);
+  background:
+    radial-gradient(circle at 34% 24%, rgba(255, 255, 255, 0.74), transparent 36%),
+    linear-gradient(145deg, rgba(232, 191, 92, 0.5), rgba(255, 251, 240, 0.72));
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.62),
+    0 1px 2px rgba(45, 26, 0, 0.12);
+  font-family: var(--font-heading);
+  font-size: 0.78rem;
+  line-height: 1;
+}
+
+.focus-icon svg {
+  width: 0.92rem;
+  height: 0.92rem;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 2.5;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.focus-buttons button span:not(.focus-icon) {
+  position: relative;
+  z-index: 1;
 }
 
 .reset-area {
