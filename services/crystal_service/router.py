@@ -4,13 +4,13 @@ import logging
 
 # IMPORTANTE: Ajustado a tu nombre de carpeta 'crystal_service'
 from services.crystal_service.crystal_service import CrystalService
-from orchestrator.velora_weaver import VeloraWeaver
+from orchestrator.velora_weaver import get_weaver
 
 router = APIRouter(prefix="/crystal", tags=["crystal"])
 logger = logging.getLogger("CrystalRouter")
 
 mechanics = CrystalService()
-weaver = VeloraWeaver()
+weaver = get_weaver()
 
 class VisionRequest(BaseModel):
     question: str

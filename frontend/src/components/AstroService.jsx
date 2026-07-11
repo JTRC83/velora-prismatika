@@ -20,9 +20,9 @@ const zodiacMap = {
   Piscis: '♓\uFE0E',
 };
 
-export default function AstroService({ onServiceResult }) {
+export default function AstroService({ onServiceResult, userData, onSaveUserData }) {
   const [formData, setFormData] = useState({
-    birthdate: '',
+    birthdate: userData?.birthdate || '',
     birthtime: '',
     location: '',
     coordinates: ''
@@ -92,7 +92,11 @@ export default function AstroService({ onServiceResult }) {
   const handleSubmit = async e => {
     e.preventDefault();
     if (!formData.birthdate) return;
-    
+
+    if (formData.birthdate && formData.birthdate !== userData?.birthdate) {
+      onSaveUserData?.({ birthdate: formData.birthdate });
+    }
+
     setLoading(true);
     setError(null);
     setResult(null);

@@ -7,7 +7,7 @@ from typing import Optional
 # Importamos TU mecánica refactorizada
 from services.astro_service.astro_service import AstroService
 # Importamos el Cerebro de Velora
-from orchestrator.velora_weaver import VeloraWeaver
+from orchestrator.velora_weaver import get_weaver
 
 router = APIRouter(prefix="/astro", tags=["astro"])
 logger = logging.getLogger("AstroRouter")
@@ -19,7 +19,7 @@ except Exception as e:
     logger.error(f"Error iniciando AstroService: {e}")
     mechanics = None
 
-weaver = VeloraWeaver()
+weaver = get_weaver()
 
 class NatalRequest(BaseModel):
     fecha_nacimiento: date

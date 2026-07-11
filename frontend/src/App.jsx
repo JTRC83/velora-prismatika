@@ -5,6 +5,7 @@ import ChatWindow      from "./components/ChatWindow";
 import InputBar        from "./components/InputBar";
 import Curtain         from "./components/Curtain";
 import { slugify }     from "./utils/slugify";
+import { useUserData } from "./utils/useUserData";
 // Servicios existentes
 import AstroService         from './components/AstroService';
 import NumerologyService    from "./components/NumerologyService";
@@ -104,6 +105,7 @@ export default function App() {
   const [veloraInsight,   setVeloraInsight]   = React.useState({ status: 'idle' });
   const [curtainPhase,    setCurtainPhase]    = React.useState("idle"); // idle | closing | opening
   const [isSending,       setIsSending]       = React.useState(false);
+  const { userData, saveUserData } = useUserData();
 
   const publishServiceContext = React.useCallback((service, payload) => {
     if (!payload) {
@@ -343,11 +345,11 @@ export default function App() {
       </div>
 
       {/* 4) Zona de servicio dinámico */}
-      {selectedService === 'Astrología Natal' && <AstroService onServiceResult={serviceContextPublishers.astro} />}
-      {selectedService === 'Numerología'      && <NumerologyService onServiceResult={serviceContextPublishers.numerology} />}
+      {selectedService === 'Astrología Natal' && <AstroService onServiceResult={serviceContextPublishers.astro} userData={userData} onSaveUserData={saveUserData} />}
+      {selectedService === 'Numerología'      && <NumerologyService onServiceResult={serviceContextPublishers.numerology} userData={userData} onSaveUserData={saveUserData} />}
       {selectedService === 'Fases Lunares'    && <MoonPhaseService onServiceResult={serviceContextPublishers.moon} />}
       {selectedService === 'Compatibilidad'   && <CompatibilityService onServiceResult={serviceContextPublishers.compatibility} />}
-      {selectedService === 'Rituales'         && <RitualService onServiceResult={serviceContextPublishers.rituals} />}
+      {selectedService === 'Rituales'         && <RitualService onServiceResult={serviceContextPublishers.rituals} userData={userData} onSaveUserData={saveUserData} />}
       {selectedService === 'Chakras'          && <ChakraService onServiceResult={serviceContextPublishers.chakra} />}
       
       {/* AQUÍ ESTABA EL CAMBIO CLAVE: Coincidir string exacto "Tarot 3 Cartas" */}

@@ -4,13 +4,13 @@ from typing import Dict, List, Optional
 import logging
 
 from services.palmistry_service.palmistry_service import PalmistryService
-from orchestrator.velora_weaver import VeloraWeaver
+from orchestrator.velora_weaver import get_weaver
 
 router = APIRouter(prefix="/palmistry", tags=["palmistry"])
 logger = logging.getLogger("PalmistryRouter")
 
 mechanics = PalmistryService()
-weaver = VeloraWeaver()
+weaver = get_weaver()
 
 # Modelos
 class LineInfo(BaseModel):

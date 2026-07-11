@@ -568,3 +568,19 @@ class VeloraWeaver:
 
         raw = self._llamar_a_gemma(system_instruction, user_prompt)
         return self._procesar_respuesta(raw)
+
+
+# --- SINGLETON ---
+# VeloraWeaver se instancia una sola vez y se comparte entre todos los
+# routers de servicios y el orchestrator. Usar get_weaver() en lugar de
+# VeloraWeaver() directamente.
+
+_weaver_instance: Optional[VeloraWeaver] = None
+
+
+def get_weaver() -> VeloraWeaver:
+    """Devuelve la instancia única de VeloraWeaver (singleton)."""
+    global _weaver_instance
+    if _weaver_instance is None:
+        _weaver_instance = VeloraWeaver()
+    return _weaver_instance

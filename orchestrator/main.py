@@ -1,6 +1,7 @@
 # orchestrator/main.py
 import importlib
 import logging
+from contextlib import asynccontextmanager
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 
@@ -15,7 +16,7 @@ logger = logging.getLogger("Velora-Main")
 # -------------------------------------------------------------------------
 try:
     from orchestrator.router import router as orchestrator_router
-    from orchestrator.velora_weaver import VeloraWeaver
+    from orchestrator.velora_weaver import get_weaver
     VELORA_AVAILABLE = True
 except ImportError as e:
     registrar_incidente(
@@ -25,23 +26,8 @@ except ImportError as e:
     )
     VELORA_AVAILABLE = False
 
-app = FastAPI(title="Velora Prismätika")
-
 # -------------------------------------------------------------------------
-# 1. CONFIGURACIÓN CORS
-# -------------------------------------------------------------------------
-app.add_middleware(
-    CORSMiddleware,
-    allow_origins=[
-        "http://localhost:5173",
-        "http://127.0.0.1:5173",
-    ],
-    allow_methods=["*"],
-    allow_headers=["*"],
-)
-
-# -------------------------------------------------------------------------
-# 2. CARGA DE SERVICIOS MECÁNICOS
+# CARGA DE SERVICIOS MECÁNICOS
 # -------------------------------------------------------------------------
 SERVICE_LIST = [
     ("astro", "services.astro_service.router"),
@@ -68,7 +54,7 @@ for service_name, module_path in SERVICE_LIST:
     try:
         module = importlib.import_module(module_path)
         if hasattr(module, "router"):
-            app.include_router(module.router)
+            app_include_router = module.router
             servicios_activos.append(service_name)
             logger.info(f"Servicio cargado: {service_name.upper()}")
         else:
@@ -78,6 +64,7 @@ for service_name, module_path in SERVICE_LIST:
                 {"servicio": service_name, "modulo": module_path},
             )
             servicios_fallidos.append(service_name)
+            continue
     except ImportError as e:
         registrar_incidente(
             TipoIncidencia.SERVICIO_NO_CARGADO,
@@ -85,6 +72,7 @@ for service_name, module_path in SERVICE_LIST:
             {"servicio": service_name, "modulo": module_path, "error": str(e)},
         )
         servicios_fallidos.append(service_name)
+        continue
     except Exception as e:
         registrar_incidente(
             TipoIncidencia.ERROR_INTERNO,
@@ -92,13 +80,78 @@ for service_name, module_path in SERVICE_LIST:
             {"servicio": service_name, "modulo": module_path, "error": str(e)},
         )
         servicios_fallidos.append(service_name)
+        continue
+
+# Collect routers to include after app creation
+_routers_to_include = []
+if VELORA_AVAILABLE:
+    _routers_to_include.append(orchestrator_router)
+    logger.info("Velora (Chat Neural) preparada para cargar.")
 
 # -------------------------------------------------------------------------
-# 3. CARGA DE VELORA (CAPA ETÉREA)
+# LIFESPAN (reemplaza @app.on_event("startup"))
 # -------------------------------------------------------------------------
-if VELORA_AVAILABLE:
+@asynccontextmanager
+async def lifespan(app: FastAPI):
+    # --- Arranque ---
+    logger.info("SISTEMA ONLINE.")
+    logger.info(f"Servicios activos: {', '.join(servicios_activos)}")
+    if servicios_fallidos:
+        logger.warning(f"Servicios fallidos: {', '.join(servicios_fallidos)}")
+
+    if VELORA_AVAILABLE:
+        try:
+            logger.info("Contactando con consciencia neuronal (Ollama)...")
+            weaver = get_weaver()
+            logger.info(f"Conexión establecida. Modelo activo: {weaver.model}")
+        except Exception as e:
+            registrar_incidente(
+                TipoIncidencia.OLLAMA_NO_RESPONDE,
+                f"Ollama no responde: {e}",
+                {"modelo": "qwen3:14b"},
+            )
+            logger.warning("Ollama no responde. La app funcionará, pero Velora no hablará.")
+
+    yield
+
+    # --- Cierre ---
+    logger.info("Velora Prismätika se detiene.")
+
+
+# -------------------------------------------------------------------------
+# APP FASTAPI
+# -------------------------------------------------------------------------
+app = FastAPI(title="Velora Prismätika", lifespan=lifespan)
+
+# -------------------------------------------------------------------------
+# 1. CONFIGURACIÓN CORS
+# -------------------------------------------------------------------------
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=[
+        "http://localhost:5173",
+        "http://127.0.0.1:5173",
+    ],
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
+
+# -------------------------------------------------------------------------
+# 2. MONTAR ROUTERS
+# -------------------------------------------------------------------------
+for service_name, module_path in SERVICE_LIST:
+    if service_name in servicios_fallidos:
+        continue
     try:
-        app.include_router(orchestrator_router)
+        module = importlib.import_module(module_path)
+        if hasattr(module, "router"):
+            app.include_router(module.router)
+    except Exception:
+        pass
+
+for router in _routers_to_include:
+    try:
+        app.include_router(router)
         logger.info("Velora (Chat Neural) cargada correctamente.")
     except Exception as e:
         registrar_incidente(
@@ -108,30 +161,7 @@ if VELORA_AVAILABLE:
         )
 
 # -------------------------------------------------------------------------
-# 4. EVENTOS DE INICIO
-# -------------------------------------------------------------------------
-@app.on_event("startup")
-async def startup_event():
-    logger.info("SISTEMA ONLINE.")
-    logger.info(f"Servicios activos: {', '.join(servicios_activos)}")
-    if servicios_fallidos:
-        logger.warning(f"Servicios fallidos: {', '.join(servicios_fallidos)}")
-
-    if VELORA_AVAILABLE:
-        try:
-            logger.info("Contactando con consciencia neuronal (Ollama)...")
-            weaver = VeloraWeaver()
-            logger.info("Conexión establecida. Velora está escuchando.")
-        except Exception as e:
-            registrar_incidente(
-                TipoIncidencia.OLLAMA_NO_RESPONDE,
-                f"Ollama no responde: {e}",
-                {"modelo": "qwen3:14b"},
-            )
-            logger.warning("Ollama no responde. La app funcionará, pero Velora no hablará.")
-
-# -------------------------------------------------------------------------
-# 5. ENDPOINTS DE SALUD E INCIDENCIAS
+# 3. ENDPOINTS DE SALUD E INCIDENCIAS
 # -------------------------------------------------------------------------
 
 @app.get("/")

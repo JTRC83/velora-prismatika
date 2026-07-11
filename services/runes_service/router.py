@@ -4,13 +4,13 @@ from typing import List, Dict, Any
 import logging
 
 from services.runes_service.runes_service import RunesService
-from orchestrator.velora_weaver import VeloraWeaver
+from orchestrator.velora_weaver import get_weaver
 
 router = APIRouter(prefix="/runes", tags=["runes"])
 logger = logging.getLogger("RunesRouter")
 
 mechanics = RunesService()
-weaver = VeloraWeaver()
+weaver = get_weaver()
 
 class RuneCastRequest(BaseModel):
     tipo: str = "three" # "one" (Consejo), "three" (Nornas), "five" (Cruz)

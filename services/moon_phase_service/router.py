@@ -4,13 +4,13 @@ from datetime import datetime
 import logging
 
 from services.moon_phase_service.moon_phase_service import MoonService
-from orchestrator.velora_weaver import VeloraWeaver
+from orchestrator.velora_weaver import get_weaver
 
 router = APIRouter(prefix="/moon-phase", tags=["moon"])
 logger = logging.getLogger("MoonRouter")
 
 mechanics = MoonService()
-weaver = VeloraWeaver()
+weaver = get_weaver()
 
 class MoonResponse(BaseModel):
     date: str

@@ -4,7 +4,7 @@ import logging
 from typing import List, Dict, Any 
 
 from services.tarot_service.tarot_service import TarotService
-from orchestrator.velora_weaver import VeloraWeaver
+from orchestrator.velora_weaver import get_weaver
 
 # 👇 ESTA ES LA VARIABLE QUE TE FALTABA 👇
 router = APIRouter(prefix="/tarot", tags=["tarot"])
@@ -22,7 +22,7 @@ try:
 except Exception as e:
     mechanics = None
 
-weaver = VeloraWeaver()
+weaver = get_weaver()
 
 class TiradaRequest(BaseModel):
     tipo: str = "three-card"

@@ -4,13 +4,13 @@ from typing import List, Optional
 import logging
 
 from services.kabbalah_service.kabbalah_service import KabbalahService
-from orchestrator.velora_weaver import VeloraWeaver
+from orchestrator.velora_weaver import get_weaver
 
 router = APIRouter(prefix="/kabbalah", tags=["kabbalah"])
 logger = logging.getLogger("KabbalahRouter")
 
 mechanics = KabbalahService()
-weaver = VeloraWeaver()
+weaver = get_weaver()
 
 class GematriaRequest(BaseModel):
     name: str

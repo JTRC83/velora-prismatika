@@ -3,14 +3,17 @@ import './AstroService.css'; // Estilos base
 import './RitualService.css'; // Estilos del Grimorio
 import VeloraLoader from './VeloraLoader';
 
-export default function RitualService({ onServiceResult }) {
-  const [birthdate, setBirthdate] = useState('');
+export default function RitualService({ onServiceResult, userData, onSaveUserData }) {
+  const [birthdate, setBirthdate] = useState(userData?.birthdate || '');
   const [ritual, setRitual] = useState(null);
   const [loading, setLoading] = useState(false);
 
   const fetchRitual = async (e) => {
     e.preventDefault();
     if(!birthdate) return;
+    if (birthdate !== userData?.birthdate) {
+      onSaveUserData?.({ birthdate });
+    }
     setLoading(true);
     setRitual(null);
     onServiceResult?.(null);

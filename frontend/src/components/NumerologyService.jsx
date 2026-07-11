@@ -2,10 +2,10 @@ import React, { useState } from 'react';
 import './NumerologyService.css';
 import VeloraLoader from './VeloraLoader';
 
-export default function NumerologyService({ onServiceResult }) {
+export default function NumerologyService({ onServiceResult, userData, onSaveUserData }) {
   const [formData, setFormData] = useState({
-    name: '',
-    birthdate: ''
+    name: userData?.name || '',
+    birthdate: userData?.birthdate || ''
   });
   
   const [loading, setLoading] = useState(false);
@@ -22,6 +22,10 @@ export default function NumerologyService({ onServiceResult }) {
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (!formData.name || !formData.birthdate) return;
+
+    if (formData.name !== userData?.name || formData.birthdate !== userData?.birthdate) {
+      onSaveUserData?.({ name: formData.name, birthdate: formData.birthdate });
+    }
 
     setLoading(true);
     setResult(null);

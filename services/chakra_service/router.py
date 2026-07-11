@@ -4,13 +4,13 @@ from typing import List, Optional
 import logging
 
 from services.chakra_service.chakra_service import ChakraService
-from orchestrator.velora_weaver import VeloraWeaver
+from orchestrator.velora_weaver import get_weaver
 
 router = APIRouter(prefix="/chakra", tags=["chakra"])
 logger = logging.getLogger("ChakraRouter")
 
 mechanics = ChakraService()
-weaver = VeloraWeaver()
+weaver = get_weaver()
 
 # Modelos de entrada
 class DiagnosisRequest(BaseModel):

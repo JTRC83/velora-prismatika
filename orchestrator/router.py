@@ -6,11 +6,11 @@ from fastapi import APIRouter
 from pydantic import BaseModel
 
 # Importamos solo el cerebro narrativo, NO los servicios mecánicos
-from orchestrator.velora_weaver import VeloraWeaver
+from orchestrator.velora_weaver import get_weaver
 from services.knowledge_service.store import knowledge_base
 
 router = APIRouter()
-weaver = VeloraWeaver()
+weaver = get_weaver()
 logger = logging.getLogger("VeloraRouter")
 
 # --- 1. CONFIGURACIÓN DE FACETAS ---
