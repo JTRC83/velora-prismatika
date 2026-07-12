@@ -110,7 +110,7 @@ const TarotService = ({ onServiceResult, onServiceLabelChange }) => {
           ? 'No puedo conectar con el servidor'
           : 'El backend devolvió un error',
         mensaje: esFalloConexion
-          ? 'Comprueba que la aplicación esté iniciada por completo (backend en el puerto 8000).'
+          ? 'Comprueba que la aplicación esté iniciada por completo.'
           : err.message,
       });
       setReadingState('idle');

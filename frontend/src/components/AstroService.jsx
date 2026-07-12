@@ -140,7 +140,7 @@ export default function AstroService({ onServiceResult, userData, onSaveUserData
 
     } catch (err) {
       console.error("Error completo:", err);
-      setError("Los astros guardan silencio... (Verifica que el Backend corre en el puerto 8000)");
+      setError("Los astros guardan silencio... (Verifica que la aplicación esté iniciada)");
       setLoading(false);
     }
   };

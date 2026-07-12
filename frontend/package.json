@@ -6,7 +6,7 @@
   "scripts": {
     "dev": "concurrently \"npm run vite\" \"npm run backend\"",
     "vite": "vite",
-    "backend": "cd .. && venv/bin/uvicorn orchestrator.main:app --reload --port 8000",
+    "backend": "cd .. && venv/bin/uvicorn orchestrator.main:app --reload --port 17890",
     "build": "vite build",
     "lint": "eslint .",
     "preview": "vite preview"
