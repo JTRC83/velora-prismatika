@@ -16,41 +16,6 @@ const MOON_PHASE_BACKDROP = [
   'new',
 ];
 
-const MOON_PHASE_META = {
-  new: {
-    label: 'Luna nueva',
-    whisper: 'semilla invisible',
-  },
-  'waxing-crescent': {
-    label: 'Creciente',
-    whisper: 'primer impulso',
-  },
-  'first-quarter': {
-    label: 'Cuarto creciente',
-    whisper: 'decisión',
-  },
-  'waxing-gibbous': {
-    label: 'Gibosa creciente',
-    whisper: 'ajuste',
-  },
-  full: {
-    label: 'Luna llena',
-    whisper: 'plenitud',
-  },
-  'waning-gibbous': {
-    label: 'Gibosa menguante',
-    whisper: 'integración',
-  },
-  'last-quarter': {
-    label: 'Cuarto menguante',
-    whisper: 'depuración',
-  },
-  'waning-crescent': {
-    label: 'Menguante',
-    whisper: 'retiro',
-  },
-};
-
 function normalizeText(value = '') {
   return value
     .toString()
@@ -93,15 +58,50 @@ function getMoonLightGeometry(artPhase, illumination = 0) {
   };
 }
 
+function getCrescentShadowOffset(illumination = 0, radius = 58) {
+  const measuredLight = Math.max(0, Math.min(0.5, Number(illumination) / 100));
+  const targetLight = measuredLight > 0 ? Math.max(0.075, measuredLight) : 0;
+
+  if (targetLight <= 0) return 0;
+
+  let low = 0;
+  let high = radius * 2;
+
+  for (let index = 0; index < 24; index += 1) {
+    const distance = (low + high) / 2;
+    const overlap =
+      2 * radius * radius * Math.acos(distance / (2 * radius)) -
+      0.5 * distance * Math.sqrt(4 * radius * radius - distance * distance);
+    const visibleRatio = 1 - overlap / (Math.PI * radius * radius);
+
+    if (visibleRatio < targetLight) low = distance;
+    else high = distance;
+  }
+
+  return (low + high) / 2;
+}
+
 function MoonPhaseIllustration({ phaseName, illumination }) {
   const artPhase = getMoonArtPhase(phaseName, illumination);
-  const phaseMeta = MOON_PHASE_META[artPhase] || MOON_PHASE_META.new;
   const lightValue = Math.round(Number(illumination) || 0);
   const lightGeometry = getMoonLightGeometry(artPhase, lightValue);
+  const crescentShadowOffset = getCrescentShadowOffset(illumination);
+  const crescentShadowCx =
+    artPhase === 'waning-crescent'
+      ? 180 + crescentShadowOffset
+      : 180 - crescentShadowOffset;
+  const crescentPath = [
+    'M 122 118',
+    'a 58 58 0 1 0 116 0',
+    'a 58 58 0 1 0 -116 0',
+    `M ${crescentShadowCx - 58} 118`,
+    'a 58 58 0 1 0 116 0',
+    'a 58 58 0 1 0 -116 0',
+  ].join(' ');
 
   return (
     <div className={`moon-illustration-wrap phase-${artPhase}`} aria-hidden="true">
-      <svg className="moon-illustration" viewBox="0 0 360 260" role="img">
+      <svg className="moon-illustration" viewBox="0 0 360 225" role="img">
         <defs>
           <radialGradient id="moonSurface" cx="35%" cy="28%" r="72%">
             <stop offset="0%" stopColor="#fffdf0" />
@@ -188,6 +188,11 @@ function MoonPhaseIllustration({ phaseName, illumination }) {
               rx={lightGeometry.biteRx}
               ry="61"
             />
+            <path
+              className="moon-light-crescent moon-light-crescent--precise"
+              d={crescentPath}
+              fillRule="evenodd"
+            />
             <ellipse
               className="moon-dark-bite moon-dark-bite--right"
               cx={lightGeometry.biteRightCx}
@@ -208,16 +213,6 @@ function MoonPhaseIllustration({ phaseName, illumination }) {
           </g>
 
           <circle className="moon-disc-stroke" cx="180" cy="118" r="58" />
-        </g>
-
-        <g className="moon-phase-caption">
-          <path d="M112 221c38 18 98 18 136 0" />
-          <text className="moon-phase-caption__label" x="180" y="232">
-            {phaseMeta.label}
-          </text>
-          <text className="moon-phase-caption__note" x="180" y="248">
-            {lightValue}% de luz · {phaseMeta.whisper}
-          </text>
         </g>
 
         <g className="moon-pedestal">

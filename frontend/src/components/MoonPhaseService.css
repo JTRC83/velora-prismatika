@@ -316,7 +316,7 @@
   filter:
     drop-shadow(0 18px 28px rgba(4, 8, 20, 0.38))
     drop-shadow(0 0 20px rgba(203, 213, 225, 0.14));
-  animation: floatMoon 4s ease-in-out infinite;
+  animation: floatMoon 3.2s ease-in-out infinite;
 }
 
 .moon-illustration {
@@ -400,14 +400,16 @@
 
 .phase-first-quarter .moon-light-half--right,
 .phase-last-quarter .moon-light-half--left,
-.phase-waxing-crescent .moon-light-crescent--right,
-.phase-waning-crescent .moon-light-crescent--left {
+.phase-waxing-crescent .moon-light-crescent--precise,
+.phase-waning-crescent .moon-light-crescent--precise {
   opacity: 1;
 }
 
-.phase-waxing-crescent .moon-light-crescent--right,
-.phase-waning-crescent .moon-light-crescent--left {
-  filter: drop-shadow(0 0 8px rgba(245, 235, 190, 0.36));
+.phase-waxing-crescent .moon-light-crescent--precise,
+.phase-waning-crescent .moon-light-crescent--precise {
+  filter:
+    brightness(1.16)
+    drop-shadow(0 0 9px rgba(245, 235, 190, 0.58));
 }
 
 .phase-waxing-gibbous .moon-dark-bite--left,
@@ -435,36 +437,6 @@
   stroke-width: 1.2;
 }
 
-.moon-phase-caption {
-  fill: none;
-  stroke: rgba(245, 235, 190, 0.36);
-  stroke-linecap: round;
-  text-anchor: middle;
-}
-
-.moon-phase-caption__label,
-.moon-phase-caption__note {
-  stroke: none;
-  fill: rgba(245, 235, 190, 0.78);
-  font-family: var(--font-heading);
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-}
-
-.moon-phase-caption__label {
-  font-size: 10px;
-  font-weight: 700;
-}
-
-.moon-phase-caption__note {
-  fill: rgba(203, 213, 225, 0.68);
-  font-family: var(--font-body);
-  font-size: 8px;
-  font-style: italic;
-  letter-spacing: 0.04em;
-  text-transform: none;
-}
-
 .moon-pedestal {
   fill: rgba(245, 235, 190, 0.08);
   stroke: rgba(226, 232, 240, 0.24);
@@ -478,8 +450,8 @@
 }
 
 @keyframes floatMoon {
-  0%, 100% { transform: translateY(0); }
-  50% { transform: translateY(-5px); }
+  0%, 100% { transform: translateY(2px); }
+  50% { transform: translateY(-8px); }
 }
 
 .moon-phase-name {
