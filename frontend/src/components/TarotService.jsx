@@ -42,18 +42,21 @@ const TarotService = ({ onServiceResult, onServiceLabelChange }) => {
   const [revealedCards, setRevealedCards] = useState({});
   const [failedImages, setFailedImages] = useState({});
   const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState(null);
 
   // Seleccionar tipo de tirada
   const selectSpread = (spread) => {
     setSelectedSpread(spread);
     onServiceLabelChange?.(getSpreadServiceName(spread));
     setReadingState('idle');
+    setError(null);
   };
 
   const startReading = async () => {
     setReadingState('shuffling');
     setIsLoading(true);
     setFailedImages({});
+    setError(null);
 
     try {
       const response = await fetch('/tarot/tirada', {
@@ -62,8 +65,22 @@ const TarotService = ({ onServiceResult, onServiceLabelChange }) => {
         body: JSON.stringify({ tipo: selectedSpread.id }),
       });
 
-      if (!response.ok) throw new Error('Error en el oráculo');
+      if (!response.ok) {
+        let detail = '';
+        try {
+          const errorBody = await response.json();
+          detail = errorBody.detail || JSON.stringify(errorBody);
+        } catch {
+          detail = await response.text().catch(() => '');
+        }
+        throw new Error(`Backend respondió ${response.status}${detail ? `: ${detail}` : ''}`);
+      }
+
       const data = await response.json();
+
+      if (!data.visual_data || !Array.isArray(data.visual_data)) {
+        throw new Error('La respuesta del backend no contiene cartas válidas (visual_data vacío o inválido).');
+      }
 
       // Ajustamos posiciones visuales si vienen del backend o usamos las predefinidas
       const cardsWithPos = data.visual_data.map((c, i) => ({
@@ -85,9 +102,17 @@ const TarotService = ({ onServiceResult, onServiceLabelChange }) => {
         setFailedImages({});
       }, 2000);
 
-    } catch (error) {
-      console.error("Error:", error);
-      alert("Velora guarda silencio. Verifica el backend.");
+    } catch (err) {
+      const esFalloConexion = err instanceof TypeError;
+      setError({
+        tipo: esFalloConexion ? 'conexion' : 'backend',
+        titulo: esFalloConexion
+          ? 'No puedo conectar con el servidor'
+          : 'El backend devolvió un error',
+        mensaje: esFalloConexion
+          ? 'Comprueba que la aplicación esté iniciada por completo (backend en el puerto 8000).'
+          : err.message,
+      });
       setReadingState('idle');
       setIsLoading(false);
     }
@@ -113,6 +138,7 @@ const TarotService = ({ onServiceResult, onServiceLabelChange }) => {
     setSelectedSpread(null);
     setCards([]);
     setReadingMeta(null);
+    setError(null);
     onServiceLabelChange?.(null);
     onServiceResult?.(null);
     setRevealedCards({});
@@ -231,6 +257,19 @@ const TarotService = ({ onServiceResult, onServiceLabelChange }) => {
         <button className="reset-btn" onClick={resetReading}>
           <span>Nueva Lectura</span>
         </button>
+      )}
+
+      {error && (
+        <div className="tarot-error-box">
+          <div className="tarot-error-header">
+            <span className="tarot-error-icon">❗</span>
+            <strong>{error.titulo}</strong>
+          </div>
+          <p className="tarot-error-message">{error.mensaje}</p>
+          <button className="tarot-error-dismiss" onClick={() => setError(null)}>
+            Reintentar
+          </button>
+        </div>
       )}
       </section>
     </div>
