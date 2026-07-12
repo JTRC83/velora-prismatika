@@ -38,8 +38,8 @@ const ICONS = {
 };
 
 const SERVICES_LEFT  = [
-  "Astrología Natal",
   "Numerología",
+  "Astrología Natal",
   "Fases Lunares",
   "Compatibilidad",
   "Rituales",
@@ -364,7 +364,7 @@ export default function App() {
         />
       )}
       {selectedService === 'Runas'            && <RunesService onServiceResult={serviceContextPublishers.runes} />}
-      {selectedService === 'Cábala'           && <KabbalahService onServiceResult={serviceContextPublishers.kabbalah} />}
+      {selectedService === 'Cábala'           && <KabbalahService onServiceResult={serviceContextPublishers.kabbalah} userData={userData} onSaveUserData={saveUserData} />}
       {selectedService === 'Tránsitos'        && <TransitsService onServiceResult={serviceContextPublishers.transits} />}
       {selectedService === 'Bola de Cristal'  && <CrystalBallService onServiceResult={serviceContextPublishers.crystal} />}
       {selectedService === 'Lectura de Mano'  && <PalmistryService onServiceResult={serviceContextPublishers.palmistry} />}

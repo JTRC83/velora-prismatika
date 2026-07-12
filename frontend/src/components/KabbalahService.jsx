@@ -22,9 +22,9 @@ const PATHS = [
   [7,8], [7,9], [7,10], [8,9], [8,10], [9,10]
 ];
 
-const KabbalahService = ({ onServiceResult }) => {
+const KabbalahService = ({ onServiceResult, userData, onSaveUserData }) => {
   const [selectedNode, setSelectedNode] = useState(null);
-  const [inputName, setInputName] = useState("");
+  const [inputName, setInputName] = useState(userData?.name || "");
   const [loading, setLoading] = useState(false);
   const [gematriaResult, setGematriaResult] = useState(null);
   const [veloraMessage, setVeloraMessage] = useState(null); // Nuevo estado para IA
@@ -57,6 +57,9 @@ const KabbalahService = ({ onServiceResult }) => {
   // 2. CÁLCULO GEMATRÍA (CONECTADO AL BACKEND)
   const calculateGematria = async () => {
     if (!inputName.trim()) return;
+    if (inputName !== userData?.name) {
+      onSaveUserData?.({ name: inputName });
+    }
     setLoading(true);
     setVeloraMessage(null);
     setSelectedNode(null);

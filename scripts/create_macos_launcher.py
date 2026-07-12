@@ -70,11 +70,6 @@ def build_svg() -> None:
     <clipPath id="roundedIcon">
       <rect x="34" y="34" width="956" height="956" rx="186" ry="186"/>
     </clipPath>
-    <radialGradient id="glassGlow" cx="28%" cy="16%" r="86%">
-      <stop offset="0%" stop-color="#ffffff" stop-opacity="0.24"/>
-      <stop offset="42%" stop-color="#ffffff" stop-opacity="0.04"/>
-      <stop offset="100%" stop-color="#ffffff" stop-opacity="0"/>
-    </radialGradient>
     <linearGradient id="edgeGlass" x1="0%" y1="0%" x2="100%" y2="100%">
       <stop offset="0%" stop-color="#ffffff" stop-opacity="0.48"/>
       <stop offset="42%" stop-color="#d9f4ff" stop-opacity="0.14"/>
@@ -99,11 +94,8 @@ def build_svg() -> None:
   <g filter="url(#softShadow)">
     <g clip-path="url(#roundedIcon)">
       <image href="data:image/png;base64,{image_data}" x="62" y="48" width="900" height="900" preserveAspectRatio="xMidYMid meet"/>
-      <rect x="34" y="34" width="956" height="956" rx="186" fill="url(#glassGlow)"/>
       <rect x="34" y="34" width="956" height="956" rx="186" fill="none" stroke="#ffffff" stroke-opacity="0.11" stroke-width="28"/>
       <rect x="74" y="74" width="876" height="876" rx="150" fill="none" stroke="#ffffff" stroke-opacity="0.08" stroke-width="14"/>
-      <path d="M102 164c178-98 418-112 692-46" fill="none" stroke="#ffffff" stroke-opacity="0.18" stroke-width="24" stroke-linecap="round"/>
-      <path d="M92 830c232 70 520 68 838-52" fill="none" stroke="#000000" stroke-opacity="0.22" stroke-width="36" stroke-linecap="round"/>
     </g>
   </g>
   <rect x="34" y="34" width="956" height="956" rx="186" fill="none" stroke="url(#edgeGlass)" stroke-width="26" filter="url(#innerGlass)"/>
@@ -155,8 +147,8 @@ def write_app_bundle() -> None:
         "CFBundleInfoDictionaryVersion": "6.0",
         "CFBundleName": "Velora Prismätika",
         "CFBundlePackageType": "APPL",
-        "CFBundleShortVersionString": "1.0",
-        "CFBundleVersion": "1",
+        "CFBundleShortVersionString": "1.0.1",
+        "CFBundleVersion": "2",
         "LSMinimumSystemVersion": "12.0",
         "NSHighResolutionCapable": True,
     }
@@ -183,21 +175,18 @@ osascript -e 'display notification "Arrancando Ollama, modelo y Velora…" with 
 def main() -> None:
     ensure_tools()
 
-    if not PNG_1024.exists():
-        if not SOURCE_COLOR.exists():
-            raise FileNotFoundError(
-                f"No existe la imagen base: {SOURCE_COLOR}\n"
-                f"Define VELORA_ICON_SOURCE con la ruta a un PNG cuadrado de al menos 1024px."
-            )
+    try:
         build_svg()
-        render_png()
-    else:
-        print(f"✓ Icono PNG ya existe: {PNG_1024}")
+    except (FileNotFoundError, PermissionError) as exc:
+        if not SVG_PATH.exists():
+            raise RuntimeError(
+                f"No puedo reconstruir el icono porque no puedo leer la imagen base: {SOURCE_COLOR}\n"
+                f"Define VELORA_ICON_SOURCE con una imagen accesible."
+            ) from exc
+        print(f"⚠️  No puedo leer la imagen base, reutilizo el SVG existente: {SVG_PATH}")
 
-    if not ICNS_PATH.exists():
-        build_icns()
-    else:
-        print(f"✓ Icono ICNS ya existe: {ICNS_PATH}")
+    render_png()
+    build_icns()
 
     write_app_bundle()
     print(f"App creada: {APP_DIR}")
