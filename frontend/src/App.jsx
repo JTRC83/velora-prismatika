@@ -224,7 +224,7 @@ export default function App() {
     const text = input.trim();
     if (!text || isSending) return;
 
-    setMessages(prev => [...prev, { text, user: true }]);
+    setMessages(prev => [...prev, { id: crypto.randomUUID(), text, user: true }]);
     setInput("");
     setIsSending(true);
 
@@ -257,6 +257,7 @@ export default function App() {
         setMessages(prev => [
           ...prev,
           {
+            id: crypto.randomUUID(),
             text: mensajesPorTipo[inc.tipo] || `Incidencia: ${inc.mensaje}`,
             user: false,
             incidencia: inc,
@@ -268,6 +269,7 @@ export default function App() {
       setMessages(prev => [
         ...prev,
         {
+          id: crypto.randomUUID(),
           text: data.velora_voice || "La bóveda permanece en silencio por ahora.",
           user: false,
           reflejo: data.reflejo,
@@ -280,6 +282,7 @@ export default function App() {
       setMessages(prev => [
         ...prev,
         {
+          id: crypto.randomUUID(),
           text: esFalloConexion
             ? "No puedo conectar con el servidor de Velora. Comprueba que la aplicación esté iniciada por completo."
             : `No he podido abrir el puente con Velora: ${error.message}`,

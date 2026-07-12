@@ -1,10 +1,18 @@
 import React from 'react';
 
 export default function ChatWindow({ messages }) {
+  const scrollRef = React.useRef(null);
+
+  React.useEffect(() => {
+    const el = scrollRef.current;
+    if (!el) return;
+    el.scrollTo({ top: el.scrollHeight, behavior: 'smooth' });
+  }, [messages]);
+
   return (
-    <div className="chat-window">
-      {messages.map((m,i) => (
-        <div key={i}
+    <div className="chat-window" ref={scrollRef}>
+      {messages.map(m => (
+        <div key={m.id}
              className={`chat-bubble ${m.user ? 'user' : 'bot'} ${m.incidencia ? 'chat-bubble--incidencia' : ''}`}>
           <div className="chat-text">{m.text}</div>
           {!m.user && m.serviceContextUsed && (
