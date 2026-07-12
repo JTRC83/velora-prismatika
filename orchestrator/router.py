@@ -72,11 +72,32 @@ SALUDO_WORDS = {
     "alguien",
 }
 
+# --- PROMPTS POR MODO ---
+# El frontend puede enviar modo='ampliar' para pedir una interpretación
+# extensa del resultado visible. El prompt vive aquí, no en el cliente.
+
+PROMPT_AMPLIAR = (
+    "Amplía la lectura visible para el usuario con una interpretación extensa, "
+    "simbólica y útil, con voz de Velora: mística sobria, elegante y cercana. "
+    "Consulta la bóveda para enriquecer el contexto del servicio, pero no muestres "
+    "fuentes ni nombres de notas. Estructura la respuesta sólo con estos dos apartados: "
+    "Los signos revelados y El hilo oculto. En Los signos revelados explica cada carta, "
+    "número, signo o dato visible por separado y qué aporta a la lectura. En El hilo oculto "
+    "explica cómo esas partes encajan entre sí, qué corriente común forman, qué tensión o "
+    "armonía revelan y qué orientación práctica dejan. No uses Las piezas, El engranaje ni "
+    "Síntesis. Cuando nombres cartas o datos clave, usa negrita Markdown como **La Estrella** "
+    "para que se destaquen. No comprimas la respuesta en un único párrafo por apartado: "
+    "escribe al menos dos párrafos bajo Los signos revelados y dos bajo El hilo oculto cuando "
+    "haya datos suficientes. Desarrolla lo necesario para que el usuario entienda las partes "
+    "y el conjunto. Termina siempre con una frase completa y punto final."
+)
+
 class Mensaje(BaseModel):
     usuario: str
     current_service: Optional[str] = None
     service_context: Optional[dict[str, Any]] = None
     use_knowledge: Optional[bool] = None
+    modo: Optional[str] = None
 
 
 def _compactar_contexto_servicio(contexto: Optional[dict[str, Any]], max_chars: int = 2600) -> str:
@@ -173,6 +194,10 @@ async def chat_generico(mensaje: Mensaje):
     """
     texto = mensaje.usuario.strip()
     contexto_servicio = _compactar_contexto_servicio(mensaje.service_context)
+
+    # Si el frontend pide ampliación, usar el prompt del backend
+    if mensaje.modo == "ampliar":
+        texto = PROMPT_AMPLIAR
 
     if not contexto_servicio and _es_saludo_simple(texto):
         return {
