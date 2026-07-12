@@ -39,6 +39,7 @@ const PalmistryService = ({ onServiceResult }) => {
   const [activeLine, setActiveLine] = useState(null);
   const [reading, setReading] = useState(null);
   const [loading, setLoading] = useState(false);
+  const [lineError, setLineError] = useState('');
 
   const [handSide, setHandSide] = useState('right');
   const [photo, setPhoto] = useState(emptyPhoto);
@@ -78,8 +79,12 @@ const PalmistryService = ({ onServiceResult }) => {
     if (!cameraActive || !video || !stream) return undefined;
 
     video.srcObject = stream;
-    video.play().catch(error => {
-      console.error(error);
+    video.play().then(() => {
+      if (video.readyState >= 2) {
+        setCameraReady(true);
+      }
+    }).catch(error => {
+      console.error('Error al reproducir video:', error);
       setCameraError('La cámara se ha abierto, pero no ha podido iniciar la vista previa.');
     });
 
@@ -101,6 +106,7 @@ const PalmistryService = ({ onServiceResult }) => {
   const handleModeChange = (nextMode) => {
     setMode(nextMode);
     setScanError('');
+    setLineError('');
     if (nextMode !== 'upload') stopCamera();
   };
 
@@ -108,11 +114,15 @@ const PalmistryService = ({ onServiceResult }) => {
     setActiveLine(lineId);
     setLoading(true);
     setReading(null);
+    setLineError('');
     onServiceResult?.(null);
 
     try {
       const res = await fetch(`/palmistry/read/${lineId}`);
-      if (!res.ok) throw new Error('Error conectando con Velora');
+      if (!res.ok) {
+        const errorBody = await res.json().catch(() => ({}));
+        throw new Error(errorBody.detail || `Backend respondió ${res.status}`);
+      }
 
       const data = await res.json();
 
@@ -125,7 +135,13 @@ const PalmistryService = ({ onServiceResult }) => {
         setLoading(false);
       }, 800);
     } catch (err) {
-      console.error(err);
+      const esFalloConexion = err instanceof TypeError;
+      setLineError({
+        titulo: esFalloConexion ? 'No puedo conectar con el servidor' : 'Error al leer la línea',
+        mensaje: esFalloConexion
+          ? 'Comprueba que la aplicación esté iniciada por completo.'
+          : err.message,
+      });
       setLoading(false);
     }
   };
@@ -139,6 +155,8 @@ const PalmistryService = ({ onServiceResult }) => {
 
   const handleFileChange = (event) => {
     const file = event.target.files?.[0];
+    event.target.value = '';
+
     if (!file) return;
     if (!file.type.startsWith('image/')) {
       setScanError('Sube una imagen en formato JPG, PNG o WebP.');
@@ -152,7 +170,13 @@ const PalmistryService = ({ onServiceResult }) => {
       image.onload = () => {
         setPhotoFromSource(src, 'upload', file.name, image.naturalWidth, image.naturalHeight);
       };
+      image.onerror = () => {
+        setScanError('No se pudo cargar la imagen. Puede estar corrupta o tener un formato incompatible.');
+      };
       image.src = src;
+    };
+    reader.onerror = () => {
+      setScanError('Error al leer el archivo seleccionado. Intenta con otro archivo.');
     };
     reader.readAsDataURL(file);
   };
@@ -160,6 +184,7 @@ const PalmistryService = ({ onServiceResult }) => {
   const startCamera = async () => {
     setCameraError('');
     setScanError('');
+    setScanReading(null);
 
     if (!navigator.mediaDevices?.getUserMedia) {
       setCameraError('Este navegador no permite acceder a la cámara desde aquí.');
@@ -181,8 +206,13 @@ const PalmistryService = ({ onServiceResult }) => {
       setCameraReady(false);
       setCameraActive(true);
     } catch (error) {
-      console.error(error);
-      setCameraError('No he podido abrir la cámara. Revisa permisos del navegador o usa una imagen subida.');
+      const mensajes = {
+        NotAllowedError: 'Permiso de cámara denegado. Activa el acceso en el navegador o usa una imagen subida.',
+        NotFoundError: 'No se encontró ninguna cámara en este dispositivo. Usa una imagen subida.',
+        NotReadableError: 'La cámara está ocupada por otra aplicación. Ciérrala e inténtalo de nuevo.',
+      };
+      const msg = mensajes[error.name] || 'No he podido abrir la cámara. Revisa permisos del navegador o usa una imagen subida.';
+      setCameraError(msg);
       stopCamera();
     }
   };
@@ -203,7 +233,10 @@ const PalmistryService = ({ onServiceResult }) => {
     canvas.width = width;
     canvas.height = height;
     const context = canvas.getContext('2d');
-    if (!context) return;
+    if (!context) {
+      setCameraError('No se pudo procesar la captura en este navegador.');
+      return;
+    }
     context.drawImage(video, sourceX, sourceY, width, height, 0, 0, width, height);
     const src = canvas.toDataURL('image/jpeg', 0.92);
     setPhotoFromSource(src, 'camera', 'captura-camara.jpg', width, height);
@@ -257,7 +290,6 @@ const PalmistryService = ({ onServiceResult }) => {
         reflejo: data.reflejo,
       });
     } catch (error) {
-      console.error(error);
       if (error instanceof TypeError) {
         setScanError('No puedo conectar con el servidor de Velora. Comprueba que la aplicación esté iniciada por completo.');
       } else {
@@ -266,6 +298,13 @@ const PalmistryService = ({ onServiceResult }) => {
     } finally {
       setScanLoading(false);
     }
+  };
+
+  const handleNewScan = () => {
+    setScanReading(null);
+    setPhoto(emptyPhoto);
+    setScanError('');
+    onServiceResult?.(null);
   };
 
   return (
@@ -357,6 +396,14 @@ const PalmistryService = ({ onServiceResult }) => {
                   <div className="info-content active fade-in">
                     {loading ? (
                       <VeloraLoader message="Velora está trazando tu piel..." compact />
+                    ) : lineError ? (
+                      <div className="palm-line-error">
+                        <strong>{lineError.titulo}</strong>
+                        <p>{lineError.mensaje}</p>
+                        <button className="clear-selection-btn" onClick={() => { setActiveLine(null); setLineError(''); }}>
+                          Volver
+                        </button>
+                      </div>
                     ) : reading ? (
                       <>
                         <h3>{reading.line_name}</h3>
@@ -386,7 +433,7 @@ const PalmistryService = ({ onServiceResult }) => {
                         </button>
                       </>
                     ) : (
-                      <p>Error en la lectura.</p>
+                      <p>Esperando lectura...</p>
                     )}
                   </div>
                 ) : (
@@ -447,7 +494,7 @@ const PalmistryService = ({ onServiceResult }) => {
                 <button className="palm-action-btn" onClick={() => fileInputRef.current?.click()}>
                   Subir imagen
                 </button>
-                <button className="palm-action-btn" onClick={startCamera}>
+                <button className="palm-action-btn" onClick={startCamera} disabled={cameraActive}>
                   Usar cámara
                 </button>
               </div>
@@ -465,6 +512,7 @@ const PalmistryService = ({ onServiceResult }) => {
                       playsInline
                       muted
                       onLoadedData={() => setCameraReady(true)}
+                      onCanPlay={() => setCameraReady(true)}
                     />
                     <div className="camera-hand-guide" aria-hidden="true">
                       <span className="camera-guide-label camera-guide-label--top">Dedos arriba</span>
@@ -510,13 +558,21 @@ const PalmistryService = ({ onServiceResult }) => {
 
               {scanError && <p className="palm-error">{scanError}</p>}
 
-              <button
-                className="scan-palm-btn"
-                onClick={handleScan}
-                disabled={!photo.src || scanLoading}
-              >
-                {scanLoading ? 'Leyendo trazos...' : 'Leer esta mano'}
-              </button>
+              {!scanLoading && !scanReading && (
+                <button
+                  className="scan-palm-btn"
+                  onClick={handleScan}
+                  disabled={!photo.src || cameraActive}
+                >
+                  {photo.src ? 'Leer esta mano' : 'Sube o captura una mano primero'}
+                </button>
+              )}
+
+              {scanReading && (
+                <button className="scan-palm-btn" onClick={handleNewScan}>
+                  Nueva lectura
+                </button>
+              )}
             </section>
 
             <section className="palm-scan-panel">

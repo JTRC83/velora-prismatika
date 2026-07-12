@@ -858,6 +858,33 @@
   font-style: italic;
 }
 
+.palm-line-error {
+  display: grid;
+  gap: 0.5rem;
+  padding: 1rem 1.1rem;
+  border: 1px solid rgba(127, 29, 29, 0.28);
+  border-left: 4px solid #b45309;
+  border-radius: 14px;
+  background: rgba(254, 243, 199, 0.45);
+}
+
+.palm-line-error strong {
+  color: #7f1d1d;
+  font-family: var(--font-heading, "Faculty Glyphic", serif);
+  font-size: 0.92rem;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+.palm-line-error p {
+  margin: 0;
+  color: rgba(45, 26, 0, 0.82);
+  font-family: var(--font-body, "Garamond", "Georgia", serif);
+  font-size: 0.95rem;
+  line-height: 1.5;
+  overflow-wrap: anywhere;
+}
+
 .palm-waiting {
   display: grid;
   grid-template-columns: minmax(8rem, 0.42fr) minmax(0, 1fr);
