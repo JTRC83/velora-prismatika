@@ -322,6 +322,9 @@
   text-shadow: 0 1px 0 rgba(255, 255, 255, 0.38);
 }
 
+.velora-insight-copy h1,
+.velora-insight-copy h2,
+.velora-insight-copy h3,
 .velora-insight-copy h4 {
   position: relative;
   width: fit-content;
@@ -334,6 +337,12 @@
   text-transform: uppercase;
 }
 
+.velora-insight-copy h1::before,
+.velora-insight-copy h1::after,
+.velora-insight-copy h2::before,
+.velora-insight-copy h2::after,
+.velora-insight-copy h3::before,
+.velora-insight-copy h3::after,
 .velora-insight-copy h4::before,
 .velora-insight-copy h4::after {
   content: "";
@@ -344,21 +353,58 @@
   background: linear-gradient(90deg, transparent, rgba(78, 57, 9, 0.42));
 }
 
+.velora-insight-copy h1::before,
+.velora-insight-copy h2::before,
+.velora-insight-copy h3::before,
 .velora-insight-copy h4::before {
   right: calc(100% + 0.85rem);
 }
 
+.velora-insight-copy h1::after,
+.velora-insight-copy h2::after,
+.velora-insight-copy h3::after,
 .velora-insight-copy h4::after {
   left: calc(100% + 0.85rem);
   transform: scaleX(-1);
 }
 
-.velora-insight-copy .is-list-line {
+.velora-insight-copy ul,
+.velora-insight-copy ol {
+  margin: 0;
+  padding-left: 1.4rem;
+}
+
+.velora-insight-copy li {
+  margin-bottom: 0.5rem;
   padding: 0.75rem 0.95rem;
   border: 1px solid rgba(78, 57, 9, 0.12);
   border-left: 3px solid rgba(184, 134, 11, 0.42);
   border-radius: 14px;
   background: rgba(255, 251, 240, 0.3);
+  color: rgba(45, 26, 0, 0.84);
+  font-family: var(--font-body, "Garamond", "Georgia", serif);
+  font-size: clamp(1.04rem, 1.65vw, 1.18rem);
+  line-height: 1.62;
+  list-style: none;
+}
+
+.velora-insight-copy blockquote {
+  margin: 0;
+  padding: 0.5rem 1rem;
+  border-left: 3px solid rgba(184, 134, 11, 0.42);
+  color: rgba(45, 26, 0, 0.7);
+  font-style: italic;
+}
+
+.velora-insight-copy a {
+  color: #8a6d1e;
+  text-decoration: underline;
+  text-underline-offset: 0.15rem;
+}
+
+.velora-insight-copy em {
+  color: rgba(45, 26, 0, 0.7);
+  font-style: italic;
 }
 
 @keyframes veloraLoreIn {

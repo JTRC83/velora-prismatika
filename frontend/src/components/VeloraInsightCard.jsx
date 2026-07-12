@@ -1,42 +1,8 @@
 import React from 'react';
+import ReactMarkdown from 'react-markdown';
 import VeloraLoader from './VeloraLoader';
 import { SERVICE_LORE_ROTATION_MS, getServiceLore } from '../data/serviceLore';
 import './VeloraInsightCard.css';
-
-const SECTION_HEADINGS = new Set([
-  'los signos revelados',
-  'el hilo oculto',
-  'la corriente visible',
-  'la corriente de fondo',
-  'lectura de conjunto',
-  'reflejo practico',
-  'reflejo práctico',
-]);
-
-function classifyInsightLine(line) {
-  const normalized = line
-    .replace(/^#+\s*/, '')
-    .replace(/^\*\*|\*\*$/g, '')
-    .replace(/:$/, '')
-    .trim()
-    .toLowerCase();
-
-  if (SECTION_HEADINGS.has(normalized)) return 'heading';
-  if (/^[-•]\s+/.test(line)) return 'list';
-  return 'paragraph';
-}
-
-function renderInlineEmphasis(text) {
-  const parts = text.split(/(\*\*[^*]+\*\*)/g);
-
-  return parts.map((part, index) => {
-    if (part.startsWith('**') && part.endsWith('**')) {
-      return <strong key={index}>{part.slice(2, -2)}</strong>;
-    }
-
-    return part;
-  });
-}
 
 export default function VeloraInsightCard({ insight }) {
   const status = insight?.status || 'idle';
@@ -68,10 +34,6 @@ export default function VeloraInsightCard({ insight }) {
 
   if (!insight || status === 'idle') return null;
 
-  const paragraphs = text
-    .split('\n')
-    .map(line => line.trim())
-    .filter(Boolean);
   const activeLore = lore.items[activeLoreIndex % lore.items.length];
   const isFlipped = status === 'ready' || status === 'error';
 
@@ -127,24 +89,7 @@ export default function VeloraInsightCard({ insight }) {
 
           {status === 'ready' && (
             <div className="velora-insight-copy">
-              {paragraphs.map((paragraph, index) => {
-                const lineType = classifyInsightLine(paragraph);
-                const cleanParagraph = paragraph.replace(/^[-•]\s+/, '');
-
-                if (lineType === 'heading') {
-                  return (
-                    <h4 key={index}>
-                      {cleanParagraph.replace(/^\*\*|\*\*$/g, '').replace(/:$/, '')}
-                    </h4>
-                  );
-                }
-
-                return (
-                  <p key={index} className={lineType === 'list' ? 'is-list-line' : undefined}>
-                    {renderInlineEmphasis(cleanParagraph)}
-                  </p>
-                );
-              })}
+              <ReactMarkdown>{text}</ReactMarkdown>
             </div>
           )}
 
