@@ -12,22 +12,22 @@ OLLAMA_NUM_CTX="${OLLAMA_NUM_CTX:-8192}"
 OLLAMA_NUM_PREDICT="${OLLAMA_NUM_PREDICT:-1600}"
 API_HOST="${API_HOST:-127.0.0.1}"
 API_PORT="${API_PORT:-8000}"
-WEB_HOST="${WEB_HOST:-127.0.0.1}"
-WEB_PORT="${WEB_PORT:-5173}"
-APP_URL="${APP_URL:-http://${WEB_HOST}:${WEB_PORT}/}"
+APP_URL="${APP_URL:-http://${API_HOST}:${API_PORT}/}"
 
 NO_OPEN=0
 SKIP_WARM=0
+SKIP_BUILD=0
 RESTART_STUCK_OLLAMA="${RESTART_STUCK_OLLAMA:-0}"
 
 for arg in "$@"; do
   case "$arg" in
     --no-open) NO_OPEN=1 ;;
     --skip-warm) SKIP_WARM=1 ;;
+    --skip-build) SKIP_BUILD=1 ;;
     --restart-stuck-ollama) RESTART_STUCK_OLLAMA=1 ;;
     *)
       echo "Argumento desconocido: $arg" >&2
-      echo "Uso: scripts/start_velora.sh [--no-open] [--skip-warm] [--restart-stuck-ollama]" >&2
+      echo "Uso: scripts/start_velora.sh [--no-open] [--skip-warm] [--skip-build] [--restart-stuck-ollama]" >&2
       exit 2
       ;;
   esac
@@ -175,25 +175,28 @@ ensure_backend() {
 }
 
 ensure_frontend() {
-  if port_is_open "$WEB_PORT"; then
-    echo "✓ Frontend ya estaba activo en :$WEB_PORT"
-  else
-    say_step "Arrancando frontend Velora"
+  if [[ "$SKIP_BUILD" -eq 0 ]]; then
+    say_step "Construyendo frontend de producción"
     (
       cd "$ROOT_DIR/frontend"
-      npm run vite -- --host "$WEB_HOST" --port "$WEB_PORT"
-    ) >"$LOG_DIR/frontend.log" 2>&1 &
-    echo $! >"$PID_DIR/frontend.pid"
+      npm run build
+    )
+  else
+    echo "✓ Build del frontend saltado (--skip-build)"
   fi
 
-  wait_for_http "$APP_URL" "Frontend" 75
+  if [[ ! -d "$ROOT_DIR/frontend/dist" ]]; then
+    echo "❌ No se encontró frontend/dist. Ejecuta 'npm run build' en frontend/ manualmente." >&2
+    exit 1
+  fi
+  echo "✓ Frontend de producción listo en frontend/dist"
 }
 
 main() {
   say_step "Despertando Velora Prismätika"
   ensure_ollama
-  ensure_backend
   ensure_frontend
+  ensure_backend
 
   if [[ "$NO_OPEN" -eq 0 ]]; then
     say_step "Abriendo Velora"

@@ -172,8 +172,8 @@ PROJECT_ROOT="{ROOT}"
 LOG_DIR="$PROJECT_ROOT/.runtime/logs"
 mkdir -p "$LOG_DIR"
 
-osascript -e 'display notification "Arrancando Ollama, Qwen y Velora…" with title "Velora Prismätika"' >/dev/null 2>&1 || true
-"$PROJECT_ROOT/scripts/start_velora.sh" --restart-stuck-ollama >>"$LOG_DIR/macos-launcher.log" 2>&1 &
+osascript -e 'display notification "Arrancando Ollama, modelo y Velora…" with title "Velora Prismätika"' >/dev/null 2>&1 || true
+"$PROJECT_ROOT/scripts/start_velora.sh" --restart-stuck-ollama --skip-build >>"$LOG_DIR/macos-launcher.log" 2>&1 &
 """,
         encoding="utf-8",
     )
@@ -182,9 +182,23 @@ osascript -e 'display notification "Arrancando Ollama, Qwen y Velora…" with ti
 
 def main() -> None:
     ensure_tools()
-    build_svg()
-    render_png()
-    build_icns()
+
+    if not PNG_1024.exists():
+        if not SOURCE_COLOR.exists():
+            raise FileNotFoundError(
+                f"No existe la imagen base: {SOURCE_COLOR}\n"
+                f"Define VELORA_ICON_SOURCE con la ruta a un PNG cuadrado de al menos 1024px."
+            )
+        build_svg()
+        render_png()
+    else:
+        print(f"✓ Icono PNG ya existe: {PNG_1024}")
+
+    if not ICNS_PATH.exists():
+        build_icns()
+    else:
+        print(f"✓ Icono ICNS ya existe: {ICNS_PATH}")
+
     write_app_bundle()
     print(f"App creada: {APP_DIR}")
     print(f"Icono creado: {ICNS_PATH}")

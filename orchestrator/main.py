@@ -1,9 +1,12 @@
 # orchestrator/main.py
 import importlib
 import logging
+import os
 from contextlib import asynccontextmanager
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
+from fastapi.staticfiles import StaticFiles
+from fastapi.responses import FileResponse
 
 from orchestrator.incidentes import TipoIncidencia, registrar_incidente
 
@@ -164,15 +167,6 @@ for router in _routers_to_include:
 # 3. ENDPOINTS DE SALUD E INCIDENCIAS
 # -------------------------------------------------------------------------
 
-@app.get("/")
-def root():
-    return {
-        "status": "Velora Prismätika Online",
-        "services_loaded": len(servicios_activos),
-        "services_failed": servicios_fallidos,
-        "ai_active": VELORA_AVAILABLE,
-    }
-
 @app.get("/health")
 def health():
     """Endpoint de salud detallado para diagnóstico."""
@@ -182,3 +176,37 @@ def health():
         "services_failed": servicios_fallidos,
         "ai_active": VELORA_AVAILABLE,
     }
+
+@app.get("/api/status")
+def api_status():
+    """Estado de la API para diagnóstico programático."""
+    return {
+        "status": "Velora Prismätika Online",
+        "services_loaded": len(servicios_activos),
+        "services_failed": servicios_fallidos,
+        "ai_active": VELORA_AVAILABLE,
+    }
+
+# -------------------------------------------------------------------------
+# 4. SERVIR FRONTEND DE PRODUCCIÓN
+# -------------------------------------------------------------------------
+# Si existe frontend/dist (vite build), FastAPI sirve la app completa.
+# En modo desarrollo, Vite corre aparte en :5173 y no se sirve aquí.
+
+_FRONTEND_DIST = os.path.join(os.path.dirname(os.path.dirname(__file__)), "frontend", "dist")
+_FRONTEND_INDEX = os.path.join(_FRONTEND_DIST, "index.html")
+
+if os.path.isdir(_FRONTEND_DIST):
+    app.mount("/assets", StaticFiles(directory=os.path.join(_FRONTEND_DIST, "assets")), name="assets")
+
+    @app.get("/{full_path:path}")
+    async def serve_frontend(full_path: str):
+        """Sirve el frontend SPA. Las rutas de la API ya están registradas arriba."""
+        file_path = os.path.join(_FRONTEND_DIST, full_path)
+        if os.path.isfile(file_path):
+            return FileResponse(file_path)
+        return FileResponse(_FRONTEND_INDEX)
+
+    logger.info(f"Frontend de producción servido desde {_FRONTEND_DIST}")
+else:
+    logger.info("Frontend de producción no encontrado. Modo desarrollo: usa Vite en :5173.")
