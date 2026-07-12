@@ -306,12 +306,40 @@ class KnowledgeBase:
         self.documents: Dict[str, KnowledgeDocument] = {}
         self.chunks: List[KnowledgeChunk] = []
         self.indexed_at: Optional[float] = None
+        self._vault_fingerprint: Optional[Dict[str, float]] = None
 
     def vault_exists(self) -> bool:
         return self.vault_path.exists() and self.vault_path.is_dir()
 
+    def _calcular_fingerprint(self) -> Dict[str, float]:
+        """Devuelve un mapa {ruta_relativa: st_mtime} de los .md de la bóveda."""
+        fingerprint = {}
+        if not self.vault_exists():
+            return fingerprint
+        for path in self.vault_path.rglob("*.md"):
+            if any(part.startswith(".") for part in path.relative_to(self.vault_path).parts):
+                continue
+            try:
+                rel = str(path.relative_to(self.vault_path))
+                fingerprint[rel] = path.stat().st_mtime
+            except OSError:
+                continue
+        return fingerprint
+
+    def _boveda_cambiada(self) -> bool:
+        """Compara el fingerprint actual con el guardado tras la última indexación."""
+        if self._vault_fingerprint is None:
+            return True
+        actual = self._calcular_fingerprint()
+        if set(actual.keys()) != set(self._vault_fingerprint.keys()):
+            return True
+        for ruta, mtime in actual.items():
+            if self._vault_fingerprint.get(ruta) != mtime:
+                return True
+        return False
+
     def refresh(self, force: bool = False) -> None:
-        if self.indexed_at and not force:
+        if self.indexed_at and not force and not self._boveda_cambiada():
             return
 
         self.documents = {}
@@ -319,6 +347,7 @@ class KnowledgeBase:
 
         if not self.vault_exists():
             self.indexed_at = time.time()
+            self._vault_fingerprint = {}
             return
 
         for path in sorted(self.vault_path.rglob("*.md")):
@@ -327,6 +356,7 @@ class KnowledgeBase:
             self._index_file(path)
 
         self.indexed_at = time.time()
+        self._vault_fingerprint = self._calcular_fingerprint()
 
     def _index_file(self, path: Path) -> None:
         try:
