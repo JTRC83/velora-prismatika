@@ -402,27 +402,27 @@
   z-index: 8;
   display: grid;
   justify-items: center;
-  width: clamp(15.6rem, 33vw, 20.8rem);
-  height: 5.4rem;
-  margin-top: -1.2rem;
+  width: clamp(16rem, 34vw, 21rem);
+  height: 6.6rem;
+  margin-top: -1.6rem;
 }
 
 /* Aro superior que sujeta la bola */
 .stand-ring {
   position: absolute;
-  top: 0;
+  top: 0.05rem;
   left: 50%;
-  width: 84%;
-  height: 1.2rem;
+  width: 88%;
+  height: 1.4rem;
   border: 1px solid rgba(31, 12, 3, 0.5);
   border-radius: 50%;
   background:
-    radial-gradient(ellipse at 54% 16%, rgba(255, 232, 188, 0.55), transparent 40%),
+    radial-gradient(ellipse at 50% 18%, rgba(255, 232, 188, 0.5), transparent 45%),
     linear-gradient(90deg, #271006 0%, #62300e 22%, #a95f21 50%, #62300e 78%, #271006 100%);
   box-shadow:
-    inset 0 0.2rem 0 rgba(255, 226, 180, 0.24),
-    inset 0 -0.28rem 0 rgba(18, 7, 2, 0.52),
-    0 0.12rem 0.3rem rgba(18, 7, 2, 0.22);
+    inset 0 0.25rem 0 rgba(255, 226, 180, 0.24),
+    inset 0 -0.35rem 0 rgba(18, 7, 2, 0.52),
+    0 0.18rem 0.5rem rgba(18, 7, 2, 0.28);
   transform: translateX(-50%);
   pointer-events: none;
 }
@@ -430,20 +430,20 @@
 /* Columna / pedestal */
 .stand-column {
   position: absolute;
-  top: 0.55rem;
+  top: 0.72rem;
   left: 50%;
-  width: 80%;
-  height: 3.6rem;
+  width: 78%;
+  height: 4.4rem;
   border-inline: 1px solid rgba(31, 12, 3, 0.52);
-  border-radius: 0.42rem 0.42rem 1.62rem 1.62rem / 0.24rem 0.24rem 0.88rem 0.88rem;
+  border-radius: 0.34rem 0.34rem 1.8rem 1.8rem / 0.22rem 0.22rem 1rem 1rem;
   background:
     radial-gradient(ellipse at 50% 8%, rgba(255, 220, 154, 0.28), transparent 40%),
-    linear-gradient(180deg, rgba(255, 210, 141, 0.16), transparent 26%, rgba(20, 8, 2, 0.38) 100%),
+    linear-gradient(180deg, rgba(255, 210, 141, 0.16), transparent 22%, rgba(20, 8, 2, 0.38) 100%),
     linear-gradient(90deg, #1b0a03 0%, #5a2a0b 14%, #944a16 36%, #dba16c 57%, #79360f 79%, #1b0a03 100%);
   box-shadow:
     inset 0.34rem 0 0.7rem rgba(18, 7, 2, 0.36),
     inset -0.34rem 0 0.7rem rgba(18, 7, 2, 0.34),
-    inset 0 -1.02rem 0 rgba(18, 7, 2, 0.6);
+    inset 0 -1.2rem 0 rgba(18, 7, 2, 0.6);
   transform: translateX(-50%);
   pointer-events: none;
 }
@@ -453,12 +453,12 @@
   content: "";
   position: absolute;
   left: 50%;
-  top: 0.32rem;
-  width: 106%;
-  height: 0.2rem;
+  top: 0.45rem;
+  width: 108%;
+  height: 0.22rem;
   border-radius: 999px;
   background:
-    linear-gradient(90deg, rgba(18, 7, 2, 0.68), rgba(255, 222, 166, 0.26), rgba(18, 7, 2, 0.68));
+    linear-gradient(90deg, rgba(18, 7, 2, 0.68), rgba(255, 222, 166, 0.28), rgba(18, 7, 2, 0.68));
   transform: translateX(-50%);
 }
 
@@ -466,12 +466,12 @@
   content: "";
   position: absolute;
   left: 50%;
-  bottom: 0.28rem;
-  width: 112%;
-  height: 0.54rem;
+  bottom: 0.36rem;
+  width: 116%;
+  height: 0.62rem;
   border-radius: 999px;
   background:
-    linear-gradient(90deg, rgba(18, 7, 2, 0.68), rgba(255, 220, 151, 0.24), rgba(18, 7, 2, 0.68));
+    linear-gradient(90deg, rgba(18, 7, 2, 0.68), rgba(255, 220, 151, 0.26), rgba(18, 7, 2, 0.68));
   transform: translateX(-50%);
 }
 
@@ -480,8 +480,8 @@
   position: absolute;
   left: 50%;
   bottom: 0;
-  width: 118%;
-  height: 2.2rem;
+  width: 128%;
+  height: 2.8rem;
   border: 1px solid rgba(31, 12, 3, 0.6);
   border-radius: 50% / 48%;
   background:
@@ -490,9 +490,24 @@
     linear-gradient(180deg, rgba(154, 72, 22, 0.86), rgba(68, 25, 6, 0.96) 58%, rgba(14, 5, 1, 0.99)),
     linear-gradient(90deg, #190702 0%, #4b1d04 24%, #7a3510 50%, #4b1d04 76%, #190702 100%);
   box-shadow:
-    inset 0 0.36rem 0 rgba(255, 224, 171, 0.24),
-    inset 0 -1.1rem 0 rgba(12, 4, 1, 0.8),
-    0 1.15rem 1.55rem rgba(45, 26, 0, 0.24);
+    inset 0 0.45rem 0 rgba(255, 224, 171, 0.24),
+    inset 0 -1.4rem 0 rgba(12, 4, 1, 0.8),
+    0 1.3rem 1.8rem rgba(45, 26, 0, 0.24);
+  transform: translateX(-50%);
+  pointer-events: none;
+}
+
+/* Sombra de contacto entre bola y peana */
+.stand-foot::after {
+  content: "";
+  position: absolute;
+  top: -0.75rem;
+  left: 50%;
+  width: 72%;
+  height: 1.6rem;
+  border-radius: 50%;
+  background: radial-gradient(ellipse at center, rgba(18, 7, 2, 0.35), transparent 70%);
+  filter: blur(0.35rem);
   transform: translateX(-50%);
   pointer-events: none;
 }
