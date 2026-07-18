@@ -297,6 +297,8 @@
 
 .ball-eye-sigil {
   position: absolute;
+  top: 50%;
+  left: 50%;
   z-index: 24;
   width: min(72%, 17rem);
   height: auto;
@@ -309,13 +311,13 @@
     brightness(1.2)
     drop-shadow(0 0 16px rgba(255, 250, 220, 0.35));
   pointer-events: none;
-  transform: scale(0.93);
+  transform: translate(-50%, -50%) scale(0.93);
   transition: opacity 0.8s ease, transform 0.8s ease;
 }
 
 .crystal-ball.pulsing .ball-eye-sigil {
   opacity: 0.13;
-  transform: scale(1);
+  transform: translate(-50%, -50%) scale(1);
   animation: crystalEyeSigil 4.2s ease-in-out infinite;
 }
 
@@ -779,12 +781,12 @@
   0%,
   100% {
     opacity: 0.08;
-    transform: scale(0.96);
+    transform: translate(-50%, -50%) scale(0.96);
   }
 
   50% {
     opacity: 0.16;
-    transform: scale(1.015);
+    transform: translate(-50%, -50%) scale(1.015);
   }
 }
 
