@@ -550,7 +550,12 @@ const PalmistryService = ({ onServiceResult }) => {
                 </div>
               ) : (
                 <div className="photo-empty-state">
-                  <span className="palm-symbol" aria-hidden="true">✋</span>
+                  <img
+                    className="palm-empty-hand"
+                    src="/assets/icons/mano.png"
+                    alt=""
+                    aria-hidden="true"
+                  />
                   <h3>Esperando una mano</h3>
                   <p>Sube una foto o abre la cámara para preparar la lectura.</p>
                 </div>
