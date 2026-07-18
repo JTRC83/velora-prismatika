@@ -106,17 +106,19 @@ const CrystalService = ({ onServiceResult }) => {
           <div className="ball-reflection"></div>
           <div className="ball-highlight"></div>
           
-          {/* Niebla dinámica */}
-          <div 
-            className="ball-fog" 
-            style={{ opacity: state === 'idle' ? 0.15 : fogIntensity }}
-          ></div>
-          <img
-            className="ball-eye-sigil"
-            src="/assets/ojo_velora.png"
-            alt=""
-            aria-hidden="true"
-          />
+          <div className="ball-inner">
+            {/* Niebla dinámica */}
+            <div
+              className="ball-fog"
+              style={{ opacity: state === 'idle' ? 0.15 : fogIntensity }}
+            ></div>
+            <img
+              className="ball-eye-sigil"
+              src="/assets/ojo_velora.png"
+              alt=""
+              aria-hidden="true"
+            />
+          </div>
 
           <div className="ball-content">
             {state === 'gazing' && (
