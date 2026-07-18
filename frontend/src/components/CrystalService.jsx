@@ -145,7 +145,9 @@ const CrystalService = ({ onServiceResult }) => {
         </div>
 
         <div className="crystal-stand">
-          <div className="stand-base"></div>
+          <div className="stand-ring" aria-hidden="true" />
+          <div className="stand-column" aria-hidden="true" />
+          <div className="stand-foot" aria-hidden="true" />
         </div>
       </div>
 
@@ -182,8 +184,9 @@ const CrystalService = ({ onServiceResult }) => {
                 <button onClick={() => consultOracle('¿Tendré éxito en el trabajo?')}>
                   <span className="focus-icon" aria-hidden="true">
                     <svg viewBox="0 0 24 24" focusable="false">
-                      <path d="M14.4 5.2a4.2 4.2 0 0 0 4.4 4.4l-8.9 8.9a2 2 0 0 1-2.8 0l-1.6-1.6a2 2 0 0 1 0-2.8l8.9-8.9Z" />
-                      <path d="M12.8 6.8 17.2 11.2" />
+                      <rect x="3" y="7.5" width="18" height="12" rx="2" />
+                      <path d="M9 7.5V5.8a1.8 1.8 0 0 1 1.8-1.8h2.4A1.8 1.8 0 0 1 15 5.8v1.7" />
+                      <path d="M3 12.5h18" />
                     </svg>
                   </span>
                   <span>Trabajo</span>

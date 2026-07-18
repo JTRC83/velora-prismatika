@@ -384,105 +384,106 @@
   text-shadow: 0 1px 3px rgba(45, 26, 0, 0.7);
 }
 
+/* --- PEANA: aro superior + pedestal + base --- */
+
 .crystal-stand {
   position: relative;
   z-index: 8;
+  display: grid;
+  justify-items: center;
   width: clamp(15.6rem, 33vw, 20.8rem);
-  height: 6.25rem;
+  height: 6.5rem;
   margin-top: -1rem;
 }
 
-.crystal-stand::before {
-  content: "";
+/* Aro superior que sujeta la bola */
+.stand-ring {
   position: absolute;
-  top: 0.02rem;
+  top: 0;
   left: 50%;
-  z-index: 5;
-  width: 80%;
-  height: 1.22rem;
+  width: 78%;
+  height: 1.25rem;
   border: 1px solid rgba(31, 12, 3, 0.5);
   border-radius: 50%;
   background:
-    radial-gradient(ellipse at 54% 16%, rgba(255, 232, 188, 0.5), transparent 40%),
+    radial-gradient(ellipse at 54% 16%, rgba(255, 232, 188, 0.55), transparent 40%),
     linear-gradient(90deg, #271006 0%, #62300e 22%, #a95f21 50%, #62300e 78%, #271006 100%);
   box-shadow:
-    inset 0 0.2rem 0 rgba(255, 226, 180, 0.22),
-    inset 0 -0.3rem 0 rgba(18, 7, 2, 0.52),
-    0 0.1rem 0.25rem rgba(18, 7, 2, 0.24);
+    inset 0 0.2rem 0 rgba(255, 226, 180, 0.24),
+    inset 0 -0.28rem 0 rgba(18, 7, 2, 0.52),
+    0 0.12rem 0.3rem rgba(18, 7, 2, 0.22);
   transform: translateX(-50%);
+  pointer-events: none;
 }
 
-.crystal-stand::after {
-  content: "";
+/* Columna / pedestal */
+.stand-column {
   position: absolute;
+  top: 0.58rem;
   left: 50%;
-  bottom: 0.2rem;
-  z-index: 1;
-  width: 138%;
-  height: 3.35rem;
-  border: 1px solid rgba(31, 12, 3, 0.6);
-  border-radius: 50% / 48%;
-  background:
-    radial-gradient(ellipse at 52% 20%, rgba(255, 220, 164, 0.4), transparent 42%),
-    radial-gradient(ellipse at 50% 76%, rgba(255, 184, 92, 0.22), transparent 52%),
-    linear-gradient(180deg, rgba(154, 72, 22, 0.86), rgba(68, 25, 6, 0.96) 58%, rgba(14, 5, 1, 0.99)),
-    linear-gradient(90deg, #190702 0%, #4b1d04 24%, #7a3510 50%, #4b1d04 76%, #190702 100%);
-  box-shadow:
-    inset 0 0.36rem 0 rgba(255, 224, 171, 0.23),
-    inset 0 -1.1rem 0 rgba(12, 4, 1, 0.8),
-    0 1.15rem 1.55rem rgba(45, 26, 0, 0.24);
-  transform: translateX(-50%);
-}
-
-.stand-base {
-  position: absolute;
-  left: 50%;
-  transform: translateX(-50%);
-}
-
-.stand-base {
-  z-index: 4;
-  top: 0.48rem;
-  width: 82.5%;
-  height: 4.02rem;
+  width: 74%;
+  height: 3.6rem;
   border-inline: 1px solid rgba(31, 12, 3, 0.52);
   border-radius: 0.42rem 0.42rem 1.62rem 1.62rem / 0.24rem 0.24rem 0.88rem 0.88rem;
   background:
-    radial-gradient(ellipse at 50% 8%, rgba(255, 220, 154, 0.26), transparent 40%),
+    radial-gradient(ellipse at 50% 8%, rgba(255, 220, 154, 0.28), transparent 40%),
     linear-gradient(180deg, rgba(255, 210, 141, 0.16), transparent 26%, rgba(20, 8, 2, 0.38) 100%),
     linear-gradient(90deg, #1b0a03 0%, #5a2a0b 14%, #944a16 36%, #dba16c 57%, #79360f 79%, #1b0a03 100%);
   box-shadow:
     inset 0.34rem 0 0.7rem rgba(18, 7, 2, 0.36),
     inset -0.34rem 0 0.7rem rgba(18, 7, 2, 0.34),
-    inset 0 -1.02rem 0 rgba(18, 7, 2, 0.6),
-    0 0.18rem 0 rgba(54, 23, 7, 0.34);
+    inset 0 -1.02rem 0 rgba(18, 7, 2, 0.6);
+  transform: translateX(-50%);
   pointer-events: none;
 }
 
-.stand-base::before,
-.stand-base::after {
+/* Línea ornamental en la columna */
+.stand-column::before {
   content: "";
   position: absolute;
   left: 50%;
+  top: 0.32rem;
+  width: 106%;
+  height: 0.2rem;
+  border-radius: 999px;
+  background:
+    linear-gradient(90deg, rgba(18, 7, 2, 0.68), rgba(255, 222, 166, 0.26), rgba(18, 7, 2, 0.68));
   transform: translateX(-50%);
 }
 
-.stand-base::before {
-  top: 0.42rem;
-  width: 102%;
-  height: 0.22rem;
+.stand-column::after {
+  content: "";
+  position: absolute;
+  left: 50%;
+  bottom: 0.28rem;
+  width: 112%;
+  height: 0.54rem;
   border-radius: 999px;
   background:
-    linear-gradient(90deg, rgba(18, 7, 2, 0.66), rgba(255, 222, 166, 0.24), rgba(18, 7, 2, 0.66));
+    linear-gradient(90deg, rgba(18, 7, 2, 0.68), rgba(255, 220, 151, 0.24), rgba(18, 7, 2, 0.68));
+  transform: translateX(-50%);
 }
 
-.stand-base::after {
-  bottom: 0.34rem;
-  width: 114%;
-  height: 0.58rem;
-  border-radius: 999px;
+/* Base / pie */
+.stand-foot {
+  position: absolute;
+  left: 50%;
+  bottom: 0;
+  width: 132%;
+  height: 3.2rem;
+  border: 1px solid rgba(31, 12, 3, 0.6);
+  border-radius: 50% / 48%;
   background:
-    linear-gradient(90deg, rgba(18, 7, 2, 0.66), rgba(255, 220, 151, 0.22), rgba(18, 7, 2, 0.66));
+    radial-gradient(ellipse at 52% 20%, rgba(255, 220, 164, 0.42), transparent 42%),
+    radial-gradient(ellipse at 50% 76%, rgba(255, 184, 92, 0.24), transparent 52%),
+    linear-gradient(180deg, rgba(154, 72, 22, 0.86), rgba(68, 25, 6, 0.96) 58%, rgba(14, 5, 1, 0.99)),
+    linear-gradient(90deg, #190702 0%, #4b1d04 24%, #7a3510 50%, #4b1d04 76%, #190702 100%);
+  box-shadow:
+    inset 0 0.36rem 0 rgba(255, 224, 171, 0.24),
+    inset 0 -1.1rem 0 rgba(12, 4, 1, 0.8),
+    0 1.15rem 1.55rem rgba(45, 26, 0, 0.24);
+  transform: translateX(-50%);
+  pointer-events: none;
 }
 
 .crystal-controls {
